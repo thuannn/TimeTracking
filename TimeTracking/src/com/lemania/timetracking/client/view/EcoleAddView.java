@@ -39,4 +39,10 @@ public class EcoleAddView extends ViewWithUiHandlers<EcoleAddUiHandler> implemen
 		if (getUiHandlers() != null)
 			getUiHandlers().ecoleAddCancel();
 	}
+	
+	@UiHandler("cmdAddEcole")
+	void onCmdAddEcoleClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().ecoleAdd();
+	}
 }

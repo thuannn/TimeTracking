@@ -49,12 +49,11 @@ public class EcoleAddPresenter extends
 	@Override
 	public void ecoleAdd() {
 		// TODO Auto-generated method stub
-		
+		Window.alert("here");
 	}
 
 	@Override
 	public void ecoleAddCancel() {
-		Window.alert("here");
 		// TODO Auto-generated method stub
 		History.newItem(NameTokens.ecolepage);
 	}
