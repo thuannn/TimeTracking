@@ -1,5 +1,7 @@
 package com.lemania.timetracking.server.service;
 
+import java.util.List;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.util.DAOBase;
@@ -9,6 +11,10 @@ public class EcoleDao extends DAOBase{
 	static {
         ObjectifyService.register(Ecole.class);
     }
+	
+	public List<Ecole> listAll(){
+		return null;
+	}
 	
 	public void save(Ecole ecole){
 		this.ofy().put(ecole);

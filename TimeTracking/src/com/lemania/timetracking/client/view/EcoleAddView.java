@@ -43,6 +43,6 @@ public class EcoleAddView extends ViewWithUiHandlers<EcoleAddUiHandler> implemen
 	@UiHandler("cmdAddEcole")
 	void onCmdAddEcoleClicked(ClickEvent event){
 		if (getUiHandlers() != null)
-			getUiHandlers().ecoleAdd();
+			getUiHandlers().ecoleAdd(txtNom.getText(), txtAdresse.getText());
 	}
 }

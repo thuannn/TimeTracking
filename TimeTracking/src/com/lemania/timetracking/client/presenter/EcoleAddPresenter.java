@@ -7,13 +7,18 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.EcoleAddUiHandler;
+import com.lemania.timetracking.shared.EcoleProxy;
+import com.lemania.timetracking.shared.service.EcoleRequestFactory;
+import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 
 public class EcoleAddPresenter extends
 		Presenter<EcoleAddPresenter.MyView, EcoleAddPresenter.MyProxy> 
@@ -47,9 +52,18 @@ public class EcoleAddPresenter extends
 	}
 
 	@Override
-	public void ecoleAdd() {
-		// TODO Auto-generated method stub
-		Window.alert("here");
+	public void ecoleAdd(String ecoleNom, String ecoleAdresse) {
+		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
+		EcoleRequestContext rc = rf.ecoleRequest();
+		EcoleProxy ep = rc.create(EcoleProxy.class);
+		ep.setName(ecoleNom);
+		ep.setAddress(ecoleAdresse);
+		rc.saveAndReturn(ep).fire(new Receiver<EcoleProxy>(){
+			@Override
+			public void onSuccess(EcoleProxy savedEcole){
+				Window.alert("saved done");
+			}
+		});
 	}
 
 	@Override
