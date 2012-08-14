@@ -12,5 +12,13 @@
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/javax.inject.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/gwtp-all-0.7.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/objectify-3.1/objectify-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/requestfactory-server.jar" sourcepath="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/requestfactory-server+src.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/requestfactory-apt.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

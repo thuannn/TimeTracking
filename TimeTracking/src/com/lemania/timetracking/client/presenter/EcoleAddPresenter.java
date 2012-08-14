@@ -12,7 +12,9 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.google.web.bindery.requestfactory.shared.Receiver;
+import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.EcoleAddUiHandler;
@@ -52,16 +54,22 @@ public class EcoleAddPresenter extends
 	}
 
 	@Override
-	public void ecoleAdd(String ecoleNom, String ecoleAdresse) {
+	public void ecoleAdd(String ecoleNom, String ecoleAdresse) {	
+		final EventBus eventBus = new SimpleEventBus();
 		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
+		rf.initialize(eventBus);
 		EcoleRequestContext rc = rf.ecoleRequest();
 		EcoleProxy ep = rc.create(EcoleProxy.class);
-		ep.setName(ecoleNom);
-		ep.setAddress(ecoleAdresse);
-		rc.saveAndReturn(ep).fire(new Receiver<EcoleProxy>(){
+		ep.setSchoolName(ecoleNom);
+		ep.setSchoolAddress(ecoleAdresse);
+		rc.save(ep).fire(new Receiver<Void>(){
 			@Override
-			public void onSuccess(EcoleProxy savedEcole){
-				Window.alert("saved done");
+			public void onSuccess(Void response){
+				Window.alert("saved");
+			}
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
 			}
 		});
 	}
