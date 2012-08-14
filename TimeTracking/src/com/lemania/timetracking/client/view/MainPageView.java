@@ -56,7 +56,7 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiHandler("cmdHomepage")
 	void onCmdHomepageClicked(ClickEvent event){
 		if (getUiHandlers() != null)
-			getUiHandlers().showEcoleList();
+			getUiHandlers().showHomepage();
 	}
 	
 	@UiHandler("cmdEcolePage")

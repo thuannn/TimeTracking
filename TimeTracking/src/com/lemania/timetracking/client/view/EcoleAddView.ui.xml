@@ -35,8 +35,8 @@
 				</g:customCell>
 				<g:customCell>
 					<g:HorizontalPanel width="136px">
-						<g:Button text="Ajouter"/>
-						<g:Button text="Annuler"/>
+						<g:Button text="Ajouter" ui:field="cmdAddEcole"/>
+						<g:Button text="Annuler" ui:field="cmdCancel"/>
 					</g:HorizontalPanel>
 				</g:customCell>
 			</g:row>
