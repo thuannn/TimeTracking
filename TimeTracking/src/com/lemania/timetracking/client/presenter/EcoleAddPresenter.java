@@ -14,6 +14,7 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.google.web.bindery.requestfactory.shared.Receiver;
+import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
@@ -54,10 +55,9 @@ public class EcoleAddPresenter extends
 	}
 
 	@Override
-	public void ecoleAdd(String ecoleNom, String ecoleAdresse) {	
-		final EventBus eventBus = new SimpleEventBus();
+	public void ecoleAdd(String ecoleNom, String ecoleAdresse) {
 		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
-		rf.initialize(eventBus);
+		rf.initialize(this.getEventBus());
 		EcoleRequestContext rc = rf.ecoleRequest();
 		EcoleProxy ep = rc.create(EcoleProxy.class);
 		ep.setSchoolName(ecoleNom);
@@ -65,7 +65,7 @@ public class EcoleAddPresenter extends
 		rc.save(ep).fire(new Receiver<Void>(){
 			@Override
 			public void onSuccess(Void response){
-				Window.alert("saved");
+				returnToEcoleList();
 			}
 			@Override
 			public void onFailure(ServerFailure error){
@@ -76,6 +76,11 @@ public class EcoleAddPresenter extends
 
 	@Override
 	public void ecoleAddCancel() {
+		// TODO Auto-generated method stub
+		returnToEcoleList();
+	}
+
+	private void returnToEcoleList() {
 		// TODO Auto-generated method stub
 		History.newItem(NameTokens.ecolepage);
 	}

@@ -1,9 +1,11 @@
 package com.lemania.timetracking.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.Ecole;
 
@@ -13,7 +15,12 @@ public class EcoleDao extends DAOBase{
     }
 	
 	public List<Ecole> listAll(){
-		return null;
+		Query<Ecole> q = this.ofy().query(Ecole.class);
+		List<Ecole> returnList = new ArrayList<Ecole>();
+		for (Ecole ecole : q){
+			returnList.add(ecole);
+		}
+		return returnList;
 	}
 	
 	public void save(Ecole ecole){
