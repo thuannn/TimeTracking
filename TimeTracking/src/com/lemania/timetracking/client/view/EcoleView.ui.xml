@@ -10,7 +10,7 @@
 		<g:FlowPanel width="100%" height="100%">
 			<g:VerticalPanel>
 				<g:Label text="Liste d&apos;écoles"/>
-				<p1:DataGrid width="306px" height="244px" ui:field="tblEcoles"/>
+				<p1:DataGrid width="800" height="600" ui:field="tblEcoles"/>
 			</g:VerticalPanel>
 		</g:FlowPanel></g:HTMLPanel>
 </ui:UiBinder>

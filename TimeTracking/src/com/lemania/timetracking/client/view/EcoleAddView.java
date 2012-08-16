@@ -11,6 +11,7 @@ import com.lemania.timetracking.client.uihandler.EcoleAddUiHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.SimpleCheckBox;
 
 public class EcoleAddView extends ViewWithUiHandlers<EcoleAddUiHandler> implements EcoleAddPresenter.MyView {
 
@@ -33,6 +34,7 @@ public class EcoleAddView extends ViewWithUiHandlers<EcoleAddUiHandler> implemen
 	@UiField TextBox txtAdresse;
 	@UiField Button cmdAddEcole;
 	@UiField Button cmdCancel;
+	@UiField SimpleCheckBox chkActive;
 	
 	@UiHandler("cmdCancel")
 	void onCmdCancelClicked(ClickEvent event){
@@ -43,6 +45,6 @@ public class EcoleAddView extends ViewWithUiHandlers<EcoleAddUiHandler> implemen
 	@UiHandler("cmdAddEcole")
 	void onCmdAddEcoleClicked(ClickEvent event){
 		if (getUiHandlers() != null)
-			getUiHandlers().ecoleAdd(txtNom.getText(), txtAdresse.getText());
+			getUiHandlers().ecoleAdd(txtNom.getText(), txtAdresse.getText(), chkActive.getValue());
 	}
 }

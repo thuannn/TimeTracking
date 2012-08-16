@@ -7,6 +7,9 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyEvent;
+import com.lemania.timetracking.client.event.EcoleAddedEvent;
+import com.lemania.timetracking.client.event.EcoleAddedEvent.EcoleAddedHandler;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
@@ -23,10 +26,12 @@ import com.lemania.timetracking.shared.service.EcoleRequestFactory;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 
 public class EcolePresenter extends
-		Presenter<EcolePresenter.MyView, EcolePresenter.MyProxy> {
+		Presenter<EcolePresenter.MyView, EcolePresenter.MyProxy> 
+		implements EcoleAddedHandler {
 
 	public interface MyView extends View, HasUiHandlers<EcoleListUiHandler> {
 		void setData(List<EcoleProxy> ecoleList);
+		void addEcole(EcoleProxy newEcole);
 	}
 
 	@ProxyCodeSplit
@@ -72,5 +77,12 @@ public class EcolePresenter extends
 				display.setData(response);
 			}
 		});
+	}
+
+	@ProxyEvent
+	@Override
+	public void onEcoleAdded(EcoleAddedEvent event) {
+		display.addEcole(event.getNewEcole());
+		revealInParent();		
 	}
 }

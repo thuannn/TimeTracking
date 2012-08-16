@@ -5,6 +5,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.lemania.timetracking.client.event.EcoleAddedEvent;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
@@ -12,9 +13,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.google.web.bindery.requestfactory.shared.Receiver;
-import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
@@ -43,6 +42,9 @@ public class EcoleAddPresenter extends
 		// Thuan: attach Ui handler
 		getView().setUiHandlers(this);
 	}
+	
+	// Thuan	
+	private EcoleProxy ep;
 
 	@Override
 	protected void revealInParent() {
@@ -55,17 +57,18 @@ public class EcoleAddPresenter extends
 	}
 
 	@Override
-	public void ecoleAdd(String ecoleNom, String ecoleAdresse) {
+	public void ecoleAdd(String ecoleNom, String ecoleAdresse, Boolean ecoleActive) {
 		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
 		rf.initialize(this.getEventBus());
 		EcoleRequestContext rc = rf.ecoleRequest();
-		EcoleProxy ep = rc.create(EcoleProxy.class);
+		ep = rc.create(EcoleProxy.class);
 		ep.setSchoolName(ecoleNom);
 		ep.setSchoolAddress(ecoleAdresse);
+		ep.setSchoolStatus(ecoleActive);
 		rc.save(ep).fire(new Receiver<Void>(){
 			@Override
 			public void onSuccess(Void response){
-				returnToEcoleList();
+				returnToEcoleListSuccess();
 			}
 			@Override
 			public void onFailure(ServerFailure error){
@@ -77,11 +80,15 @@ public class EcoleAddPresenter extends
 	@Override
 	public void ecoleAddCancel() {
 		// TODO Auto-generated method stub
-		returnToEcoleList();
+		returnToEcoleListCancel();
 	}
 
-	private void returnToEcoleList() {
+	private void returnToEcoleListCancel() {
 		// TODO Auto-generated method stub
 		History.newItem(NameTokens.ecolepage);
+	}
+	
+	private void returnToEcoleListSuccess() {
+		this.getEventBus().fireEvent(new EcoleAddedEvent(ep));
 	}
 }

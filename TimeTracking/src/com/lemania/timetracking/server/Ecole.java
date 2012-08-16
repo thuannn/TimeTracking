@@ -6,6 +6,7 @@ import com.googlecode.objectify.annotation.Entity;
 public class Ecole extends DatastoreObject{
 	private String schoolName;
 	private String schoolAddress;
+	private Boolean schoolActive = false;
 	
 	public String getSchoolName() {
 		return schoolName;
@@ -21,5 +22,13 @@ public class Ecole extends DatastoreObject{
 
 	public void setSchoolAddress(String schoolAddress) {
 		this.schoolAddress = schoolAddress;
+	}
+
+	public Boolean getSchoolStatus() {
+		return schoolActive;
+	}
+
+	public void setSchoolStatus(Boolean schoolActive) {
+		this.schoolActive = schoolActive;
 	}
 }

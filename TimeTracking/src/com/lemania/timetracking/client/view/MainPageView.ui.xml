@@ -11,7 +11,7 @@
 			<g:Dock direction="NORTH" height="40px">
 				<g:Image url="images/logo.jpg" width=""/>
 			</g:Dock>
-			<g:Dock direction="WEST" width="10%">
+			<g:Dock direction="WEST" width="10%" height="100%">
 				<g:Tree animationEnabled="true">
 					<g:Button ui:field="cmdHomepage">Accueil</g:Button>
 					<g:Button>Mettre des heures</g:Button>
@@ -25,7 +25,7 @@
 				</g:Tree>
 			</g:Dock>
 			<g:Dock direction="CENTER">
-				<g:FlowPanel ui:field="mainContentPanel" width="100%" height="100%"/>
+				<g:FlowPanel ui:field="mainContentPanel" width="90%" height="100%"/>
 			</g:Dock>
 		</g:DockPanel>
 	</g:FlowPanel>
