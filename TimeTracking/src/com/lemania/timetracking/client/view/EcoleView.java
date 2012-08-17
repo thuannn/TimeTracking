@@ -2,10 +2,11 @@ package com.lemania.timetracking.client.view;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.CheckboxCell;
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.EcolePresenter;
@@ -50,7 +51,7 @@ public class EcoleView extends ViewWithUiHandlers<EcoleListUiHandler> implements
 	      @Override
 	      public String getValue(EcoleProxy object) {
 	        return object.getSchoolAddress();
-	      }
+	      } 
 	    };
 	    tblEcoles.addColumn(colAddress, "Adresse");
 	    
@@ -59,11 +60,24 @@ public class EcoleView extends ViewWithUiHandlers<EcoleListUiHandler> implements
 	    	@Override
 	    	public Boolean getValue(EcoleProxy ecole){
 	    		return ecole.getSchoolStatus();
-	    	}
+	    	}	    	
 	    };
-	    tblEcoles.addColumn(colActive, "Activée");
+	    tblEcoles.addColumn(colActive, "Activé");
 	    
-	    
+	    colActive.setFieldUpdater(new FieldUpdater<EcoleProxy, Boolean>(){
+	    	@Override
+	    	public void update(int index, EcoleProxy ecole, Boolean value){
+	            // Push the changes into the Contact. At this point, you could send an
+	            // asynchronous request to the server to update the database.
+	    		if (getUiHandlers() != null) {
+	    			ecole.setSchoolStatus(value);
+	    			getUiHandlers().updateEcoleStatus(ecole);
+	    		}
+
+	    	}
+	    });
+	   
+	    // Put them together
 		tblEcoles.setRowData(0, ecoleList);
 	}
 
@@ -73,5 +87,12 @@ public class EcoleView extends ViewWithUiHandlers<EcoleListUiHandler> implements
 		List<EcoleProxy> newEcoles = new ArrayList<EcoleProxy>();
 		newEcoles.add(newEcole);
 		tblEcoles.setRowData(tblEcoles.getRowCount()+1, newEcoles);
+	}
+	
+	@Override
+	public void refreshTable(){
+        // Redraw the table with the new data.
+		Window.alert("changed");
+        tblEcoles.redraw();
 	}
 }

@@ -13,6 +13,7 @@ import com.lemania.timetracking.client.event.EcoleAddedEvent.EcoleAddedHandler;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -27,19 +28,18 @@ import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestC
 
 public class EcolePresenter extends
 		Presenter<EcolePresenter.MyView, EcolePresenter.MyProxy> 
-		implements EcoleAddedHandler {
+		implements EcoleListUiHandler, EcoleAddedHandler {
 
 	public interface MyView extends View, HasUiHandlers<EcoleListUiHandler> {
 		void setData(List<EcoleProxy> ecoleList);
 		void addEcole(EcoleProxy newEcole);
+		void refreshTable();
 	}
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.ecolepage)
 	public interface MyProxy extends ProxyPlace<EcolePresenter> {
 	}
-
-	private final MyView display;
 	
 	@Inject
 	public EcolePresenter(final EventBus eventBus, final MyView view,
@@ -47,7 +47,7 @@ public class EcolePresenter extends
 		super(eventBus, view, proxy);
 		
 		// Thuan
-		this.display = view;
+		getView().setUiHandlers(this);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class EcolePresenter extends
 			}
 			@Override
 			public void onSuccess(List<EcoleProxy> response) {
-				display.setData(response);
+				getView().setData(response);
 			}
 		});
 	}
@@ -82,7 +82,25 @@ public class EcolePresenter extends
 	@ProxyEvent
 	@Override
 	public void onEcoleAdded(EcoleAddedEvent event) {
-		display.addEcole(event.getNewEcole());
-		revealInParent();		
+		getView().addEcole(event.getNewEcole());
+		History.newItem(NameTokens.ecolepage, true);	
+	}
+
+	@Override
+	public void updateEcoleStatus(EcoleProxy ecole) {
+		// TODO Auto-generated method stub
+		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
+		rf.initialize(this.getEventBus());
+		EcoleRequestContext rc = rf.ecoleRequest();
+		rc.save(ecole).fire(new Receiver<Void>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(Void response) {
+				getView().refreshTable();
+			}
+		});
 	}
 }
