@@ -1,2 +1,31 @@
 /* Add css rules here for your application. */
 
+body {
+  padding: 10px;
+}
+
+/* stock list header row */
+.pageTitle {
+	padding: 3px;
+  	background-color: #D2C40B;
+  	color: white;
+  	font-style: gros;
+  	font-size: 18px;
+}
+
+.sideBar {
+	background-color: #F2F2F2;
+	border-style:solid;
+	border-width:1px;
+	border-color:  #D2C40B;
+}
+
+.btnFocus {
+	background-color: #D2C40B;
+}
+
+.paneMain {
+	border-style:solid;
+	border-width:1px;
+	border-color: #D2C40B;
+}

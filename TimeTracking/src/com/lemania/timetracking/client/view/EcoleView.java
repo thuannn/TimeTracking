@@ -20,6 +20,8 @@ import com.google.gwt.user.cellview.client.TextColumn;
 public class EcoleView extends ViewWithUiHandlers<EcoleListUiHandler> implements EcolePresenter.MyView {
 
 	private final Widget widget;
+	
+	private int selectedEcole;
 
 	public interface Binder extends UiBinder<Widget, EcoleView> {
 	}
@@ -62,18 +64,17 @@ public class EcoleView extends ViewWithUiHandlers<EcoleListUiHandler> implements
 	    		return ecole.getSchoolStatus();
 	    	}	    	
 	    };
-	    tblEcoles.addColumn(colActive, "Activé");
+	    tblEcoles.addColumn(colActive, "Active");
 	    
 	    colActive.setFieldUpdater(new FieldUpdater<EcoleProxy, Boolean>(){
 	    	@Override
 	    	public void update(int index, EcoleProxy ecole, Boolean value){
 	            // Push the changes into the Contact. At this point, you could send an
-	            // asynchronous request to the server to update the database.
-	    		if (getUiHandlers() != null) {
-	    			ecole.setSchoolStatus(value);
-	    			getUiHandlers().updateEcoleStatus(ecole);
-	    		}
-
+	            // asynchronous request to the server to update the database.	    	
+	    		if (getUiHandlers() != null) {	    			
+	    			selectedEcole = index;
+	    			getUiHandlers().updateEcoleStatus(ecole, value);
+	    		}	    		
 	    	}
 	    });
 	   
@@ -90,9 +91,13 @@ public class EcoleView extends ViewWithUiHandlers<EcoleListUiHandler> implements
 	}
 	
 	@Override
-	public void refreshTable(){
-        // Redraw the table with the new data.
-		Window.alert("changed");
-        tblEcoles.redraw();
+	public void refreshTable(EcoleProxy updatedEcole){
+		List<EcoleProxy> ecoles = new ArrayList<EcoleProxy>();
+		ecoles.add(updatedEcole);
+        tblEcoles.setRowData(selectedEcole, ecoles);
+		tblEcoles.redraw();
+		
+		// Notify user
+		Window.alert("Statut de l'école mis à jour.");
 	}
 }

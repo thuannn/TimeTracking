@@ -23,6 +23,14 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiField Button cmdEcolePage;
 	@UiField Button cmdEcoleAdd;
 	@UiField Button cmdHomepage;
+	@UiField Button cmdTimeInput;
+	@UiField Button cmdCours;
+	@UiField Button cmdCoursAdd;
+	@UiField Button cmdTypes;
+	@UiField Button cmdTypesAdd;
+	@UiField Button cmdProfs;
+	@UiField Button cmdProfsAdd;
+	@UiField Button cmdContact;
 	
 	public MainPageView() {		
 		widget = uiBinder.createAndBindUi(this);
@@ -69,5 +77,47 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	void onCmdEcoleAddClicked(ClickEvent event){
 		if (getUiHandlers() != null)
 			getUiHandlers().showEcoleAdd();
+	}
+	
+	@UiHandler("cmdTimeInput")
+	void onCmdTimeInputClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().showTimeInput();
+	}
+	
+	@UiHandler("cmdCours")
+	void onCmdCoursClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().showCoursList();
+	}
+	
+	@UiHandler("cmdCoursAdd")
+	void onCmdCoursAddClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().showCoursAdd();
+	}
+	
+	@UiHandler("cmdTypes")
+	void onCmdTypesClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().showTypeList();
+	}
+	
+	@UiHandler("cmdTypesAdd")
+	void onCmdTypesAddClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().showTypeAdd();
+	}
+	
+	@UiHandler("cmdProfs")
+	void onCmdProfsClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().showProfessorList();
+	}
+	
+	@UiHandler("cmdProfsAdd")
+	void onCmdProfsAddClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().showProfessorAdd();
 	}
 }

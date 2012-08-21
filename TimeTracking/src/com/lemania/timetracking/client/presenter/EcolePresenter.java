@@ -33,7 +33,7 @@ public class EcolePresenter extends
 	public interface MyView extends View, HasUiHandlers<EcoleListUiHandler> {
 		void setData(List<EcoleProxy> ecoleList);
 		void addEcole(EcoleProxy newEcole);
-		void refreshTable();
+		void refreshTable(EcoleProxy updatedEcole);
 	}
 
 	@ProxyCodeSplit
@@ -51,13 +51,13 @@ public class EcolePresenter extends
 	}
 
 	@Override
-	protected void revealInParent() {
+	protected void revealInParent() {		
 		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent, this);
 	}
 
 	@Override
 	protected void onBind() {
-		super.onBind();
+		super.onBind();		
 		
 		// Thuan
 		getEcoleList();
@@ -87,19 +87,21 @@ public class EcolePresenter extends
 	}
 
 	@Override
-	public void updateEcoleStatus(EcoleProxy ecole) {
+	public void updateEcoleStatus(EcoleProxy ecole, Boolean value) {
 		// TODO Auto-generated method stub
 		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
 		rf.initialize(this.getEventBus());
 		EcoleRequestContext rc = rf.ecoleRequest();
-		rc.save(ecole).fire(new Receiver<Void>(){
+		EcoleProxy ecoleForUpdate = rc.edit(ecole);
+		ecoleForUpdate.setSchoolStatus(value);
+		rc.saveAndReturn(ecoleForUpdate).fire(new Receiver<EcoleProxy>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
 			}
 			@Override
-			public void onSuccess(Void response) {
-				getView().refreshTable();
+			public void onSuccess(EcoleProxy response) {
+				getView().refreshTable(response);
 			}
 		});
 	}
