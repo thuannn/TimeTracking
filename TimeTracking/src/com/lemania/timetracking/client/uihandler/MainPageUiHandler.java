@@ -11,6 +11,7 @@ import com.gwtplatform.mvp.client.UiHandlers;
  */
 public interface MainPageUiHandler extends UiHandlers {
 	void showHomepage();
+	void showTimeInput();
 	
 	void showEcoleList();
 	void showEcoleAdd();
@@ -24,5 +25,5 @@ public interface MainPageUiHandler extends UiHandlers {
 	void showTypeList();
 	void showTypeAdd();
 	
-	void showTimeInput();
+	void showContact();
 }

@@ -79,36 +79,42 @@ public class MainPagePresenter extends
 	@Override
 	public void showCoursAdd() {
 		// TODO Auto-generated method stub
-		
+		History.newItem(NameTokens.coursadd, true);
 	}
 
 	@Override
 	public void showProfessorList() {
 		// TODO Auto-generated method stub
-		
+		History.newItem(NameTokens.profs, true);
 	}
 
 	@Override
 	public void showProfessorAdd() {
 		// TODO Auto-generated method stub
-		
+		History.newItem(NameTokens.profsadd, true);
 	}
 
 	@Override
 	public void showTypeList() {
 		// TODO Auto-generated method stub
-		
+		History.newItem(NameTokens.types, true);
 	}
 
 	@Override
 	public void showTypeAdd() {
 		// TODO Auto-generated method stub
-		
+		History.newItem(NameTokens.typesadd, true);
 	}
 
 	@Override
 	public void showTimeInput() {
 		// TODO Auto-generated method stub
 		History.newItem(NameTokens.timeinput, true);
+	}
+
+	@Override
+	public void showContact() {
+		// TODO Auto-generated method stub
+		History.newItem(NameTokens.contact);
 	}
 }

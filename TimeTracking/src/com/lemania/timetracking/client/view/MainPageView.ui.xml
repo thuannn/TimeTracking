@@ -20,15 +20,15 @@
 					<g:Button ui:field="cmdHomepage">Accueil</g:Button>
 					<g:Button ui:field="cmdTimeInput">Mettre des heures</g:Button>
 					<g:TreeItem text="Informations de base" state="true">
-						<g:TreeItem text="Ecoles" state="true">
+						<g:TreeItem text="Ecoles">
 						<g:Button ui:field="cmdEcolePage">Liste d'écoles</g:Button>
 						<g:Button text="Ajouter une école" ui:field="cmdEcoleAdd"/>
 					</g:TreeItem>
-						<g:TreeItem text="Cours" state="true">
-							<g:Button ui:field="cmdCours">Liste de cours</g:Button>
-							<g:Button ui:field="cmdCoursAdd">Ajouter un cours</g:Button>
+						<g:TreeItem text="Noms de Cours">
+							<g:Button ui:field="cmdCours" text="Liste des noms">Liste de cours</g:Button>
+							<g:Button ui:field="cmdCoursAdd" text="Ajouter un nom">Ajouter un cours</g:Button>
 						</g:TreeItem>
-						<g:TreeItem text="Types d&apos;heure" state="true">
+						<g:TreeItem text="Types d&apos;heure">
 							<g:Button text="Liste des types" ui:field="cmdTypes"/>
 							<g:Button ui:field="cmdTypesAdd">Ajouter un type</g:Button>
 						</g:TreeItem>
@@ -42,6 +42,11 @@
 			</g:Dock>
 			<g:Dock direction="CENTER">
 				<g:FlowPanel ui:field="mainContentPanel" width="90%" height="600px" styleName="paneMain"/>
+			</g:Dock>
+			<g:Dock direction="SOUTH">
+				<g:HorizontalPanel horizontalAlignment="ALIGN_RIGHT" width="90%">
+					<g:Label text="Copyright 2012 Ecole Lémania"/>
+				</g:HorizontalPanel>
 			</g:Dock>
 		</g:DockPanel>
 	</g:FlowPanel>

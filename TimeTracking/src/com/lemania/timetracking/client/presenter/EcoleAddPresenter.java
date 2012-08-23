@@ -58,6 +58,11 @@ public class EcoleAddPresenter extends
 
 	@Override
 	public void ecoleAdd(String ecoleNom, String ecoleAdresse, Boolean ecoleActive) {
+		if (ecoleNom.isEmpty() || ecoleAdresse.isEmpty()){
+			Window.alert("Veuillez saissir le nom et l'addresse de l'école !");
+			return;
+		}
+		
 		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
 		rf.initialize(this.getEventBus());
 		EcoleRequestContext rc = rf.ecoleRequest();

@@ -120,4 +120,10 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 		if (getUiHandlers() != null)
 			getUiHandlers().showProfessorAdd();
 	}
+	
+	@UiHandler("cmdContact")
+	void onCmdContactClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().showContact();
+	}
 }

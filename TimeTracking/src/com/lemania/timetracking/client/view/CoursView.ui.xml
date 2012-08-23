@@ -8,8 +8,8 @@
 
 	<g:HTMLPanel>
 		<g:VerticalPanel width="100%">
-			<g:Label text="List des cours" styleName="pageTitle"/>
-			<p1:DataGrid width="800px" height="600px" ui:field="dataGrid"/>
+			<g:Label text="Liste des nom de cours" styleName="pageTitle"/>
+			<p1:DataGrid width="800px" height="600px" ui:field="tblCours"/>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

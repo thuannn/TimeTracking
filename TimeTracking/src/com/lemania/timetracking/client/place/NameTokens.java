@@ -6,6 +6,12 @@ public class NameTokens {
 	public static final String addecole = "!addecole";
 	public static final String timeinput = "!timeinput";
 	public static final String cours = "!cours";
+	public static final String coursadd = "coursadd";
+	public static final String types = "types";
+	public static final String typesadd = "!typesadd";
+	public static final String profs = "!profs";
+	public static final String profsadd = "!profsadd";
+	public static final String contact = "!contact";
 
 	public static String getHomePage() {
 	    return homepage;
@@ -25,5 +31,29 @@ public class NameTokens {
 
 	public static String getCours() {
 		return cours;
+	}
+
+	public static String getCoursadd() {
+		return coursadd;
+	}
+
+	public static String getTypes() {
+		return types;
+	}
+
+	public static String getTypesadd() {
+		return typesadd;
+	}
+
+	public static String getProfs() {
+		return profs;
+	}
+
+	public static String getProfsadd() {
+		return profsadd;
+	}
+
+	public static String getContact() {
+		return contact;
 	}
 }

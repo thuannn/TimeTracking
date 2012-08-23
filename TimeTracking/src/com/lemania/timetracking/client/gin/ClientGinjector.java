@@ -13,6 +13,12 @@ import com.lemania.timetracking.client.presenter.EcolePresenter;
 import com.lemania.timetracking.client.presenter.EcoleAddPresenter;
 import com.lemania.timetracking.client.presenter.TimeInputPresenter;
 import com.lemania.timetracking.client.presenter.CoursPresenter;
+import com.lemania.timetracking.client.presenter.CoursAddPresenter;
+import com.lemania.timetracking.client.presenter.TypesPresenter;
+import com.lemania.timetracking.client.presenter.TypesAddPresenter;
+import com.lemania.timetracking.client.presenter.ProfsPresenter;
+import com.lemania.timetracking.client.presenter.ProfsAddPresenter;
+import com.lemania.timetracking.client.presenter.ContactPresenter;
 
 @GinModules({ ClientModule.class })
 public interface ClientGinjector extends Ginjector {
@@ -32,4 +38,16 @@ public interface ClientGinjector extends Ginjector {
 	AsyncProvider<TimeInputPresenter> getTimeInputPresenter();
 
 	AsyncProvider<CoursPresenter> getCoursPresenter();
+
+	AsyncProvider<CoursAddPresenter> getCoursAddPresenter();
+
+	AsyncProvider<TypesPresenter> getTypesPresenter();
+
+	AsyncProvider<TypesAddPresenter> getTypesAddPresenter();
+
+	AsyncProvider<ProfsPresenter> getProfsPresenter();
+
+	AsyncProvider<ProfsAddPresenter> getProfsAddPresenter();
+
+	AsyncProvider<ContactPresenter> getContactPresenter();
 }

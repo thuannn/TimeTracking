@@ -69,8 +69,6 @@ public class EcoleView extends ViewWithUiHandlers<EcoleListUiHandler> implements
 	    colActive.setFieldUpdater(new FieldUpdater<EcoleProxy, Boolean>(){
 	    	@Override
 	    	public void update(int index, EcoleProxy ecole, Boolean value){
-	            // Push the changes into the Contact. At this point, you could send an
-	            // asynchronous request to the server to update the database.	    	
 	    		if (getUiHandlers() != null) {	    			
 	    			selectedEcole = index;
 	    			getUiHandlers().updateEcoleStatus(ecole, value);
