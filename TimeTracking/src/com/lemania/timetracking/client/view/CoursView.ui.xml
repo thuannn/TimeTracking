@@ -9,6 +9,10 @@
 	<g:HTMLPanel>
 		<g:VerticalPanel width="100%">
 			<g:Label text="Liste des nom de cours" styleName="pageTitle"/>
+			<g:HorizontalPanel width="50%" horizontalAlignment="ALIGN_CENTER" height="40px" verticalAlignment="ALIGN_MIDDLE">
+				<g:Label text="Choisir le nom d&apos;école :" width=""/>
+				<g:ListBox ui:field="lstEcoles"/>
+			</g:HorizontalPanel>
 			<p1:DataGrid width="800px" height="600px" ui:field="tblCours"/>
 		</g:VerticalPanel>
 	</g:HTMLPanel>

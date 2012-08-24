@@ -1,5 +1,7 @@
 package com.lemania.timetracking.client.presenter;
 
+import java.util.List;
+
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -19,14 +21,18 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.CoursAddUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
+import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.service.CoursRequestFactory;
+import com.lemania.timetracking.shared.service.EcoleRequestFactory;
 import com.lemania.timetracking.shared.service.CoursRequestFactory.CoursRequestContext;
+import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 
 public class CoursAddPresenter 
 		extends Presenter<CoursAddPresenter.MyView, CoursAddPresenter.MyProxy>
 		implements CoursAddUiHandler {
 
 	public interface MyView extends View, HasUiHandlers<CoursAddUiHandler> {
+		void populateEcoleList(List<EcoleProxy> ecoles);
 	}
 	
 	// Thuan
@@ -53,22 +59,47 @@ public class CoursAddPresenter
 	@Override
 	protected void onBind() {
 		super.onBind();
+		
+		// Thuan
+		initialData();
+	}
+	
+	private void initialData(){
+		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
+		rf.initialize(this.getEventBus());
+		EcoleRequestContext rc = rf.ecoleRequest();
+		rc.listAll().fire(new Receiver<List<EcoleProxy>>(){
+			@Override
+			public void onSuccess(List<EcoleProxy> response){
+				getView().populateEcoleList(response);
+			}
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+		});
 	}
 	
 	@Override
-	public void coursAdd(String coursNom, Boolean coursActif){
+	public void coursAdd(String coursNom, String ecoleId, Boolean coursActif){
+		// Validate data		
 		if (coursNom.isEmpty()){
 			Window.alert("Veuillez saissir le nom du cours.");
 			return;
 		}
+		if (ecoleId.isEmpty()){
+			Window.alert("Veuillez choisir le nom de l'école.");
+			return;
+		}
 		
+		// Save data
 		CoursRequestFactory rf = GWT.create(CoursRequestFactory.class);
 		rf.initialize(this.getEventBus());
 		CoursRequestContext rc = rf.coursRequest();
 		cours = rc.create(CoursProxy.class);
 		cours.setCoursNom(coursNom);
 		cours.setCoursActif(coursActif);
-		rc.save(cours).fire(new Receiver<Void>(){
+		rc.save(cours, ecoleId).fire(new Receiver<Void>(){
 			@Override
 			public void onSuccess(Void response){
 				returnToCoursListSuccess();

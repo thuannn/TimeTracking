@@ -7,10 +7,14 @@ import com.lemania.timetracking.server.ObjectifyLocator;
 
 @ProxyFor(value=Ecole.class, locator=ObjectifyLocator.class)
 public interface EcoleProxy extends EntityProxy {
+	Long getId();
+	
 	String getSchoolName();
-	String getSchoolAddress();
-	Boolean getSchoolStatus();
 	void setSchoolName(String name);
+	
+	String getSchoolAddress();
 	void setSchoolAddress(String name);
+	
+	Boolean getSchoolStatus();
 	void setSchoolStatus(Boolean active);
 }

@@ -1,5 +1,7 @@
 package com.lemania.timetracking.client.view;
 
+import java.util.List;
+
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -8,10 +10,12 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.CoursAddPresenter;
 import com.lemania.timetracking.client.uihandler.CoursAddUiHandler;
+import com.lemania.timetracking.shared.EcoleProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.ListBox;
 
 public class CoursAddView extends ViewWithUiHandlers<CoursAddUiHandler> implements CoursAddPresenter.MyView {
 
@@ -33,6 +37,7 @@ public class CoursAddView extends ViewWithUiHandlers<CoursAddUiHandler> implemen
 	@UiField Button cmdAjouter;
 	@UiField TextBox txtCoursNom;
 	@UiField CheckBox chkActif;
+	@UiField ListBox lstEcoles;
 	
 	@UiHandler("cmdAnnuler")
 	void onCmdAnnulerClicked(ClickEvent event){
@@ -43,6 +48,17 @@ public class CoursAddView extends ViewWithUiHandlers<CoursAddUiHandler> implemen
 	@UiHandler("cmdAjouter")
 	void onCmdAjouterClicked(ClickEvent event){
 		if (getUiHandlers() != null)
-			getUiHandlers().coursAdd(txtCoursNom.getText().trim(), chkActif.getValue());
+			getUiHandlers().coursAdd(
+					txtCoursNom.getText().trim(), 
+					lstEcoles.getValue(lstEcoles.getSelectedIndex()), 
+					chkActif.getValue());
+	}
+
+	@Override
+	public void populateEcoleList(List<EcoleProxy> ecoles){
+		// Thuan: populate the list of school names
+		lstEcoles.addItem("-","");
+		for (int i=0; i<ecoles.size(); i++)
+			lstEcoles.addItem(ecoles.get(i).getSchoolName(), ecoles.get(i).getId().toString());
 	}
 }

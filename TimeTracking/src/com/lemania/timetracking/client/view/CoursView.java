@@ -6,17 +6,22 @@ import java.util.List;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.CoursPresenter;
 import com.lemania.timetracking.client.uihandler.CoursListUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
+import com.lemania.timetracking.shared.EcoleProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.ListBox;
 
 public class CoursView extends ViewWithUiHandlers<CoursListUiHandler> implements CoursPresenter.MyView {
 
@@ -38,6 +43,7 @@ public class CoursView extends ViewWithUiHandlers<CoursListUiHandler> implements
 		return widget;
 	}
 	@UiField(provided=true) DataGrid<CoursProxy> tblCours = new DataGrid<CoursProxy>();
+	@UiField ListBox lstEcoles;
 	
 	@Override
 	public void addCours(CoursProxy cours) {
@@ -49,7 +55,14 @@ public class CoursView extends ViewWithUiHandlers<CoursListUiHandler> implements
 
 	@Override
 	public void setData(List<CoursProxy> listCours) {
-		 // Add a text column to show the name.
+	    // add the data
+	    tblCours.setRowData(listCours);
+	    tblCours.redraw();
+	}
+	
+	@Override
+	public void initializeTable(){
+		// Add a text column to show the name.
 	    TextColumn<CoursProxy> colName = new TextColumn<CoursProxy>() {
 	      @Override
 	      public String getValue(CoursProxy object) {
@@ -76,9 +89,6 @@ public class CoursView extends ViewWithUiHandlers<CoursListUiHandler> implements
 	    		}	    		
 	    	}
 	    });
-	   
-	    // Put them together
-	    tblCours.setRowData(0, listCours);
 	}
 
 	@Override
@@ -91,5 +101,19 @@ public class CoursView extends ViewWithUiHandlers<CoursListUiHandler> implements
 		
 		// Notify user
 		Window.alert("Statut du cours mis à jour.");
+	}
+
+	@Override
+	public void populateEcoleList(List<EcoleProxy> ecoles) {
+		// Thuan: populate the list of school names
+		lstEcoles.addItem("-","");
+		for (int i=0; i<ecoles.size(); i++)
+			lstEcoles.addItem(ecoles.get(i).getSchoolName(), ecoles.get(i).getId().toString());
+	}
+	
+	@UiHandler("lstEcoles")
+	void onLstEcolesSelected(ChangeEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().populateCoursList(lstEcoles.getValue(lstEcoles.getSelectedIndex()));
 	}
 }

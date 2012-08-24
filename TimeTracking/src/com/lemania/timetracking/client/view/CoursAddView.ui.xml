@@ -20,6 +20,14 @@
 				</g:row>
 				<g:row>
 					<g:customCell>
+						<g:Label text="Nom d&apos;école :"/>
+					</g:customCell>
+					<g:customCell>
+						<g:ListBox ui:field="lstEcoles"/>
+					</g:customCell>
+				</g:row>
+				<g:row>
+					<g:customCell>
 						<g:Label text="Actif :"/>
 					</g:customCell>
 					<g:customCell>

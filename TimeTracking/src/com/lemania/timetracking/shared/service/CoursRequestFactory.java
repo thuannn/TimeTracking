@@ -15,7 +15,11 @@ public interface CoursRequestFactory extends RequestFactory {
 	@Service(value=CoursDao.class, locator=DaoServiceLocator.class)
 	interface CoursRequestContext extends RequestContext {
 		Request<List<CoursProxy>> listAll();
+		Request<List<CoursProxy>> listAll(String ecoleId);
+		
 		Request<Void> save(CoursProxy cours);
+		Request<Void> save(CoursProxy cours, String ecoleId);
+		
 		Request<CoursProxy> saveAndReturn(CoursProxy newCours);
 		Request<Void> removeCours(CoursProxy cours);
 	}

@@ -8,6 +8,7 @@ import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.Cours;
+import com.lemania.timetracking.server.Ecole;
 
 public class CoursDao extends DAOBase {
 	static {
@@ -23,7 +24,25 @@ public class CoursDao extends DAOBase {
 		return returnList;
 	}
 	
+	public List<Cours> listAll(String ecoleId){
+		Key<Ecole> ecole = new Key<Ecole>(Ecole.class, Long.parseLong(ecoleId));
+		Query<Cours> q = this.ofy().query(Cours.class).filter("ecole", ecole);
+		
+		List<Cours> returnList = new ArrayList<Cours>();
+		for (Cours cours : q){
+			returnList.add(cours);
+		}
+		
+		return returnList;
+	}
+	
 	public void save(Cours cours){
+		this.ofy().put(cours);
+	}
+	
+	public void save(Cours cours, String ecoleId){
+		Key<Ecole> ecoleKey = new Key<Ecole>(Ecole.class, Long.parseLong(ecoleId));
+		cours.setEcole(ecoleKey);
 		this.ofy().put(cours);
 	}
 	

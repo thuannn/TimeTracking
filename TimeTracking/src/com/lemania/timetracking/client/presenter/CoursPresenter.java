@@ -23,8 +23,11 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.CoursListUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
+import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.service.CoursRequestFactory;
+import com.lemania.timetracking.shared.service.EcoleRequestFactory;
 import com.lemania.timetracking.shared.service.CoursRequestFactory.CoursRequestContext;
+import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 
 public class CoursPresenter extends
 		Presenter<CoursPresenter.MyView, CoursPresenter.MyProxy> 
@@ -34,6 +37,8 @@ public class CoursPresenter extends
 		void addCours(CoursProxy cours);
 		void setData(List<CoursProxy> listCours);
 		void refreshTable(CoursProxy updatedCours);
+		void populateEcoleList(List<EcoleProxy> ecoles);
+		void initializeTable();
 	}
 
 	@ProxyCodeSplit
@@ -60,7 +65,27 @@ public class CoursPresenter extends
 		super.onBind();
 		
 		// Thuan
-		getCoursList();
+		initialData();
+	}
+	
+	// Thuan: Populate the list of school names
+	private void initialData(){
+		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
+		rf.initialize(this.getEventBus());
+		EcoleRequestContext rc = rf.ecoleRequest();
+		rc.listAll().fire(new Receiver<List<EcoleProxy>>(){
+			@Override
+			public void onSuccess(List<EcoleProxy> response){
+				getView().populateEcoleList(response);
+			}
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+		});
+		
+		// Structure the table
+		getView().initializeTable();
 	}
 	
 	private void getCoursList() {
@@ -102,6 +127,27 @@ public class CoursPresenter extends
 			@Override
 			public void onSuccess(CoursProxy response) {
 				getView().refreshTable(response);
+			}
+		});
+	}
+
+	@Override
+	public void populateCoursList(String ecoleId) {
+		if (ecoleId.isEmpty()){
+			return;
+		}
+		
+		CoursRequestFactory rf = GWT.create(CoursRequestFactory.class);
+		rf.initialize(this.getEventBus());
+		CoursRequestContext rc = rf.coursRequest();
+		rc.listAll(ecoleId).fire(new Receiver<List<CoursProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<CoursProxy> response) {
+				getView().setData(response);
 			}
 		});
 	}
