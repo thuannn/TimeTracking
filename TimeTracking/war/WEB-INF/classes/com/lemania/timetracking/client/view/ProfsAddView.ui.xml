@@ -1,0 +1,49 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default' xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+
+	<g:HTMLPanel width="100%">
+		<g:VerticalPanel width="100%">
+			<g:Label text="Ajouter un professeur" styleName="pageTitle"/>
+			<g:HorizontalPanel width="100%">
+				<g:Grid>
+					<g:row>
+						<g:customCell>
+							<g:Label text="Nom : "/>
+						</g:customCell>
+						<g:customCell>
+							<g:TextBox width="250px"/>
+						</g:customCell>
+					</g:row>
+					<g:row>
+						<g:customCell>
+							<g:Label text="Active :"/>
+						</g:customCell>
+						<g:customCell>
+							<g:CheckBox/>
+						</g:customCell>
+					</g:row>
+					<g:row>
+						<g:customCell>
+							<g:Label/>
+						</g:customCell>
+						<g:customCell>
+							<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_RIGHT">
+								<g:Button>Annuler</g:Button>
+								<g:Button>Ajouter</g:Button>
+							</g:HorizontalPanel>
+						</g:customCell>
+					</g:row>
+				</g:Grid>
+				<g:VerticalPanel>
+					<g:Label text="Les cours pris en charge :"/>
+					<p1:DataGrid width="250px" height="200px" ui:field="dataGrid"/>
+				</g:VerticalPanel>
+			</g:HorizontalPanel>
+		</g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>
