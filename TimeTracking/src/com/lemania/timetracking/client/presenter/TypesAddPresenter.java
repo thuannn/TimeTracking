@@ -5,6 +5,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.lemania.timetracking.client.event.HourAddedEvent;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
@@ -17,10 +18,7 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.HourAddUiHandler;
-import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.HourProxy;
-import com.lemania.timetracking.shared.service.EcoleRequestFactory;
-import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 import com.lemania.timetracking.shared.service.HourRequestFactory;
 import com.lemania.timetracking.shared.service.HourRequestFactory.HourRequestContext;
 
@@ -83,7 +81,7 @@ public class TypesAddPresenter
 	}
 	
 	private void returnToHourListSuccess(){
-		// fire event here
+		getEventBus().fireEvent(new HourAddedEvent(hp));
 	}
 
 	@Override

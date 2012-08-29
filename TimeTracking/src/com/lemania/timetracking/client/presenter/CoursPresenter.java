@@ -88,6 +88,9 @@ public class CoursPresenter extends
 		getView().initializeTable();
 	}
 	
+	
+	// Thuan: not being used any more
+	/*
 	private void getCoursList() {
 		CoursRequestFactory rf = GWT.create(CoursRequestFactory.class);
 		rf.initialize(this.getEventBus());
@@ -103,6 +106,7 @@ public class CoursPresenter extends
 			}
 		});
 	}
+	*/
 
 	@ProxyEvent
 	@Override
