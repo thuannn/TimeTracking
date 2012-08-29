@@ -15,7 +15,7 @@
 						<g:Label text="Nom de type :"/>
 					</g:customCell>
 					<g:customCell>
-						<g:TextBox width="250px"/>
+						<g:TextBox width="250px" ui:field="txtHourName"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -23,7 +23,7 @@
 						<g:Label text="Actif :"/>
 					</g:customCell>
 					<g:customCell>
-						<g:CheckBox/>
+						<g:CheckBox ui:field="txtHourActive"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -32,8 +32,8 @@
 					</g:customCell>
 					<g:customCell>
 						<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_RIGHT">
-							<g:Button>Annuler</g:Button>
-							<g:Button>Ajouter</g:Button>
+							<g:Button ui:field="cmdCancel">Annuler</g:Button>
+							<g:Button ui:field="cmdAdd">Ajouter</g:Button>
 						</g:HorizontalPanel>
 					</g:customCell>
 				</g:row>

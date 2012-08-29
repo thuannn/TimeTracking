@@ -4,6 +4,9 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyEvent;
+import com.lemania.timetracking.client.event.HourAddedEvent;
+import com.lemania.timetracking.client.event.HourAddedEvent.HourAddedHandler;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.inject.Inject;
@@ -11,10 +14,12 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 
-public class TypesPresenter extends
-		Presenter<TypesPresenter.MyView, TypesPresenter.MyProxy> {
+public class TypesPresenter 
+		extends Presenter<TypesPresenter.MyView, TypesPresenter.MyProxy> 
+		implements HourAddedHandler {
 
 	public interface MyView extends View {
+		void initializeTable();
 	}
 
 	@ProxyCodeSplit
@@ -36,5 +41,11 @@ public class TypesPresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
+	}
+
+	@ProxyEvent
+	@Override
+	public void onHourAdded(HourAddedEvent event) {
+		// 
 	}
 }

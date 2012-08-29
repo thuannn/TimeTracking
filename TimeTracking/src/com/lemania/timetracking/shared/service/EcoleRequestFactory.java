@@ -6,8 +6,6 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.Service;
-import com.googlecode.objectify.Key;
-import com.lemania.timetracking.server.Ecole;
 import com.lemania.timetracking.server.service.DaoServiceLocator;
 import com.lemania.timetracking.server.service.EcoleDao;
 import com.lemania.timetracking.shared.EcoleProxy;
