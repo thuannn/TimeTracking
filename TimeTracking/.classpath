@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/GWT (1)"/>
 	<classpathentry exported="true" kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/gin-1.5-post-gwt-2.2.jar"/>
@@ -10,15 +9,16 @@
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/guice-assistedinject-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/guice-servlet-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/javax.inject.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/gwtp-all-0.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/objectify-3.1/objectify-3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/requestfactory-server.jar" sourcepath="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/requestfactory-server+src.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Thuan/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/requestfactory-apt.jar"/>
 	<classpathentry kind="src" path=".apt_generated">
 		<attributes>
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/SkyDrive/Dev_Resources/Lib/gwtp-all-0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/SkyDrive/Dev_Resources/Lib/objectify-3.1/objectify-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/requestfactory-apt.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/requestfactory-server.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
