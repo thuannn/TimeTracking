@@ -15,10 +15,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/SkyDrive/Dev_Resources/Lib/gwtp-all-0.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/SkyDrive/Dev_Resources/Lib/objectify-3.1/objectify-3.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/requestfactory-apt.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/requestfactory-server.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/SkyDrive/Dev_Resources/Lib/gwt-2.5.0.rc1/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="C:/01.DevLibs/gwtp-all-0.7.jar"/>
+	<classpathentry kind="lib" path="C:/01.DevLibs/objectify-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/01.DevLibs/requestfactory-apt.jar"/>
+	<classpathentry kind="lib" path="C:/01.DevLibs/requestfactory-client.jar"/>
+	<classpathentry kind="lib" path="C:/01.DevLibs/requestfactory-server.jar"/>
+	<classpathentry kind="lib" path="C:/01.DevLibs/validation-api-1.0.0.GA.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
