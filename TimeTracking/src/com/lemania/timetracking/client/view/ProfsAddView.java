@@ -1,15 +1,20 @@
 package com.lemania.timetracking.client.view;
 
-import com.gwtplatform.mvp.client.ViewImpl;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.ProfsAddPresenter;
-import com.lemania.timetracking.client.presenter.ProfsAddPresenter.MyView;
+import com.lemania.timetracking.client.uihandler.ProfessorAddUiHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.CheckBox;
 
-public class ProfsAddView extends ViewImpl implements ProfsAddPresenter.MyView {
+public class ProfsAddView extends ViewWithUiHandlers<ProfessorAddUiHandler> implements ProfsAddPresenter.MyView {
 
 	private final Widget widget;
 
@@ -26,4 +31,26 @@ public class ProfsAddView extends ViewImpl implements ProfsAddPresenter.MyView {
 		return widget;
 	}
 	@UiField(provided=true) DataGrid<Object> dataGrid = new DataGrid<Object>();
+	@UiField Button cmdCancel;
+	@UiField Button cmdAdd;
+	@UiField TextBox txtProfName;
+	@UiField CheckBox chkProfStatus;
+	
+	@UiHandler("cmdCancel")
+	public void onCmdCancelClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().professorAddCancelled();
+	}
+	
+	@UiHandler("cmdAdd")
+	public void onCmdAddClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().professorAdd(txtProfName.getText().trim(), chkProfStatus.getValue());
+	}
+
+	@Override
+	public void disableUiAfterAdd() {
+		
+		cmdAdd.setEnabled(false);
+	}
 }

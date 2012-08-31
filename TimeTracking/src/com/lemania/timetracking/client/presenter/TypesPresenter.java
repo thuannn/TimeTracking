@@ -22,11 +22,8 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.HourListUiHandler;
-import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.HourProxy;
-import com.lemania.timetracking.shared.service.EcoleRequestFactory;
 import com.lemania.timetracking.shared.service.HourRequestFactory;
-import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 import com.lemania.timetracking.shared.service.HourRequestFactory.HourRequestContext;
 
 public class TypesPresenter 
