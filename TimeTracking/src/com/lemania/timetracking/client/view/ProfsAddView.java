@@ -30,7 +30,6 @@ public class ProfsAddView extends ViewWithUiHandlers<ProfessorAddUiHandler> impl
 	public Widget asWidget() {
 		return widget;
 	}
-	@UiField(provided=true) DataGrid<Object> dataGrid = new DataGrid<Object>();
 	@UiField Button cmdCancel;
 	@UiField Button cmdAdd;
 	@UiField TextBox txtProfName;

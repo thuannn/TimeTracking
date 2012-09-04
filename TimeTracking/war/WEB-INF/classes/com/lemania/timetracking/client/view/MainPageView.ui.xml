@@ -13,6 +13,7 @@
 					<g:Image url="images/logo.jpg" width=""/>
 					<g:Label text="Vous êtes connectés, Thuan !   " width="" horizontalAlignment="ALIGN_RIGHT"/>
 					<g:Hyperlink text="Déconnexion" targetHistoryToken="newHistoryToken" width=""/>
+					<g:Image url="images/appengine-silver-120x30.gif"/>
 				</g:HorizontalPanel>
 			</g:Dock>
 			<g:Dock direction="WEST" width="10%" height="100%">

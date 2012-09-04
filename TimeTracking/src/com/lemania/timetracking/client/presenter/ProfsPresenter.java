@@ -18,6 +18,7 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.ProfessorListUiHandler;
+import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory.ProfessorRequestContext;
@@ -30,6 +31,7 @@ public class ProfsPresenter
 		void initializeTable();
 		void setData(List<ProfessorProxy> profs);
 		void refreshTable(ProfessorProxy prof);
+		void setEcoleList(List<EcoleProxy> ecoles);
 	}
 
 	@ProxyCodeSplit
@@ -38,8 +40,7 @@ public class ProfsPresenter
 	}
 
 	@Inject
-	public ProfsPresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy) {
+	public ProfsPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
 		super(eventBus, view, proxy);
 		
 		// Thuan
@@ -61,6 +62,7 @@ public class ProfsPresenter
 	}
 	
 	private void getProfessorsList() {
+		
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
 		rf.initialize(this.getEventBus());
 		ProfessorRequestContext rc = rf.professorRequest();
@@ -92,6 +94,23 @@ public class ProfsPresenter
 			@Override
 			public void onSuccess(ProfessorProxy response) {
 				getView().refreshTable(response);
+			}
+		});	
+	}
+
+	@Override
+	public void professorSelected(ProfessorProxy prof) {
+		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
+		rf.initialize(this.getEventBus());
+		ProfessorRequestContext rc = rf.professorRequest();
+		rc.listEcoles(prof).fire(new Receiver<List<EcoleProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<EcoleProxy> response) {
+				//getView().refreshTable(response);
 			}
 		});	
 	}

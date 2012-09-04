@@ -12,11 +12,17 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.ProfsPresenter;
 import com.lemania.timetracking.client.uihandler.ProfessorListUiHandler;
+import com.lemania.timetracking.shared.CoursProxy;
+import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.user.client.ui.Label;
 
 public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implements ProfsPresenter.MyView {
 
@@ -37,6 +43,10 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	}
 	
 	@UiField(provided=true) DataGrid<ProfessorProxy> tblProfessors = new DataGrid<ProfessorProxy>();
+	@UiField(provided=true) DataGrid<CoursProxy> tblCourses = new DataGrid<CoursProxy>();
+	@UiField ListBox lstEcoles;
+	@UiField Label lblProfName;
+	@UiField Label lblProfNameAssign;
 
 	@Override
 	public void initializeTable() {
@@ -68,12 +78,35 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    		}	    		
 	    	}
 	    });
+	    
+	    // Courses table
+	    TextColumn<CoursProxy> colCourseName = new TextColumn<CoursProxy>() {
+	      @Override
+	      public String getValue(CoursProxy object) {
+	        return object.getCoursNom();
+	      }
+	    };
+	    tblCourses.addColumn(colCourseName, "Nom du cours");
+	    
+	    // Add a selection model to handle user selection.
+	    final SingleSelectionModel<ProfessorProxy> selectionModel = new SingleSelectionModel<ProfessorProxy>();
+	    tblProfessors.setSelectionModel(selectionModel);
+	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+	      public void onSelectionChange(SelectionChangeEvent event) {
+	        ProfessorProxy selectedProf = selectionModel.getSelectedObject();
+	        if (selectedProf != null) {
+	        	lblProfName.setText(selectedProf.getProfName());
+	        	lblProfNameAssign.setText(selectedProf.getProfName());
+	        	getUiHandlers().professorSelected(selectedProf);
+	        }
+	      }
+	    });
+	    
 	}
 
 	@Override
 	public void setData(List<ProfessorProxy> profs) {
-		
-		// Put them together
+		tblProfessors.setRowCount(profs.size(), true);
 		tblProfessors.setRowData(0, profs);
 	}
 
@@ -87,5 +120,12 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 		
 		// Notify user
 		Window.alert("Statut du professeur a été mis à jour.");
+	}
+
+	@Override
+	public void setEcoleList(List<EcoleProxy> ecoles) {
+		lstEcoles.addItem("-","");
+		for (int i=0; i<ecoles.size(); i++)
+			lstEcoles.addItem(ecoles.get(i).getSchoolName(), ecoles.get(i).getId().toString());		
 	}
 }

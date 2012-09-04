@@ -10,6 +10,7 @@ public interface ProfessorProxy extends EntityProxy {
 
 	public String getProfName();
 	public void setProfName(String profName);
+	
 	public Boolean getProfActive();
 	public void setProfActive(Boolean profActive);
 }

@@ -6,10 +6,60 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default' xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
 
-	<g:HTMLPanel>
+	<g:HTMLPanel width="100%">
 		<g:VerticalPanel width="100%">
 			<g:Label text="Liste de professeurs" styleName="pageTitle"/>
-			<p1:DataGrid width="800px" height="600px" ui:field="tblProfessors"/>
+			<g:HorizontalPanel width="900px">
+				<g:VerticalPanel width="400px">
+					<p1:DataGrid width="400px" height="600px" ui:field="tblProfessors"/>
+				</g:VerticalPanel>
+				<g:VerticalPanel width="400px">
+					<g:Grid width="100%" styleName="sideBar">
+						<g:row>
+							<g:customCell>
+								<g:Label text="Assigner un cours pour : " width=""/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label ui:field="lblProfNameAssign"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Ecole : " width=""/>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Cours : " width=""/>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label/>
+							</g:customCell>
+							<g:customCell>
+								<g:Button>Ajouter</g:Button>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:FlowPanel height="20px"/>
+					<g:HorizontalPanel width="100%" height="20px">
+						<g:Label text="Liste des courses pris en charge : "/>
+						<g:Label ui:field="lblProfName"/>
+					</g:HorizontalPanel>
+					<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_RIGHT" height="20px">
+						<g:Label text="Liste d&apos;écoles : "/>
+						<g:ListBox ui:field="lstEcoles"/>
+					</g:HorizontalPanel>
+					<p1:DataGrid width="400px" height="200px" ui:field="tblCourses"/>
+				</g:VerticalPanel>
+			</g:HorizontalPanel>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

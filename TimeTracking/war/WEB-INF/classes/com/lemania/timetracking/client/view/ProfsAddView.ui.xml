@@ -8,15 +8,15 @@
 
 	<g:HTMLPanel width="100%">
 		<g:VerticalPanel width="100%">
-			<g:Label text="Ajouter un professeur" styleName="pageTitle"/>
-			<g:HorizontalPanel width="100%">
-				<g:Grid>
+			<g:Label text="Ajouter un professeur" styleName="pageTitle" width=""/>
+			<g:HorizontalPanel width="800px">
+				<g:Grid width="320px">
 					<g:row>
 						<g:customCell>
 							<g:Label text="Nom : "/>
 						</g:customCell>
 						<g:customCell>
-							<g:TextBox width="250px" ui:field="txtProfName"/>
+							<g:TextBox width="270px" ui:field="txtProfName"/>
 						</g:customCell>
 					</g:row>
 					<g:row>
@@ -39,10 +39,6 @@
 						</g:customCell>
 					</g:row>
 				</g:Grid>
-				<g:VerticalPanel>
-					<g:Label text="Les cours pris en charge :"/>
-					<p1:DataGrid width="250px" height="200px" ui:field="dataGrid"/>
-				</g:VerticalPanel>
 			</g:HorizontalPanel>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
