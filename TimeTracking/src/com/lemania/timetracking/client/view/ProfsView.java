@@ -6,7 +6,10 @@ import java.util.List;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -23,11 +26,13 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Button;
 
 public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implements ProfsPresenter.MyView {
 
 	private final Widget widget;
 	private int selectedProf;
+	private ProfessorProxy selectedProfessor;
 
 	public interface Binder extends UiBinder<Widget, ProfsView> {
 	}
@@ -47,6 +52,21 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	@UiField ListBox lstEcoles;
 	@UiField Label lblProfName;
 	@UiField Label lblProfNameAssign;
+	@UiField Button cmdAddCourse;
+	@UiField ListBox lstAddEcole;
+	@UiField ListBox lstAddCourse;
+	
+	@UiHandler("cmdAddCourse")
+	public void onCmdAddCourseClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().addCourse(lstAddCourse.getValue(lstAddCourse.getSelectedIndex()), selectedProfessor);
+	}
+	
+	@UiHandler("lstAddEcole")
+	public void onLstAddEcoleChanged(ChangeEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().addSchoolSelected(lstAddEcole.getValue(lstAddEcole.getSelectedIndex()));
+	}
 
 	@Override
 	public void initializeTable() {
@@ -74,7 +94,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    	public void update(int index, ProfessorProxy prof, Boolean value){
 	    		if (getUiHandlers() != null) {	    			
 	    			selectedProf = index;
-	    			getUiHandlers().updateEcoleStatus(prof, value);
+	    			getUiHandlers().updateProfessorStatus(prof, value);
 	    		}	    		
 	    	}
 	    });
@@ -93,11 +113,11 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    tblProfessors.setSelectionModel(selectionModel);
 	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 	      public void onSelectionChange(SelectionChangeEvent event) {
-	        ProfessorProxy selectedProf = selectionModel.getSelectedObject();
-	        if (selectedProf != null) {
-	        	lblProfName.setText(selectedProf.getProfName());
-	        	lblProfNameAssign.setText(selectedProf.getProfName());
-	        	getUiHandlers().professorSelected(selectedProf);
+	        selectedProfessor = selectionModel.getSelectedObject();
+	        if (selectedProfessor != null) {
+	        	lblProfName.setText(selectedProfessor.getProfName());
+	        	lblProfNameAssign.setText(selectedProfessor.getProfName());
+	        	getUiHandlers().professorSelected(selectedProfessor);
 	        }
 	      }
 	    });
@@ -127,5 +147,32 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 		lstEcoles.addItem("-","");
 		for (int i=0; i<ecoles.size(); i++)
 			lstEcoles.addItem(ecoles.get(i).getSchoolName(), ecoles.get(i).getId().toString());		
+	}
+
+	@Override
+	public void setEcoleAddList(List<EcoleProxy> ecoles) {
+		lstAddEcole.addItem("-","");
+		for (int i=0; i<ecoles.size(); i++)
+			lstAddEcole.addItem(ecoles.get(i).getSchoolName(), ecoles.get(i).getId().toString());		
+	}
+
+	@Override
+	public void setCourseAddList(List<CoursProxy> cours) {
+		lstAddCourse.clear();
+		lstAddCourse.addItem("-","");
+		for (int i=0; i<cours.size(); i++)
+			lstAddCourse.addItem(cours.get(i).getCoursNom(), cours.get(i).getId().toString());				
+	}
+
+	@Override
+	public void addCourseToList(CoursProxy cours) {
+		List<CoursProxy> newList = new ArrayList<CoursProxy>();
+		newList.add(cours);
+		tblCourses.setRowData(tblCourses.getRowCount(), newList);		
+	}
+
+	@Override
+	public void addCoursesList(List<CoursProxy> courses) {
+		tblCourses.setRowData(courses);		
 	}
 }

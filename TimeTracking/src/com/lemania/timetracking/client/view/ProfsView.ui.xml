@@ -28,7 +28,7 @@
 								<g:Label text="Ecole : " width=""/>
 							</g:customCell>
 							<g:customCell>
-								<g:ListBox/>
+								<g:ListBox ui:field="lstAddEcole"/>
 							</g:customCell>
 						</g:row>
 						<g:row>
@@ -36,7 +36,7 @@
 								<g:Label text="Cours : " width=""/>
 							</g:customCell>
 							<g:customCell>
-								<g:ListBox/>
+								<g:ListBox ui:field="lstAddCourse"/>
 							</g:customCell>
 						</g:row>
 						<g:row>
@@ -44,7 +44,7 @@
 								<g:Label/>
 							</g:customCell>
 							<g:customCell>
-								<g:Button>Ajouter</g:Button>
+								<g:Button ui:field="cmdAddCourse">Ajouter</g:Button>
 							</g:customCell>
 						</g:row>
 					</g:Grid>

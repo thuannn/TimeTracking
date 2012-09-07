@@ -9,6 +9,7 @@ import com.google.web.bindery.requestfactory.shared.Service;
 import com.lemania.timetracking.server.service.CoursDao;
 import com.lemania.timetracking.server.service.DaoServiceLocator;
 import com.lemania.timetracking.shared.CoursProxy;
+import com.lemania.timetracking.shared.ProfessorProxy;
 
 public interface CoursRequestFactory extends RequestFactory {
 	
@@ -22,6 +23,8 @@ public interface CoursRequestFactory extends RequestFactory {
 		
 		Request<CoursProxy> saveAndReturn(CoursProxy newCours);
 		Request<Void> removeCours(CoursProxy cours);
+		
+		Request<List<CoursProxy>> listCours(ProfessorProxy prof);
 	}
 	
 	CoursRequestContext coursRequest();

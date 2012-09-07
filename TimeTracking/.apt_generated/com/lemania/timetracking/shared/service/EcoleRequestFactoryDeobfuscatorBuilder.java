@@ -27,6 +27,13 @@ withOperation(new OperationKey("Fs$dWINWMromRUPDXKZdyrOQnOs="),
   .withMethodName("removeEcole")
   .withRequestContext("com.lemania.timetracking.shared.service.EcoleRequestFactory$EcoleRequestContext")
   .build());
+withOperation(new OperationKey("q9tJw8kUfOpa_O6NMFAN2GJze$o="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()Ljava/util/List;")
+  .withMethodName("listAllActive")
+  .withRequestContext("com.lemania.timetracking.shared.service.EcoleRequestFactory$EcoleRequestContext")
+  .build());
 withOperation(new OperationKey("9EsiXw3x9Vb9cvKxBmpxVD60090="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/EcoleProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")

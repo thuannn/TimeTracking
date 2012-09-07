@@ -12,7 +12,7 @@ import com.lemania.timetracking.server.Professor;
 
 public class ProfessorDao extends DAOBase {
 	static {
-        ObjectifyService.register(Professor.class);
+        ObjectifyService.register(Professor.class);        
     }
 	
 	public List<Professor> listAll(){
@@ -43,16 +43,29 @@ public class ProfessorDao extends DAOBase {
 	
 	public List<Ecole> listEcoles(Professor prof) {
 		List<Ecole> lstEcoles = new ArrayList<Ecole>();
-		Key<Cours>[] cours = prof.getCourses();
+		List<Key<Cours>> cours = prof.getCourses();
+		Key<Ecole> key;
 		if (cours != null) {
-			Query<Ecole> q;
-			for (int i=0; i<cours.length; i++) {
-				q = this.ofy().query(Ecole.class).filter("ecole", cours[i]);
-				for (Ecole ecole : q){
-					lstEcoles.add(ecole);
-				}
+			for (int i=0; i<cours.size(); i++) {
+				key = this.ofy().get(cours.get(i)).getEcole();
+				lstEcoles.add(this.ofy().get(key));				
 			}
 		}
 		return lstEcoles;
+	}
+	
+	public Cours addCourse(String coursId, Professor prof){		
+		List<Key<Cours>> results = new ArrayList<Key<Cours>>();		
+		if (prof.getCourses() != null){
+			results = prof.getCourses();			
+		}
+		
+		Key<Cours> keyCours = new Key<Cours>(Cours.class, Long.parseLong(coursId)); 
+		results.add( keyCours );
+		
+		prof.setCourses(results);		
+		this.ofy().put(prof);
+		
+		return this.ofy().get(keyCours);
 	}
 }

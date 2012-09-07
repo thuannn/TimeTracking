@@ -18,9 +18,14 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.ProfessorListUiHandler;
+import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
+import com.lemania.timetracking.shared.service.CoursRequestFactory;
+import com.lemania.timetracking.shared.service.EcoleRequestFactory;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
+import com.lemania.timetracking.shared.service.CoursRequestFactory.CoursRequestContext;
+import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory.ProfessorRequestContext;
 
 public class ProfsPresenter 
@@ -29,9 +34,18 @@ public class ProfsPresenter
 
 	public interface MyView extends View, HasUiHandlers<ProfessorListUiHandler> {
 		void initializeTable();
+		
 		void setData(List<ProfessorProxy> profs);
+		
 		void refreshTable(ProfessorProxy prof);
+		
 		void setEcoleList(List<EcoleProxy> ecoles);
+		void addCoursesList(List<CoursProxy> courses);
+		
+		void addCourseToList(CoursProxy cours);
+		
+		void setEcoleAddList(List<EcoleProxy> ecoles);
+		void setCourseAddList(List<CoursProxy> cours);
 	}
 
 	@ProxyCodeSplit
@@ -59,6 +73,7 @@ public class ProfsPresenter
 		// Thuan
 		getView().initializeTable();
 		getProfessorsList();
+		getEcoleList();
 	}
 	
 	private void getProfessorsList() {
@@ -77,9 +92,27 @@ public class ProfsPresenter
 			}
 		});
 	}
+	
+	/*
+	 * Populate list of ecoles in drop-down list */
+	private void getEcoleList(){
+		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
+		rf.initialize(this.getEventBus());
+		EcoleRequestContext rc = rf.ecoleRequest();
+		rc.listAllActive().fire(new Receiver<List<EcoleProxy>>(){
+			@Override
+			public void onSuccess(List<EcoleProxy> response){
+				getView().setEcoleAddList(response);
+			}
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+		});
+	}
 
 	@Override
-	public void updateEcoleStatus(ProfessorProxy prof, Boolean status) {
+	public void updateProfessorStatus(ProfessorProxy prof, Boolean status) {
 		
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
 		rf.initialize(this.getEventBus());
@@ -100,18 +133,61 @@ public class ProfsPresenter
 
 	@Override
 	public void professorSelected(ProfessorProxy prof) {
-		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
+		CoursRequestFactory rf = GWT.create(CoursRequestFactory.class);
 		rf.initialize(this.getEventBus());
-		ProfessorRequestContext rc = rf.professorRequest();
-		rc.listEcoles(prof).fire(new Receiver<List<EcoleProxy>>(){
+		CoursRequestContext rc = rf.coursRequest();
+		rc.listCours(prof).fire(new Receiver<List<CoursProxy>>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
 			}
 			@Override
-			public void onSuccess(List<EcoleProxy> response) {
-				//getView().refreshTable(response);
+			public void onSuccess(List<CoursProxy> response) {
+				getView().addCoursesList(response);
+			}
+		});
+	}
+
+	@Override
+	public void addCourse(String courseId, ProfessorProxy prof) {
+		if (courseId.isEmpty())
+			Window.alert("Veuillez choisir un cours à rajouter.");
+		
+		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
+		rf.initialize(this.getEventBus());
+		ProfessorRequestContext rc = rf.professorRequest();
+		rc.addCourse(courseId, prof).fire(new Receiver<CoursProxy>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(CoursProxy response) {
+				getView().addCourseToList(response);
 			}
 		});	
+	}
+
+	/*
+	 * When school name is selected, poupulate the list of courses to add */
+	@Override
+	public void addSchoolSelected(String ecoleId) {
+		if (ecoleId.equals("")){
+			Window.alert("Veuillez choisir l'école à rajouter.");
+		}
+		
+		CoursRequestFactory rf = GWT.create(CoursRequestFactory.class);
+		rf.initialize(this.getEventBus());
+		CoursRequestContext rc = rf.coursRequest();
+		rc.listAll(ecoleId).fire(new Receiver<List<CoursProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<CoursProxy> response) {
+				getView().setCourseAddList(response);
+			}
+		});
 	}
 }

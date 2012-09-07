@@ -23,6 +23,15 @@ public class EcoleDao extends DAOBase{
 		return returnList;
 	}
 	
+	public List<Ecole> listAllActive(){
+		Query<Ecole> q = this.ofy().query(Ecole.class).filter("schoolActive", true);
+		List<Ecole> returnList = new ArrayList<Ecole>();
+		for (Ecole ecole : q){
+			returnList.add(ecole);
+		}
+		return returnList;
+	}
+	
 	public void save(Ecole ecole){
 		this.ofy().put(ecole);
 	}

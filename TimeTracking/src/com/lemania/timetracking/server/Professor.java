@@ -1,5 +1,7 @@
 package com.lemania.timetracking.server;
 
+import java.util.List;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 
@@ -8,7 +10,7 @@ public class Professor extends DatastoreObject {
 
 	private String profName;
 	private Boolean profActive;
-	private Key<Cours>[] courses;
+	private List<Key<Cours>> courses;
 	
 	public String getProfName() {
 		return profName;
@@ -26,12 +28,11 @@ public class Professor extends DatastoreObject {
 		this.profActive = profActive;
 	}
 
-	public Key<Cours>[] getCourses() {
+	public List<Key<Cours>> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(Key<Cours>[] courses) {
+	public void setCourses(List<Key<Cours>> courses) {
 		this.courses = courses;
-	}
-	
+	}	
 }
