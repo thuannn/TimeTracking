@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.ProfsPresenter;
 import com.lemania.timetracking.client.uihandler.ProfessorListUiHandler;
+import com.lemania.timetracking.shared.AssignmentProxy;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
@@ -48,8 +49,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	}
 	
 	@UiField(provided=true) DataGrid<ProfessorProxy> tblProfessors = new DataGrid<ProfessorProxy>();
-	@UiField(provided=true) DataGrid<CoursProxy> tblCourses = new DataGrid<CoursProxy>();
-	@UiField ListBox lstEcoles;
+	@UiField(provided=true) DataGrid<AssignmentProxy> tblAssignment = new DataGrid<AssignmentProxy>();
 	@UiField Label lblProfName;
 	@UiField Label lblProfNameAssign;
 	@UiField Button cmdAddCourse;
@@ -99,15 +99,6 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    	}
 	    });
 	    
-	    // Courses table
-	    TextColumn<CoursProxy> colCourseName = new TextColumn<CoursProxy>() {
-	      @Override
-	      public String getValue(CoursProxy object) {
-	        return object.getCoursNom();
-	      }
-	    };
-	    tblCourses.addColumn(colCourseName, "Nom du cours");
-	    
 	    // Add a selection model to handle user selection.
 	    final SingleSelectionModel<ProfessorProxy> selectionModel = new SingleSelectionModel<ProfessorProxy>();
 	    tblProfessors.setSelectionModel(selectionModel);
@@ -122,6 +113,22 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	      }
 	    });
 	    
+	    // Assignment table	    
+	    TextColumn<AssignmentProxy> colSchoolName = new TextColumn<AssignmentProxy>() {
+		      @Override
+		      public String getValue(AssignmentProxy object) {
+		        return object.getSchoolName();
+		      }
+		    };
+		tblAssignment.addColumn(colSchoolName, "Ecole");
+		    
+	    TextColumn<AssignmentProxy> colCourseName = new TextColumn<AssignmentProxy>() {
+	      @Override
+	      public String getValue(AssignmentProxy object) {
+	        return object.getCourseName();
+	      }
+	    };
+	    tblAssignment.addColumn(colCourseName, "Cours");	    
 	}
 
 	@Override
@@ -143,13 +150,6 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	}
 
 	@Override
-	public void setEcoleList(List<EcoleProxy> ecoles) {
-		lstEcoles.addItem("-","");
-		for (int i=0; i<ecoles.size(); i++)
-			lstEcoles.addItem(ecoles.get(i).getSchoolName(), ecoles.get(i).getId().toString());		
-	}
-
-	@Override
 	public void setEcoleAddList(List<EcoleProxy> ecoles) {
 		lstAddEcole.addItem("-","");
 		for (int i=0; i<ecoles.size(); i++)
@@ -165,14 +165,15 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	}
 
 	@Override
-	public void addCourseToList(CoursProxy cours) {
-		List<CoursProxy> newList = new ArrayList<CoursProxy>();
-		newList.add(cours);
-		tblCourses.setRowData(tblCourses.getRowCount(), newList);		
+	public void addToAssignmentList(AssignmentProxy a) {				
+		List<AssignmentProxy> list = new ArrayList<AssignmentProxy>();
+		list.add(a);		
+		tblAssignment.setRowData(tblAssignment.getRowCount()+1, list);		
 	}
 
 	@Override
-	public void addCoursesList(List<CoursProxy> courses) {
-		tblCourses.setRowData(courses);		
+	public void setAssignmentList(List<AssignmentProxy> assignments) {		
+		tblAssignment.setRowData(assignments);
+		tblAssignment.setRowCount(assignments.size());
 	}
 }

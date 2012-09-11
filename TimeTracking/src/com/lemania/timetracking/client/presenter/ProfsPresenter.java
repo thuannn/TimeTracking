@@ -18,9 +18,12 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.ProfessorListUiHandler;
+import com.lemania.timetracking.shared.AssignmentProxy;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
+import com.lemania.timetracking.shared.service.AssignmentRequestFactory;
+import com.lemania.timetracking.shared.service.AssignmentRequestFactory.AssignmentRequestContext;
 import com.lemania.timetracking.shared.service.CoursRequestFactory;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
@@ -39,10 +42,8 @@ public class ProfsPresenter
 		
 		void refreshTable(ProfessorProxy prof);
 		
-		void setEcoleList(List<EcoleProxy> ecoles);
-		void addCoursesList(List<CoursProxy> courses);
-		
-		void addCourseToList(CoursProxy cours);
+		void setAssignmentList(List<AssignmentProxy> courses);		
+		void addToAssignmentList(AssignmentProxy a);
 		
 		void setEcoleAddList(List<EcoleProxy> ecoles);
 		void setCourseAddList(List<CoursProxy> cours);
@@ -109,6 +110,21 @@ public class ProfsPresenter
 				Window.alert(error.getMessage());
 			}
 		});
+		
+		// Just to register the Cours class in Objectify
+		CoursRequestFactory crf = GWT.create(CoursRequestFactory.class);
+		crf.initialize(this.getEventBus());
+		CoursRequestContext crc = crf.coursRequest();
+		crc.listAll("").fire(new Receiver<List<CoursProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<CoursProxy> response) {
+				getView().setCourseAddList(response);
+			}
+		});
 	}
 
 	@Override
@@ -133,17 +149,18 @@ public class ProfsPresenter
 
 	@Override
 	public void professorSelected(ProfessorProxy prof) {
-		CoursRequestFactory rf = GWT.create(CoursRequestFactory.class);
+		
+		AssignmentRequestFactory rf = GWT.create(AssignmentRequestFactory.class);
 		rf.initialize(this.getEventBus());
-		CoursRequestContext rc = rf.coursRequest();
-		rc.listCours(prof).fire(new Receiver<List<CoursProxy>>(){
+		AssignmentRequestContext rc = rf.assignmentRequest();
+		rc.listAll(prof.getId().toString()).fire(new Receiver<List<AssignmentProxy>>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
 			}
 			@Override
-			public void onSuccess(List<CoursProxy> response) {
-				getView().addCoursesList(response);
+			public void onSuccess(List<AssignmentProxy> response) {
+				getView().setAssignmentList(response);
 			}
 		});
 	}
@@ -153,19 +170,19 @@ public class ProfsPresenter
 		if (courseId.isEmpty())
 			Window.alert("Veuillez choisir un cours à rajouter.");
 		
-		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
+		AssignmentRequestFactory rf = GWT.create(AssignmentRequestFactory.class);
 		rf.initialize(this.getEventBus());
-		ProfessorRequestContext rc = rf.professorRequest();
-		rc.addCourse(courseId, prof).fire(new Receiver<CoursProxy>(){
+		AssignmentRequestContext rc = rf.assignmentRequest();
+		rc.saveAndReturn(courseId, prof.getId().toString()).fire(new Receiver<AssignmentProxy>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
 			}
 			@Override
-			public void onSuccess(CoursProxy response) {
-				getView().addCourseToList(response);
+			public void onSuccess(AssignmentProxy response) {				
+				getView().addToAssignmentList(response);
 			}
-		});	
+		});
 	}
 
 	/*

@@ -9,7 +9,7 @@
 	<g:HTMLPanel width="100%">
 		<g:VerticalPanel width="100%">
 			<g:Label text="Liste de professeurs" styleName="pageTitle"/>
-			<g:HorizontalPanel width="900px">
+			<g:HorizontalPanel width="850px">
 				<g:VerticalPanel width="400px">
 					<p1:DataGrid width="400px" height="600px" ui:field="tblProfessors"/>
 				</g:VerticalPanel>
@@ -53,11 +53,7 @@
 						<g:Label text="Liste des courses pris en charge : "/>
 						<g:Label ui:field="lblProfName"/>
 					</g:HorizontalPanel>
-					<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_RIGHT" height="20px">
-						<g:Label text="Liste d&apos;écoles : "/>
-						<g:ListBox ui:field="lstEcoles"/>
-					</g:HorizontalPanel>
-					<p1:DataGrid width="400px" height="200px" ui:field="tblCourses"/>
+					<p1:DataGrid width="400px" height="400px" ui:field="tblAssignment"/>
 				</g:VerticalPanel>
 			</g:HorizontalPanel>
 		</g:VerticalPanel>

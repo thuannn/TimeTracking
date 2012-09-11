@@ -7,6 +7,7 @@ import com.lemania.timetracking.server.Professor;
 
 @ProxyFor(value=Professor.class, locator=ObjectifyLocator.class)
 public interface ProfessorProxy extends EntityProxy {
+	Long getId();
 
 	public String getProfName();
 	public void setProfName(String profName);
