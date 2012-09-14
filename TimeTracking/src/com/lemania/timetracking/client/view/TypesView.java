@@ -11,14 +11,14 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.TypesPresenter;
-import com.lemania.timetracking.client.uihandler.HourListUiHandler;
-import com.lemania.timetracking.shared.HourProxy;
+import com.lemania.timetracking.client.uihandler.TypeListUiHandler;
+import com.lemania.timetracking.shared.TypeProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
 
-public class TypesView extends ViewWithUiHandlers<HourListUiHandler> implements TypesPresenter.MyView {
+public class TypesView extends ViewWithUiHandlers<TypeListUiHandler> implements TypesPresenter.MyView {
 
 	private final Widget widget;
 	private int selectedHour;
@@ -36,53 +36,53 @@ public class TypesView extends ViewWithUiHandlers<HourListUiHandler> implements 
 		return widget;
 	}
 	
-	@UiField(provided=true) DataGrid<HourProxy> tblHours = new DataGrid<HourProxy>();
+	@UiField(provided=true) DataGrid<TypeProxy> tblHours = new DataGrid<TypeProxy>();
 	
 	@Override
 	public void initializeTable() {
 		// Add a text column to show the name.
-	    TextColumn<HourProxy> colName = new TextColumn<HourProxy>() {
+	    TextColumn<TypeProxy> colName = new TextColumn<TypeProxy>() {
 	      @Override
-	      public String getValue(HourProxy object) {
-	        return object.getHourName();
+	      public String getValue(TypeProxy object) {
+	        return object.getTypeName();
 	      }
 	    };
 	    tblHours.addColumn(colName, "Nom");
 	    
 	    CheckboxCell cellActive = new CheckboxCell();
-	    Column<HourProxy, Boolean> colActive = new Column<HourProxy, Boolean>(cellActive) {
+	    Column<TypeProxy, Boolean> colActive = new Column<TypeProxy, Boolean>(cellActive) {
 	    	@Override
-	    	public Boolean getValue(HourProxy hour){
-	    		return hour.getHourActive();
+	    	public Boolean getValue(TypeProxy type){
+	    		return type.getTypeActive();
 	    	}	    	
 	    };
 	    tblHours.addColumn(colActive, "Actif");
 	    
-	    colActive.setFieldUpdater(new FieldUpdater<HourProxy, Boolean>(){
+	    colActive.setFieldUpdater(new FieldUpdater<TypeProxy, Boolean>(){
 	    	@Override
-	    	public void update(int index, HourProxy hour, Boolean value){
+	    	public void update(int index, TypeProxy type, Boolean value){
 	    		if (getUiHandlers() != null) {
 	    			selectedHour = index;
-	    			getUiHandlers().updateHourStatus(hour, value);
+	    			getUiHandlers().updateTypeStatus(type, value);
 	    		}	    		
 	    	}
 	    });
 	}
 
 	@Override
-	public void addHour(HourProxy hour) {
+	public void addHour(TypeProxy type) {
 		// TODO Auto-generated method stub
-		List<HourProxy> newHours = new ArrayList<HourProxy>();
-		newHours.add(hour);
+		List<TypeProxy> newHours = new ArrayList<TypeProxy>();
+		newHours.add(type);
 		tblHours.setRowData(tblHours.getRowCount()+1, newHours);
 	}
 
 	@Override
-	public void refreshTable(HourProxy updatedHour) {
+	public void refreshTable(TypeProxy updatedHour) {
 		// TODO Auto-generated method stub
-		List<HourProxy> hours = new ArrayList<HourProxy>();
-		hours.add(updatedHour);
-        tblHours.setRowData(selectedHour, hours);
+		List<TypeProxy> types = new ArrayList<TypeProxy>();
+		types.add(updatedHour);
+        tblHours.setRowData(selectedHour, types);
 		tblHours.redraw();
 		
 		// Notify user
@@ -90,7 +90,7 @@ public class TypesView extends ViewWithUiHandlers<HourListUiHandler> implements 
 	}
 
 	@Override
-	public void setData(List<HourProxy> hours) {
-		tblHours.setRowData(0, hours);
+	public void setData(List<TypeProxy> types) {
+		tblHours.setRowData(0, types);
 	}
 }

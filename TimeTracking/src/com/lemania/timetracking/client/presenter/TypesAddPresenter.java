@@ -5,7 +5,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
-import com.lemania.timetracking.client.event.HourAddedEvent;
+import com.lemania.timetracking.client.event.TypeAddedEvent;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
@@ -18,9 +18,9 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.HourAddUiHandler;
-import com.lemania.timetracking.shared.HourProxy;
-import com.lemania.timetracking.shared.service.HourRequestFactory;
-import com.lemania.timetracking.shared.service.HourRequestFactory.HourRequestContext;
+import com.lemania.timetracking.shared.TypeProxy;
+import com.lemania.timetracking.shared.service.TypeRequestFactory;
+import com.lemania.timetracking.shared.service.TypeRequestFactory.TypeRequestContext;
 
 public class TypesAddPresenter 
 		extends Presenter<TypesAddPresenter.MyView, TypesAddPresenter.MyProxy>
@@ -29,7 +29,7 @@ public class TypesAddPresenter
 	public interface MyView extends View, HasUiHandlers<HourAddUiHandler> {
 	}
 	
-	private HourProxy hp;
+	private TypeProxy hp;
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.typesadd)
@@ -62,12 +62,12 @@ public class TypesAddPresenter
 			return;
 		}
 		
-		HourRequestFactory rf = GWT.create(HourRequestFactory.class);
+		TypeRequestFactory rf = GWT.create(TypeRequestFactory.class);
 		rf.initialize(this.getEventBus());
-		HourRequestContext rc = rf.hourRequest();
-		hp = rc.create(HourProxy.class);
-		hp.setHourName(nom);
-		hp.setHourActive(active);
+		TypeRequestContext rc = rf.typeRequest();
+		hp = rc.create(TypeProxy.class);
+		hp.setTypeName(nom);
+		hp.setTypeActive(active);
 		rc.save(hp).fire(new Receiver<Void>(){
 			@Override
 			public void onSuccess(Void response){
@@ -81,7 +81,7 @@ public class TypesAddPresenter
 	}
 	
 	private void returnToHourListSuccess(){
-		getEventBus().fireEvent(new HourAddedEvent(hp));
+		getEventBus().fireEvent(new TypeAddedEvent(hp));
 	}
 
 	@Override

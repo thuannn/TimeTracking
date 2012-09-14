@@ -3,24 +3,24 @@ package com.lemania.timetracking.server;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
-public class Hour extends DatastoreObject{
+public class Type extends DatastoreObject{
 
 	private String hourName;
 	private Boolean hourActive;
 	
-	public Boolean getHourActive() {
+	public Boolean getTypeActive() {
 		return hourActive;
 	}
 	
-	public void setHourActive(Boolean hourActive) {
+	public void setTypeActive(Boolean hourActive) {
 		this.hourActive = hourActive;
 	}
 	
-	public String getHourName() {
+	public String getTypeName() {
 		return hourName;
 	}
 	
-	public void setHourName(String hourName) {
+	public void setTypeName(String hourName) {
 		this.hourName = hourName;
 	}
 }

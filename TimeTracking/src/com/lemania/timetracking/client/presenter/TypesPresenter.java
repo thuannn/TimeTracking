@@ -8,8 +8,8 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
-import com.lemania.timetracking.client.event.HourAddedEvent;
-import com.lemania.timetracking.client.event.HourAddedEvent.HourAddedHandler;
+import com.lemania.timetracking.client.event.TypeAddedEvent;
+import com.lemania.timetracking.client.event.TypeAddedEvent.TypeAddedHandler;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
@@ -21,20 +21,20 @@ import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
-import com.lemania.timetracking.client.uihandler.HourListUiHandler;
-import com.lemania.timetracking.shared.HourProxy;
-import com.lemania.timetracking.shared.service.HourRequestFactory;
-import com.lemania.timetracking.shared.service.HourRequestFactory.HourRequestContext;
+import com.lemania.timetracking.client.uihandler.TypeListUiHandler;
+import com.lemania.timetracking.shared.TypeProxy;
+import com.lemania.timetracking.shared.service.TypeRequestFactory;
+import com.lemania.timetracking.shared.service.TypeRequestFactory.TypeRequestContext;
 
 public class TypesPresenter 
 		extends Presenter<TypesPresenter.MyView, TypesPresenter.MyProxy> 
-		implements HourAddedHandler, HourListUiHandler {
+		implements TypeAddedHandler, TypeListUiHandler {
 
-	public interface MyView extends View, HasUiHandlers<HourListUiHandler> {
+	public interface MyView extends View, HasUiHandlers<TypeListUiHandler> {
 		void initializeTable();
-		void addHour(HourProxy hour);
-		void refreshTable(HourProxy updatedHour);
-		void setData(List<HourProxy> hours);
+		void addHour(TypeProxy hour);
+		void refreshTable(TypeProxy updatedHour);
+		void setData(List<TypeProxy> hours);
 	}
 
 	@ProxyCodeSplit
@@ -70,16 +70,16 @@ public class TypesPresenter
 	}
 	
 	private void getHourList() {
-		HourRequestFactory rf = GWT.create(HourRequestFactory.class);
+		TypeRequestFactory rf = GWT.create(TypeRequestFactory.class);
 		rf.initialize(this.getEventBus());
-		HourRequestContext rc = rf.hourRequest();
-		rc.listAll().fire(new Receiver<List<HourProxy>>(){
+		TypeRequestContext rc = rf.typeRequest();
+		rc.listAll().fire(new Receiver<List<TypeProxy>>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
 			}
 			@Override
-			public void onSuccess(List<HourProxy> response) {
+			public void onSuccess(List<TypeProxy> response) {
 				getView().setData(response);
 			}
 		});
@@ -87,25 +87,25 @@ public class TypesPresenter
 
 	@ProxyEvent
 	@Override
-	public void onHourAdded(HourAddedEvent event) {
+	public void onHourAdded(TypeAddedEvent event) {
 		getView().addHour(event.getHp());
 		History.newItem(NameTokens.types, true);
 	}
 
 	@Override
-	public void updateHourStatus(HourProxy hp, Boolean status) {
-		HourRequestFactory rf = GWT.create(HourRequestFactory.class);
+	public void updateTypeStatus(TypeProxy hp, Boolean status) {
+		TypeRequestFactory rf = GWT.create(TypeRequestFactory.class);
 		rf.initialize(this.getEventBus());
-		HourRequestContext rc = rf.hourRequest();
-		HourProxy hourForUpdate = rc.edit(hp);
-		hourForUpdate.setHourActive(status);
-		rc.saveAndReturn(hourForUpdate).fire(new Receiver<HourProxy>(){
+		TypeRequestContext rc = rf.typeRequest();
+		TypeProxy hourForUpdate = rc.edit(hp);
+		hourForUpdate.setTypeActive(status);
+		rc.saveAndReturn(hourForUpdate).fire(new Receiver<TypeProxy>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
 			}
 			@Override
-			public void onSuccess(HourProxy response) {
+			public void onSuccess(TypeProxy response) {
 				getView().refreshTable(response);
 			}
 		});
