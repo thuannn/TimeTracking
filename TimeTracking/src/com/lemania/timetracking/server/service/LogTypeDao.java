@@ -7,29 +7,29 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
-import com.lemania.timetracking.server.Type;
+import com.lemania.timetracking.server.LogType;
 
-public class TypeDao extends DAOBase {
+public class LogTypeDao extends DAOBase {
 	
 	static {
-        ObjectifyService.register(Type.class);
+        ObjectifyService.register(LogType.class);
     }
 	
-	public List<Type> listAll(){
-		Query<Type> q = this.ofy().query(Type.class);
-		List<Type> returnList = new ArrayList<Type>();
-		for (Type type : q){
+	public List<LogType> listAll(){
+		Query<LogType> q = this.ofy().query(LogType.class);
+		List<LogType> returnList = new ArrayList<LogType>();
+		for (LogType type : q){
 			returnList.add(type);
 		}
 		return returnList;
 	}
 	
-	public void save(Type type){
+	public void save(LogType type){
 		this.ofy().put(type);
 	}
 	
-	public Type saveAndReturn(Type type){
-		Key<Type> key = this.ofy().put(type);
+	public LogType saveAndReturn(LogType type){
+		Key<LogType> key = this.ofy().put(type);
 		try {
 			return this.ofy().get(key);
 		} catch (Exception e) {
@@ -37,7 +37,7 @@ public class TypeDao extends DAOBase {
 		}
 	}
 	
-	public void removeType(Type type){
+	public void removeLogType(LogType type){
 		this.ofy().delete(type);
 	}
 }

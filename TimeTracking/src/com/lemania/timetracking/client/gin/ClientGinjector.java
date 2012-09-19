@@ -8,14 +8,14 @@ import com.google.inject.Provider;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
 import com.lemania.timetracking.client.presenter.HomePresenter;
+import com.lemania.timetracking.client.presenter.LogTypesAddPresenter;
+import com.lemania.timetracking.client.presenter.LogTypesPresenter;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.presenter.EcolePresenter;
 import com.lemania.timetracking.client.presenter.EcoleAddPresenter;
 import com.lemania.timetracking.client.presenter.TimeInputPresenter;
 import com.lemania.timetracking.client.presenter.CoursPresenter;
 import com.lemania.timetracking.client.presenter.CoursAddPresenter;
-import com.lemania.timetracking.client.presenter.TypesPresenter;
-import com.lemania.timetracking.client.presenter.TypesAddPresenter;
 import com.lemania.timetracking.client.presenter.ProfsPresenter;
 import com.lemania.timetracking.client.presenter.ProfsAddPresenter;
 import com.lemania.timetracking.client.presenter.ContactPresenter;
@@ -41,9 +41,9 @@ public interface ClientGinjector extends Ginjector {
 
 	AsyncProvider<CoursAddPresenter> getCoursAddPresenter();
 
-	AsyncProvider<TypesPresenter> getTypesPresenter();
+	AsyncProvider<LogTypesPresenter> getTypesPresenter();
 
-	AsyncProvider<TypesAddPresenter> getTypesAddPresenter();
+	AsyncProvider<LogTypesAddPresenter> getTypesAddPresenter();
 
 	AsyncProvider<ProfsPresenter> getProfsPresenter();
 

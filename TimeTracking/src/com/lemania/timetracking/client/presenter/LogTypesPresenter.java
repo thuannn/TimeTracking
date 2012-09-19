@@ -8,8 +8,8 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
-import com.lemania.timetracking.client.event.TypeAddedEvent;
-import com.lemania.timetracking.client.event.TypeAddedEvent.TypeAddedHandler;
+import com.lemania.timetracking.client.event.LogTypeAddedEvent;
+import com.lemania.timetracking.client.event.LogTypeAddedEvent.LogTypeAddedHandler;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
@@ -21,29 +21,29 @@ import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
-import com.lemania.timetracking.client.uihandler.TypeListUiHandler;
-import com.lemania.timetracking.shared.TypeProxy;
-import com.lemania.timetracking.shared.service.TypeRequestFactory;
-import com.lemania.timetracking.shared.service.TypeRequestFactory.TypeRequestContext;
+import com.lemania.timetracking.client.uihandler.LogTypeListUiHandler;
+import com.lemania.timetracking.shared.LogTypeProxy;
+import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
+import com.lemania.timetracking.shared.service.LogTypeRequestFactory.LogTypeRequestContext;
 
-public class TypesPresenter 
-		extends Presenter<TypesPresenter.MyView, TypesPresenter.MyProxy> 
-		implements TypeAddedHandler, TypeListUiHandler {
+public class LogTypesPresenter 
+		extends Presenter<LogTypesPresenter.MyView, LogTypesPresenter.MyProxy> 
+		implements LogTypeAddedHandler, LogTypeListUiHandler {
 
-	public interface MyView extends View, HasUiHandlers<TypeListUiHandler> {
+	public interface MyView extends View, HasUiHandlers<LogTypeListUiHandler> {
 		void initializeTable();
-		void addHour(TypeProxy hour);
-		void refreshTable(TypeProxy updatedHour);
-		void setData(List<TypeProxy> hours);
+		void addHour(LogTypeProxy hour);
+		void refreshTable(LogTypeProxy updatedHour);
+		void setData(List<LogTypeProxy> hours);
 	}
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.types)
-	public interface MyProxy extends ProxyPlace<TypesPresenter> {
+	public interface MyProxy extends ProxyPlace<LogTypesPresenter> {
 	}
 
 	@Inject
-	public TypesPresenter(final EventBus eventBus, final MyView view,
+	public LogTypesPresenter(final EventBus eventBus, final MyView view,
 			final MyProxy proxy) {
 		super(eventBus, view, proxy);
 		
@@ -70,16 +70,16 @@ public class TypesPresenter
 	}
 	
 	private void getHourList() {
-		TypeRequestFactory rf = GWT.create(TypeRequestFactory.class);
+		LogTypeRequestFactory rf = GWT.create(LogTypeRequestFactory.class);
 		rf.initialize(this.getEventBus());
-		TypeRequestContext rc = rf.typeRequest();
-		rc.listAll().fire(new Receiver<List<TypeProxy>>(){
+		LogTypeRequestContext rc = rf.typeRequest();
+		rc.listAll().fire(new Receiver<List<LogTypeProxy>>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
 			}
 			@Override
-			public void onSuccess(List<TypeProxy> response) {
+			public void onSuccess(List<LogTypeProxy> response) {
 				getView().setData(response);
 			}
 		});
@@ -87,25 +87,25 @@ public class TypesPresenter
 
 	@ProxyEvent
 	@Override
-	public void onHourAdded(TypeAddedEvent event) {
+	public void onHourAdded(LogTypeAddedEvent event) {
 		getView().addHour(event.getHp());
 		History.newItem(NameTokens.types, true);
 	}
 
 	@Override
-	public void updateTypeStatus(TypeProxy hp, Boolean status) {
-		TypeRequestFactory rf = GWT.create(TypeRequestFactory.class);
+	public void updateLogTypeStatus(LogTypeProxy hp, Boolean status) {
+		LogTypeRequestFactory rf = GWT.create(LogTypeRequestFactory.class);
 		rf.initialize(this.getEventBus());
-		TypeRequestContext rc = rf.typeRequest();
-		TypeProxy hourForUpdate = rc.edit(hp);
-		hourForUpdate.setTypeActive(status);
-		rc.saveAndReturn(hourForUpdate).fire(new Receiver<TypeProxy>(){
+		LogTypeRequestContext rc = rf.typeRequest();
+		LogTypeProxy hourForUpdate = rc.edit(hp);
+		hourForUpdate.setLogTypeActive(status);
+		rc.saveAndReturn(hourForUpdate).fire(new Receiver<LogTypeProxy>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
 			}
 			@Override
-			public void onSuccess(TypeProxy response) {
+			public void onSuccess(LogTypeProxy response) {
 				getView().refreshTable(response);
 			}
 		});

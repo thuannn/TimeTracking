@@ -6,22 +6,22 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.lemania.timetracking.client.presenter.TypesAddPresenter;
+import com.lemania.timetracking.client.presenter.LogTypesAddPresenter;
 import com.lemania.timetracking.client.uihandler.HourAddUiHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Button;
 
-public class TypesAddView extends ViewWithUiHandlers<HourAddUiHandler> implements TypesAddPresenter.MyView {
+public class LogTypesAddView extends ViewWithUiHandlers<HourAddUiHandler> implements LogTypesAddPresenter.MyView {
 
 	private final Widget widget;
 
-	public interface Binder extends UiBinder<Widget, TypesAddView> {
+	public interface Binder extends UiBinder<Widget, LogTypesAddView> {
 	}
 
 	@Inject
-	public TypesAddView(final Binder binder) {
+	public LogTypesAddView(final Binder binder) {
 		widget = binder.createAndBindUi(this);
 	}
 

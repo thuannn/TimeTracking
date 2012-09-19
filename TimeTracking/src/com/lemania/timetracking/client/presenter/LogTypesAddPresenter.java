@@ -5,7 +5,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
-import com.lemania.timetracking.client.event.TypeAddedEvent;
+import com.lemania.timetracking.client.event.LogTypeAddedEvent;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
@@ -18,26 +18,26 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.HourAddUiHandler;
-import com.lemania.timetracking.shared.TypeProxy;
-import com.lemania.timetracking.shared.service.TypeRequestFactory;
-import com.lemania.timetracking.shared.service.TypeRequestFactory.TypeRequestContext;
+import com.lemania.timetracking.shared.LogTypeProxy;
+import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
+import com.lemania.timetracking.shared.service.LogTypeRequestFactory.LogTypeRequestContext;
 
-public class TypesAddPresenter 
-		extends Presenter<TypesAddPresenter.MyView, TypesAddPresenter.MyProxy>
+public class LogTypesAddPresenter 
+		extends Presenter<LogTypesAddPresenter.MyView, LogTypesAddPresenter.MyProxy>
 		implements HourAddUiHandler {
 
 	public interface MyView extends View, HasUiHandlers<HourAddUiHandler> {
 	}
 	
-	private TypeProxy hp;
+	private LogTypeProxy hp;
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.typesadd)
-	public interface MyProxy extends ProxyPlace<TypesAddPresenter> {
+	public interface MyProxy extends ProxyPlace<LogTypesAddPresenter> {
 	}
 
 	@Inject
-	public TypesAddPresenter(final EventBus eventBus, final MyView view,
+	public LogTypesAddPresenter(final EventBus eventBus, final MyView view,
 			final MyProxy proxy) {
 		super(eventBus, view, proxy);
 		
@@ -62,12 +62,12 @@ public class TypesAddPresenter
 			return;
 		}
 		
-		TypeRequestFactory rf = GWT.create(TypeRequestFactory.class);
+		LogTypeRequestFactory rf = GWT.create(LogTypeRequestFactory.class);
 		rf.initialize(this.getEventBus());
-		TypeRequestContext rc = rf.typeRequest();
-		hp = rc.create(TypeProxy.class);
-		hp.setTypeName(nom);
-		hp.setTypeActive(active);
+		LogTypeRequestContext rc = rf.typeRequest();
+		hp = rc.create(LogTypeProxy.class);
+		hp.setLogTypeName(nom);
+		hp.setLogTypeActive(active);
 		rc.save(hp).fire(new Receiver<Void>(){
 			@Override
 			public void onSuccess(Void response){
@@ -81,7 +81,7 @@ public class TypesAddPresenter
 	}
 	
 	private void returnToHourListSuccess(){
-		getEventBus().fireEvent(new TypeAddedEvent(hp));
+		getEventBus().fireEvent(new LogTypeAddedEvent(hp));
 	}
 
 	@Override

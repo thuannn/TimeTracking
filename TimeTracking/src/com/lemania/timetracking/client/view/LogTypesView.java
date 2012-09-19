@@ -10,24 +10,24 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.lemania.timetracking.client.presenter.TypesPresenter;
-import com.lemania.timetracking.client.uihandler.TypeListUiHandler;
-import com.lemania.timetracking.shared.TypeProxy;
+import com.lemania.timetracking.client.uihandler.LogTypeListUiHandler;
+import com.lemania.timetracking.shared.LogTypeProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.lemania.timetracking.client.presenter.LogTypesPresenter;
 
-public class TypesView extends ViewWithUiHandlers<TypeListUiHandler> implements TypesPresenter.MyView {
+public class LogTypesView extends ViewWithUiHandlers<LogTypeListUiHandler> implements LogTypesPresenter.MyView {
 
 	private final Widget widget;
 	private int selectedHour;
 
-	public interface Binder extends UiBinder<Widget, TypesView> {
+	public interface Binder extends UiBinder<Widget, LogTypesView> {
 	}
 
 	@Inject
-	public TypesView(final Binder binder) {
+	public LogTypesView(final Binder binder) {
 		widget = binder.createAndBindUi(this);
 	}
 
@@ -36,51 +36,51 @@ public class TypesView extends ViewWithUiHandlers<TypeListUiHandler> implements 
 		return widget;
 	}
 	
-	@UiField(provided=true) DataGrid<TypeProxy> tblHours = new DataGrid<TypeProxy>();
+	@UiField(provided=true) DataGrid<LogTypeProxy> tblHours = new DataGrid<LogTypeProxy>();
 	
 	@Override
 	public void initializeTable() {
 		// Add a text column to show the name.
-	    TextColumn<TypeProxy> colName = new TextColumn<TypeProxy>() {
+	    TextColumn<LogTypeProxy> colName = new TextColumn<LogTypeProxy>() {
 	      @Override
-	      public String getValue(TypeProxy object) {
-	        return object.getTypeName();
+	      public String getValue(LogTypeProxy object) {
+	        return object.getLogTypeName();
 	      }
 	    };
 	    tblHours.addColumn(colName, "Nom");
 	    
 	    CheckboxCell cellActive = new CheckboxCell();
-	    Column<TypeProxy, Boolean> colActive = new Column<TypeProxy, Boolean>(cellActive) {
+	    Column<LogTypeProxy, Boolean> colActive = new Column<LogTypeProxy, Boolean>(cellActive) {
 	    	@Override
-	    	public Boolean getValue(TypeProxy type){
-	    		return type.getTypeActive();
+	    	public Boolean getValue(LogTypeProxy type){
+	    		return type.getLogTypeActive();
 	    	}	    	
 	    };
 	    tblHours.addColumn(colActive, "Actif");
 	    
-	    colActive.setFieldUpdater(new FieldUpdater<TypeProxy, Boolean>(){
+	    colActive.setFieldUpdater(new FieldUpdater<LogTypeProxy, Boolean>(){
 	    	@Override
-	    	public void update(int index, TypeProxy type, Boolean value){
+	    	public void update(int index, LogTypeProxy type, Boolean value){
 	    		if (getUiHandlers() != null) {
 	    			selectedHour = index;
-	    			getUiHandlers().updateTypeStatus(type, value);
+	    			getUiHandlers().updateLogTypeStatus(type, value);
 	    		}	    		
 	    	}
 	    });
 	}
 
 	@Override
-	public void addHour(TypeProxy type) {
+	public void addHour(LogTypeProxy type) {
 		// TODO Auto-generated method stub
-		List<TypeProxy> newHours = new ArrayList<TypeProxy>();
+		List<LogTypeProxy> newHours = new ArrayList<LogTypeProxy>();
 		newHours.add(type);
 		tblHours.setRowData(tblHours.getRowCount()+1, newHours);
 	}
 
 	@Override
-	public void refreshTable(TypeProxy updatedHour) {
+	public void refreshTable(LogTypeProxy updatedHour) {
 		// TODO Auto-generated method stub
-		List<TypeProxy> types = new ArrayList<TypeProxy>();
+		List<LogTypeProxy> types = new ArrayList<LogTypeProxy>();
 		types.add(updatedHour);
         tblHours.setRowData(selectedHour, types);
 		tblHours.redraw();
@@ -90,7 +90,7 @@ public class TypesView extends ViewWithUiHandlers<TypeListUiHandler> implements 
 	}
 
 	@Override
-	public void setData(List<TypeProxy> types) {
+	public void setData(List<LogTypeProxy> types) {
 		tblHours.setRowData(0, types);
 	}
 }

@@ -8,7 +8,7 @@ public class Log extends DatastoreObject {
 	
 	Key<Professor> prof;
 	Key<Cours> cours;
-	Key<Type> type;
+	Key<LogType> type;
 	int hour;
 	
 	public Key<Professor> getProf() {
@@ -27,11 +27,11 @@ public class Log extends DatastoreObject {
 		this.cours = cours;
 	}
 	
-	public Key<Type> getType() {
+	public Key<LogType> getLogType() {
 		return type;
 	}
 	
-	public void setType(Key<Type> type) {
+	public void setLogType(Key<LogType> type) {
 		this.type = type;
 	}
 	
