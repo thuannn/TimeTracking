@@ -40,7 +40,33 @@ public class EcoleView extends ViewWithUiHandlers<EcoleListUiHandler> implements
 
 	@Override
 	public void setData(List<EcoleProxy> ecoleList) {
-		 // Add a text column to show the name.
+	    // Put them together
+		tblEcoles.setRowData(ecoleList);
+		tblEcoles.setRowCount(ecoleList.size());
+	}
+
+	@Override
+	public void addEcole(EcoleProxy newEcole) {
+		// TODO Auto-generated method stub
+		List<EcoleProxy> newEcoles = new ArrayList<EcoleProxy>();
+		newEcoles.add(newEcole);
+		tblEcoles.setRowData(tblEcoles.getRowCount()+1, newEcoles);
+	}
+	
+	@Override
+	public void refreshTable(EcoleProxy updatedEcole){
+		List<EcoleProxy> ecoles = new ArrayList<EcoleProxy>();
+		ecoles.add(updatedEcole);
+        tblEcoles.setRowData(selectedEcole, ecoles);
+		tblEcoles.redraw();
+		
+		// Notify user
+		Window.alert("Statut de l'école mis à jour.");
+	}
+
+	@Override
+	public void initializeTable() {
+		// Add a text column to show the name.
 	    TextColumn<EcoleProxy> colName = new TextColumn<EcoleProxy>() {
 	      @Override
 	      public String getValue(EcoleProxy object) {
@@ -75,27 +101,5 @@ public class EcoleView extends ViewWithUiHandlers<EcoleListUiHandler> implements
 	    		}	    		
 	    	}
 	    });
-	   
-	    // Put them together
-		tblEcoles.setRowData(0, ecoleList);
-	}
-
-	@Override
-	public void addEcole(EcoleProxy newEcole) {
-		// TODO Auto-generated method stub
-		List<EcoleProxy> newEcoles = new ArrayList<EcoleProxy>();
-		newEcoles.add(newEcole);
-		tblEcoles.setRowData(tblEcoles.getRowCount()+1, newEcoles);
-	}
-	
-	@Override
-	public void refreshTable(EcoleProxy updatedEcole){
-		List<EcoleProxy> ecoles = new ArrayList<EcoleProxy>();
-		ecoles.add(updatedEcole);
-        tblEcoles.setRowData(selectedEcole, ecoles);
-		tblEcoles.redraw();
-		
-		// Notify user
-		Window.alert("Statut de l'école mis à jour.");
 	}
 }

@@ -31,6 +31,7 @@ public class EcolePresenter extends
 		implements EcoleListUiHandler, EcoleAddedHandler {
 
 	public interface MyView extends View, HasUiHandlers<EcoleListUiHandler> {
+		void initializeTable();
 		void setData(List<EcoleProxy> ecoleList);
 		void addEcole(EcoleProxy newEcole);
 		void refreshTable(EcoleProxy updatedEcole);
@@ -57,9 +58,19 @@ public class EcolePresenter extends
 
 	@Override
 	protected void onBind() {
-		super.onBind();		
+		super.onBind();
 		
 		// Thuan
+		getView().initializeTable();
+	}
+	
+	@Override
+	protected void onReveal(){
+		// TODO
+	}
+	
+	@Override
+	protected void onReset(){
 		getEcoleList();
 	}
 

@@ -1,5 +1,7 @@
 package com.lemania.timetracking.server;
 
+import java.util.Date;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 
@@ -9,6 +11,7 @@ public class Log extends DatastoreObject {
 	Key<Professor> prof;
 	Key<Cours> cours;
 	Key<LogType> type;
+	Date date;
 	int hour;
 	
 	public Key<Professor> getProf() {
@@ -42,4 +45,12 @@ public class Log extends DatastoreObject {
 	public void setHour(int hour) {
 		this.hour = hour;
 	}	
+	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 }
