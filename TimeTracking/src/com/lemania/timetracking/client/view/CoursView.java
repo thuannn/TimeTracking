@@ -105,6 +105,7 @@ public class CoursView extends ViewWithUiHandlers<CoursListUiHandler> implements
 	@Override
 	public void populateEcoleList(List<EcoleProxy> ecoles) {
 		// Thuan: populate the list of school names
+		lstEcoles.clear();
 		lstEcoles.addItem("-","");
 		for (int i=0; i<ecoles.size(); i++)
 			lstEcoles.addItem(ecoles.get(i).getSchoolName(), ecoles.get(i).getId().toString());

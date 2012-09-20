@@ -61,11 +61,16 @@ public class LogTypesPresenter
 		super.onBind();
 		
 		// Thuan
+		getView().initializeTable();
+	}
+	
+	@Override
+	protected void onReset(){
+		// Thuan
 		initializeData();
 	}
 	
 	private void initializeData(){
-		getView().initializeTable();
 		getHourList();
 	}
 	
@@ -88,7 +93,6 @@ public class LogTypesPresenter
 	@ProxyEvent
 	@Override
 	public void onHourAdded(LogTypeAddedEvent event) {
-		getView().addHour(event.getHp());
 		History.newItem(NameTokens.types, true);
 	}
 

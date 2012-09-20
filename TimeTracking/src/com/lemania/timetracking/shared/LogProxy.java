@@ -12,4 +12,10 @@ public interface LogProxy extends EntityProxy {
 	
 	public int getHour();	
 	public void setHour(int hour);	
+	
+	public int getYear();
+	public void setYear(int year);
+
+	public int getMonth();
+	public void setMonth(int month);
 }

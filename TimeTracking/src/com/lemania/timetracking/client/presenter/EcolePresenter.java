@@ -93,7 +93,6 @@ public class EcolePresenter extends
 	@ProxyEvent
 	@Override
 	public void onEcoleAdded(EcoleAddedEvent event) {
-		getView().addEcole(event.getNewEcole());
 		History.newItem(NameTokens.ecolepage, true);	
 	}
 

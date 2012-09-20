@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.TimeInputPresenter;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.client.ui.ListBox;
 
 public class TimeInputView extends ViewImpl implements
 		TimeInputPresenter.MyView {
@@ -25,5 +26,10 @@ public class TimeInputView extends ViewImpl implements
 	public Widget asWidget() {
 		return widget;
 	}
+	@UiField(provided=true) DataGrid<Object> tblProfesseurs = new DataGrid<Object>();
+	@UiField ListBox lstCourses;
 	@UiField(provided=true) DataGrid<Object> dataGrid = new DataGrid<Object>();
+	@UiField ListBox lstYear;
+	@UiField ListBox lstMonth;
+	@UiField ListBox lstSchools;
 }

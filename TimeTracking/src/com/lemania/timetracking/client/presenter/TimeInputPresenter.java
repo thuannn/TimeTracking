@@ -37,4 +37,14 @@ public class TimeInputPresenter extends
 	protected void onBind() {
 		super.onBind();
 	}
+	
+	@Override
+	protected void onReset(){
+		getCourseList();
+	}
+
+	// List of courses to select
+	private void getCourseList() {
+		
+	}
 }

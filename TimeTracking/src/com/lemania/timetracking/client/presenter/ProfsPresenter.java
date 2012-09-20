@@ -42,7 +42,7 @@ public class ProfsPresenter
 		
 		void refreshTable(ProfessorProxy prof);
 		
-		void setAssignmentList(List<AssignmentProxy> courses);		
+		void setAssignmentList(List<AssignmentProxy> courses);
 		void addToAssignmentList(AssignmentProxy a);
 		
 		void setEcoleAddList(List<EcoleProxy> ecoles);
@@ -72,7 +72,11 @@ public class ProfsPresenter
 		super.onBind();
 		
 		// Thuan
-		getView().initializeTable();
+		getView().initializeTable();	
+	}
+	
+	@Override
+	protected void onReset(){
 		getProfessorsList();
 		getEcoleList();
 	}

@@ -50,9 +50,6 @@ public class CoursPresenter extends
 	public CoursPresenter(final EventBus eventBus, final MyView view,
 			final MyProxy proxy) {
 		super(eventBus, view, proxy);
-		
-		// Thuan
-		getView().setUiHandlers(this);
 	}
 
 	@Override
@@ -64,6 +61,15 @@ public class CoursPresenter extends
 	protected void onBind() {
 		super.onBind();
 		
+		// Thuan
+		getView().setUiHandlers(this);
+		
+		// Structure the table
+		getView().initializeTable();
+	}
+	
+	@Override
+	protected void onReset(){
 		// Thuan
 		initialData();
 	}
@@ -83,36 +89,12 @@ public class CoursPresenter extends
 				Window.alert(error.getMessage());
 			}
 		});
-		
-		// Structure the table
-		getView().initializeTable();
 	}
-	
-	
-	// Thuan: not being used any more
-	/*
-	private void getCoursList() {
-		CoursRequestFactory rf = GWT.create(CoursRequestFactory.class);
-		rf.initialize(this.getEventBus());
-		CoursRequestContext rc = rf.coursRequest();
-		rc.listAll().fire(new Receiver<List<CoursProxy>>(){
-			@Override
-			public void onFailure(ServerFailure error){
-				Window.alert(error.getMessage());
-			}
-			@Override
-			public void onSuccess(List<CoursProxy> response) {
-				getView().setData(response);
-			}
-		});
-	}
-	*/
 
 	@ProxyEvent
 	@Override
 	public void onCoursAdded(CoursAddedEvent event) {
 		// TODO Auto-generated method stub
-		getView().addCours(event.getNewCours());
 		History.newItem(NameTokens.cours, true);
 	}
 

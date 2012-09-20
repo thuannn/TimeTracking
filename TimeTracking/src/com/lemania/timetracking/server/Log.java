@@ -1,7 +1,5 @@
 package com.lemania.timetracking.server;
 
-import java.util.Date;
-
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 
@@ -11,9 +9,26 @@ public class Log extends DatastoreObject {
 	Key<Professor> prof;
 	Key<Cours> cours;
 	Key<LogType> type;
-	Date date;
+	int year;
+	int month;
 	int hour;
 	
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
 	public Key<Professor> getProf() {
 		return prof;
 	}
@@ -44,13 +59,5 @@ public class Log extends DatastoreObject {
 	
 	public void setHour(int hour) {
 		this.hour = hour;
-	}	
-	
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 }
