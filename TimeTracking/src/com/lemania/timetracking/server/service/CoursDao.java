@@ -40,6 +40,23 @@ public class CoursDao extends DAOBase {
 		return returnList;
 	}
 	
+	public List<Cours> listAllActive(String ecoleId){
+		List<Cours> returnList = new ArrayList<Cours>();
+		
+		if (ecoleId.isEmpty())
+			return returnList;
+		
+		Key<Ecole> ecole = new Key<Ecole>(Ecole.class, Long.parseLong(ecoleId));
+		Query<Cours> q = this.ofy().query(Cours.class).filter("ecole", ecole);
+		
+		for (Cours cours : q){
+			if (cours.getCoursActif().equals(true))
+				returnList.add(cours);
+		}
+		
+		return returnList;
+	}
+	
 	public void save(Cours cours){
 		this.ofy().put(cours);
 	}

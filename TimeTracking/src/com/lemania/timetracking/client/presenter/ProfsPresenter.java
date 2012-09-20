@@ -57,9 +57,6 @@ public class ProfsPresenter
 	@Inject
 	public ProfsPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
 		super(eventBus, view, proxy);
-		
-		// Thuan
-		getView().setUiHandlers(this);
 	}
 
 	@Override
@@ -72,6 +69,7 @@ public class ProfsPresenter
 		super.onBind();
 		
 		// Thuan
+		getView().setUiHandlers(this);
 		getView().initializeTable();	
 	}
 	
