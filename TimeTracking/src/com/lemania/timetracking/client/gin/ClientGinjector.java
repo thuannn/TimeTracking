@@ -7,6 +7,7 @@ import com.google.gwt.inject.client.Ginjector;
 import com.google.inject.Provider;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
+import com.lemania.timetracking.client.LoggedInGatekeeper;
 import com.lemania.timetracking.client.presenter.HomePresenter;
 import com.lemania.timetracking.client.presenter.LogTypesAddPresenter;
 import com.lemania.timetracking.client.presenter.LogTypesPresenter;
@@ -49,5 +50,8 @@ public interface ClientGinjector extends Ginjector {
 
 	AsyncProvider<ProfsAddPresenter> getProfsAddPresenter();
 
-	AsyncProvider<ContactPresenter> getContactPresenter();
+	AsyncProvider<ContactPresenter> getContactPresenter();	
+	
+	// Thuan
+	LoggedInGatekeeper getLoggedInGatekeeper();
 }

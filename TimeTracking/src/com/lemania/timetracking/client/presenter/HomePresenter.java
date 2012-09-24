@@ -53,6 +53,5 @@ public class HomePresenter
 		}
 		
 		// Validate user name and password here
-		
 	}
 }

@@ -7,6 +7,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
@@ -27,6 +28,7 @@ import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
 import com.lemania.timetracking.shared.service.CoursRequestFactory.CoursRequestContext;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory.ProfessorRequestContext;
+import com.lemania.timetracking.client.LoggedInGatekeeper;
 
 public class TimeInputPresenter 
 		extends Presenter<TimeInputPresenter.MyView, TimeInputPresenter.MyProxy> 
@@ -41,6 +43,7 @@ public class TimeInputPresenter
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.timeinput)
+	@UseGatekeeper(LoggedInGatekeeper.class)
 	public interface MyProxy extends ProxyPlace<TimeInputPresenter> {
 	}
 
