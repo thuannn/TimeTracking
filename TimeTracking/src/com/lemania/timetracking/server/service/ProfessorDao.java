@@ -2,10 +2,14 @@ package com.lemania.timetracking.server.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
+import com.lemania.timetracking.server.Assignment;
+import com.lemania.timetracking.server.Cours;
 import com.lemania.timetracking.server.Professor;
 
 public class ProfessorDao extends DAOBase {
@@ -20,6 +24,19 @@ public class ProfessorDao extends DAOBase {
 			returnList.add(prof);
 		}
 		return returnList;
+	}
+	
+	public List<Professor> listAllByCourse(String courseId){
+		Key<Cours> course = new Key<Cours>(Cours.class, Long.parseLong(courseId));
+		Query<Assignment> qa = this.ofy().query(Assignment.class).filter("cours", course);
+		
+		List<Key<? extends Professor>> profKeys = new ArrayList<Key<? extends Professor>>();
+		for (Assignment a : qa){
+			profKeys.add( a.getProf() );
+		}
+		
+		Map<Key<Professor>, Professor> profs = this.ofy().get(profKeys);
+		return new ArrayList<Professor>(profs.values());
 	}
 	
 	public void save(Professor prof){

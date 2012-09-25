@@ -9,4 +9,5 @@ public interface TimeInputUiHandler extends UiHandlers {
 	void professorSelected(ProfessorProxy prof);
 		
 	void loadCoursesBySchool(String ecoleId);
+	void loadProfessorsByCourse(String courseId);
 }

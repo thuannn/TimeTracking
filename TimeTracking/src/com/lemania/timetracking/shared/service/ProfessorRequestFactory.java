@@ -16,6 +16,7 @@ public interface ProfessorRequestFactory extends RequestFactory {
 	interface ProfessorRequestContext extends RequestContext {
 		
 		Request<List<ProfessorProxy>> listAll();
+		Request<List<ProfessorProxy>> listAllByCourse(String courseId);
 		
 		Request<Void> save(ProfessorProxy prof);
 		
