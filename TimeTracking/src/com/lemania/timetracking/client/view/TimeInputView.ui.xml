@@ -33,11 +33,18 @@
 					<p1:DataGrid width="250px" height="200px" ui:field="tblProfessors"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="400px" styleName="sideBar">
-					<g:Label ui:field="lblProfName" width=""/>
-					<g:Grid width="100%" borderWidth="0" cellPadding="2" cellSpacing="2">
+					<g:Grid width="100%" borderWidth="0" cellPadding="5" cellSpacing="2">
 						<g:row>
 							<g:customCell>
-								<g:Label text="Date :"/>
+								<g:Label text="Professeur :"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label ui:field="lblProfName" width=""/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Mois :"/>
 							</g:customCell>
 							<g:customCell>
 								<p2:DatePicker ui:field="dtLogDate"/>
@@ -45,58 +52,23 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:Label text="Cours :"/>
+								<g:Label text="Heures :"/>
 							</g:customCell>
 							<g:customCell>
-								<g:TextBox ui:field="txtLogCourse"/>
+								<p1:DataGrid width="250px" height="200px" ui:field="tblLog"/>
 							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Maladie :"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="txtLogSick"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Fériés :"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="txtLogHoliday"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Privé :"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="txtLogPersonal"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Supervision :"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="txtLogSupervision"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Frais (Fr$) :"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="txtLogFrais"/>
-							</g:customCell>
-						</g:row>
+						</g:row>						
 						<g:row>
 							<g:customCell>
 								<g:Label/>
 							</g:customCell>
 							<g:customCell>
 								<g:Button text="Enregistrer" ui:field="cmdSave"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:ListBox ui:field="lstTypes"/>
 							</g:customCell>
 						</g:row>
 					</g:Grid>

@@ -14,6 +14,7 @@ import com.lemania.timetracking.client.presenter.TimeInputPresenter;
 import com.lemania.timetracking.client.uihandler.TimeInputUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
+import com.lemania.timetracking.shared.LogTypeProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.DataGrid;
@@ -23,7 +24,6 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.datepicker.client.DatePicker;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
 
 public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implements TimeInputPresenter.MyView {
@@ -48,13 +48,9 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiField ListBox lstSchools;
 	@UiField Label lblProfName;
 	@UiField DatePicker dtLogDate;
-	@UiField TextBox txtLogCourse;
-	@UiField TextBox txtLogSick;
-	@UiField TextBox txtLogHoliday;
-	@UiField TextBox txtLogPersonal;
-	@UiField TextBox txtLogSupervision;
-	@UiField TextBox txtLogFrais;
 	@UiField Button cmdSave;
+	@UiField(provided=true) DataGrid<Object> tblLog = new DataGrid<Object>();
+	@UiField ListBox lstTypes;
 	
 	@Override
 	public void setEcoleList(List<EcoleProxy> ecoles) {
@@ -104,6 +100,25 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    });
 	}
 	
+	@Override
+	public void setTypeList(List<LogTypeProxy> types) {
+		lstTypes.clear();
+		lstTypes.addItem("-","");
+		for (int i=0; i<types.size(); i++)
+			lstTypes.addItem(types.get(i).getLogTypeName(), types.get(i).getId().toString());
+	}
+	
+	public String getTypeIdByName(String typeName){
+		String id = "";
+		for (int i=0; i<lstTypes.getItemCount(); i++){
+			if (lstTypes.getItemText(i).equals(typeName)) {
+				id = lstTypes.getValue(i);
+		        break;
+		    }
+		}
+		return id;
+	}
+	
 	/***/
 	
 	@UiHandler("lstSchools")
@@ -120,6 +135,6 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	
 	@UiHandler("cmdSave")
 	public void onCmdSaveClicked(ClickEvent event){
-		
-	}
+		// Save logged time
+	}	
 }

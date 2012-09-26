@@ -22,14 +22,17 @@ import com.lemania.timetracking.client.uihandler.TimeInputUiHandler;
 import com.lemania.timetracking.shared.AssignmentProxy;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
+import com.lemania.timetracking.shared.LogTypeProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
 import com.lemania.timetracking.shared.service.AssignmentRequestFactory;
 import com.lemania.timetracking.shared.service.CoursRequestFactory;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory;
+import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
 import com.lemania.timetracking.shared.service.AssignmentRequestFactory.AssignmentRequestContext;
 import com.lemania.timetracking.shared.service.CoursRequestFactory.CoursRequestContext;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
+import com.lemania.timetracking.shared.service.LogTypeRequestFactory.LogTypeRequestContext;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory.ProfessorRequestContext;
 import com.lemania.timetracking.client.LoggedInGatekeeper;
 
@@ -42,6 +45,7 @@ public class TimeInputPresenter
 		
 		void setEcoleList(List<EcoleProxy> ecoles);
 		void setCourseList(List<CoursProxy> cours);
+		void setTypeList(List<LogTypeProxy> types);
 		
 		// Initialize values
 		void initializeValues();
@@ -143,6 +147,21 @@ public class TimeInputPresenter
 				//
 			}
 		});
+		
+		// Get LogType list
+		LogTypeRequestFactory rfl = GWT.create(LogTypeRequestFactory.class);
+		rfl.initialize(this.getEventBus());
+		LogTypeRequestContext rcl = rfl.typeRequest();
+		rcl.listAll().fire(new Receiver<List<LogTypeProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<LogTypeProxy> response) {
+				getView().setTypeList(response);
+			}
+		});
 	}
 
 	@Override
@@ -175,15 +194,19 @@ public class TimeInputPresenter
 	public void saveLoggedTime(
 			String profId,
 			String courseId,
-			String logTypeId,
 			String year,
 			String month,
+			String courseTypeId,
 			String courseLog, 
+			String sickTypeId,
 			String sickLog, 
+			String holidayTypeId,
 			String holidayLog, 
+			String personalTypeId,
 			String personalLog, 
+			String supervisionTypeId,
 			String supervisionLog, 
 			String feeLog){
-		
+		// Save logged time here
 	}
 }

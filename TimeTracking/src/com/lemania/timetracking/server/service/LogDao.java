@@ -7,10 +7,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
-import com.lemania.timetracking.server.Cours;
 import com.lemania.timetracking.server.Log;
-import com.lemania.timetracking.server.LogType;
-import com.lemania.timetracking.server.Professor;
 
 public class LogDao extends DAOBase {
 	
@@ -43,29 +40,29 @@ public class LogDao extends DAOBase {
 	public void save(
 			String profId,
 			String courseId,
-			String logTypeId,
 			String year,
 			String month,
-			String courseLog, 
+			String courseLog,
 			String sickLog, 
 			String holidayLog, 
 			String personalLog, 
 			String supervisionLog, 
 			String feeLog) {
 		
-		Key<Professor> keyProf = new Key<Professor>(Professor.class, profId);
-		Key<Cours> keyCours = new Key<Cours>(Cours.class, courseId);
-		Key<LogType> keyLogType = new Key<LogType>(LogType.class, logTypeId);
-		
-		Log log = new Log();
-		log.setProf(keyProf);
-		log.setCours(keyCours);
-		log.setLogType(keyLogType);
-		log.setYear(year);
-		log.setMonth(month);
-		log.setHour(loggedTime);
-		
-		this.ofy().put(log);
+//		Key<Professor> keyProf = new Key<Professor>(Professor.class, profId);
+//		Key<Cours> keyCours = new Key<Cours>(Cours.class, courseId);
+//		
+//		Log log = new Log();
+//		log.setProf(keyProf);
+//		log.setCours(keyCours);
+//		log.setYear(Integer.valueOf(year));
+//		log.setMonth(Integer.valueOf(month));
+//		
+//		// Course log
+//		Key<LogType> keyLogType = this.ofy().get()
+//		log.setLogType(keyLogType);
+//		log.setHour(Integer.valueOf(courseLog));
+//		this.ofy().put(log);
 	}
 	
 	public Log saveAndReturn(Log log){
