@@ -1,13 +1,18 @@
 package com.lemania.timetracking.server.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
+import com.ibm.icu.util.Calendar;
+import com.lemania.timetracking.server.Cours;
 import com.lemania.timetracking.server.Log;
+import com.lemania.timetracking.server.LogType;
+import com.lemania.timetracking.server.Professor;
 
 public class LogDao extends DAOBase {
 	
@@ -19,15 +24,27 @@ public class LogDao extends DAOBase {
 		Query<Log> q = this.ofy().query(Log.class);
 		List<Log> returnList = new ArrayList<Log>();
 		for (Log log : q){
+			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
 			returnList.add(log);
 		}
 		return returnList;
 	}
 	
-	public List<Log> listAllActive(){
-		Query<Log> q = this.ofy().query(Log.class).filter("schoolActive", true);
+	public List<Log> listAll(String profId, String coursId, Date currentMonth){
+		java.util.Calendar cal = java.util.Calendar.getInstance();
+		cal.setTime(currentMonth);
+		
+		Key<Professor> profKey = new Key<Professor>(Professor.class, Long.parseLong(profId));
+		Key<Cours> coursKey = new Key<Cours>(Cours.class, Long.parseLong(coursId));
+		
+		Query<Log> q = this.ofy().query(Log.class)
+				.filter("year", cal.get(Calendar.YEAR))
+				.filter("month", cal.get(Calendar.MONTH))
+				.filter("prof", profKey)
+				.filter("cours", coursKey);
 		List<Log> returnList = new ArrayList<Log>();
 		for (Log log : q){
+			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
 			returnList.add(log);
 		}
 		return returnList;
@@ -35,34 +52,6 @@ public class LogDao extends DAOBase {
 	
 	public void save(Log log){
 		this.ofy().put(log);
-	}
-	
-	public void save(
-			String profId,
-			String courseId,
-			String year,
-			String month,
-			String courseLog,
-			String sickLog, 
-			String holidayLog, 
-			String personalLog, 
-			String supervisionLog, 
-			String feeLog) {
-		
-//		Key<Professor> keyProf = new Key<Professor>(Professor.class, profId);
-//		Key<Cours> keyCours = new Key<Cours>(Cours.class, courseId);
-//		
-//		Log log = new Log();
-//		log.setProf(keyProf);
-//		log.setCours(keyCours);
-//		log.setYear(Integer.valueOf(year));
-//		log.setMonth(Integer.valueOf(month));
-//		
-//		// Course log
-//		Key<LogType> keyLogType = this.ofy().get()
-//		log.setLogType(keyLogType);
-//		log.setHour(Integer.valueOf(courseLog));
-//		this.ofy().put(log);
 	}
 	
 	public Log saveAndReturn(Log log){
@@ -76,6 +65,27 @@ public class LogDao extends DAOBase {
 	
 	public void removeLog(Log log){
 		this.ofy().delete(log);
+	}
+	
+	public List<Log> batchUpdate(String profId, String courseId, Date currentMonth, List<String> typeIdList) {
+		java.util.Calendar cal = java.util.Calendar.getInstance();
+		cal.setTime(currentMonth);
+		
+		List<Log> returnList = new ArrayList<Log>();
+		Log log;
+		for (int i=0; i<typeIdList.size(); i++) {
+			log = new Log();
+			log.setProf( new Key<Professor>(Professor.class, Long.parseLong(profId)));
+			log.setCours( new Key<Cours>(Cours.class, Long.parseLong(courseId)));
+			log.setLogType( new Key<LogType>(LogType.class, Long.parseLong(typeIdList.get(i))));
+			log.setYear(cal.get(Calendar.YEAR));
+			log.setMonth(cal.get(Calendar.MONTH));
+			this.ofy().put(log);
+			
+			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
+			returnList.add(log);
+		}
+		return returnList;
 	}
 
 }

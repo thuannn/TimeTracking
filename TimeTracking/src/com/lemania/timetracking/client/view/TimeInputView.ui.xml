@@ -33,7 +33,7 @@
 					<p1:DataGrid width="250px" height="200px" ui:field="tblProfessors"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="400px" styleName="sideBar">
-					<g:Grid width="100%" borderWidth="0" cellPadding="5" cellSpacing="2">
+					<g:Grid width="400px" borderWidth="0" cellPadding="5" cellSpacing="2">
 						<g:row>
 							<g:customCell>
 								<g:Label text="Professeur :"/>
@@ -55,20 +55,7 @@
 								<g:Label text="Heures :"/>
 							</g:customCell>
 							<g:customCell>
-								<p1:DataGrid width="250px" height="200px" ui:field="tblLog"/>
-							</g:customCell>
-						</g:row>						
-						<g:row>
-							<g:customCell>
-								<g:Label/>
-							</g:customCell>
-							<g:customCell>
-								<g:Button text="Enregistrer" ui:field="cmdSave"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:ListBox ui:field="lstTypes"/>
+								<p1:DataGrid width="300px" height="300px" ui:field="tblLog"/>
 							</g:customCell>
 						</g:row>
 					</g:Grid>

@@ -1,22 +1,29 @@
 package com.lemania.timetracking.client.view;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.TextInputCell;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.TimeInputPresenter;
 import com.lemania.timetracking.client.uihandler.TimeInputUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
+import com.lemania.timetracking.shared.LogProxy;
 import com.lemania.timetracking.shared.LogTypeProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.ListBox;
@@ -30,6 +37,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 
 	private final Widget widget;
 	private ProfessorProxy selectedProfessor;
+	private int selectedLog;
 
 	public interface Binder extends UiBinder<Widget, TimeInputView> {
 	}
@@ -43,14 +51,13 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	public Widget asWidget() {
 		return widget;
 	}
+	
 	@UiField(provided=true) DataGrid<ProfessorProxy> tblProfessors = new DataGrid<ProfessorProxy>();
 	@UiField ListBox lstCourses;
 	@UiField ListBox lstSchools;
 	@UiField Label lblProfName;
 	@UiField DatePicker dtLogDate;
-	@UiField Button cmdSave;
-	@UiField(provided=true) DataGrid<Object> tblLog = new DataGrid<Object>();
-	@UiField ListBox lstTypes;
+	@UiField(provided=true) DataGrid<LogProxy> tblLog = new DataGrid<LogProxy>();
 	
 	@Override
 	public void setEcoleList(List<EcoleProxy> ecoles) {
@@ -69,7 +76,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	}
 	
 	@Override
-	public void setData(List<ProfessorProxy> profs) {
+	public void setProfData(List<ProfessorProxy> profs) {
 		tblProfessors.setRowCount(profs.size(), true);
 		tblProfessors.setRowData(profs);
 		tblProfessors.setRowCount(profs.size());
@@ -77,7 +84,44 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 
 	@Override
 	public void initializeValues() {
-		// Professor table
+		// Clear school list and course list
+		lstSchools.clear();
+		lstCourses.clear();
+		
+		clearProfTable();
+		clearLogTable();
+	}
+	
+	/***/
+	
+	@UiHandler("lstSchools")
+	public void onLstAddEcoleChanged(ChangeEvent event){
+		clearProfTable();
+		if (getUiHandlers() != null)
+			getUiHandlers().loadCoursesBySchool(lstSchools.getValue(lstSchools.getSelectedIndex()));
+	}
+	
+	private void clearProfTable() {
+		List<ProfessorProxy> temp = new ArrayList<ProfessorProxy>();
+		tblProfessors.setRowData(temp);
+		tblProfessors.setRowCount(temp.size());
+	}
+	
+	private void clearLogTable() {
+		List<LogProxy> temp = new ArrayList<LogProxy>();
+		tblLog.setRowData(temp);
+		tblLog.setRowCount(temp.size());
+	}
+
+	@UiHandler("lstCourses")
+	public void onLstCoursesChanged(ChangeEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().loadProfessorsByCourse(lstCourses.getValue(lstCourses.getSelectedIndex()));
+	}
+
+	@Override
+	public void initializeProfTable() {
+		// Initialize table structure of Professor table
 		TextColumn<ProfessorProxy> colName = new TextColumn<ProfessorProxy>() {
 	      @Override
 	      public String getValue(ProfessorProxy object) {
@@ -94,47 +138,58 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	        selectedProfessor = selectionModel.getSelectedObject();
 	        if (selectedProfessor != null) {
 	        	lblProfName.setText(selectedProfessor.getProfName());
-	        	getUiHandlers().professorSelected(selectedProfessor);
+	        	getUiHandlers().professorSelected(
+	        			selectedProfessor, 
+	        			lstCourses.getValue(lstCourses.getSelectedIndex()),
+	        			dtLogDate.getCurrentMonth());
 	        }
 	      }
 	    });
 	}
-	
+
 	@Override
-	public void setTypeList(List<LogTypeProxy> types) {
-		lstTypes.clear();
-		lstTypes.addItem("-","");
-		for (int i=0; i<types.size(); i++)
-			lstTypes.addItem(types.get(i).getLogTypeName(), types.get(i).getId().toString());
+	public void setLogData(List<LogProxy> logs) {
+		// TODO Auto-generated method stub
+		tblLog.setRowCount(logs.size(), true);
+		tblLog.setRowData(logs);
+		tblLog.setRowCount(logs.size());
 	}
-	
-	public String getTypeIdByName(String typeName){
-		String id = "";
-		for (int i=0; i<lstTypes.getItemCount(); i++){
-			if (lstTypes.getItemText(i).equals(typeName)) {
-				id = lstTypes.getValue(i);
-		        break;
-		    }
-		}
-		return id;
+
+	@Override
+	public void initializeLogTable() {
+		TextColumn<LogProxy> colType = new TextColumn<LogProxy>() {
+			@Override
+			public String getValue(LogProxy object) {
+				return object.getTypeName();
+			}
+	    };
+	    tblLog.addColumn(colType, "Type");
+	    tblLog.setColumnWidth(colType, 5.0, Unit.EM);
+	    
+	    TextInputCell hourCell = new TextInputCell();
+	    Column<LogProxy,String> hourColl = new Column<LogProxy,String>(hourCell) {
+	    	@Override
+	    	public String getValue(LogProxy log){
+	    		return Integer.toString(log.getHour());
+	    	}	 
+	    };
+	    hourColl.setFieldUpdater(new FieldUpdater<LogProxy,String>(){
+	    	@Override
+	    	public void update(int index, LogProxy cours, String value){
+	    		if (getUiHandlers() != null) {
+	    			selectedLog = index;
+	    			// getUiHandlers().updateCoursStatus(cours, value);
+	    			Window.alert("changed : " + value);
+	    		}	    		
+	    	}
+	    });
+	    tblLog.addColumn(hourColl, "No. d'heurs");
+	    tblLog.setColumnWidth(hourColl, 3.0, Unit.EM);
 	}
-	
-	/***/
-	
-	@UiHandler("lstSchools")
-	public void onLstAddEcoleChanged(ChangeEvent event){
-		if (getUiHandlers() != null)
-			getUiHandlers().loadCoursesBySchool(lstSchools.getValue(lstSchools.getSelectedIndex()));
+
+	@Override
+	public void updateLogTypeList(List<LogProxy> logList) {
+		// TODO Auto-generated method stub
+		
 	}
-	
-	@UiHandler("lstCourses")
-	public void onLstCoursesChanged(ChangeEvent event){
-		if (getUiHandlers() != null)
-			getUiHandlers().loadProfessorsByCourse(lstCourses.getValue(lstCourses.getSelectedIndex()));
-	}
-	
-	@UiHandler("cmdSave")
-	public void onCmdSaveClicked(ClickEvent event){
-		// Save logged time
-	}	
 }

@@ -1,5 +1,7 @@
 package com.lemania.timetracking.client.presenter;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -22,11 +24,14 @@ import com.lemania.timetracking.client.uihandler.TimeInputUiHandler;
 import com.lemania.timetracking.shared.AssignmentProxy;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
+import com.lemania.timetracking.shared.LogProxy;
 import com.lemania.timetracking.shared.LogTypeProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
 import com.lemania.timetracking.shared.service.AssignmentRequestFactory;
 import com.lemania.timetracking.shared.service.CoursRequestFactory;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory;
+import com.lemania.timetracking.shared.service.LogRequestFactory;
+import com.lemania.timetracking.shared.service.LogRequestFactory.LogRequestContext;
 import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
 import com.lemania.timetracking.shared.service.AssignmentRequestFactory.AssignmentRequestContext;
@@ -39,16 +44,23 @@ import com.lemania.timetracking.client.LoggedInGatekeeper;
 public class TimeInputPresenter 
 		extends Presenter<TimeInputPresenter.MyView, TimeInputPresenter.MyProxy> 
 		implements TimeInputUiHandler {
+	
+	private List<LogTypeProxy> logTypes;
 
 	public interface MyView extends View, HasUiHandlers<TimeInputUiHandler> {
-		void setData(List<ProfessorProxy> profs);
+		
+		void setProfData(List<ProfessorProxy> profs);
+		void setLogData(List<LogProxy> logs);
 		
 		void setEcoleList(List<EcoleProxy> ecoles);
 		void setCourseList(List<CoursProxy> cours);
-		void setTypeList(List<LogTypeProxy> types);
 		
 		// Initialize values
 		void initializeValues();
+		void initializeProfTable();
+		void initializeLogTable();
+		
+		void updateLogTypeList(List<LogProxy> logList);
 	}
 
 	@ProxyCodeSplit
@@ -72,15 +84,19 @@ public class TimeInputPresenter
 	protected void onBind() {
 		super.onBind();
 		
-		// Thuan
+		/* Thuan */
 		getView().setUiHandlers(this);
 		
-		// Initalize lists
-		getView().initializeValues();
+		// Initalize table structure
+		getView().initializeProfTable();
+		getView().initializeLogTable();
 	}
 	
 	@Override
 	protected void onReset(){
+		// Initialize values
+		getView().initializeValues();
+		
 		// Initialize active school list
 		getEcoleList();
 	}
@@ -96,7 +112,7 @@ public class TimeInputPresenter
 			}
 			@Override
 			public void onSuccess(List<ProfessorProxy> response) {
-				getView().setData(response);
+				getView().setProfData(response);
 			}
 		});
 	}
@@ -159,15 +175,69 @@ public class TimeInputPresenter
 			}
 			@Override
 			public void onSuccess(List<LogTypeProxy> response) {
-				getView().setTypeList(response);
+				logTypes = response;
 			}
 		});
 	}
 
 	@Override
-	public void professorSelected(ProfessorProxy prof) {
-		// TODO Auto-generated method stub
+	public void professorSelected(final ProfessorProxy prof, final String courseId, final Date currentMonth) {
+		// TODO Load log list
+		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
+		rfl.initialize(this.getEventBus());
+		LogRequestContext rcl = rfl.logRequest();
+		rcl.listAll(prof.getId().toString(), courseId, currentMonth).fire(new Receiver<List<LogProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<LogProxy> response) {
+				populateLogTypeList(response, prof, courseId, currentMonth);
+			}
+		});
+	}
+	
+	// Find and add missing LogType
+	public void populateLogTypeList(final List<LogProxy> logList, ProfessorProxy prof, String courseId, Date currentMonth){
 		
+		List<String> typeIdList = new ArrayList<String>();
+		boolean found = false;
+		for (int i=0; i<logTypes.size(); i++) {
+			found = false;
+			for (int j=0; j<logList.size(); j++) {
+				if (logTypes.get(i).getId().toString().equals(logList.get(j).getTypeId())) {
+					found = true;
+					break;
+				}
+			}
+			
+			if (found) {
+				continue;
+			}
+			else {
+				typeIdList.add(logTypes.get(i).getId().toString());
+			}
+		}
+		
+		if (typeIdList.size() > 0) {
+			LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
+			rfl.initialize(this.getEventBus());
+			LogRequestContext rcl = rfl.logRequest();
+			rcl.batchUpdate(prof.getId().toString(), courseId, currentMonth, typeIdList).fire(new Receiver<List<LogProxy>>(){
+				@Override
+				public void onFailure(ServerFailure error){
+					Window.alert(error.getMessage());
+				}
+				@Override
+				public void onSuccess(List<LogProxy> response) {
+					logList.addAll(response);
+					getView().setLogData(logList);
+				}
+			});
+		} else {
+			getView().setLogData(logList);
+		}
 	}
 
 	@Override
@@ -189,24 +259,5 @@ public class TimeInputPresenter
 				getView().setCourseList(response);
 			}
 		});
-	}
-	
-	public void saveLoggedTime(
-			String profId,
-			String courseId,
-			String year,
-			String month,
-			String courseTypeId,
-			String courseLog, 
-			String sickTypeId,
-			String sickLog, 
-			String holidayTypeId,
-			String holidayLog, 
-			String personalTypeId,
-			String personalLog, 
-			String supervisionTypeId,
-			String supervisionLog, 
-			String feeLog){
-		// Save logged time here
 	}
 }

@@ -18,4 +18,9 @@ public interface LogProxy extends EntityProxy {
 
 	public int getMonth();
 	public void setMonth(int month);
+	
+	public String getCourseId();
+	public String getTypeId();
+	
+	public String getTypeName();
 }
