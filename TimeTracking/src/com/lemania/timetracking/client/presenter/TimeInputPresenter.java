@@ -60,6 +60,11 @@ public class TimeInputPresenter
 		void initializeValues();
 		void initializeProfTable();
 		void initializeLogTable();
+		
+		// 
+		void setNotification(String code);
+		void clearLogTable();
+		void clearProfTable();
 	}
 
 	@ProxyCodeSplit
@@ -268,6 +273,28 @@ public class TimeInputPresenter
 	@Override
 	public void professorSelected(ProfessorProxy prof, String courseId,
 			String year, String month) {
+		getView().clearLogTable();
 		getEventBus().fireEvent(new UpdateTimeLogEvent(prof, courseId, year, month));
+	}
+
+	@Override
+	public void updateLogTime(LogProxy log, String value) {
+		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
+		rfl.initialize(this.getEventBus());
+		LogRequestContext rcl = rfl.logRequest();
+
+		LogProxy logUpdate = rcl.edit(log);
+		logUpdate.setHour(Integer.parseInt(value));
+		
+		rcl.save(logUpdate).fire(new Receiver<Void>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(Void response) {
+				getView().setNotification("log-updated");
+			}
+		});		
 	}
 }

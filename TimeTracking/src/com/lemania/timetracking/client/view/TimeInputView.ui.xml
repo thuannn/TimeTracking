@@ -60,6 +60,14 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
+								<g:Label text="."/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label ui:field="txtNotification"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
 								<g:Label text="Heures :"/>
 							</g:customCell>
 							<g:customCell>

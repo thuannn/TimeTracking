@@ -6,13 +6,11 @@ import java.util.List;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextInputCell;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.TimeInputPresenter;
@@ -29,7 +27,6 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.datepicker.client.DatePicker;
 
 public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implements TimeInputPresenter.MyView {
 
@@ -57,6 +54,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiField(provided=true) DataGrid<LogProxy> tblLog = new DataGrid<LogProxy>();
 	@UiField ListBox lstYear;
 	@UiField ListBox lstMonth;
+	@UiField Label txtNotification;
 	
 	@Override
 	public void setEcoleList(List<EcoleProxy> ecoles) {
@@ -91,9 +89,11 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		clearLogTable();
 		
 		// Set current year and month
+		lstMonth.clear();
 		for (int i=1; i<13; i++)
 			lstMonth.addItem( Integer.toString(i), Integer.toString(i));
 		
+		lstYear.clear();
 		for (int i=2012; i<2015; i++)
 			lstYear.addItem( Integer.toString(i), Integer.toString(i));
 	}
@@ -107,16 +107,35 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 			getUiHandlers().loadCoursesBySchool(lstSchools.getValue(lstSchools.getSelectedIndex()));
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void clearProfTable() {
+	@UiHandler("lstYear")
+	public void onLstYearChanged(ChangeEvent event) {
+		clearLogTable();
+		getUiHandlers().professorSelected(
+    			selectedProfessor, 
+    			lstCourses.getValue(lstCourses.getSelectedIndex()),
+    			lstYear.getItemText(lstYear.getSelectedIndex()),
+    			lstMonth.getItemText(lstMonth.getSelectedIndex()));
+	}
+	
+	@UiHandler("lstMonth")
+	public void onLstMonthChanged(ChangeEvent event) {
+		clearLogTable();
+		getUiHandlers().professorSelected(
+    			selectedProfessor, 
+    			lstCourses.getValue(lstCourses.getSelectedIndex()),
+    			lstYear.getItemText(lstYear.getSelectedIndex()),
+    			lstMonth.getItemText(lstMonth.getSelectedIndex()));
+	}
+	
+	@Override
+	public void clearProfTable() {
 		List<ProfessorProxy> temp = new ArrayList<ProfessorProxy>();
 		tblProfessors.setRowData(temp);
 		tblProfessors.setRowCount(temp.size());
-		
-		((SingleSelectionModel<ProfessorProxy>)tblProfessors.getSelectionModel()).setSelected(((SingleSelectionModel<ProfessorProxy>)tblProfessors.getSelectionModel()).getSelectedObject(), false);
 	}
 	
-	private void clearLogTable() {
+	@Override
+	public void clearLogTable() {
 		List<LogProxy> temp = new ArrayList<LogProxy>();
 		tblLog.setRowData(temp);
 		tblLog.setRowCount(temp.size());
@@ -190,14 +209,31 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    };
 	    hourColl.setFieldUpdater(new FieldUpdater<LogProxy,String>(){
 	    	@Override
-	    	public void update(int index, LogProxy cours, String value){
+	    	public void update(int index, LogProxy log, String value){
 	    		if (getUiHandlers() != null) {
 	    			selectedLog = index;
-	    			// getUiHandlers().updateCoursStatus(cours, value);
-	    			Window.alert("changed : " + value);
+	    			getUiHandlers().updateLogTime(log, value);
 	    		}	    		
 	    	}
 	    });
 	    tblLog.addColumn(hourColl, "No. d'heurs");
+	}
+
+	@Override
+	public void setNotification(String code) {
+		if (code.equals("log-updated"))
+			showTimer("Modification enregistrée.");
+	}
+	
+	private void showTimer(final String text) {
+		txtNotification.setText(text);
+		txtNotification.setVisible(true);
+		Timer t = new Timer() {
+	      public void run() {
+	        txtNotification.setVisible(false);
+	      }
+	    };
+	    // Schedule the timer to run once in 3 seconds.
+	    t.schedule(1000);
 	}
 }
