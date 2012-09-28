@@ -1,15 +1,16 @@
 package com.lemania.timetracking.client.presenter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.lemania.timetracking.client.event.UpdateTimeLogEvent;
+import com.lemania.timetracking.client.event.UpdateTimeLogEvent.UpdateTimeLogHandler;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
@@ -43,7 +44,7 @@ import com.lemania.timetracking.client.LoggedInGatekeeper;
 
 public class TimeInputPresenter 
 		extends Presenter<TimeInputPresenter.MyView, TimeInputPresenter.MyProxy> 
-		implements TimeInputUiHandler {
+		implements TimeInputUiHandler, UpdateTimeLogHandler {
 	
 	private List<LogTypeProxy> logTypes;
 
@@ -59,8 +60,6 @@ public class TimeInputPresenter
 		void initializeValues();
 		void initializeProfTable();
 		void initializeLogTable();
-		
-		void updateLogTypeList(List<LogProxy> logList);
 	}
 
 	@ProxyCodeSplit
@@ -179,27 +178,26 @@ public class TimeInputPresenter
 			}
 		});
 	}
-
-	@Override
-	public void professorSelected(final ProfessorProxy prof, final String courseId, final Date currentMonth) {
+	
+	public void updateLogTypeList(final ProfessorProxy prof, final String courseId, final String year, final String month) {
 		// TODO Load log list
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
 		rfl.initialize(this.getEventBus());
 		LogRequestContext rcl = rfl.logRequest();
-		rcl.listAll(prof.getId().toString(), courseId, currentMonth).fire(new Receiver<List<LogProxy>>(){
+		rcl.listAll(prof.getId().toString(), courseId, year, month).fire(new Receiver<List<LogProxy>>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
 			}
 			@Override
 			public void onSuccess(List<LogProxy> response) {
-				populateLogTypeList(response, prof, courseId, currentMonth);
+				populateLogTypeList(response, prof, courseId, year, month);
 			}
 		});
 	}
 	
 	// Find and add missing LogType
-	public void populateLogTypeList(final List<LogProxy> logList, ProfessorProxy prof, String courseId, Date currentMonth){
+	public void populateLogTypeList(final List<LogProxy> logList, ProfessorProxy prof, String courseId, String year, String month){
 		
 		List<String> typeIdList = new ArrayList<String>();
 		boolean found = false;
@@ -224,7 +222,7 @@ public class TimeInputPresenter
 			LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
 			rfl.initialize(this.getEventBus());
 			LogRequestContext rcl = rfl.logRequest();
-			rcl.batchUpdate(prof.getId().toString(), courseId, currentMonth, typeIdList).fire(new Receiver<List<LogProxy>>(){
+			rcl.batchUpdate(prof.getId().toString(), courseId, year, month, typeIdList).fire(new Receiver<List<LogProxy>>(){
 				@Override
 				public void onFailure(ServerFailure error){
 					Window.alert(error.getMessage());
@@ -259,5 +257,17 @@ public class TimeInputPresenter
 				getView().setCourseList(response);
 			}
 		});
+	}
+
+	@ProxyEvent
+	@Override
+	public void onUpdateTimeLog(UpdateTimeLogEvent event) {
+		updateLogTypeList(event.getProf(), event.getCourseId(), event.getYear(), event.getMonth());
+	}
+
+	@Override
+	public void professorSelected(ProfessorProxy prof, String courseId,
+			String year, String month) {
+		getEventBus().fireEvent(new UpdateTimeLogEvent(prof, courseId, year, month));
 	}
 }

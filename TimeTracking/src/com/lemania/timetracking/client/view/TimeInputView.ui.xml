@@ -44,10 +44,18 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
+								<g:Label text="Année :"/>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="lstYear"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
 								<g:Label text="Mois :"/>
 							</g:customCell>
 							<g:customCell>
-								<p2:DatePicker ui:field="dtLogDate"/>
+								<g:ListBox ui:field="lstMonth"/>
 							</g:customCell>
 						</g:row>
 						<g:row>

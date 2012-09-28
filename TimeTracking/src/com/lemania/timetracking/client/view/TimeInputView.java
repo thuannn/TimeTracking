@@ -3,13 +3,13 @@ package com.lemania.timetracking.client.view;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextInputCell;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
@@ -20,7 +20,6 @@ import com.lemania.timetracking.client.uihandler.TimeInputUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.LogProxy;
-import com.lemania.timetracking.shared.LogTypeProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
@@ -31,7 +30,6 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.datepicker.client.DatePicker;
-import com.google.gwt.user.client.ui.Button;
 
 public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implements TimeInputPresenter.MyView {
 
@@ -56,8 +54,9 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiField ListBox lstCourses;
 	@UiField ListBox lstSchools;
 	@UiField Label lblProfName;
-	@UiField DatePicker dtLogDate;
 	@UiField(provided=true) DataGrid<LogProxy> tblLog = new DataGrid<LogProxy>();
+	@UiField ListBox lstYear;
+	@UiField ListBox lstMonth;
 	
 	@Override
 	public void setEcoleList(List<EcoleProxy> ecoles) {
@@ -90,6 +89,13 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		
 		clearProfTable();
 		clearLogTable();
+		
+		// Set current year and month
+		for (int i=1; i<13; i++)
+			lstMonth.addItem( Integer.toString(i), Integer.toString(i));
+		
+		for (int i=2012; i<2015; i++)
+			lstYear.addItem( Integer.toString(i), Integer.toString(i));
 	}
 	
 	/***/
@@ -101,10 +107,13 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 			getUiHandlers().loadCoursesBySchool(lstSchools.getValue(lstSchools.getSelectedIndex()));
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void clearProfTable() {
 		List<ProfessorProxy> temp = new ArrayList<ProfessorProxy>();
 		tblProfessors.setRowData(temp);
 		tblProfessors.setRowCount(temp.size());
+		
+		((SingleSelectionModel<ProfessorProxy>)tblProfessors.getSelectionModel()).setSelected(((SingleSelectionModel<ProfessorProxy>)tblProfessors.getSelectionModel()).getSelectedObject(), false);
 	}
 	
 	private void clearLogTable() {
@@ -131,7 +140,12 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    tblProfessors.addColumn(colName, "Nom");
 	    
 	    // Add a selection model to handle user selection.
-	    final SingleSelectionModel<ProfessorProxy> selectionModel = new SingleSelectionModel<ProfessorProxy>();
+	    final SingleSelectionModel<ProfessorProxy> selectionModel = new SingleSelectionModel<ProfessorProxy>() {
+	    	@Override
+	    	public void setSelected(ProfessorProxy object, boolean selected) {	    		
+    	      	super.setSelected(object, selected);
+	    	}
+	    };
 	    tblProfessors.setSelectionModel(selectionModel);
 	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 	      public void onSelectionChange(SelectionChangeEvent event) {
@@ -141,7 +155,8 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	        	getUiHandlers().professorSelected(
 	        			selectedProfessor, 
 	        			lstCourses.getValue(lstCourses.getSelectedIndex()),
-	        			dtLogDate.getCurrentMonth());
+	        			lstYear.getItemText(lstYear.getSelectedIndex()),
+	        			lstMonth.getItemText(lstMonth.getSelectedIndex()));
 	        }
 	      }
 	    });
@@ -184,12 +199,5 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    	}
 	    });
 	    tblLog.addColumn(hourColl, "No. d'heurs");
-	    tblLog.setColumnWidth(hourColl, 3.0, Unit.EM);
-	}
-
-	@Override
-	public void updateLogTypeList(List<LogProxy> logList) {
-		// TODO Auto-generated method stub
-		
 	}
 }
