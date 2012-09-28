@@ -7,8 +7,38 @@
 	ui:generateLocales='default'>
 
 	<g:HTMLPanel width="100%" height="100%">
-		<g:VerticalPanel width="100%" height="100%">
+		<g:VerticalPanel width="100%">
 			<g:Label text="Bienvenue" styleName="pageTitle"/>
+			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT">
+			<g:Grid width="">
+				<g:row>
+					<g:customCell>
+						<g:Label text="Nom d&apos;utilisateur :"/>
+					</g:customCell>
+					<g:customCell>
+						<g:TextBox ui:field="txtUserName"/>
+					</g:customCell>
+				</g:row>
+				<g:row>
+					<g:customCell>
+						<g:Label text="Mot de passe :"/>
+					</g:customCell>
+					<g:customCell>
+						<g:PasswordTextBox ui:field="txtPassword"/>
+					</g:customCell>
+				</g:row>
+				<g:row>
+					<g:customCell>
+						<g:Label/>
+					</g:customCell>
+					<g:customCell>
+						<g:Button text="Se connecter" ui:field="cmdLogin"/>
+					</g:customCell>
+				</g:row>
+			</g:Grid>
+			<g:VerticalPanel width="" height="" horizontalAlignment="ALIGN_LEFT">
 			<g:Image url="images/12023-22.jpg"/>
+		</g:VerticalPanel>
+		</g:HorizontalPanel>
 		</g:VerticalPanel></g:HTMLPanel>
 </ui:UiBinder>

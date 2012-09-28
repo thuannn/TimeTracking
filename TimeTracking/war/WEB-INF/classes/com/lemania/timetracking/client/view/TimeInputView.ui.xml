@@ -6,26 +6,77 @@
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default' xmlns:p1="urn:import:com.google.gwt.user.cellview.client" xmlns:p2="urn:import:com.google.gwt.user.datepicker.client">
 
-	<g:HTMLPanel>
-		<g:VerticalPanel width="100%">
-			<g:Label text="Mettre des heures" styleName="pageTitle"/>
-			<g:Grid>
+	<g:HTMLPanel width="100%" height="100%">
+		<g:VerticalPanel width="100%" height="">
+			<g:Label text="Mettre des heures" styleName="pageTitle" width=""/>
+			<g:HorizontalPanel width="100%" height="100%" horizontalAlignment="ALIGN_LEFT" borderWidth="0">
+				<g:VerticalPanel width="400px">
+					<g:Grid>
+						<g:row>
+					<g:customCell>
+						<g:Label text="Ecoles : "/>
+					</g:customCell>
+					<g:customCell>
+						<g:ListBox ui:field="lstSchools"/>
+					</g:customCell>
+				</g:row>
 				<g:row>
 					<g:customCell>
 						<g:Label text="Cours :"/>
 					</g:customCell>
 					<g:customCell>
-						<g:ListBox/>
-					</g:customCell>
-					<g:customCell>
-						<g:Label text="Date :"/>
-					</g:customCell>
-					<g:customCell>
-						<p2:DateBox/>
+						<g:ListBox ui:field="lstCourses"/>
 					</g:customCell>
 				</g:row>
+				<g:row/>
 			</g:Grid>
-			<p1:DataGrid width="250px" height="200px" ui:field="dataGrid"/>
+					<p1:DataGrid width="250px" height="200px" ui:field="tblProfessors"/>
+				</g:VerticalPanel>
+				<g:VerticalPanel width="400px" styleName="sideBar">
+					<g:Grid width="400px" borderWidth="0" cellPadding="5" cellSpacing="2">
+						<g:row>
+							<g:customCell>
+								<g:Label text="Professeur :"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label ui:field="lblProfName" width=""/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Année :"/>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="lstYear"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Mois :"/>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="lstMonth"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="."/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label ui:field="txtNotification"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Heures :"/>
+							</g:customCell>
+							<g:customCell>
+								<p1:DataGrid width="300px" height="300px" ui:field="tblLog"/>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+				</g:VerticalPanel>
+			</g:HorizontalPanel>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

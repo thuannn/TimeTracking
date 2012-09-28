@@ -34,6 +34,13 @@ withOperation(new OperationKey("yI87RsyoDsBZEvpUZqK4aITdDI8="),
   .withMethodName("saveAndReturn")
   .withRequestContext("com.lemania.timetracking.shared.service.ProfessorRequestFactory$ProfessorRequestContext")
   .build());
+withOperation(new OperationKey("ywncKjv4F7rkiVzVbLxtJTCHnls="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Ljava/lang/String;)Ljava/util/List;")
+  .withMethodName("listAllByCourse")
+  .withRequestContext("com.lemania.timetracking.shared.service.ProfessorRequestFactory$ProfessorRequestContext")
+  .build());
 withRawTypeToken("QVZ$sjfjvTS6fRjG5V4DJUTmz2M=", "com.lemania.timetracking.shared.ProfessorProxy");
 withRawTypeToken("w1Qg$YHpDaNcHrR5HZ$23y518nA=", "com.google.web.bindery.requestfactory.shared.EntityProxy");
 withRawTypeToken("FXHD5YU0TiUl3uBaepdkYaowx9k=", "com.google.web.bindery.requestfactory.shared.BaseProxy");
