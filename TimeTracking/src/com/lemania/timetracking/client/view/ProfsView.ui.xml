@@ -11,7 +11,8 @@
 			<g:Label text="Liste de professeurs" styleName="pageTitle"/>
 			<g:HorizontalPanel width="850px">
 				<g:VerticalPanel width="400px">
-					<p1:DataGrid width="400px" height="550px" ui:field="tblProfessors"/>
+					<p1:SimplePager location="CENTER" ui:field="pager" pageSize="10"/>
+					<p1:DataGrid width="400px" height="550px" ui:field="tblProfessors" pageSize="10"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="400px">
 					<g:Grid width="100%" styleName="sideBar">

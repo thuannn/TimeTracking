@@ -16,7 +16,7 @@ public class LogTypeDao extends DAOBase {
     }
 	
 	public List<LogType> listAll(){
-		Query<LogType> q = this.ofy().query(LogType.class);
+		Query<LogType> q = this.ofy().query(LogType.class).order("hourName");
 		List<LogType> returnList = new ArrayList<LogType>();
 		for (LogType type : q){
 			returnList.add(type);

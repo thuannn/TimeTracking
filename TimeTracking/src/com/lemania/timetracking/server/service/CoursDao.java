@@ -16,7 +16,7 @@ public class CoursDao extends DAOBase {
     }
 	
 	public List<Cours> listAll(){
-		Query<Cours> q = this.ofy().query(Cours.class);
+		Query<Cours> q = this.ofy().query(Cours.class).order("coursNom");
 		List<Cours> returnList = new ArrayList<Cours>();
 		for (Cours ecole : q){
 			returnList.add(ecole);
@@ -31,7 +31,9 @@ public class CoursDao extends DAOBase {
 			return returnList;
 		
 		Key<Ecole> ecole = new Key<Ecole>(Ecole.class, Long.parseLong(ecoleId));
-		Query<Cours> q = this.ofy().query(Cours.class).filter("ecole", ecole);
+		Query<Cours> q = this.ofy().query(Cours.class)
+				.filter("ecole", ecole)
+				.order("coursNom");
 		
 		for (Cours cours : q){
 			returnList.add(cours);
@@ -47,7 +49,9 @@ public class CoursDao extends DAOBase {
 			return returnList;
 		
 		Key<Ecole> ecole = new Key<Ecole>(Ecole.class, Long.parseLong(ecoleId));
-		Query<Cours> q = this.ofy().query(Cours.class).filter("ecole", ecole);
+		Query<Cours> q = this.ofy().query(Cours.class)
+				.filter("ecole", ecole)
+				.order("coursNom");
 		
 		for (Cours cours : q){
 			if (cours.getCoursActif().equals(true))

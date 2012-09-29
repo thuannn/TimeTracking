@@ -18,7 +18,7 @@ public class LogDao extends DAOBase {
     }
 	
 	public List<Log> listAll(){
-		Query<Log> q = this.ofy().query(Log.class);
+		Query<Log> q = this.ofy().query(Log.class).order("type");
 		List<Log> returnList = new ArrayList<Log>();
 		for (Log log : q){
 			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
@@ -35,7 +35,8 @@ public class LogDao extends DAOBase {
 				.filter("year", Integer.parseInt(year))
 				.filter("month", Integer.parseInt(month))
 				.filter("prof", profKey)
-				.filter("cours", coursKey);
+				.filter("cours", coursKey)
+				.order("type");
 		List<Log> returnList = new ArrayList<Log>();
 		for (Log log : q){
 			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );

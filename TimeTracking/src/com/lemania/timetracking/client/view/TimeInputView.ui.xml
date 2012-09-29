@@ -30,7 +30,8 @@
 				</g:row>
 				<g:row/>
 			</g:Grid>
-					<p1:DataGrid width="250px" height="200px" ui:field="tblProfessors"/>
+					<p1:SimplePager location="CENTER" ui:field="pager" pageSize="10"/>
+					<p1:DataGrid width="400px" height="550px" ui:field="tblProfessors" pageSize="10"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="400px" styleName="sideBar">
 					<g:Grid width="400px" borderWidth="0" cellPadding="5" cellSpacing="2">

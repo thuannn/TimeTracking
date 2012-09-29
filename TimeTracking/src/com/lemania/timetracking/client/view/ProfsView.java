@@ -6,6 +6,7 @@ import java.util.List;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -22,8 +23,11 @@ import com.lemania.timetracking.shared.ProfessorProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
@@ -34,6 +38,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	private final Widget widget;
 	private int selectedProf;
 	private ProfessorProxy selectedProfessor;
+	private ListDataProvider<ProfessorProxy> professorProvider;
 
 	public interface Binder extends UiBinder<Widget, ProfsView> {
 	}
@@ -55,6 +60,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	@UiField Button cmdAddCourse;
 	@UiField ListBox lstAddEcole;
 	@UiField ListBox lstAddCourse;
+	@UiField SimplePager pager;
 	
 	@UiHandler("cmdAddCourse")
 	public void onCmdAddCourseClicked(ClickEvent event){
@@ -113,6 +119,8 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	      }
 	    });
 	    
+	    pager.setDisplay(tblProfessors);
+	    
 	    // Assignment table	    
 	    TextColumn<AssignmentProxy> colSchoolName = new TextColumn<AssignmentProxy>() {
 		      @Override
@@ -133,8 +141,11 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 
 	@Override
 	public void setData(List<ProfessorProxy> profs) {
-		tblProfessors.setRowCount(profs.size(), true);
-		tblProfessors.setRowData(0, profs);
+		// tblProfessors.setRowCount(profs.size(), true);
+		// tblProfessors.setRowData(0, profs);
+		professorProvider = new ListDataProvider<ProfessorProxy>();
+		professorProvider.setList(profs);
+		professorProvider.addDataDisplay(tblProfessors);
 	}
 
 	@Override

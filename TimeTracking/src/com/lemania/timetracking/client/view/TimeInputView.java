@@ -24,15 +24,18 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.cellview.client.SimplePager;
 
 public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implements TimeInputPresenter.MyView {
 
 	private final Widget widget;
 	private ProfessorProxy selectedProfessor;
 	private int selectedLog;
+	private ListDataProvider<ProfessorProxy> professorProvider;
 
 	public interface Binder extends UiBinder<Widget, TimeInputView> {
 	}
@@ -55,6 +58,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiField ListBox lstYear;
 	@UiField ListBox lstMonth;
 	@UiField Label txtNotification;
+	@UiField SimplePager pager;
 	
 	@Override
 	public void setEcoleList(List<EcoleProxy> ecoles) {
@@ -74,9 +78,13 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	
 	@Override
 	public void setProfData(List<ProfessorProxy> profs) {
-		tblProfessors.setRowCount(profs.size(), true);
-		tblProfessors.setRowData(profs);
-		tblProfessors.setRowCount(profs.size());
+//		tblProfessors.setRowCount(profs.size(), true);
+//		tblProfessors.setRowData(profs);
+//		tblProfessors.setRowCount(profs.size());
+		
+		professorProvider = new ListDataProvider<ProfessorProxy>();
+		professorProvider.setList(profs);
+		professorProvider.addDataDisplay(tblProfessors);
 	}
 
 	@Override
@@ -101,10 +109,12 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	/***/
 	
 	@UiHandler("lstSchools")
-	public void onLstAddEcoleChanged(ChangeEvent event){
+	public void onLstAddEcoleChanged(ChangeEvent event) {
 		clearProfTable();
-		if (getUiHandlers() != null)
-			getUiHandlers().loadCoursesBySchool(lstSchools.getValue(lstSchools.getSelectedIndex()));
+		if ( !lstSchools.getItemText(lstSchools.getSelectedIndex()).equals("-") ) {
+			if (getUiHandlers() != null)
+				getUiHandlers().loadCoursesBySchool(lstSchools.getValue(lstSchools.getSelectedIndex()));
+		}
 	}
 	
 	@UiHandler("lstYear")
@@ -130,8 +140,13 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@Override
 	public void clearProfTable() {
 		List<ProfessorProxy> temp = new ArrayList<ProfessorProxy>();
-		tblProfessors.setRowData(temp);
-		tblProfessors.setRowCount(temp.size());
+		
+//		tblProfessors.setRowData(temp);
+//		tblProfessors.setRowCount(temp.size());
+		
+		professorProvider = new ListDataProvider<ProfessorProxy>();
+		professorProvider.setList(temp);
+		professorProvider.addDataDisplay(tblProfessors);
 	}
 	
 	@Override
@@ -143,8 +158,11 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 
 	@UiHandler("lstCourses")
 	public void onLstCoursesChanged(ChangeEvent event){
-		if (getUiHandlers() != null)
-			getUiHandlers().loadProfessorsByCourse(lstCourses.getValue(lstCourses.getSelectedIndex()));
+		clearProfTable();
+		if ( !lstCourses.getItemText(lstCourses.getSelectedIndex()).equals("-") ) {
+			if (getUiHandlers() != null)
+				getUiHandlers().loadProfessorsByCourse(lstCourses.getValue(lstCourses.getSelectedIndex()));
+		}
 	}
 
 	@Override
@@ -165,7 +183,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
     	      	super.setSelected(object, selected);
 	    	}
 	    };
-	    tblProfessors.setSelectionModel(selectionModel);
+	    
 	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 	      public void onSelectionChange(SelectionChangeEvent event) {
 	        selectedProfessor = selectionModel.getSelectedObject();
@@ -179,6 +197,9 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	        }
 	      }
 	    });
+	    tblProfessors.setSelectionModel(selectionModel);
+	    
+	    pager.setDisplay(tblProfessors);
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public class ProfessorDao extends DAOBase {
     }
 	
 	public List<Professor> listAll(){
-		Query<Professor> q = this.ofy().query(Professor.class);
+		Query<Professor> q = this.ofy().query(Professor.class).order("profName");
 		List<Professor> returnList = new ArrayList<Professor>();
 		for (Professor prof : q){
 			returnList.add(prof);
@@ -36,7 +36,9 @@ public class ProfessorDao extends DAOBase {
 		}
 		
 		Map<Key<Professor>, Professor> profs = this.ofy().get(profKeys);
-		return new ArrayList<Professor>(profs.values());
+		List<Professor> returnList = new ArrayList<Professor>(profs.values());
+		java.util.Collections.sort(returnList);
+		return returnList;
 	}
 	
 	public void save(Professor prof){

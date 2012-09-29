@@ -18,7 +18,7 @@ public class AssignmentDao extends DAOBase {
     }
 	
 	public List<Assignment> listAll(){
-		Query<Assignment> q = this.ofy().query(Assignment.class);
+		Query<Assignment> q = this.ofy().query(Assignment.class).order("cours");
 		List<Assignment> returnList = new ArrayList<Assignment>();
 		for (Assignment a : q){
 			a.setSchoolName( this.ofy().get(this.ofy().get(a.getCours()).getEcole()).getSchoolName());
@@ -29,7 +29,9 @@ public class AssignmentDao extends DAOBase {
 	}
 	
 	public List<Assignment> listAll(String profId){
-		Query<Assignment> q = this.ofy().query(Assignment.class).filter("prof", new Key<Professor>(Professor.class, Long.parseLong(profId)));
+		Query<Assignment> q = this.ofy().query(Assignment.class)
+				.filter("prof", new Key<Professor>(Professor.class, Long.parseLong(profId)))
+				.order("cours");
 		List<Assignment> returnList = new ArrayList<Assignment>();
 		for (Assignment a : q){
 			a.setSchoolName( this.ofy().get(this.ofy().get(a.getCours()).getEcole()).getSchoolName());
@@ -40,7 +42,9 @@ public class AssignmentDao extends DAOBase {
 	}
 	
 	public List<Assignment> listAllActive(){
-		Query<Assignment> q = this.ofy().query(Assignment.class).filter("schoolActive", true);
+		Query<Assignment> q = this.ofy().query(Assignment.class)
+				.filter("schoolActive", true)
+				.order("cours");
 		List<Assignment> returnList = new ArrayList<Assignment>();
 		for (Assignment a : q){
 			returnList.add(a);

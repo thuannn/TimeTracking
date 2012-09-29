@@ -15,7 +15,7 @@ public class EcoleDao extends DAOBase{
     }
 	
 	public List<Ecole> listAll(){
-		Query<Ecole> q = this.ofy().query(Ecole.class);
+		Query<Ecole> q = this.ofy().query(Ecole.class).order("schoolName");
 		List<Ecole> returnList = new ArrayList<Ecole>();
 		for (Ecole ecole : q){
 			returnList.add(ecole);
@@ -24,7 +24,9 @@ public class EcoleDao extends DAOBase{
 	}
 	
 	public List<Ecole> listAllActive(){
-		Query<Ecole> q = this.ofy().query(Ecole.class).filter("schoolActive", true);
+		Query<Ecole> q = this.ofy().query(Ecole.class)
+				.filter("schoolActive", true)
+				.order("schoolName");
 		List<Ecole> returnList = new ArrayList<Ecole>();
 		for (Ecole ecole : q){
 			returnList.add(ecole);
