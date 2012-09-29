@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/gin-1.5-post-gwt-2.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/aopalliance.jar"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/guice-3.0.jar"/>
@@ -15,11 +14,12 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtp-all-0.7.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-3.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/requestfactory-apt.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/requestfactory-server.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/validation-api-1.0.0.GA.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/requestfactory-client.jar"/>
+	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/gwtp-all-0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/objectify-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/requestfactory-apt.jar"/>
+	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/requestfactory-server.jar"/>
+	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/validation-api-1.0.0.GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/requestfactory-client.jar"/>
+	<classpathentry exported="true" kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

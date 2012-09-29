@@ -48,7 +48,13 @@ public class ProfsAddView extends ViewWithUiHandlers<ProfessorAddUiHandler> impl
 
 	@Override
 	public void disableUiAfterAdd() {
-		
 		cmdAdd.setEnabled(false);
+	}
+
+	@Override
+	public void initializeUi() {
+		// TODO Clear prof name and enable Add button
+		txtProfName.setText("");
+		cmdAdd.setEnabled(true);
 	}
 }

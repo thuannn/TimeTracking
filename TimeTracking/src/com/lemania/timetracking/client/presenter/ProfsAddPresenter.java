@@ -29,6 +29,7 @@ public class ProfsAddPresenter
 
 	public interface MyView extends View, HasUiHandlers<ProfessorAddUiHandler> {
 		void disableUiAfterAdd();
+		void initializeUi();
 	}
 
 	@ProxyCodeSplit
@@ -53,6 +54,11 @@ public class ProfsAddPresenter
 	@Override
 	protected void onBind() {
 		super.onBind();
+	}
+	
+	@Override
+	protected void onReset(){
+		getView().initializeUi();
 	}
 
 	@Override

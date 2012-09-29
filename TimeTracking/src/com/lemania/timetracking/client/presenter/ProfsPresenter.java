@@ -168,7 +168,7 @@ public class ProfsPresenter
 	}
 
 	@Override
-	public void addCourse(String courseId, ProfessorProxy prof) {
+	public void addCourse(String courseId, final ProfessorProxy prof) {
 		if (courseId.isEmpty())
 			Window.alert("Veuillez choisir un cours à rajouter.");
 		
@@ -182,7 +182,7 @@ public class ProfsPresenter
 			}
 			@Override
 			public void onSuccess(AssignmentProxy response) {				
-				getView().addToAssignmentList(response);
+				professorSelected(prof);
 			}
 		});
 	}

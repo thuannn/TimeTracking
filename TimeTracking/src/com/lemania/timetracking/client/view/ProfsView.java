@@ -151,6 +151,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 
 	@Override
 	public void setEcoleAddList(List<EcoleProxy> ecoles) {
+		lstAddEcole.clear();
 		lstAddEcole.addItem("-","");
 		for (int i=0; i<ecoles.size(); i++)
 			lstAddEcole.addItem(ecoles.get(i).getSchoolName(), ecoles.get(i).getId().toString());		
@@ -166,9 +167,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 
 	@Override
 	public void addToAssignmentList(AssignmentProxy a) {				
-		List<AssignmentProxy> list = new ArrayList<AssignmentProxy>();
-		list.add(a);		
-		tblAssignment.setRowData(tblAssignment.getRowCount()+1, list);		
+		// Not using for the moment
 	}
 
 	@Override
