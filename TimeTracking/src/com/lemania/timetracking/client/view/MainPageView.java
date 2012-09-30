@@ -11,6 +11,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.MainPageUiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Label;
 
 public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implements MainPagePresenter.MyView {
 	
@@ -31,6 +33,8 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiField Button cmdProfs;
 	@UiField Button cmdProfsAdd;
 	@UiField Button cmdContact;
+	@UiField Hyperlink cmdLogout;
+	@UiField Label txtWelcome;
 	
 	public MainPageView() {		
 		widget = uiBinder.createAndBindUi(this);
@@ -125,5 +129,17 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	void onCmdContactClicked(ClickEvent event){
 		if (getUiHandlers() != null)
 			getUiHandlers().showContact();
+	}
+	
+	@UiHandler("cmdLogout")
+	void onCmdLogoutClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().logOut();
+	}
+
+	@Override
+	public void showUserInfo() {
+		txtWelcome.setText("Vous êtes connecté, Thuan!");
+		cmdLogout.setText("Déconnection");
 	}
 }

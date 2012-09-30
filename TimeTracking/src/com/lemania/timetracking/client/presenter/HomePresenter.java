@@ -5,6 +5,8 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.lemania.timetracking.client.CurrentUser;
+import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.user.client.Window;
@@ -52,6 +54,8 @@ public class HomePresenter
 			return;
 		}
 		
-		// Validate user name and password here
+		CurrentUser currentUser = new CurrentUser();
+		currentUser.setLoggedIn(true);
+		this.getEventBus().fireEvent(new LoginAuthenticatedEvent(currentUser));
 	}
 }

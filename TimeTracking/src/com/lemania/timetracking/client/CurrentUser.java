@@ -16,50 +16,14 @@
 
 package com.lemania.timetracking.client;
 
-import com.google.web.bindery.event.shared.EventBus;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HasHandlers;
-import com.google.inject.Inject;
-import com.lemania.timetracking.client.event.CurrentUserChangedEvent;
-
-/**
- * This is a basic class that holds the privileges of the user
- * currently logged in.
- *
- * @author Philippe Beaudoin
- */
-public class CurrentUser implements HasHandlers {
-
-  private boolean isAdmin = true;
-  private boolean isLoggedIn = true;
-
-  private final EventBus eventBus;
-
-  @Inject
-  public CurrentUser(EventBus eventBus) {
-    this.eventBus = eventBus;
-  }
-
-  public void setAdmin(boolean isAdmin) {
-    this.isAdmin = isAdmin;    
-    CurrentUserChangedEvent.fire(this);
-  }
-  
-  public void setLoggedIn(boolean isLoggedIn) {
-	    this.isLoggedIn = isLoggedIn;    
-	    CurrentUserChangedEvent.fire(this);
-  }
-
-  public boolean isLoggedIn() {
-    return isLoggedIn;
-  }
-  
-  public boolean isAdmin() {
-	  return isAdmin;
-  }
-
-  @Override
-  public void fireEvent(GwtEvent<?> event) {
-    eventBus.fireEvent(event);
-  }
+public class CurrentUser {
+	  private boolean isLoggedIn = false;
+	
+	  public void setLoggedIn(boolean isLoggedIn) {
+		  this.isLoggedIn = isLoggedIn;
+	  }
+	
+	  public boolean isLoggedIn() {
+	    return isLoggedIn;
+	  }
 }

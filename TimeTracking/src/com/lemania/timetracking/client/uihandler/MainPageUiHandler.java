@@ -26,4 +26,6 @@ public interface MainPageUiHandler extends UiHandlers {
 	void showTypeAdd();
 	
 	void showContact();
+	
+	void logOut();
 }

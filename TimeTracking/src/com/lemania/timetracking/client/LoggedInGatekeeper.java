@@ -1,21 +1,34 @@
 package com.lemania.timetracking.client;
 
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
+import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
+import com.lemania.timetracking.client.event.LoginAuthenticatedEvent.LoginAuthenticatedHandler;
 
 
 public class LoggedInGatekeeper implements Gatekeeper {
 	
-	private final CurrentUser currentUser;
+	private final EventBus eventBus;
+	private CurrentUser currentUser = null;
 
 	  @Inject
-	  public LoggedInGatekeeper (
-	      final CurrentUser currentUser ) {
-	    this.currentUser = currentUser;
+	  public LoggedInGatekeeper (final EventBus eventBus) {
+		  this.eventBus = eventBus;
+		  this.eventBus.addHandler(LoginAuthenticatedEvent.getType(), new LoginAuthenticatedHandler() {
+			  @Override
+			  public void onLoginAuthenticated(LoginAuthenticatedEvent event){
+				  currentUser = event.getCurrentUser();
+			  }
+		  });
 	  }
 
 	  @Override
 	  public boolean canReveal() {
-	    return currentUser.isLoggedIn();
+		  boolean loggedIn = false;
+		  if (currentUser != null) {
+			  loggedIn = currentUser.isLoggedIn();
+		  }
+		  return loggedIn;
 	  }
 }

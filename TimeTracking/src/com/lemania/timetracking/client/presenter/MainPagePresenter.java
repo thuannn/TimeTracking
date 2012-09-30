@@ -4,6 +4,7 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
@@ -13,12 +14,15 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.History;
 import com.google.inject.Inject;
+import com.lemania.timetracking.client.CurrentUser;
+import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
+import com.lemania.timetracking.client.event.LoginAuthenticatedEvent.LoginAuthenticatedHandler;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.lemania.timetracking.client.uihandler.MainPageUiHandler;
 
 public class MainPagePresenter extends
 		Presenter<MainPagePresenter.MyView, MainPagePresenter.MyProxy>
-		implements MainPageUiHandler {
+		implements MainPageUiHandler, LoginAuthenticatedHandler {
 	/**
 	   * Child presenters can fire a RevealContentEvent with TYPE_SetMainContent to set themselves
 	   * as children of this presenter.
@@ -27,6 +31,7 @@ public class MainPagePresenter extends
 	public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
 
 	public interface MyView extends View, HasUiHandlers<MainPageUiHandler> {
+		void showUserInfo();
 	}
 	
 	@ProxyStandard
@@ -116,5 +121,18 @@ public class MainPagePresenter extends
 	public void showContact() {
 		// TODO Auto-generated method stub
 		History.newItem(NameTokens.contact);
+	}
+
+	@Override
+	public void logOut() {
+		CurrentUser currentUser = new CurrentUser();
+		currentUser.setLoggedIn(false);
+		this.getEventBus().fireEvent(new LoginAuthenticatedEvent(currentUser));
+	}
+
+	@ProxyEvent
+	@Override
+	public void onLoginAuthenticated(LoginAuthenticatedEvent event) {
+		getView().showUserInfo();
 	}
 }

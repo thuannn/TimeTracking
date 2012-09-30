@@ -11,8 +11,8 @@
 			<g:Dock direction="NORTH">
 				<g:HorizontalPanel verticalAlignment="ALIGN_BOTTOM" width="90%" height="54px" spacing="5">
 					<g:Image url="images/logo.jpg" width=""/>
-					<g:Label text="Vous êtes connectés, Thuan !   " width="" horizontalAlignment="ALIGN_RIGHT"/>
-					<g:Hyperlink text="Déconnexion" targetHistoryToken="newHistoryToken" width=""/>
+					<g:Label width="" horizontalAlignment="ALIGN_RIGHT" ui:field="txtWelcome"/>
+					<g:Hyperlink targetHistoryToken="newHistoryToken" width="" ui:field="cmdLogout"/>
 					<g:Image url="images/appengine-silver-120x30.gif"/>
 				</g:HorizontalPanel>
 			</g:Dock>
