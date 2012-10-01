@@ -1,3 +1,2 @@
 # Module timetracking
 # RPC service class, partial path of RPC policy file
-com.google.gwt.logging.shared.RemoteLoggingService, 5018A242D7F4A0AE3903FED1FB55D655.gwt.rpc

@@ -9,7 +9,7 @@
 	<g:HTMLPanel width="100%" height="100%">
 		<g:FlowPanel width="100%" height="100%">
 			<g:VerticalPanel width="100%" height="100%">
-				<g:Label text="Extraire des informations des heures" styleName="pageTitle"/>
+				<g:Label text="Extraire des informations des heures" styleName="pageTitle" width="830" height="30"/>
 				<g:HorizontalPanel>
 					<g:Label text="Filtres : "/>
 					<g:Label text="Année :"/>
@@ -19,7 +19,7 @@
 					<g:Button text="Filtrer">Afiner</g:Button>
 				</g:HorizontalPanel>
 				<g:Button>Extraire en Excel</g:Button>
-				<p1:DataGrid width="800px" height="450px" ui:field="tblLog"/>
+				<p1:DataGrid width="830px" height="450px" ui:field="tblLog"/>
 			</g:VerticalPanel>
 		</g:FlowPanel>
 	</g:HTMLPanel>

@@ -21,18 +21,18 @@
 					<g:Button ui:field="cmdHomepage">Accueil</g:Button>
 					<g:Button ui:field="cmdTimeInput">Mettre des heures</g:Button>
 					<g:TreeItem text="Rapports" state="true">
-						<g:Button text="Extraire des heures" ui:field="cmdExtractData"/>
+						<g:Button text="Vue d&apos;ensembles - Télécharger" ui:field="cmdExtractData"/>
 					</g:TreeItem>
 					<g:TreeItem text="Informations de base" state="true">
-						<g:TreeItem text="Ecoles">
-						<g:Button ui:field="cmdEcolePage">Liste d'écoles</g:Button>
+						<g:TreeItem text="Ecoles" state="true">
+						<g:Button ui:field="cmdEcolePage" text="Liste des écoles">Liste d'écoles</g:Button>
 						<g:Button text="Ajouter une école" ui:field="cmdEcoleAdd"/>
 					</g:TreeItem>
-						<g:TreeItem text="Noms de Cours">
-							<g:Button ui:field="cmdCours" text="Liste des noms">Liste de cours</g:Button>
-							<g:Button ui:field="cmdCoursAdd" text="Ajouter un nom">Ajouter un cours</g:Button>
+						<g:TreeItem text="Départements" state="true">
+							<g:Button ui:field="cmdCours" text="Liste des départements">Liste de cours</g:Button>
+							<g:Button ui:field="cmdCoursAdd" text="Ajouter un département">Ajouter un cours</g:Button>
 						</g:TreeItem>
-						<g:TreeItem text="Types d&apos;heure">
+						<g:TreeItem text="Types d&apos;heure" state="true">
 							<g:Button text="Liste des types" ui:field="cmdTypes"/>
 							<g:Button ui:field="cmdTypesAdd">Ajouter un type</g:Button>
 						</g:TreeItem>
