@@ -35,6 +35,7 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiField Button cmdContact;
 	@UiField Hyperlink cmdLogout;
 	@UiField Label txtWelcome;
+	@UiField Button cmdExtractData;
 	
 	public MainPageView() {		
 		widget = uiBinder.createAndBindUi(this);
@@ -125,6 +126,12 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 			getUiHandlers().showProfessorAdd();
 	}
 	
+	@UiHandler("cmdExtractData")
+	void onCmdExtractDataClicked(ClickEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().showExtractDataForm();
+	}
+	
 	@UiHandler("cmdContact")
 	void onCmdContactClicked(ClickEvent event){
 		if (getUiHandlers() != null)
@@ -133,8 +140,11 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	
 	@UiHandler("cmdLogout")
 	void onCmdLogoutClicked(ClickEvent event){
-		if (getUiHandlers() != null)
+		if (getUiHandlers() != null) {
+			txtWelcome.setText("");
+			cmdLogout.setText("");
 			getUiHandlers().logOut();
+		}
 	}
 
 	@Override

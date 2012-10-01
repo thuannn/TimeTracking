@@ -27,5 +27,7 @@ public interface MainPageUiHandler extends UiHandlers {
 	
 	void showContact();
 	
+	void showExtractDataForm();
+	
 	void logOut();
 }

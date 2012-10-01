@@ -219,7 +219,6 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 			}
 	    };
 	    tblLog.addColumn(colType, "Type");
-	    tblLog.setColumnWidth(colType, 5.0, Unit.EM);
 	    
 	    TextInputCell hourCell = new TextInputCell();
 	    Column<LogProxy,String> hourColl = new Column<LogProxy,String>(hourCell) {

@@ -5,6 +5,8 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.lemania.timetracking.client.LoggedInGatekeeper;
 import com.lemania.timetracking.client.event.LogTypeAddedEvent;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
@@ -33,6 +35,7 @@ public class LogTypesAddPresenter
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.typesadd)
+	@UseGatekeeper(LoggedInGatekeeper.class)
 	public interface MyProxy extends ProxyPlace<LogTypesAddPresenter> {
 	}
 

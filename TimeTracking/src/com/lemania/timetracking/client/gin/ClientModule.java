@@ -13,6 +13,7 @@ import com.lemania.timetracking.client.view.CoursAddView;
 import com.lemania.timetracking.client.view.CoursView;
 import com.lemania.timetracking.client.view.EcoleAddView;
 import com.lemania.timetracking.client.view.EcoleView;
+import com.lemania.timetracking.client.view.ExtractDataView;
 import com.lemania.timetracking.client.view.HomeView;
 import com.lemania.timetracking.client.view.LogTypesAddView;
 import com.lemania.timetracking.client.view.LogTypesView;
@@ -29,6 +30,7 @@ import com.lemania.timetracking.client.presenter.CoursAddPresenter;
 import com.lemania.timetracking.client.presenter.ProfsPresenter;
 import com.lemania.timetracking.client.presenter.ProfsAddPresenter;
 import com.lemania.timetracking.client.presenter.ContactPresenter;
+import com.lemania.timetracking.client.presenter.ExtractDataPresenter;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -77,5 +79,9 @@ public class ClientModule extends AbstractPresenterModule {
 
 		bindPresenter(ContactPresenter.class, ContactPresenter.MyView.class,
 				ContactView.class, ContactPresenter.MyProxy.class);
+
+		bindPresenter(ExtractDataPresenter.class,
+				ExtractDataPresenter.MyView.class, ExtractDataView.class,
+				ExtractDataPresenter.MyProxy.class);
 	}
 }

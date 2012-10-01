@@ -20,6 +20,7 @@ import com.lemania.timetracking.client.presenter.CoursAddPresenter;
 import com.lemania.timetracking.client.presenter.ProfsPresenter;
 import com.lemania.timetracking.client.presenter.ProfsAddPresenter;
 import com.lemania.timetracking.client.presenter.ContactPresenter;
+import com.lemania.timetracking.client.presenter.ExtractDataPresenter;
 
 @GinModules({ ClientModule.class })
 public interface ClientGinjector extends Ginjector {
@@ -54,4 +55,6 @@ public interface ClientGinjector extends Ginjector {
 	
 	// Thuan
 	LoggedInGatekeeper getLoggedInGatekeeper();
+
+	AsyncProvider<ExtractDataPresenter> getExtractDataPresenter();
 }

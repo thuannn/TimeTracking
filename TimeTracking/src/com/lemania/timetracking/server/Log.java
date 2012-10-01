@@ -15,7 +15,16 @@ public class Log extends DatastoreObject {
 	int hour;
 	
 	@NotSaved
+	String profName;
+
+	@NotSaved
 	String typeName;
+	
+	@NotSaved
+	String schoolName;
+	
+	@NotSaved
+	String courseName;
 	
 	public int getYear() {
 		return year;
@@ -79,5 +88,29 @@ public class Log extends DatastoreObject {
 	
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
+	}
+	
+	public String getProfName() {
+		return profName;
+	}
+
+	public void setProfName(String profName) {
+		this.profName = profName;
+	}
+
+	public String getSchoolName() {
+		return schoolName;
+	}
+
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 }

@@ -135,4 +135,9 @@ public class MainPagePresenter extends
 	public void onLoginAuthenticated(LoginAuthenticatedEvent event) {
 		getView().showUserInfo();
 	}
+
+	@Override
+	public void showExtractDataForm() {
+		History.newItem(NameTokens.extractdata);
+	}
 }

@@ -20,6 +20,9 @@
 				<g:Tree animationEnabled="true" styleName="sideBar" height="600px">
 					<g:Button ui:field="cmdHomepage">Accueil</g:Button>
 					<g:Button ui:field="cmdTimeInput">Mettre des heures</g:Button>
+					<g:TreeItem text="Rapports" state="true">
+						<g:Button text="Extraire des heures" ui:field="cmdExtractData"/>
+					</g:TreeItem>
 					<g:TreeItem text="Informations de base" state="true">
 						<g:TreeItem text="Ecoles">
 						<g:Button ui:field="cmdEcolePage">Liste d'écoles</g:Button>

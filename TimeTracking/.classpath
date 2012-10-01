@@ -9,6 +9,7 @@
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/guice-assistedinject-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/guice-servlet-3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/javax.inject.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jdo2-api-2.3-eb.jar"/>
 	<classpathentry kind="src" path=".apt_generated">
 		<attributes>
 			<attribute name="optional" value="true"/>

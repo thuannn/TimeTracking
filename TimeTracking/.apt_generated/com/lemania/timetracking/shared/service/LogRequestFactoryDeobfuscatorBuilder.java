@@ -20,6 +20,13 @@ withOperation(new OperationKey("tDC7lLOJfVdsA4iVyX907h2IS_U="),
   .withMethodName("save")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
+withOperation(new OperationKey("rPl4K6fdVW7Khbh5XG__wSa8jn4="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()Ljava/util/List;")
+  .withMethodName("listAll")
+  .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
+  .build());
 withOperation(new OperationKey("jYwYNZ2GdAHpRkHITOENfbCme_E="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
@@ -27,11 +34,11 @@ withOperation(new OperationKey("jYwYNZ2GdAHpRkHITOENfbCme_E="),
   .withMethodName("listAll")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
-withOperation(new OperationKey("rPl4K6fdVW7Khbh5XG__wSa8jn4="),
+withOperation(new OperationKey("ppgHbdsCjY9F$gPBQ7NdM7Kb_CM="),
   new OperationData.Builder()
   .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
   .withDomainMethodDescriptor("()Ljava/util/List;")
-  .withMethodName("listAll")
+  .withMethodName("listAllFullDetail")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
 withOperation(new OperationKey("Z9jONGDxCKtP$8lWnGHVODUZCf8="),

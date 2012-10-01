@@ -23,4 +23,7 @@ public interface LogProxy extends EntityProxy {
 	public String getTypeId();
 	
 	public String getTypeName();
+	public String getProfName();
+	public String getSchoolName();
+	public String getCourseName();
 }
