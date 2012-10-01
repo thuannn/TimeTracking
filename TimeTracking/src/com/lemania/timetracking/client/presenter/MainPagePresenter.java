@@ -29,9 +29,12 @@ public class MainPagePresenter extends
 	   */
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
+	
+	private CurrentUser currentUser;
 
 	public interface MyView extends View, HasUiHandlers<MainPageUiHandler> {
-		void showUserInfo();
+		void showUserInfo(CurrentUser currentUser);
+		void initializeUi(CurrentUser currentUser);
 	}
 	
 	@ProxyStandard
@@ -55,6 +58,11 @@ public class MainPagePresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
+	}
+	
+	@Override
+	protected void onReset() {
+		getView().initializeUi(currentUser);
 	}
 
 	@Override
@@ -125,7 +133,8 @@ public class MainPagePresenter extends
 
 	@Override
 	public void logOut() {
-		CurrentUser currentUser = new CurrentUser();
+		if (currentUser == null)
+			currentUser = new CurrentUser();
 		currentUser.setLoggedIn(false);
 		this.getEventBus().fireEvent(new LoginAuthenticatedEvent(currentUser));
 	}
@@ -133,7 +142,8 @@ public class MainPagePresenter extends
 	@ProxyEvent
 	@Override
 	public void onLoginAuthenticated(LoginAuthenticatedEvent event) {
-		getView().showUserInfo();
+		currentUser = event.getCurrentUser();
+		getView().showUserInfo(event.getCurrentUser());
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 
 	private final Widget widget;
 	private ProfessorProxy selectedProfessor;
-	private int selectedLog;
+	private LogProxy selectedLog;
 	private ListDataProvider<ProfessorProxy> professorProvider;
 
 	public interface Binder extends UiBinder<Widget, TimeInputView> {
@@ -219,6 +219,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 			}
 	    };
 	    tblLog.addColumn(colType, "Type");
+	    tblLog.setColumnWidth(colType, 60, Unit.PCT);
 	    
 	    TextInputCell hourCell = new TextInputCell();
 	    Column<LogProxy,String> hourColl = new Column<LogProxy,String>(hourCell) {
@@ -231,18 +232,19 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    	@Override
 	    	public void update(int index, LogProxy log, String value){
 	    		if (getUiHandlers() != null) {
-	    			selectedLog = index;
+	    			selectedLog = log;
 	    			getUiHandlers().updateLogTime(log, value);
 	    		}	    		
 	    	}
 	    });
 	    tblLog.addColumn(hourColl, "No. d'heurs");
+	    tblLog.setColumnWidth(hourColl, 40, Unit.PCT);
 	}
 
 	@Override
 	public void setNotification(String code) {
 		if (code.equals("log-updated"))
-			showTimer("Modification enregistrée.");
+			showTimer("Modification enregistrÃ©e.");
 	}
 	
 	private void showTimer(final String text) {
@@ -253,7 +255,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	        txtNotification.setVisible(false);
 	      }
 	    };
-	    // Schedule the timer to run once in 3 seconds.
+	    // Schedule the timer to run once in 1 seconds.
 	    t.schedule(1000);
 	}
 }

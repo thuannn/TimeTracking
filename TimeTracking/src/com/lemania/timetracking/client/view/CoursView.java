@@ -99,7 +99,7 @@ public class CoursView extends ViewWithUiHandlers<CoursListUiHandler> implements
 		tblCours.redraw();
 		
 		// Notify user
-		Window.alert("Statut du cours mis à jour.");
+		Window.alert("Statut du cours mis Ã  jour.");
 	}
 
 	@Override

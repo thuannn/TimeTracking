@@ -61,7 +61,7 @@ public class EcoleView extends ViewWithUiHandlers<EcoleListUiHandler> implements
 		tblEcoles.redraw();
 		
 		// Notify user
-		Window.alert("Statut de l'école mis à jour.");
+		Window.alert("Statut de l'Ã©cole mis Ã  jour.");
 	}
 
 	@Override

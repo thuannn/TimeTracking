@@ -6,7 +6,6 @@ import java.util.List;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -24,7 +23,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.SimplePager;
-import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.view.client.ListDataProvider;
@@ -157,7 +155,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 		tblProfessors.redraw();
 		
 		// Notify user
-		Window.alert("Statut du professeur a été mis à jour.");
+		Window.alert("Statut du professeur mis Ã  jour.");
 	}
 
 	@Override

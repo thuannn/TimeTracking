@@ -86,7 +86,7 @@ public class LogTypesView extends ViewWithUiHandlers<LogTypeListUiHandler> imple
 		tblHours.redraw();
 		
 		// Notify user
-		Window.alert("Statut du type d'heure mis à jour.");
+		Window.alert("Statut du type d'heure mis Ã  jour.");
 	}
 
 	@Override
