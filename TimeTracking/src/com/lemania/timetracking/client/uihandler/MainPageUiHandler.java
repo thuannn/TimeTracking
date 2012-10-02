@@ -29,5 +29,7 @@ public interface MainPageUiHandler extends UiHandlers {
 	
 	void showExtractDataForm();
 	
+	void showUserManagement();
+	
 	void logOut();
 }

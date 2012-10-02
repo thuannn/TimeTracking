@@ -37,6 +37,7 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiField Hyperlink cmdLogout;
 	@UiField Label txtWelcome;
 	@UiField Button cmdExtractData;
+	@UiField Button cmdUserMgt;
 	
 	public MainPageView() {		
 		widget = uiBinder.createAndBindUi(this);
@@ -143,6 +144,13 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	void onCmdLogoutClicked(ClickEvent event){
 		if (getUiHandlers() != null) {			
 			getUiHandlers().logOut();
+		}
+	}
+	
+	@UiHandler("cmdUserMgt")
+	void onCmdUserMgtClicked(ClickEvent event) {
+		if (getUiHandlers() != null) {
+			getUiHandlers().showUserManagement();
 		}
 	}
 

@@ -130,6 +130,11 @@ public class MainPagePresenter extends
 		// TODO Auto-generated method stub
 		History.newItem(NameTokens.contact);
 	}
+	
+	@Override
+	public void showUserManagement() {
+		History.newItem(NameTokens.usermanagement);
+	}
 
 	@Override
 	public void logOut() {

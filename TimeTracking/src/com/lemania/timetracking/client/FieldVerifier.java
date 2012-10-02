@@ -5,7 +5,7 @@ public class FieldVerifier {
 	public static boolean isValidUserName(String userName) {
 		if (userName == null)
 			return false;
-		return (userName.length() > 8);
+		return (userName.length() >= 6);
 	}
 	
 	private final static String PASSWORD_VALIDATION_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,32})";
