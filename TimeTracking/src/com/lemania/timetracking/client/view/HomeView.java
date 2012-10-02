@@ -5,8 +5,10 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.lemania.timetracking.client.FieldVerifier;
 import com.lemania.timetracking.client.presenter.HomePresenter;
 import com.lemania.timetracking.client.uihandler.HomeUiHandler;
 import com.google.gwt.uibinder.client.UiField;
@@ -39,7 +41,16 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandler> implements HomeP
 	
 	@UiHandler("cmdLogin")
 	public void onCmdLoginClicked(ClickEvent event){
-		if (this.getUiHandlers() != null)
+		if ( !FieldVerifier.isValidUserName(txtUserName.getText()) ){
+			Window.alert("Le nom d'utilisateur n'est pas valable.");
+			return;
+		}
+		if ( !FieldVerifier.isValidUserName(txtPassword.getText()) ){
+			Window.alert("Le mot de passe n'est pas valable.");
+			return;
+		}		
+		if (this.getUiHandlers() != null) {
 			this.getUiHandlers().authenticateUser(txtUserName.getText(), txtPassword.getText());
+		}
 	}
 }
