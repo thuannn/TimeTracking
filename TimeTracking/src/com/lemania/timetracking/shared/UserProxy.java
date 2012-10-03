@@ -24,4 +24,6 @@ public interface UserProxy extends EntityProxy {
 	
 	public Boolean getAdmin();
 	public void setAdmin(Boolean admin);
+	
+	public Long getId();
 }

@@ -3,6 +3,7 @@ package com.lemania.timetracking.server;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Indexed;
+import com.googlecode.objectify.annotation.NotSaved;
 
 @Entity
 public class Cours extends DatastoreObject implements Comparable<Cours>{
@@ -12,6 +13,17 @@ public class Cours extends DatastoreObject implements Comparable<Cours>{
 	@Indexed
 	Key<Ecole> ecole;
 	
+	@NotSaved
+	String schoolName;
+	
+	public String getSchoolName() {
+		return schoolName;
+	}
+
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
+
 	public Key<Ecole> getEcole() {
 		return ecole;
 	}

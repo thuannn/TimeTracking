@@ -62,6 +62,19 @@ public class UserDao extends DAOBase {
 		return returnList;
 	}
 	
+	public List<Cours> getDepartments(Long userId) {
+		User user = this.ofy().get(new Key<User>(User.class, userId));
+		List<Cours> returnList = new ArrayList<Cours>();
+			if (user.getDepartments() != null) {
+			Map<Key<Cours>, Cours> cours = this.ofy().get( user.getDepartments() );
+			returnList = new ArrayList<Cours>(cours.values());
+			for (int i=0; i<returnList.size(); i++)
+				returnList.get(i).setSchoolName( this.ofy().get( (returnList.get(i).getEcole())).getSchoolName() );
+			java.util.Collections.sort(returnList);
+		}
+		return returnList;
+	}
+	
 	public void save(User user){
 		this.ofy().put(user);
 	}

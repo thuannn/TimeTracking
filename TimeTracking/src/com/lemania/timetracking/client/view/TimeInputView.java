@@ -73,7 +73,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		lstCourses.clear();
 		lstCourses.addItem("-","");
 		for (int i=0; i<cours.size(); i++)
-			lstCourses.addItem(cours.get(i).getCoursNom(), cours.get(i).getId().toString());				
+			lstCourses.addItem(cours.get(i).getSchoolName() + " - " +cours.get(i).getCoursNom(), cours.get(i).getId().toString());				
 	}
 	
 	@Override

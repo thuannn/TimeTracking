@@ -80,6 +80,8 @@ public class HomePresenter
 					currentUser.setFullName(response.getFullName());
 					currentUser.setLoggedIn(true);
 					currentUser.setAdmin(response.getAdmin());
+					currentUser.setUserId(response.getId());
+					
 					getEventBus().fireEvent(new LoginAuthenticatedEvent(currentUser));
 					getView().toggleLoginPanel(false);
 				}

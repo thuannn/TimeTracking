@@ -12,6 +12,8 @@ public interface CoursProxy extends EntityProxy {
 	String getCoursNom();
 	void setCoursNom(String name);
 	
+	String getSchoolName();
+	
 	Boolean getCoursActif();
 	void setCoursActif(Boolean status);
 }
