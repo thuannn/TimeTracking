@@ -9,6 +9,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.lemania.timetracking.client.AdminGateKeeper;
 import com.lemania.timetracking.client.LoggedInGatekeeper;
 import com.lemania.timetracking.client.event.CoursAddedEvent;
 import com.lemania.timetracking.client.event.CoursAddedEvent.CoursAddedHandler;
@@ -45,7 +46,7 @@ public class CoursPresenter extends
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.cours)
-	@UseGatekeeper(LoggedInGatekeeper.class)
+	@UseGatekeeper(AdminGateKeeper.class)
 	public interface MyProxy extends ProxyPlace<CoursPresenter> {
 	}
 

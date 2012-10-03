@@ -7,10 +7,10 @@
 	ui:generateLocales='default'>
 
 	<g:HTMLPanel width="100%" height="100%">
-		<g:VerticalPanel width="100%">
+		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER">
 			<g:Label text="Bienvenue" styleName="pageTitle"/>
 			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT">
-			<g:Grid width="">
+			<g:Grid width="" ui:field="panelLogin">
 				<g:row>
 					<g:customCell>
 						<g:Label text="Nom d&apos;utilisateur :"/>
@@ -36,9 +36,7 @@
 					</g:customCell>
 				</g:row>
 			</g:Grid>
-			<g:VerticalPanel width="" height="" horizontalAlignment="ALIGN_LEFT">
-			<g:Image url="images/12023-22.jpg"/>
-		</g:VerticalPanel>
 		</g:HorizontalPanel>
+			<g:Image url="images/Capture.PNG" width="339px" height="336px"/>
 		</g:VerticalPanel></g:HTMLPanel>
 </ui:UiBinder>

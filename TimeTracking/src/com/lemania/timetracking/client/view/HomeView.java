@@ -15,6 +15,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.Grid;
 
 public class HomeView extends ViewWithUiHandlers<HomeUiHandler> implements HomePresenter.MyView {
 	
@@ -22,6 +23,7 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandler> implements HomeP
 	@UiField TextBox txtUserName;
 	@UiField Button cmdLogin;
 	@UiField PasswordTextBox txtPassword;
+	@UiField Grid panelLogin;
 	interface HomeViewUiBinder extends UiBinder<Widget, HomeView> {}
 
 	private final Widget widget;
@@ -52,5 +54,10 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandler> implements HomeP
 		if (this.getUiHandlers() != null) {
 			this.getUiHandlers().authenticateUser(txtUserName.getText(), txtPassword.getText());
 		}
+	}
+
+	@Override
+	public void toggleLoginPanel(Boolean visible) {
+		panelLogin.setVisible(visible);		
 	}
 }

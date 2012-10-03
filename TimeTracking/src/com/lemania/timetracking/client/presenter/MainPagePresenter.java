@@ -15,6 +15,7 @@ import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.History;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.CurrentUser;
+import com.lemania.timetracking.client.event.AfterUserLogOutEvent;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent.LoginAuthenticatedHandler;
 import com.lemania.timetracking.client.place.NameTokens;
@@ -142,13 +143,14 @@ public class MainPagePresenter extends
 			currentUser = new CurrentUser();
 		currentUser.setLoggedIn(false);
 		this.getEventBus().fireEvent(new LoginAuthenticatedEvent(currentUser));
+		this.getEventBus().fireEvent(new AfterUserLogOutEvent());
 	}
 
 	@ProxyEvent
 	@Override
 	public void onLoginAuthenticated(LoginAuthenticatedEvent event) {
 		currentUser = event.getCurrentUser();
-		getView().showUserInfo(event.getCurrentUser());
+		getView().showUserInfo(currentUser);
 	}
 
 	@Override

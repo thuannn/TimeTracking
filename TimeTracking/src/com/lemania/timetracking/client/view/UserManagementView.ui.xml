@@ -37,6 +37,14 @@
 					</g:row>
 					<g:row>
 						<g:customCell>
+							<g:Label text="Email :"/>
+						</g:customCell>
+						<g:customCell>
+							<g:TextBox ui:field="txtEmail"/>
+						</g:customCell>
+					</g:row>
+					<g:row>
+						<g:customCell>
 							<g:Label text="."/>
 						</g:customCell>
 						<g:customCell>
@@ -45,12 +53,20 @@
 					</g:row>
 				</g:Grid>
 			<g:Grid width="100%">
+				<g:row>
+					<g:customCell>
+						<g:Label text="Ecoles :"/>
+					</g:customCell>
+					<g:customCell>
+						<g:ListBox ui:field="lstAddEcole"/>
+					</g:customCell>
+				</g:row>
 					<g:row>
 						<g:customCell>
 							<g:Label text="Départements :"/>
 						</g:customCell>
 						<g:customCell>
-							<g:ListBox/>
+							<g:ListBox ui:field="lstAddCourse"/>
 						</g:customCell>
 					</g:row>
 					<g:row>
@@ -58,13 +74,14 @@
 							<g:Label/>
 						</g:customCell>
 						<g:customCell>
-							<g:Button text="Assigner"/>
+							<g:Button text="Assigner" ui:field="cmdAddCourse"/>
 						</g:customCell>
 					</g:row>
 				</g:Grid>
 		</g:HorizontalPanel>
 			<g:HorizontalPanel width="100%">
 				<p1:DataGrid width="400px" height="450px" ui:field="tblUser"/>
+				<p1:DataGrid width="250px" height="450px" ui:field="tblDepartment"/>
 			</g:HorizontalPanel>
 		</g:VerticalPanel>
 	</g:HTMLPanel>

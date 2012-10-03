@@ -8,7 +8,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
-import com.lemania.timetracking.client.LoggedInGatekeeper;
+import com.lemania.timetracking.client.AdminGateKeeper;
 import com.lemania.timetracking.client.event.CoursAddedEvent;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
@@ -42,7 +42,7 @@ public class CoursAddPresenter
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.coursadd)
-	@UseGatekeeper(LoggedInGatekeeper.class)
+	@UseGatekeeper(AdminGateKeeper.class)
 	public interface MyProxy extends ProxyPlace<CoursAddPresenter> {
 	}
 
@@ -91,7 +91,7 @@ public class CoursAddPresenter
 			return;
 		}
 		if (ecoleId.isEmpty()){
-			Window.alert("Veuillez choisir le nom de l'école.");
+			Window.alert("Veuillez choisir le nom de l'ï¿½cole.");
 			return;
 		}
 		

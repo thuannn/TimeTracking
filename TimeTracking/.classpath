@@ -6,8 +6,8 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine (2)"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine (2)/v2"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/Documents/GitHub/TimeTracking/TimeTracking/war/WEB-INF/lib/aopalliance.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/Documents/GitHub/TimeTracking/TimeTracking/war/WEB-INF/lib/appengine-api-labs.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/thuannn/Documents/GitHub/TimeTracking/TimeTracking/war/WEB-INF/lib/appengine-endpoints.jar"/>

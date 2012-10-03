@@ -6,6 +6,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.lemania.timetracking.client.AdminGateKeeper;
 import com.lemania.timetracking.client.LoggedInGatekeeper;
 import com.lemania.timetracking.client.event.EcoleAddedEvent;
 import com.lemania.timetracking.client.place.NameTokens;
@@ -33,7 +34,7 @@ public class EcoleAddPresenter extends
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.addecole)
-	@UseGatekeeper(LoggedInGatekeeper.class)
+	@UseGatekeeper(AdminGateKeeper.class)
 	public interface MyProxy extends ProxyPlace<EcoleAddPresenter> {
 	}
 
@@ -62,7 +63,7 @@ public class EcoleAddPresenter extends
 	@Override
 	public void ecoleAdd(String ecoleNom, String ecoleAdresse, Boolean ecoleActive) {
 		if (ecoleNom.isEmpty() || ecoleAdresse.isEmpty()){
-			Window.alert("Veuillez saissir le nom et l'addresse de l'école !");
+			Window.alert("Veuillez saissir le nom et l'addresse de l'ï¿½cole !");
 			return;
 		}
 		

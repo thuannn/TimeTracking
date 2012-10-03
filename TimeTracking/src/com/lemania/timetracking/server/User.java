@@ -1,5 +1,7 @@
 package com.lemania.timetracking.server;
 
+import java.util.List;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 
@@ -9,8 +11,10 @@ public class User extends DatastoreObject {
 	private String fullName;
 	private String userName;
 	private String password;
-	private Boolean active;
-	Key<Cours>[] departments;
+	private String email;
+	private Boolean active = false;
+	private Boolean admin = false;
+	private List<Key<Cours>> departments;
 	
 	public String getUserName() {
 		return userName;
@@ -44,11 +48,27 @@ public class User extends DatastoreObject {
 		this.active = active;
 	}
 	
-	public Key<Cours>[] getDepartments() {
+	public List<Key<Cours>> getDepartments() {
 		return departments;
 	}
 	
-	public void setDepartments(Key<Cours>[] departments) {
+	public void setDepartments(List<Key<Cours>> departments) {
 		this.departments = departments;
+	}
+	
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

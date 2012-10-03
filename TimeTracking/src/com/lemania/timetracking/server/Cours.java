@@ -5,7 +5,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Indexed;
 
 @Entity
-public class Cours extends DatastoreObject{
+public class Cours extends DatastoreObject implements Comparable<Cours>{
 	private String coursNom;
 	private Boolean coursActif;
 	
@@ -35,4 +35,10 @@ public class Cours extends DatastoreObject{
 	public void setCoursActif(Boolean coursActif) {
 		this.coursActif = coursActif;
 	}
+	
+	@Override
+	public int compareTo(Cours cours) {
+		int lastCourseName = coursNom.compareTo( cours.getCoursNom() );
+		return lastCourseName;
+	}	
 }

@@ -173,7 +173,7 @@ public class ProfsPresenter
 	@Override
 	public void addCourse(String courseId, final ProfessorProxy prof) {
 		if (courseId.isEmpty())
-			Window.alert("Veuillez choisir un cours à rajouter.");
+			Window.alert("Veuillez choisir un cours Ã  rajouter.");
 		
 		AssignmentRequestFactory rf = GWT.create(AssignmentRequestFactory.class);
 		rf.initialize(this.getEventBus());
@@ -195,7 +195,7 @@ public class ProfsPresenter
 	@Override
 	public void addSchoolSelected(String ecoleId) {
 		if (ecoleId.equals("")){
-			Window.alert("Veuillez choisir l'école à rajouter.");
+			Window.alert("Veuillez choisir l'Ã©cole.");
 		}
 		
 		CoursRequestFactory rf = GWT.create(CoursRequestFactory.class);

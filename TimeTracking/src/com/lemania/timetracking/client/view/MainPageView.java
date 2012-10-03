@@ -156,7 +156,7 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 
 	@Override
 	public void showUserInfo(CurrentUser currentUser) {
-		txtWelcome.setText("Vous êtes connecté(e), Thuan!");
+		txtWelcome.setText("Vous êtes connecté(e), " + currentUser.getFullName() + " !");
 		cmdLogout.setText("Déconnexion");
 	}
 
