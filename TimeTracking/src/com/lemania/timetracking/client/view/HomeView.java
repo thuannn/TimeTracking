@@ -3,6 +3,9 @@ package com.lemania.timetracking.client.view;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
@@ -41,8 +44,19 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandler> implements HomeP
 		return widget;
 	}
 	
+	@UiHandler("txtPassword")
+	public void onTxtPasswordKeypress(KeyPressEvent event) {
+		if (event.getCharCode() == KeyCodes.KEY_ENTER) {
+			authenticateUser();
+		}
+	}
+	
 	@UiHandler("cmdLogin")
 	public void onCmdLoginClicked(ClickEvent event){
+		authenticateUser();
+	}
+	
+	private void authenticateUser() {
 		if ( !FieldVerifier.isValidUserName(txtUserName.getText()) ){
 			Window.alert("Le nom d'utilisateur n'est pas valable.");
 			return;

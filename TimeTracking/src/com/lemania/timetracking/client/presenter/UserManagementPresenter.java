@@ -54,7 +54,7 @@ public class UserManagementPresenter
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.usermanagement)
-	@UseGatekeeper(AdminGateKeeper.class)
+//	@UseGatekeeper(AdminGateKeeper.class)
 	public interface MyProxy extends ProxyPlace<UserManagementPresenter> {
 	}
 

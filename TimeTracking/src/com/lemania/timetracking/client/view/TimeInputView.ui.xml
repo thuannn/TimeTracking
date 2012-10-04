@@ -10,19 +10,19 @@
 		<g:VerticalPanel width="100%" height="">
 			<g:Label text="Mettre des heures" styleName="pageTitle" width=""/>
 			<g:HorizontalPanel width="100%" height="100%" horizontalAlignment="ALIGN_LEFT" borderWidth="0">
-				<g:VerticalPanel width="400px">
-					<g:Grid>
+				<g:VerticalPanel width="400px" horizontalAlignment="ALIGN_CENTER">
+					<g:Grid width="100%">
 						<g:row>
 					<g:customCell>
-						<g:Label text="Ecoles : "/>
+						<g:Label text="Ecoles : " visible="false"/>
 					</g:customCell>
 					<g:customCell>
-						<g:ListBox ui:field="lstSchools"/>
+						<g:ListBox ui:field="lstSchools" visible="false"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
 					<g:customCell>
-						<g:Label text="Cours :"/>
+						<g:Label text="Départements :"/>
 					</g:customCell>
 					<g:customCell>
 						<g:ListBox ui:field="lstCourses"/>

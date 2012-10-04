@@ -9,15 +9,14 @@
 	<g:FlowPanel width="100%" height="100%">
 		<g:DockPanel width="100%" height="100%" spacing="5">
 			<g:Dock direction="NORTH">
-				<g:HorizontalPanel verticalAlignment="ALIGN_BOTTOM" width="90%" height="54px" spacing="5">
+				<g:HorizontalPanel verticalAlignment="ALIGN_BOTTOM" width="100%" height="54px" spacing="5">
 					<g:Image url="images/logo.jpg" width=""/>
 					<g:Label width="" horizontalAlignment="ALIGN_RIGHT" ui:field="txtWelcome"/>
 					<g:Hyperlink targetHistoryToken="newHistoryToken" width="" ui:field="cmdLogout"/>
-					<g:Image url="images/appengine-silver-120x30.gif"/>
 				</g:HorizontalPanel>
 			</g:Dock>
 			<g:Dock direction="WEST" width="10%" height="100%">
-				<g:Tree animationEnabled="true" styleName="sideBar" height="600px">
+				<g:Tree animationEnabled="true" styleName="sideBar" height="" width="250px">
 					<g:Button ui:field="cmdHomepage">Accueil</g:Button>
 					<g:Button ui:field="cmdTimeInput">Mettre des heures</g:Button>
 					<g:TreeItem text="Rapports" state="true">
@@ -45,13 +44,14 @@
 						</g:TreeItem>
 					</g:TreeItem>
 					<g:Button ui:field="cmdContact">Contact</g:Button>
+					<g:Image url="images/appengine-silver-120x30.gif"/>
 				</g:Tree>
 			</g:Dock>
 			<g:Dock direction="CENTER">
-				<g:FlowPanel ui:field="mainContentPanel" width="90%" height="600px" styleName="paneMain"/>
+				<g:FlowPanel ui:field="mainContentPanel" width="100%" height="600px" styleName="paneMain"/>
 			</g:Dock>
 			<g:Dock direction="SOUTH">
-				<g:HorizontalPanel horizontalAlignment="ALIGN_RIGHT" width="90%">
+				<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_RIGHT">
 					<g:Label text="Copyright 2012 Ecole Lémania"/>
 				</g:HorizontalPanel>
 			</g:Dock>

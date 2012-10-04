@@ -20,17 +20,17 @@ withOperation(new OperationKey("tDC7lLOJfVdsA4iVyX907h2IS_U="),
   .withMethodName("save")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
-withOperation(new OperationKey("jYwYNZ2GdAHpRkHITOENfbCme_E="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;")
-  .withMethodName("listAll")
-  .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
-  .build());
 withOperation(new OperationKey("rPl4K6fdVW7Khbh5XG__wSa8jn4="),
   new OperationData.Builder()
   .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
   .withDomainMethodDescriptor("()Ljava/util/List;")
+  .withMethodName("listAll")
+  .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
+  .build());
+withOperation(new OperationKey("jYwYNZ2GdAHpRkHITOENfbCme_E="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;")
   .withMethodName("listAll")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
