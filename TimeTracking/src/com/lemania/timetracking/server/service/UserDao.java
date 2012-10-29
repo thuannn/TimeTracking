@@ -1,6 +1,7 @@
 package com.lemania.timetracking.server.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -8,13 +9,24 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
+import com.lemania.timetracking.server.Assignment;
 import com.lemania.timetracking.server.Cours;
+import com.lemania.timetracking.server.Ecole;
+import com.lemania.timetracking.server.Log;
+import com.lemania.timetracking.server.LogType;
+import com.lemania.timetracking.server.Professor;
 import com.lemania.timetracking.server.User;
 
 public class UserDao extends DAOBase {
 
 	static {
         ObjectifyService.register(User.class);
+        ObjectifyService.register(Professor.class); 
+        ObjectifyService.register(LogType.class);
+        ObjectifyService.register(Log.class);
+        ObjectifyService.register(Ecole.class);
+        ObjectifyService.register(Cours.class);
+        ObjectifyService.register(Assignment.class);
     }
 	
 	public List<User> listAll(){
@@ -99,7 +111,11 @@ public class UserDao extends DAOBase {
 				.filter("password", password);
 		List<User> returnList = new ArrayList<User>();
 		
+		Calendar cal = Calendar.getInstance();
+		
 		for (User user : q){
+			user.setCurrentMonth(cal.get(Calendar.MONTH));
+			user.setCurrentYear(cal.get(Calendar.YEAR));
 			returnList.add(user);
 		}
 		

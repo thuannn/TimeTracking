@@ -6,6 +6,25 @@ public class CurrentUser {
 	private boolean isAdmin = false;
 	private boolean isLoggedIn = false;
 	
+	private int currentMonth;
+	private int currentYear;
+	
+	public int getCurrentMonth() {
+		return currentMonth;
+	}
+
+	public void setCurrentMonth(int currentMonth) {
+		this.currentMonth = currentMonth;
+	}
+
+	public int getCurrentYear() {
+		return currentYear;
+	}
+
+	public void setCurrentYear(int currentYear) {
+		this.currentYear = currentYear;
+	}
+
 	public void setLoggedIn(boolean isLoggedIn) {
 		this.isLoggedIn = isLoggedIn;
 	}

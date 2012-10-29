@@ -24,25 +24,17 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.TimeInputUiHandler;
-import com.lemania.timetracking.shared.AssignmentProxy;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.LogProxy;
 import com.lemania.timetracking.shared.LogTypeProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
-import com.lemania.timetracking.shared.UserProxy;
-import com.lemania.timetracking.shared.service.AssignmentRequestFactory;
-import com.lemania.timetracking.shared.service.CoursRequestFactory;
-import com.lemania.timetracking.shared.service.EcoleRequestFactory;
 import com.lemania.timetracking.shared.service.LogRequestFactory;
+import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
+import com.lemania.timetracking.shared.service.LogTypeRequestFactory.LogTypeRequestContext;
 import com.lemania.timetracking.shared.service.UserRequestFactory;
 import com.lemania.timetracking.shared.service.LogRequestFactory.LogRequestContext;
-import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
-import com.lemania.timetracking.shared.service.AssignmentRequestFactory.AssignmentRequestContext;
-import com.lemania.timetracking.shared.service.CoursRequestFactory.CoursRequestContext;
-import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
-import com.lemania.timetracking.shared.service.LogTypeRequestFactory.LogTypeRequestContext;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory.ProfessorRequestContext;
 import com.lemania.timetracking.shared.service.UserRequestFactory.UserRequestContext;
 import com.lemania.timetracking.client.CurrentUser;
@@ -64,7 +56,7 @@ public class TimeInputPresenter
 		void setCourseList(List<CoursProxy> cours);
 		
 		// Initialize values
-		void initializeValues();
+		void initializeValues(int currentMonth, int currentYear);
 		void initializeProfTable();
 		void initializeLogTable();
 		
@@ -106,12 +98,12 @@ public class TimeInputPresenter
 	@Override
 	protected void onReset(){
 		// Initialize values
-		getView().initializeValues();
+		getView().initializeValues(currentUser.getCurrentMonth(), currentUser.getCurrentYear());
 		
 		// Initialize active school list
-		// getEcoleList();
 		
 		loadDepartmentList();
+		loadLogTypeList();
 	}
 	
 	private void loadDepartmentList() {
@@ -148,65 +140,21 @@ public class TimeInputPresenter
 	
 	/*
 	 * Populate list of ecoles in drop-down list */
-	private void getEcoleList(){
-//		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
-//		rf.initialize(this.getEventBus());
-//		EcoleRequestContext rc = rf.ecoleRequest();
-//		rc.listAllActive().fire(new Receiver<List<EcoleProxy>>(){
-//			@Override
-//			public void onSuccess(List<EcoleProxy> response){
-//				getView().setEcoleList(response);
-//			}
-//			@Override
-//			public void onFailure(ServerFailure error){
-//				Window.alert(error.getMessage());
-//			}
-//		});
-//		
-//		// Just to register the Cours class in Objectify
-//		CoursRequestFactory crf = GWT.create(CoursRequestFactory.class);
-//		crf.initialize(this.getEventBus());
-//		CoursRequestContext crc = crf.coursRequest();
-//		crc.listAll("").fire(new Receiver<List<CoursProxy>>(){
-//			@Override
-//			public void onFailure(ServerFailure error){
-//				Window.alert(error.getMessage());
-//			}
-//			@Override
-//			public void onSuccess(List<CoursProxy> response) {
-//				// getView().setCourseList(response);
-//			}
-//		});
-//		
-//		// Just to register the Assignment class in Objectify
-//		AssignmentRequestFactory rfa = GWT.create(AssignmentRequestFactory.class);
-//		rfa.initialize(this.getEventBus());
-//		AssignmentRequestContext rca = rfa.assignmentRequest();
-//		rca.listAll().fire(new Receiver<List<AssignmentProxy>>(){
-//			@Override
-//			public void onFailure(ServerFailure error){
-//				Window.alert(error.getMessage());
-//			}
-//			@Override
-//			public void onSuccess(List<AssignmentProxy> response) {
-//				//
-//			}
-//		});
-//		
-//		// Get LogType list
-//		LogTypeRequestFactory rfl = GWT.create(LogTypeRequestFactory.class);
-//		rfl.initialize(this.getEventBus());
-//		LogTypeRequestContext rcl = rfl.typeRequest();
-//		rcl.listAll().fire(new Receiver<List<LogTypeProxy>>(){
-//			@Override
-//			public void onFailure(ServerFailure error){
-//				Window.alert(error.getMessage());
-//			}
-//			@Override
-//			public void onSuccess(List<LogTypeProxy> response) {
-//				logTypes = response;
-//			}
-//		});
+	private void loadLogTypeList(){
+		// Get LogType list
+		LogTypeRequestFactory rfl = GWT.create(LogTypeRequestFactory.class);
+		rfl.initialize(this.getEventBus());
+		LogTypeRequestContext rcl = rfl.typeRequest();
+		rcl.listAllActive().fire(new Receiver<List<LogTypeProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<LogTypeProxy> response) {
+				logTypes = response;
+			}
+		});
 	}
 	
 	public void updateLogTypeList(final ProfessorProxy prof, final String courseId, final String year, final String month) {
@@ -270,23 +218,7 @@ public class TimeInputPresenter
 
 	@Override
 	public void loadCoursesBySchool(String ecoleId) {
-//		if (ecoleId.equals("")){
-//			Window.alert("Veuillez choisir l'école à rajouter.");
-//		}
-//		
-//		CoursRequestFactory rf = GWT.create(CoursRequestFactory.class);
-//		rf.initialize(this.getEventBus());
-//		CoursRequestContext rc = rf.coursRequest();
-//		rc.listAllActive(ecoleId).fire(new Receiver<List<CoursProxy>>(){
-//			@Override
-//			public void onFailure(ServerFailure error){
-//				Window.alert(error.getMessage());
-//			}
-//			@Override
-//			public void onSuccess(List<CoursProxy> response) {
-//				getView().setCourseList(response);
-//			}
-//		});
+		// empty
 	}
 
 	@ProxyEvent
@@ -296,8 +228,7 @@ public class TimeInputPresenter
 	}
 
 	@Override
-	public void professorSelected(ProfessorProxy prof, String courseId,
-			String year, String month) {
+	public void professorSelected(ProfessorProxy prof, String courseId, String year, String month) {
 		getView().clearLogTable();
 		getEventBus().fireEvent(new UpdateTimeLogEvent(prof, courseId, year, month));
 	}
@@ -327,5 +258,26 @@ public class TimeInputPresenter
 	@Override
 	public void onLoginAuthenticated(LoginAuthenticatedEvent event) {
 		this.currentUser = event.getCurrentUser();
+	}
+
+	@Override
+	public void updateLogMemo(LogProxy log, String value) {
+		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
+		rfl.initialize(this.getEventBus());
+		LogRequestContext rcl = rfl.logRequest();
+
+		LogProxy logUpdate = rcl.edit(log);
+		logUpdate.setMemo(value);
+		
+		rcl.save(logUpdate).fire(new Receiver<Void>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(Void response) {
+				getView().setNotification("log-updated");
+			}
+		});
 	}
 }

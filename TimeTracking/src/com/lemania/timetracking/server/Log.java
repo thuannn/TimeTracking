@@ -13,7 +13,8 @@ public class Log extends DatastoreObject {
 	int year;
 	int month;
 	int hour;
-	
+	String memo = "";
+
 	@NotSaved
 	String profName;
 
@@ -112,5 +113,13 @@ public class Log extends DatastoreObject {
 
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
+	}
+	
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 }

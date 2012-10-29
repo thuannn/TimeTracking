@@ -1,9 +1,9 @@
 package com.lemania.timetracking.server;
 
 import java.util.List;
-
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.NotSaved;
 
 
 @Entity
@@ -15,6 +15,12 @@ public class User extends DatastoreObject {
 	private Boolean active = false;
 	private Boolean admin = false;
 	private List<Key<Cours>> departments;
+	
+	@NotSaved
+	private int currentMonth = 0;
+
+	@NotSaved
+	private int currentYear = 0;
 	
 	public String getUserName() {
 		return userName;
@@ -70,5 +76,21 @@ public class User extends DatastoreObject {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public int getCurrentMonth() {
+		return currentMonth;
+	}
+	
+	public int getCurrentYear() {
+		return currentYear;
+	}
+	
+	public void setCurrentMonth(int currentMonth) {
+		this.currentMonth = currentMonth;
+	}
+
+	public void setCurrentYear(int currentYear) {
+		this.currentYear = currentYear;
 	}
 }

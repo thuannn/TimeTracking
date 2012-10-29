@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.Cours;
 import com.lemania.timetracking.server.Ecole;
 
 public class CoursDao extends DAOBase {
-	static {
+	/*static {
         ObjectifyService.register(Cours.class);
-    }
+    }*/
 	
 	public List<Cours> listAll(){
 		Query<Cours> q = this.ofy().query(Cours.class).order("coursNom");

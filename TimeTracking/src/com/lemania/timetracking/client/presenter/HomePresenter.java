@@ -81,6 +81,8 @@ public class HomePresenter
 					currentUser.setLoggedIn(true);
 					currentUser.setAdmin(response.getAdmin());
 					currentUser.setUserId(response.getId());
+					currentUser.setCurrentMonth(response.getCurrentMonth());
+					currentUser.setCurrentYear(response.getCurrentYear());
 					
 					getEventBus().fireEvent(new LoginAuthenticatedEvent(currentUser));
 					getView().toggleLoginPanel(false);

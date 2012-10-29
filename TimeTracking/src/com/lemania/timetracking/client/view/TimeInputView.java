@@ -11,6 +11,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.TimeInputPresenter;
@@ -78,17 +79,13 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	
 	@Override
 	public void setProfData(List<ProfessorProxy> profs) {
-//		tblProfessors.setRowCount(profs.size(), true);
-//		tblProfessors.setRowData(profs);
-//		tblProfessors.setRowCount(profs.size());
-		
 		professorProvider = new ListDataProvider<ProfessorProxy>();
 		professorProvider.setList(profs);
 		professorProvider.addDataDisplay(tblProfessors);
 	}
 
 	@Override
-	public void initializeValues() {
+	public void initializeValues(int currentMonth, int currentYear) {
 		// Clear school list and course list
 		lstSchools.clear();
 		lstCourses.clear();
@@ -96,14 +93,21 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		clearProfTable();
 		clearLogTable();
 		
-		// Set current year and month
+		// List of month, auto-select current month
 		lstMonth.clear();
-		for (int i=1; i<13; i++)
-			lstMonth.addItem( Integer.toString(i), Integer.toString(i));
+		for (int i=0; i<12; i++) {
+			lstMonth.addItem( Integer.toString(i+1), Integer.toString(i+1));
+			if (i == currentMonth)
+				lstMonth.setSelectedIndex(i);
+		}
 		
+		// List of year, auto-select current year
 		lstYear.clear();
-		for (int i=2012; i<2015; i++)
-			lstYear.addItem( Integer.toString(i), Integer.toString(i));
+		for (int i=0; i<5; i++) {
+			lstYear.addItem( Integer.toString(i + 2011), Integer.toString(i + 2011));
+			if ((i+2011) == currentYear)
+				lstYear.setSelectedIndex(i);
+		}
 	}
 	
 	/***/
@@ -140,9 +144,6 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@Override
 	public void clearProfTable() {
 		List<ProfessorProxy> temp = new ArrayList<ProfessorProxy>();
-		
-//		tblProfessors.setRowData(temp);
-//		tblProfessors.setRowCount(temp.size());
 		
 		professorProvider = new ListDataProvider<ProfessorProxy>();
 		professorProvider.setList(temp);
@@ -218,8 +219,6 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 				return object.getTypeName();
 			}
 	    };
-	    tblLog.addColumn(colType, "Type");
-	    tblLog.setColumnWidth(colType, 60, Unit.PCT);
 	    
 	    TextInputCell hourCell = new TextInputCell();
 	    Column<LogProxy,String> hourColl = new Column<LogProxy,String>(hourCell) {
@@ -237,8 +236,32 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    		}	    		
 	    	}
 	    });
-	    tblLog.addColumn(hourColl, "No. d'heurs");
-	    tblLog.setColumnWidth(hourColl, 40, Unit.PCT);
+	    
+	    TextInputCell memoCell = new TextInputCell();
+	    Column<LogProxy, String> memoCol = new Column<LogProxy, String>(memoCell) {
+	    	@Override
+	    	public String getValue(LogProxy log){
+	    		return log.getMemo();
+	    	}
+	    };
+	    memoCol.setFieldUpdater(new FieldUpdater<LogProxy, String>(){
+	    	@Override
+	    	public void update(int index, LogProxy log, String value){
+	    		if (getUiHandlers() != null){
+	    			selectedLog = log;
+	    			getUiHandlers().updateLogMemo(log,  value);
+	    		}
+	    	}
+	    });
+	    
+	    tblLog.addColumn(colType, "Type");
+	    tblLog.setColumnWidth(colType, 20, Unit.PCT);
+	    
+	    tblLog.addColumn(hourColl, "Somme");
+	    tblLog.setColumnWidth(hourColl, 20, Unit.PCT);
+	    
+	    tblLog.addColumn(memoCol, "Memo");
+	    tblLog.setColumnWidth(memoCol, 60, Unit.PCT);
 	}
 
 	@Override

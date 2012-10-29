@@ -4,19 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.LogType;
 
 public class LogTypeDao extends DAOBase {
 	
-	static {
+	/*static {
         ObjectifyService.register(LogType.class);
-    }
+    }*/
 	
 	public List<LogType> listAll(){
 		Query<LogType> q = this.ofy().query(LogType.class).order("hourName");
+		List<LogType> returnList = new ArrayList<LogType>();
+		for (LogType type : q){
+			returnList.add(type);
+		}
+		return returnList;
+	}
+	
+	public List<LogType> listAllActive(){
+		Query<LogType> q = this.ofy().query(LogType.class).filter("hourActive", true).order("hourName");
 		List<LogType> returnList = new ArrayList<LogType>();
 		for (LogType type : q){
 			returnList.add(type);

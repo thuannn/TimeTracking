@@ -8,10 +8,12 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.ExtractDataPresenter;
+import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.LogProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.ListBox;
 
 public class ExtractDataView extends ViewImpl implements
 		ExtractDataPresenter.MyView {
@@ -32,6 +34,7 @@ public class ExtractDataView extends ViewImpl implements
 	}
 	
 	@UiField(provided=true) DataGrid<LogProxy> tblLog = new DataGrid<LogProxy>();
+	@UiField ListBox lstDepartments;
 	
 	@Override
 	public void initializeTable() {
@@ -73,14 +76,14 @@ public class ExtractDataView extends ViewImpl implements
 	    tblLog.addColumn(colMonth, "Month");
 	    tblLog.setColumnWidth(colMonth, 10, Unit.PCT);
 	    
-	    TextColumn<LogProxy> colCourse = new TextColumn<LogProxy>() {
+	    TextColumn<LogProxy> coldeptse = new TextColumn<LogProxy>() {
 			@Override
 			public String getValue(LogProxy object) {
 				return object.getCourseName();
 			}
 	    };
-	    tblLog.addColumn(colCourse, "Cours");
-	    tblLog.setColumnWidth(colCourse, 20, Unit.PCT);
+	    tblLog.addColumn(coldeptse, "depts");
+	    tblLog.setColumnWidth(coldeptse, 20, Unit.PCT);
 		
 	    TextColumn<LogProxy> colType = new TextColumn<LogProxy>() {
 			@Override
@@ -106,5 +109,13 @@ public class ExtractDataView extends ViewImpl implements
 		tblLog.setRowCount(logs.size(), true);
 		tblLog.setRowData(logs);
 		tblLog.setRowCount(logs.size());
+	}
+
+	@Override
+	public void setDepartmentList(List<CoursProxy> depts) {
+		lstDepartments.clear();
+		lstDepartments.addItem("-","");
+		for (int i=0; i<depts.size(); i++)
+			lstDepartments.addItem(depts.get(i).getSchoolName() + " - " +depts.get(i).getCoursNom(), depts.get(i).getId().toString());	
 	}
 }

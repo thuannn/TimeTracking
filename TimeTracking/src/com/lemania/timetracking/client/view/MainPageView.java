@@ -38,6 +38,7 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiField Label txtWelcome;
 	@UiField Button cmdExtractData;
 	@UiField Button cmdUserMgt;
+	@UiField Label lblCurrentMonth;
 	
 	public MainPageView() {		
 		widget = uiBinder.createAndBindUi(this);
@@ -158,6 +159,8 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	public void showUserInfo(CurrentUser currentUser) {
 		txtWelcome.setText("Vous êtes connecté(e), " + currentUser.getFullName() + " !");
 		cmdLogout.setText("Déconnexion");
+		lblCurrentMonth.setText( "Le mois actuel: " + " " + Integer.toString(currentUser.getCurrentMonth()) + "/" + 
+									Integer.toString(currentUser.getCurrentYear()) );
 	}
 
 	@Override
@@ -167,6 +170,7 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 		else {
 			txtWelcome.setText("");
 			cmdLogout.setText("");
+			lblCurrentMonth.setText("");
 		}
 	}
 }

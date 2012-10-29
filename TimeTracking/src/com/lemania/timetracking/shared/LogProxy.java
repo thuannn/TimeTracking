@@ -11,7 +11,10 @@ public interface LogProxy extends EntityProxy {
 	Long getId();	
 	
 	public int getHour();	
-	public void setHour(int hour);	
+	public void setHour(int hour);
+	
+	public String getMemo();
+	public void setMemo(String memo);
 	
 	public int getYear();
 	public void setYear(int year);
@@ -24,6 +27,7 @@ public interface LogProxy extends EntityProxy {
 	
 	public String getTypeName();
 	public String getProfName();
+	
 	public String getSchoolName();
 	public String getCourseName();
 }

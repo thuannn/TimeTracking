@@ -3,8 +3,8 @@ package com.lemania.timetracking.client.view;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -68,6 +68,11 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandler> implements HomeP
 		if (this.getUiHandlers() != null) {
 			this.getUiHandlers().authenticateUser(txtUserName.getText(), txtPassword.getText());
 		}
+	}
+	
+	@UiHandler("txtPassword")
+	public void onTxtPasswordFocus(FocusEvent event){
+		txtPassword.setSelectionRange(0, txtPassword.getText().length());
 	}
 
 	@Override

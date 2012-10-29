@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.Assignment;
@@ -13,9 +12,9 @@ import com.lemania.timetracking.server.Cours;
 import com.lemania.timetracking.server.Professor;
 
 public class ProfessorDao extends DAOBase {
-	static {
+	/*static {
         ObjectifyService.register(Professor.class);        
-    }
+    }*/
 	
 	public List<Professor> listAll(){
 		Query<Professor> q = this.ofy().query(Professor.class).order("profName");

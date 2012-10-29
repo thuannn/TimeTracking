@@ -20,6 +20,13 @@ withOperation(new OperationKey("tPqW$mcU$NfZt9T1aQTt8kiSNcU="),
   .withMethodName("listAll")
   .withRequestContext("com.lemania.timetracking.shared.service.LogTypeRequestFactory$LogTypeRequestContext")
   .build());
+withOperation(new OperationKey("cIE5M8ZO8E_gfYUVGSqnszIg2m0="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()Ljava/util/List;")
+  .withMethodName("listAllActive")
+  .withRequestContext("com.lemania.timetracking.shared.service.LogTypeRequestFactory$LogTypeRequestContext")
+  .build());
 withOperation(new OperationKey("a4g9gZ79OAWgJvEMb1SrFcYOYLc="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/LogTypeProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
