@@ -138,8 +138,7 @@ public class TimeInputPresenter
 		});
 	}
 	
-	/*
-	 * Populate list of ecoles in drop-down list */
+	
 	private void loadLogTypeList(){
 		// Get LogType list
 		LogTypeRequestFactory rfl = GWT.create(LogTypeRequestFactory.class);

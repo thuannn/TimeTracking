@@ -1,4 +1,4 @@
-<!-- Indices written at Mon, 29 Oct 2012 16:51:36 CET -->
+<!-- Indices written at Tue, 30 Oct 2012 17:06:13 CET -->
 
 <datastore-indexes>
 
@@ -6,6 +6,15 @@
     <datastore-index kind="LogType" ancestor="false" source="auto">
         <property name="hourActive" direction="asc"/>
         <property name="hourName" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 2 times in query history -->
+    <datastore-index kind="Log" ancestor="false" source="auto">
+        <property name="cours" direction="asc"/>
+        <property name="prof" direction="asc"/>
+        <property name="year" direction="asc"/>
+        <property name="month" direction="asc"/>
+        <property name="type" direction="asc"/>
     </datastore-index>
 
 </datastore-indexes>

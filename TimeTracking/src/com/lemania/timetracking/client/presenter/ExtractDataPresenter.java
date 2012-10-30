@@ -2,6 +2,7 @@ package com.lemania.timetracking.client.presenter;
 
 import java.util.List;
 
+import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -22,18 +23,21 @@ import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
+import com.lemania.timetracking.client.uihandler.ExtractDataUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.LogProxy;
+import com.lemania.timetracking.shared.service.LogRequestFactory;
 import com.lemania.timetracking.shared.service.UserRequestFactory;
+import com.lemania.timetracking.shared.service.LogRequestFactory.LogRequestContext;
 import com.lemania.timetracking.shared.service.UserRequestFactory.UserRequestContext;
 
 public class ExtractDataPresenter 
 		extends Presenter<ExtractDataPresenter.MyView, ExtractDataPresenter.MyProxy> 
-		implements LoginAuthenticatedHandler {
+		implements ExtractDataUiHandler, LoginAuthenticatedHandler {
 	
 	private CurrentUser currentUser;
 
-	public interface MyView extends View {
+	public interface MyView extends View, HasUiHandlers<ExtractDataUiHandler> {
 		
 		public void initializeTable();
 		
@@ -63,7 +67,10 @@ public class ExtractDataPresenter
 	protected void onBind() {
 		super.onBind();
 		
-		// Thuan
+		// Set this as UiHandler
+		getView().setUiHandlers(this);
+		
+		// Prepare the table structure
 		getView().initializeTable();
 	}
 
@@ -95,5 +102,22 @@ public class ExtractDataPresenter
 	@Override
 	public void onLoginAuthenticated(LoginAuthenticatedEvent event) {
 		this.currentUser = event.getCurrentUser();
+	}
+
+	@Override
+	public void onDepartmentSelected(String deptId) {
+		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
+		rfl.initialize(this.getEventBus());
+		LogRequestContext rcl = rfl.logRequest();
+		rcl.listAllFullDetailByDepartment(deptId).fire(new Receiver<List<LogProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<LogProxy> response) {
+				getView().setLogData(response);
+			}
+		});
 	}
 }

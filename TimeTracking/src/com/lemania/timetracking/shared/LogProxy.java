@@ -1,5 +1,7 @@
 package com.lemania.timetracking.shared;
 
+import java.util.List;
+
 import com.google.web.bindery.requestfactory.shared.EntityProxy;
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
 import com.lemania.timetracking.server.Log;

@@ -2,12 +2,15 @@ package com.lemania.timetracking.client.view;
 
 import java.util.List;
 
-import com.gwtplatform.mvp.client.ViewImpl;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.ExtractDataPresenter;
+import com.lemania.timetracking.client.uihandler.ExtractDataUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.LogProxy;
 import com.google.gwt.uibinder.client.UiField;
@@ -15,7 +18,7 @@ import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.ListBox;
 
-public class ExtractDataView extends ViewImpl implements
+public class ExtractDataView extends ViewWithUiHandlers<ExtractDataUiHandler> implements
 		ExtractDataPresenter.MyView {
 
 	private final Widget widget;
@@ -35,6 +38,12 @@ public class ExtractDataView extends ViewImpl implements
 	
 	@UiField(provided=true) DataGrid<LogProxy> tblLog = new DataGrid<LogProxy>();
 	@UiField ListBox lstDepartments;
+	
+	@UiHandler("lstDepartments")
+	public void onListDepartmentsSelected(ChangeEvent event){
+		if (getUiHandlers() != null)
+			getUiHandlers().onDepartmentSelected( lstDepartments.getValue( lstDepartments.getSelectedIndex() ));
+	}
 	
 	@Override
 	public void initializeTable() {
@@ -82,7 +91,7 @@ public class ExtractDataView extends ViewImpl implements
 				return object.getCourseName();
 			}
 	    };
-	    tblLog.addColumn(coldeptse, "depts");
+	    tblLog.addColumn(coldeptse, "Départements");
 	    tblLog.setColumnWidth(coldeptse, 20, Unit.PCT);
 		
 	    TextColumn<LogProxy> colType = new TextColumn<LogProxy>() {

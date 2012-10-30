@@ -14,8 +14,11 @@ public interface LogRequestFactory extends RequestFactory {
 	
 	@Service(value=LogDao.class, locator=DaoServiceLocator.class)
 	interface LogRequestContext extends RequestContext {
+		
 		Request<List<LogProxy>> listAll();
 		Request<List<LogProxy>> listAllFullDetail();
+		Request<List<LogProxy>> listAllFullDetailByDepartment(String deptId);
+		
 		Request<List<LogProxy>> listAll(String profId, String courseId, String year, String month);
 		
 		Request<List<LogProxy>> batchUpdate(String profId, String courseId, String year, String month, List<String> typeIdList);

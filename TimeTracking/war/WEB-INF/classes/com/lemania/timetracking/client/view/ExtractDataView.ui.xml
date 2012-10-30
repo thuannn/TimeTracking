@@ -8,9 +8,9 @@
 
 	<g:HTMLPanel width="100%" height="100%">
 		<g:FlowPanel width="100%" height="100%">
-			<g:VerticalPanel width="100%" height="100%">
+			<g:VerticalPanel width="100%" height="100%" horizontalAlignment="ALIGN_RIGHT">
 				<g:Label text="Extraire des informations des heures" styleName="pageTitle" width="830" height="30"/>
-				<g:HorizontalPanel width="400px">
+				<g:HorizontalPanel width="100%">
 					<g:Label text="Départements :"/>
 					<g:ListBox ui:field="lstDepartments"/>
 				</g:HorizontalPanel>

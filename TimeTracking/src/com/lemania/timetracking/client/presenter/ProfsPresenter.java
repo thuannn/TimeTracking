@@ -115,21 +115,6 @@ public class ProfsPresenter
 				Window.alert(error.getMessage());
 			}
 		});
-		
-		// Just to register the Cours class in Objectify
-		CoursRequestFactory crf = GWT.create(CoursRequestFactory.class);
-		crf.initialize(this.getEventBus());
-		CoursRequestContext crc = crf.coursRequest();
-		crc.listAll("").fire(new Receiver<List<CoursProxy>>(){
-			@Override
-			public void onFailure(ServerFailure error){
-				Window.alert(error.getMessage());
-			}
-			@Override
-			public void onSuccess(List<CoursProxy> response) {
-				getView().setCourseAddList(response);
-			}
-		});
 	}
 
 	@Override
