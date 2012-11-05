@@ -31,5 +31,8 @@ public interface MainPageUiHandler extends UiHandlers {
 	
 	void showUserManagement();
 	
+	void showRptByDept();
+	void showRptBySchool();
+	
 	void logOut();
 }

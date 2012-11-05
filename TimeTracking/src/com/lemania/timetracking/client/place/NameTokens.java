@@ -14,6 +14,8 @@ public class NameTokens {
 	public static final String contact = "!contact";
 	public static final String extractdata = "extractdata";
 	public static final String usermanagement = "usermanagement";
+	public static final String rptbydept = "rptbydept";
+	public static final String rptbyschool = "rptbyschool";
 
 	public static String getHomePage() {
 	    return homepage;
@@ -65,5 +67,13 @@ public class NameTokens {
 
 	public static String getUsermanagement() {
 		return usermanagement;
+	}
+
+	public static String getRptbydept() {
+		return rptbydept;
+	}
+
+	public static String getRptbyschool() {
+		return rptbyschool;
 	}
 }

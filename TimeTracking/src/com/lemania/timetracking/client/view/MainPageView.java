@@ -39,6 +39,8 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiField Button cmdExtractData;
 	@UiField Button cmdUserMgt;
 	@UiField Label lblCurrentMonth;
+	@UiField Button cmdRptByDept;
+	@UiField Button cmdRptByEcole;
 	
 	public MainPageView() {		
 		widget = uiBinder.createAndBindUi(this);
@@ -152,6 +154,20 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	void onCmdUserMgtClicked(ClickEvent event) {
 		if (getUiHandlers() != null) {
 			getUiHandlers().showUserManagement();
+		}
+	}
+	
+	@UiHandler("cmdRptByDept")
+	void onCmdRptByDeptClicked(ClickEvent event){
+		if (getUiHandlers() != null) {
+			getUiHandlers().showRptByDept();
+		}
+	}
+	
+	@UiHandler("cmdRptByEcole")
+	void onCmdRptBySchoolClicked(ClickEvent event){
+		if (getUiHandlers() != null) {
+			getUiHandlers().showRptBySchool();
 		}
 	}
 

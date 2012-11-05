@@ -157,4 +157,14 @@ public class MainPagePresenter extends
 	public void showExtractDataForm() {
 		History.newItem(NameTokens.extractdata);
 	}
+
+	@Override
+	public void showRptByDept() {
+		History.newItem(NameTokens.rptbydept);		
+	}
+	
+	@Override
+	public void showRptBySchool() {
+		History.newItem(NameTokens.rptbyschool);		
+	}
 }

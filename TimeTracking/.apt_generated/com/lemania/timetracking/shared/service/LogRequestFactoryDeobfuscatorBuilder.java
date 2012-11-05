@@ -34,6 +34,13 @@ withOperation(new OperationKey("rPl4K6fdVW7Khbh5XG__wSa8jn4="),
   .withMethodName("listAll")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
+withOperation(new OperationKey("r7XIrN8gCo7cvZPRVfJpFB8sIck="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Ljava/lang/String;)Ljava/util/List;")
+  .withMethodName("listAllFullDetailByProf")
+  .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
+  .build());
 withOperation(new OperationKey("ppgHbdsCjY9F$gPBQ7NdM7Kb_CM="),
   new OperationData.Builder()
   .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")

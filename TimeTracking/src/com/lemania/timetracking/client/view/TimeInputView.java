@@ -95,17 +95,17 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		
 		// List of month, auto-select current month
 		lstMonth.clear();
-		for (int i=0; i<12; i++) {
-			lstMonth.addItem( Integer.toString(i+1), Integer.toString(i+1));
-			if (i == currentMonth)
+		for (int i=0; (i + currentMonth)<= currentMonth; i++) {
+			lstMonth.addItem( Integer.toString(i + currentMonth), Integer.toString(i + currentMonth));
+			if ((i + currentMonth) == currentMonth)
 				lstMonth.setSelectedIndex(i);
 		}
 		
 		// List of year, auto-select current year
 		lstYear.clear();
-		for (int i=0; i<5; i++) {
-			lstYear.addItem( Integer.toString(i + 2011), Integer.toString(i + 2011));
-			if ((i+2011) == currentYear)
+		for (int i=0; i<1; i++) {
+			lstYear.addItem( Integer.toString(i + currentYear), Integer.toString(i + currentYear));
+			if ((i + currentYear) == currentYear)
 				lstYear.setSelectedIndex(i);
 		}
 	}

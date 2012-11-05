@@ -15,6 +15,7 @@ import com.lemania.timetracking.client.presenter.LogTypesPresenter;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.presenter.EcolePresenter;
 import com.lemania.timetracking.client.presenter.EcoleAddPresenter;
+import com.lemania.timetracking.client.presenter.RptTimeByDepartmentPresenter;
 import com.lemania.timetracking.client.presenter.TimeInputPresenter;
 import com.lemania.timetracking.client.presenter.CoursPresenter;
 import com.lemania.timetracking.client.presenter.CoursAddPresenter;
@@ -23,6 +24,7 @@ import com.lemania.timetracking.client.presenter.ProfsAddPresenter;
 import com.lemania.timetracking.client.presenter.ContactPresenter;
 import com.lemania.timetracking.client.presenter.ExtractDataPresenter;
 import com.lemania.timetracking.client.presenter.UserManagementPresenter;
+import com.lemania.timetracking.client.presenter.RptTimeBySchoolPresenter;
 
 @GinModules({ ClientModule.class })
 public interface ClientGinjector extends Ginjector {
@@ -62,4 +64,8 @@ public interface ClientGinjector extends Ginjector {
 	AsyncProvider<ExtractDataPresenter> getExtractDataPresenter();
 
 	AsyncProvider<UserManagementPresenter> getUserManagementPresenter();
+
+	AsyncProvider<RptTimeByDepartmentPresenter> getRptTimeByDepartmentPresenter();
+
+	AsyncProvider<RptTimeBySchoolPresenter> getRptTimeBySchoolPresenter();
 }

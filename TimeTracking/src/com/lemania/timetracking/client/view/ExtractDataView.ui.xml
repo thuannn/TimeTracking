@@ -8,14 +8,16 @@
 
 	<g:HTMLPanel width="100%" height="100%">
 		<g:FlowPanel width="100%" height="100%">
-			<g:VerticalPanel width="100%" height="100%" horizontalAlignment="ALIGN_RIGHT">
-				<g:Label text="Extraire des informations des heures" styleName="pageTitle" width="830" height="30"/>
-				<g:HorizontalPanel width="100%">
+			<g:VerticalPanel width="100%" height="100%" horizontalAlignment="ALIGN_LEFT">
+				<g:Label text="Informations des heures par professeur" styleName="pageTitle" width="830" height="30"/>
+				<g:HorizontalPanel width="80%" spacing="2" verticalAlignment="ALIGN_MIDDLE">
 					<g:Label text="Départements :"/>
 					<g:ListBox ui:field="lstDepartments"/>
+					<g:Label text="Professeur :"/>
+					<g:ListBox ui:field="lstProfs"/>
+					<g:Button>Extraire en Excel</g:Button>
 				</g:HorizontalPanel>
-				<g:Button>Extraire en Excel</g:Button>
-				<p1:DataGrid width="830px" height="450px" ui:field="tblLog"/>
+				<p1:DataGrid width="830px" height="520px" ui:field="tblLog"/>
 			</g:VerticalPanel>
 		</g:FlowPanel>
 	</g:HTMLPanel>

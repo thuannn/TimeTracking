@@ -29,3 +29,20 @@ body {
 	border-width:1px;
 	border-color: #D2C40B;
 }
+
+.FlexTable {
+  border-top: thin solid #444444;
+  border-left: thin solid #444444;
+  border-right: thin solid #111111;
+  border-bottom: thin solid #111111;
+  background-color:  #ffffff;
+}
+
+.FlexTable-Cell {
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: blue;
+  padding: 2px;
+  spacing: 0px;
+  height: 18px;
+}

@@ -20,11 +20,14 @@ import com.lemania.timetracking.client.view.LogTypesView;
 import com.lemania.timetracking.client.view.MainPageView;
 import com.lemania.timetracking.client.view.ProfsAddView;
 import com.lemania.timetracking.client.view.ProfsView;
+import com.lemania.timetracking.client.view.RptTimeByDepartmentView;
+import com.lemania.timetracking.client.view.RptTimeBySchoolView;
 import com.lemania.timetracking.client.view.TimeInputView;
 import com.lemania.timetracking.client.view.UserManagementView;
 import com.lemania.timetracking.client.presenter.EcoleAddPresenter;
 import com.lemania.timetracking.client.presenter.LogTypesAddPresenter;
 import com.lemania.timetracking.client.presenter.LogTypesPresenter;
+import com.lemania.timetracking.client.presenter.RptTimeByDepartmentPresenter;
 import com.lemania.timetracking.client.presenter.TimeInputPresenter;
 import com.lemania.timetracking.client.presenter.CoursPresenter;
 import com.lemania.timetracking.client.presenter.CoursAddPresenter;
@@ -33,6 +36,7 @@ import com.lemania.timetracking.client.presenter.ProfsAddPresenter;
 import com.lemania.timetracking.client.presenter.ContactPresenter;
 import com.lemania.timetracking.client.presenter.ExtractDataPresenter;
 import com.lemania.timetracking.client.presenter.UserManagementPresenter;
+import com.lemania.timetracking.client.presenter.RptTimeBySchoolPresenter;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -89,5 +93,15 @@ public class ClientModule extends AbstractPresenterModule {
 		bindPresenter(UserManagementPresenter.class,
 				UserManagementPresenter.MyView.class, UserManagementView.class,
 				UserManagementPresenter.MyProxy.class);
+
+		bindPresenter(RptTimeByDepartmentPresenter.class,
+				RptTimeByDepartmentPresenter.MyView.class,
+				RptTimeByDepartmentView.class,
+				RptTimeByDepartmentPresenter.MyProxy.class);
+
+		bindPresenter(RptTimeBySchoolPresenter.class,
+				RptTimeBySchoolPresenter.MyView.class,
+				RptTimeBySchoolView.class,
+				RptTimeBySchoolPresenter.MyProxy.class);
 	}
 }

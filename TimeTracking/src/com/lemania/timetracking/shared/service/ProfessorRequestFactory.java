@@ -6,6 +6,7 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.Service;
+import com.lemania.timetracking.server.Professor;
 import com.lemania.timetracking.server.service.DaoServiceLocator;
 import com.lemania.timetracking.server.service.ProfessorDao;
 import com.lemania.timetracking.shared.ProfessorProxy;
@@ -17,6 +18,7 @@ public interface ProfessorRequestFactory extends RequestFactory {
 		
 		Request<List<ProfessorProxy>> listAll();
 		Request<List<ProfessorProxy>> listAllByCourse(String courseId);
+		Request<List<ProfessorProxy>> listAllByCourseWithTime(String deptId, int year);
 		
 		Request<Void> save(ProfessorProxy prof);
 		

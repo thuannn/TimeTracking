@@ -6,6 +6,13 @@ import com.google.web.bindery.requestfactory.vm.impl.OperationData;
 import com.google.web.bindery.requestfactory.vm.impl.OperationKey;
 public final class ProfessorRequestFactoryDeobfuscatorBuilder extends com.google.web.bindery.requestfactory.vm.impl.Deobfuscator.Builder {
 {
+withOperation(new OperationKey("fn0y14SFjm2fiaJ$NsdUMYOo5Gk="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Ljava/lang/String;I)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Ljava/lang/String;I)Ljava/util/List;")
+  .withMethodName("listAllByCourseWithTime")
+  .withRequestContext("com.lemania.timetracking.shared.service.ProfessorRequestFactory$ProfessorRequestContext")
+  .build());
 withOperation(new OperationKey("IAiZWd5l08yJfHM9yN8_PPbImY4="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/ProfessorProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")

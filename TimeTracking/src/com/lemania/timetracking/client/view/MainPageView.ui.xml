@@ -23,12 +23,14 @@
 			<g:Dock direction="WEST" width="10%" height="100%">
 				<g:Tree animationEnabled="true" styleName="sideBar" height="" width="250px">
 					<g:Button ui:field="cmdHomepage">Accueil</g:Button>
-					<g:Button ui:field="cmdTimeInput">Mettre des heures</g:Button>
-					<g:TreeItem text="Rapports" state="true">
-						<g:Button text="Vue d&apos;ensembles - Télécharger" ui:field="cmdExtractData"/>
+					<g:Button ui:field="cmdTimeInput" text="Saisir des heures des professeurs">Mettre des heures</g:Button>
+					<g:TreeItem text="Rapports des heures" state="true">
+						<g:Button text="Par départements" ui:field="cmdRptByDept">Par départements</g:Button>
+						<g:Button text="Par professeurs" ui:field="cmdExtractData">Par professeurs</g:Button>
+						<g:Button text="Par écoles" ui:field="cmdRptByEcole" visible="false">Par écoles</g:Button>
 					</g:TreeItem>
 					<g:TreeItem text="Informations de base" state="true">
-						<g:TreeItem text="Professeurs" state="true">
+						<g:TreeItem text="Professeurs">
 							<g:Button text="Liste des professeurs" ui:field="cmdProfs"/>
 							<g:Button text="Ajouter un professeur" ui:field="cmdProfsAdd"/>
 						</g:TreeItem>

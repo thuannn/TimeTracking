@@ -26,9 +26,12 @@ import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.ExtractDataUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.LogProxy;
+import com.lemania.timetracking.shared.ProfessorProxy;
 import com.lemania.timetracking.shared.service.LogRequestFactory;
+import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
 import com.lemania.timetracking.shared.service.UserRequestFactory;
 import com.lemania.timetracking.shared.service.LogRequestFactory.LogRequestContext;
+import com.lemania.timetracking.shared.service.ProfessorRequestFactory.ProfessorRequestContext;
 import com.lemania.timetracking.shared.service.UserRequestFactory.UserRequestContext;
 
 public class ExtractDataPresenter 
@@ -44,6 +47,11 @@ public class ExtractDataPresenter
 		public void setLogData(List<LogProxy> logs);
 		
 		public void setDepartmentList(List<CoursProxy> depts);
+		
+		public void clearLogTable();
+		public void clearProfList();
+		
+		public void setProfList(List<ProfessorProxy> profs);
 	}
 
 	@ProxyCodeSplit
@@ -78,6 +86,10 @@ public class ExtractDataPresenter
 	protected void onReset() {
 		super.onReset();
 		
+		// Clear UI
+		getView().clearLogTable();
+		getView().clearProfList();
+		
 		// Thuan
 		loadDepartmentList();
 	}
@@ -106,10 +118,27 @@ public class ExtractDataPresenter
 
 	@Override
 	public void onDepartmentSelected(String deptId) {
+		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
+		rf.initialize(this.getEventBus());
+		ProfessorRequestContext rc = rf.professorRequest();
+		rc.listAllByCourse(deptId).fire(new Receiver<List<ProfessorProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<ProfessorProxy> response) {
+				getView().setProfList(response);
+			}
+		});
+	}
+
+	@Override
+	public void onProfSelected(String deptId, String profId) {
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
 		rfl.initialize(this.getEventBus());
 		LogRequestContext rcl = rfl.logRequest();
-		rcl.listAllFullDetailByDepartment(deptId).fire(new Receiver<List<LogProxy>>(){
+		rcl.listAllFullDetailByProf(profId).fire(new Receiver<List<LogProxy>>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
