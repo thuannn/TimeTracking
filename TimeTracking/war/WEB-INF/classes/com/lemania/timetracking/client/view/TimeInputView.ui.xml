@@ -31,7 +31,7 @@
 				<g:row/>
 			</g:Grid>
 					<p1:SimplePager location="CENTER" ui:field="pager" pageSize="10"/>
-					<p1:DataGrid width="400px" height="550px" ui:field="tblProfessors" pageSize="10"/>
+					<p1:DataGrid width="400px" height="400px" ui:field="tblProfessors" pageSize="10"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="550px" styleName="sideBar">
 					<g:Grid width="420px" borderWidth="0" cellPadding="5" cellSpacing="2">

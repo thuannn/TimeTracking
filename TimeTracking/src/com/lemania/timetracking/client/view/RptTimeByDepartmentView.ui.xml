@@ -8,15 +8,13 @@
 
 	<g:HTMLPanel width="100%" height="100%">
 		<g:FlowPanel width="100%" height="100%">
-			<g:VerticalPanel width="100%" height="" horizontalAlignment="ALIGN_CENTER">
+			<g:VerticalPanel width="100%" height="" horizontalAlignment="ALIGN_LEFT" spacing="2">
 				<g:Label text="Informations des heures par département" styleName="pageTitle" width="830" height="30"/>
 				<g:HorizontalPanel width="80%" spacing="2" verticalAlignment="ALIGN_MIDDLE">
 					<g:Label text="Départements :"/>
 					<g:ListBox ui:field="lstDepartments"/>
-					<g:Button>Extraire en Excel</g:Button>
 				</g:HorizontalPanel>
-				<p1:DataGrid width="830px" height="520px" ui:field="tblLog" visible="false"/>
-				<g:FlexTable ui:field="tblProf"/>
+				<g:FlexTable ui:field="tblProf" width="100%" height="100%"/>
 			</g:VerticalPanel>
 		</g:FlowPanel>
 	</g:HTMLPanel>

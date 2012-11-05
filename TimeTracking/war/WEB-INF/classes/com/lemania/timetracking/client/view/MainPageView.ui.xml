@@ -55,7 +55,7 @@
 				</g:Tree>
 			</g:Dock>
 			<g:Dock direction="CENTER">
-				<g:FlowPanel ui:field="mainContentPanel" width="100%" height="600px" styleName="paneMain"/>
+				<g:FlowPanel ui:field="mainContentPanel" width="100%" height="100%" styleName="paneMain"/>
 			</g:Dock>
 			<g:Dock direction="SOUTH">
 				<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_RIGHT">
