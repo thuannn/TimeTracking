@@ -98,11 +98,13 @@ public class ExtractDataView extends ViewWithUiHandlers<ExtractDataUiHandler> im
 			if (prevYear != logs.get(i).getYear())
 				tblLogs.setText(i+1, 0, Integer.toString(logs.get(i).getYear()));
 			
-			if (prevMonth != logs.get(i).getMonth())
+			if ((prevMonth != logs.get(i).getMonth()) || (!prevDept.equals(logs.get(i).getCourseName()))){
 				tblLogs.setText(i+1, 1, Integer.toString(logs.get(i).getMonth()));
-			
-			if (!prevDept.equals(logs.get(i).getCourseName()))
 				tblLogs.setText(i+1, 2, logs.get(i).getCourseName());
+			}
+			
+//			if (!prevDept.equals(logs.get(i).getCourseName()))
+//				tblLogs.setText(i+1, 2, logs.get(i).getCourseName());
 			
 			tblLogs.setText(i+1, 3, logs.get(i).getTypeName());
 			tblLogs.setText(i+1, 4, 

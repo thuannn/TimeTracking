@@ -1,23 +1,8 @@
-<!-- Indices written at Mon, 5 Nov 2012 23:33:47 CET -->
+<!-- Indices written at Tue, 6 Nov 2012 10:12:16 CET -->
 
 <datastore-indexes>
 
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="LogType" ancestor="false" source="auto">
-        <property name="hourActive" direction="asc"/>
-        <property name="hourName" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 9 times in query history -->
-    <datastore-index kind="Log" ancestor="false" source="auto">
-        <property name="cours" direction="asc"/>
-        <property name="month" direction="asc"/>
-        <property name="prof" direction="asc"/>
-        <property name="year" direction="asc"/>
-        <property name="type" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 3 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="Log" ancestor="false" source="auto">
         <property name="cours" direction="asc"/>
         <property name="year" direction="asc"/>
@@ -26,7 +11,7 @@
         <property name="type" direction="asc"/>
     </datastore-index>
 
-    <!-- Used 5 times in query history -->
+    <!-- Used 4 times in query history -->
     <datastore-index kind="Log" ancestor="false" source="auto">
         <property name="prof" direction="asc"/>
         <property name="year" direction="asc"/>
