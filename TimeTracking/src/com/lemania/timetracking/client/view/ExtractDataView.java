@@ -1,10 +1,7 @@
 package com.lemania.timetracking.client.view;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -12,13 +9,10 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.ExtractDataPresenter;
 import com.lemania.timetracking.client.uihandler.ExtractDataUiHandler;
-import com.lemania.timetracking.server.Professor;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.LogProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.cellview.client.DataGrid;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.FlexTable;
 
@@ -102,9 +96,6 @@ public class ExtractDataView extends ViewWithUiHandlers<ExtractDataUiHandler> im
 				tblLogs.setText(i+1, 1, Integer.toString(logs.get(i).getMonth()));
 				tblLogs.setText(i+1, 2, logs.get(i).getCourseName());
 			}
-			
-//			if (!prevDept.equals(logs.get(i).getCourseName()))
-//				tblLogs.setText(i+1, 2, logs.get(i).getCourseName());
 			
 			tblLogs.setText(i+1, 3, logs.get(i).getTypeName());
 			tblLogs.setText(i+1, 4, 

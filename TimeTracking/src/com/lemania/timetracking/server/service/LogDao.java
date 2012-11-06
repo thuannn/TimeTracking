@@ -48,6 +48,24 @@ public class LogDao extends DAOBase {
 		return returnList;
 	}
 	
+	public List<Log> listAllFullDetailByMonth(int selectedYear, int selectedMonth){
+		Query<Log> q = this.ofy().query(Log.class)
+				.filter("year", selectedYear)
+				.filter("month", selectedMonth)
+				.order("prof")
+				.order("cours")
+				.order("type");
+		List<Log> returnList = new ArrayList<Log>();
+		for (Log log : q){
+			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
+			log.setProfName( this.ofy().get(log.getProf()).getProfName());
+			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
+			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
+			returnList.add(log);
+		}
+		return returnList;
+	}
+	
 	public List<Log> listAllFullDetailByDepartment(String deptId){
 		Query<Log> q = this.ofy().query(Log.class)
 				.filter("cours",new Key<Cours>(Cours.class, Long.parseLong(deptId)))

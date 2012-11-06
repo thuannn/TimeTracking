@@ -6,13 +6,6 @@ import com.google.web.bindery.requestfactory.vm.impl.OperationData;
 import com.google.web.bindery.requestfactory.vm.impl.OperationKey;
 public final class LogRequestFactoryDeobfuscatorBuilder extends com.google.web.bindery.requestfactory.vm.impl.Deobfuscator.Builder {
 {
-withOperation(new OperationKey("O7gb32zJhuWVMfKLRpcrbA5ufds="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Ljava/util/List;")
-  .withMethodName("batchUpdate")
-  .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
-  .build());
 withOperation(new OperationKey("tDC7lLOJfVdsA4iVyX907h2IS_U="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/LogProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
@@ -20,17 +13,24 @@ withOperation(new OperationKey("tDC7lLOJfVdsA4iVyX907h2IS_U="),
   .withMethodName("save")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
-withOperation(new OperationKey("jYwYNZ2GdAHpRkHITOENfbCme_E="),
+withOperation(new OperationKey("5h14jyFhSA0RGLHOcpBdXq$DtWU="),
   new OperationData.Builder()
-  .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;")
-  .withMethodName("listAll")
+  .withClientMethodDescriptor("(II)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(II)Ljava/util/List;")
+  .withMethodName("listAllFullDetailByMonth")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
 withOperation(new OperationKey("rPl4K6fdVW7Khbh5XG__wSa8jn4="),
   new OperationData.Builder()
   .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
   .withDomainMethodDescriptor("()Ljava/util/List;")
+  .withMethodName("listAll")
+  .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
+  .build());
+withOperation(new OperationKey("jYwYNZ2GdAHpRkHITOENfbCme_E="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;")
   .withMethodName("listAll")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
@@ -41,11 +41,11 @@ withOperation(new OperationKey("r7XIrN8gCo7cvZPRVfJpFB8sIck="),
   .withMethodName("listAllFullDetailByProf")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
-withOperation(new OperationKey("ppgHbdsCjY9F$gPBQ7NdM7Kb_CM="),
+withOperation(new OperationKey("Z9jONGDxCKtP$8lWnGHVODUZCf8="),
   new OperationData.Builder()
-  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("()Ljava/util/List;")
-  .withMethodName("listAllFullDetail")
+  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/LogProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Log;)V")
+  .withMethodName("removeLog")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
 withOperation(new OperationKey("EtkNafzDOYwy1M$QC1LOstR3Dpg="),
@@ -55,11 +55,11 @@ withOperation(new OperationKey("EtkNafzDOYwy1M$QC1LOstR3Dpg="),
   .withMethodName("listAllFullDetailByDepartment")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
-withOperation(new OperationKey("Z9jONGDxCKtP$8lWnGHVODUZCf8="),
+withOperation(new OperationKey("O7gb32zJhuWVMfKLRpcrbA5ufds="),
   new OperationData.Builder()
-  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/LogProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Log;)V")
-  .withMethodName("removeLog")
+  .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Ljava/util/List;")
+  .withMethodName("batchUpdate")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
 withOperation(new OperationKey("rPUIasPiIEUgs$O7xIkrKCFLwqY="),
@@ -67,6 +67,13 @@ withOperation(new OperationKey("rPUIasPiIEUgs$O7xIkrKCFLwqY="),
   .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/LogProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
   .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Log;)Lcom/lemania/timetracking/server/Log;")
   .withMethodName("saveAndReturn")
+  .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
+  .build());
+withOperation(new OperationKey("ppgHbdsCjY9F$gPBQ7NdM7Kb_CM="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()Ljava/util/List;")
+  .withMethodName("listAllFullDetail")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
 withRawTypeToken("16SpWH2YVyznesd8b4Pdep_GTzI=", "com.lemania.timetracking.shared.LogProxy");

@@ -21,6 +21,7 @@ import com.lemania.timetracking.client.view.MainPageView;
 import com.lemania.timetracking.client.view.ProfsAddView;
 import com.lemania.timetracking.client.view.ProfsView;
 import com.lemania.timetracking.client.view.RptTimeByDepartmentView;
+import com.lemania.timetracking.client.view.RptTimeByMonthView;
 import com.lemania.timetracking.client.view.RptTimeBySchoolView;
 import com.lemania.timetracking.client.view.TimeInputView;
 import com.lemania.timetracking.client.view.UserManagementView;
@@ -37,6 +38,7 @@ import com.lemania.timetracking.client.presenter.ContactPresenter;
 import com.lemania.timetracking.client.presenter.ExtractDataPresenter;
 import com.lemania.timetracking.client.presenter.UserManagementPresenter;
 import com.lemania.timetracking.client.presenter.RptTimeBySchoolPresenter;
+import com.lemania.timetracking.client.presenter.RptTimeByMonthPresenter;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -103,5 +105,9 @@ public class ClientModule extends AbstractPresenterModule {
 				RptTimeBySchoolPresenter.MyView.class,
 				RptTimeBySchoolView.class,
 				RptTimeBySchoolPresenter.MyProxy.class);
+
+		bindPresenter(RptTimeByMonthPresenter.class,
+				RptTimeByMonthPresenter.MyView.class, RptTimeByMonthView.class,
+				RptTimeByMonthPresenter.MyProxy.class);
 	}
 }

@@ -33,6 +33,7 @@ public interface MainPageUiHandler extends UiHandlers {
 	
 	void showRptByDept();
 	void showRptBySchool();
+	void showRptByMonth();
 	
 	void logOut();
 }

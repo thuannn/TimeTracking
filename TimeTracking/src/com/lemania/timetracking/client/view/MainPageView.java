@@ -40,7 +40,7 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiField Button cmdUserMgt;
 	@UiField Label lblCurrentMonth;
 	@UiField Button cmdRptByDept;
-	@UiField Button cmdRptByEcole;
+	@UiField Button cmdRptByMonth;
 	
 	public MainPageView() {		
 		widget = uiBinder.createAndBindUi(this);
@@ -164,10 +164,10 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 		}
 	}
 	
-	@UiHandler("cmdRptByEcole")
+	@UiHandler("cmdRptByMonth")
 	void onCmdRptBySchoolClicked(ClickEvent event){
 		if (getUiHandlers() != null) {
-			getUiHandlers().showRptBySchool();
+			getUiHandlers().showRptByMonth();
 		}
 	}
 

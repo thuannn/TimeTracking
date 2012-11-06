@@ -27,7 +27,7 @@
 					<g:TreeItem text="Rapports des heures" state="true">
 						<g:Button text="Par départements" ui:field="cmdRptByDept">Par départements</g:Button>
 						<g:Button text="Par professeurs" ui:field="cmdExtractData">Par professeurs</g:Button>
-						<g:Button text="Par écoles" ui:field="cmdRptByEcole" visible="false">Par écoles</g:Button>
+						<g:Button ui:field="cmdRptByMonth">Par mois - Compta</g:Button>
 					</g:TreeItem>
 					<g:TreeItem text="Informations de base" state="true">
 						<g:TreeItem text="Professeurs">

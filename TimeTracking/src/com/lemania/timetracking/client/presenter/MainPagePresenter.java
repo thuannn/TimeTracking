@@ -167,4 +167,10 @@ public class MainPagePresenter extends
 	public void showRptBySchool() {
 		History.newItem(NameTokens.rptbyschool);		
 	}
+
+	@Override
+	public void showRptByMonth() {
+		// TODO Auto-generated method stub
+		History.newItem(NameTokens.rpttimebymonth);
+	}
 }
