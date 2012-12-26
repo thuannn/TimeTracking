@@ -10,8 +10,8 @@ public interface LogProxy extends EntityProxy {
 
 	Long getId();	
 	
-	public int getHour();	
-	public void setHour(int hour);
+	public double getHour();	
+	public void setHour(double hour);
 	
 	public String getMemo();
 	public void setMemo(String memo);

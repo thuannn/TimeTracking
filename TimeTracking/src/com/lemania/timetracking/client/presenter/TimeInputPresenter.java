@@ -56,7 +56,7 @@ public class TimeInputPresenter
 		void setCourseList(List<CoursProxy> cours);
 		
 		// Initialize values
-		void initializeValues(int currentMonth, int currentYear);
+		void initializeValues(int currentMonth, int currentYear, boolean isAdmin);
 		void initializeProfTable();
 		void initializeLogTable();
 		
@@ -98,7 +98,7 @@ public class TimeInputPresenter
 	@Override
 	protected void onReset(){
 		// Initialize values
-		getView().initializeValues(currentUser.getCurrentMonth(), currentUser.getCurrentYear());
+		getView().initializeValues(currentUser.getCurrentMonth(), currentUser.getCurrentYear(), currentUser.isAdmin());
 		
 		// Initialize active school list
 		
@@ -157,7 +157,7 @@ public class TimeInputPresenter
 	}
 	
 	public void updateLogTypeList(final ProfessorProxy prof, final String courseId, final String year, final String month) {
-		// TODO Load log list
+		// Load log list
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
 		rfl.initialize(this.getEventBus());
 		LogRequestContext rcl = rfl.logRequest();
@@ -239,7 +239,7 @@ public class TimeInputPresenter
 		LogRequestContext rcl = rfl.logRequest();
 
 		LogProxy logUpdate = rcl.edit(log);
-		logUpdate.setHour(Integer.parseInt(value));
+		logUpdate.setHour(Double.parseDouble(value));
 		
 		rcl.save(logUpdate).fire(new Receiver<Void>(){
 			@Override

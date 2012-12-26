@@ -4,10 +4,17 @@ package com.lemania.timetracking.client.view;
 import java.util.ArrayList;
 import java.util.List;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+import com.google.gwt.canvas.dom.client.Context;
+import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextInputCell;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodeEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
@@ -25,6 +32,7 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
@@ -37,6 +45,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	private ProfessorProxy selectedProfessor;
 	private LogProxy selectedLog;
 	private ListDataProvider<ProfessorProxy> professorProvider;
+	private ListDataProvider<LogProxy> logProvider;
 
 	public interface Binder extends UiBinder<Widget, TimeInputView> {
 	}
@@ -85,7 +94,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	}
 
 	@Override
-	public void initializeValues(int currentMonth, int currentYear) {
+	public void initializeValues(int currentMonth, int currentYear, boolean isAdmin) {
 		// Clear school list and course list
 		lstSchools.clear();
 		lstCourses.clear();
@@ -95,19 +104,23 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		
 		// List of month, auto-select current month
 		lstMonth.clear();
-		for (int i=0; (i + currentMonth)<= currentMonth; i++) {
-			lstMonth.addItem( Integer.toString(i + currentMonth), Integer.toString(i + currentMonth));
-			if ((i + currentMonth) == currentMonth)
+		for (int i=0; i <= currentMonth; i++) {
+			lstMonth.addItem( Integer.toString(i), Integer.toString(i));
+			if (i == currentMonth)
 				lstMonth.setSelectedIndex(i);
 		}
 		
 		// List of year, auto-select current year
 		lstYear.clear();
-		for (int i=0; i<1; i++) {
+		for (int i=-2; i<2; i++) {
 			lstYear.addItem( Integer.toString(i + currentYear), Integer.toString(i + currentYear));
 			if ((i + currentYear) == currentYear)
-				lstYear.setSelectedIndex(i);
-		}
+				lstYear.setSelectedIndex(i+2);
+		}		
+		
+		// let admin choose year and month
+		lstMonth.setEnabled(isAdmin);
+		lstYear.setEnabled(isAdmin);
 	}
 	
 	/***/
@@ -115,6 +128,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiHandler("lstSchools")
 	public void onLstAddEcoleChanged(ChangeEvent event) {
 		clearProfTable();
+		clearLogTable();
 		if ( !lstSchools.getItemText(lstSchools.getSelectedIndex()).equals("-") ) {
 			if (getUiHandlers() != null)
 				getUiHandlers().loadCoursesBySchool(lstSchools.getValue(lstSchools.getSelectedIndex()));
@@ -144,28 +158,31 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@Override
 	public void clearProfTable() {
 		List<ProfessorProxy> temp = new ArrayList<ProfessorProxy>();
-		
 		professorProvider = new ListDataProvider<ProfessorProxy>();
 		professorProvider.setList(temp);
 		professorProvider.addDataDisplay(tblProfessors);
+		
+		tblProfessors.getSelectionModel().setSelected(selectedProfessor, false);
 	}
 	
 	@Override
 	public void clearLogTable() {
 		List<LogProxy> temp = new ArrayList<LogProxy>();
-		tblLog.setRowData(temp);
-		tblLog.setRowCount(temp.size());
+		logProvider = new ListDataProvider<LogProxy>();
+		logProvider.setList(temp);
+		logProvider.addDataDisplay(tblLog);
 	}
 
 	@UiHandler("lstCourses")
 	public void onLstCoursesChanged(ChangeEvent event){
 		clearProfTable();
+		clearLogTable();
 		if ( !lstCourses.getItemText(lstCourses.getSelectedIndex()).equals("-") ) {
 			if (getUiHandlers() != null)
 				getUiHandlers().loadProfessorsByCourse(lstCourses.getValue(lstCourses.getSelectedIndex()));
 		}
 	}
-
+	
 	@Override
 	public void initializeProfTable() {
 		// Initialize table structure of Professor table
@@ -220,12 +237,12 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 			}
 	    };
 	    
-	    TextInputCell hourCell = new TextInputCell();
+	    EditTextCell hourCell = new EditTextCell();
 	    Column<LogProxy,String> hourColl = new Column<LogProxy,String>(hourCell) {
 	    	@Override
 	    	public String getValue(LogProxy log){
-	    		return Integer.toString(log.getHour());
-	    	}	 
+	    		return Double.toString(log.getHour());
+	    	}
 	    };
 	    hourColl.setFieldUpdater(new FieldUpdater<LogProxy,String>(){
 	    	@Override
@@ -237,12 +254,12 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    	}
 	    });
 	    
-	    TextInputCell memoCell = new TextInputCell();
+	    EditTextCell memoCell = new EditTextCell();
 	    Column<LogProxy, String> memoCol = new Column<LogProxy, String>(memoCell) {
 	    	@Override
 	    	public String getValue(LogProxy log){
 	    		return log.getMemo();
-	    	}
+	    	}	    	   
 	    };
 	    memoCol.setFieldUpdater(new FieldUpdater<LogProxy, String>(){
 	    	@Override
@@ -251,6 +268,18 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    			selectedLog = log;
 	    			getUiHandlers().updateLogMemo(log,  value);
 	    		}
+	    	}
+	    });
+	    
+	    tblLog.addCellPreviewHandler(new CellPreviewEvent.Handler<LogProxy>(){
+	    	@Override
+	    	public void onCellPreview(final CellPreviewEvent<LogProxy> event){
+	    		boolean isClick = "click".equals(event.getNativeEvent().getType());
+	    		boolean isKeyDown = "keydown".equals(event.getNativeEvent().getType());
+	    		if (isClick || (isKeyDown && event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE)) {
+	    			tblLog.getRowElement(event.getIndex()).getCells().getItem(event.getColumn()).dispatchEvent(
+	    				Document.get().createClickEvent(1, 0, 0, 0, 0, false, false, false, false));
+	    		}		
 	    	}
 	    });
 	    

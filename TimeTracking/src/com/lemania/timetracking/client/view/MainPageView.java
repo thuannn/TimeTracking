@@ -14,6 +14,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.lemania.timetracking.client.CurrentUser;
+import com.google.gwt.user.client.ui.Tree;
+import com.google.gwt.user.client.ui.DockPanel;
 
 public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implements MainPagePresenter.MyView {
 	
@@ -41,6 +43,9 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiField Label lblCurrentMonth;
 	@UiField Button cmdRptByDept;
 	@UiField Button cmdRptByMonth;
+	@UiField Button button;
+	@UiField Tree treeMenu;
+	@UiField DockPanel dockPanel;
 	
 	public MainPageView() {		
 		widget = uiBinder.createAndBindUi(this);
@@ -187,6 +192,19 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 			txtWelcome.setText("");
 			cmdLogout.setText("");
 			lblCurrentMonth.setText("");
+		}
+	}
+	
+	@UiHandler("button")
+	void onButtonClick(ClickEvent event) {
+		treeMenu.setVisible(!treeMenu.isVisible());
+		
+		if (!treeMenu.isVisible()) {
+			dockPanel.remove(treeMenu);
+		}
+		else {
+			dockPanel.add(treeMenu, DockPanel.WEST);
+			dockPanel.setCellWidth(treeMenu, "250px");
 		}
 	}
 }

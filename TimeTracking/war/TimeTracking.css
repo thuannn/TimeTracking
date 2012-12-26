@@ -46,3 +46,24 @@ body {
   spacing: 0px;
   height: 18px;
 }
+
+.FlexTable-Cell-Divider {    
+  height: 5px; 
+  border-width: 5px 0px 0px 0px;
+  border-style: solid;
+  border-color: red;
+  margin-top: 5px; 
+}
+
+.FlexTable-Cell-Total {    
+  height: 10px; 
+  background-color: #f2f2f2;
+  font-weight: bold;
+  font-size: bigger;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: blue;
+  padding: 2px;
+  spacing: 0px;
+  height: 18px;
+}

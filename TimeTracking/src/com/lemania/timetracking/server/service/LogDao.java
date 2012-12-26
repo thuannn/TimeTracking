@@ -63,6 +63,8 @@ public class LogDao extends DAOBase {
 			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
 			returnList.add(log);
 		}
+		// Sort by ProfName
+		java.util.Collections.sort(returnList);
 		return returnList;
 	}
 	

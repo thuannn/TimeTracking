@@ -7,7 +7,7 @@
 	ui:generateLocales='default'>
 
 	<g:FlowPanel width="100%" height="100%">
-		<g:DockPanel width="100%" height="100%" spacing="5">
+		<g:DockPanel width="100%" height="100%" spacing="5" ui:field="dockPanel">
 			<g:Dock direction="NORTH">
 				<g:HorizontalPanel verticalAlignment="ALIGN_BOTTOM" width="100%" height="54px" spacing="5">
 					<g:Image url="images/logo.jpg" width=""/>
@@ -18,10 +18,11 @@
 						</g:HorizontalPanel>
 						<g:Label ui:field="lblCurrentMonth"/>
 					</g:VerticalPanel>
+					<g:Button text="Afficher/ Cacher le menu" ui:field="button"/>
 				</g:HorizontalPanel>
 			</g:Dock>
 			<g:Dock direction="WEST" width="10%" height="100%">
-				<g:Tree animationEnabled="true" styleName="sideBar" height="" width="250px">
+				<g:Tree animationEnabled="true" styleName="sideBar" height="" width="250px" ui:field="treeMenu">
 					<g:Button ui:field="cmdHomepage">Accueil</g:Button>
 					<g:Button ui:field="cmdTimeInput" text="Saisir des heures des professeurs">Mettre des heures</g:Button>
 					<g:TreeItem text="Rapports des heures" state="true">

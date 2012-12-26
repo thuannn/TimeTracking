@@ -100,8 +100,8 @@ public class ExtractDataView extends ViewWithUiHandlers<ExtractDataUiHandler> im
 			tblLogs.setText(i+1, 3, logs.get(i).getTypeName());
 			tblLogs.setText(i+1, 4, 
 					logs.get(i).getTypeName().equals("Frais") ? 
-							(logs.get(i).getHour()>0) ? "$" + Integer.toString(logs.get(i).getHour()) : ""
-							: (logs.get(i).getHour()>0) ? Integer.toString(logs.get(i).getHour()) : "" );
+							(logs.get(i).getHour()>0) ? "CHF " + Double.toString(logs.get(i).getHour()) : ""
+							: (logs.get(i).getHour()>0) ? Double.toString(logs.get(i).getHour()) : "" );
 			tblLogs.setText(i+1, 5, logs.get(i).getMemo());
 			
 			prevYear = logs.get(i).getYear();

@@ -5,14 +5,14 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.NotSaved;
 
 @Entity
-public class Log extends DatastoreObject {
+public class Log extends DatastoreObject implements Comparable<Log>{
 	
 	Key<Professor> prof;
 	Key<Cours> cours;
 	Key<LogType> type;
 	int year;
 	int month;
-	int hour;
+	double hour;
 	String memo = "";
 
 	@NotSaved
@@ -67,11 +67,11 @@ public class Log extends DatastoreObject {
 		this.type = type;
 	}
 	
-	public int getHour() {
+	public double getHour() {
 		return hour;
 	}
 	
-	public void setHour(int hour) {
+	public void setHour(double hour) {
 		this.hour = hour;
 	}
 	
@@ -121,5 +121,16 @@ public class Log extends DatastoreObject {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	@Override
+	public int compareTo(Log log) {
+		int lastProfName = profName.compareTo(log.getProfName());
+		if (lastProfName != 0) return lastProfName;
+		
+		int lastCourseName = courseName.compareTo(log.getCourseName());
+		if (lastCourseName != 0) return lastCourseName;
+		
+		return typeName.compareTo(log.getTypeName());
 	}
 }
