@@ -104,10 +104,10 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		
 		// List of month, auto-select current month
 		lstMonth.clear();
-		for (int i=0; i <= currentMonth; i++) {
+		for (int i=1; i <= 12; i++) {
 			lstMonth.addItem( Integer.toString(i), Integer.toString(i));
 			if (i == currentMonth)
-				lstMonth.setSelectedIndex(i);
+				lstMonth.setSelectedIndex(i-1);
 		}
 		
 		// List of year, auto-select current year
@@ -249,6 +249,8 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    	public void update(int index, LogProxy log, String value){
 	    		if (getUiHandlers() != null) {
 	    			selectedLog = log;
+	    			if (value.equals(""))
+	    				value = "0";
 	    			getUiHandlers().updateLogTime(log, value);
 	    		}	    		
 	    	}
@@ -300,14 +302,16 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	}
 	
 	private void showTimer(final String text) {
-		txtNotification.setText(text);
-		txtNotification.setVisible(true);
-		Timer t = new Timer() {
-	      public void run() {
-	        txtNotification.setVisible(false);
-	      }
-	    };
-	    // Schedule the timer to run once in 1 seconds.
-	    t.schedule(1000);
+		// This function is obsolete since the progress bar has been implemented
+		
+//		txtNotification.setText(text);
+//		txtNotification.setVisible(true);
+//		Timer t = new Timer() {
+//	      public void run() {
+//	        txtNotification.setVisible(false);
+//	      }
+//	    };
+//	    // Schedule the timer to run once in 1 seconds.
+//	    t.schedule(1000);
 	}
 }

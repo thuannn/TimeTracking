@@ -8,6 +8,8 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
+import com.lemania.timetracking.client.event.ActionCompletedEvent;
+import com.lemania.timetracking.client.event.ActionInProgressEvent;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent.LoginAuthenticatedHandler;
 import com.lemania.timetracking.client.place.NameTokens;
@@ -25,6 +27,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.RptTimeByMonthUiHandler;
 import com.lemania.timetracking.shared.LogProxy;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.LogRequestFactory;
 import com.lemania.timetracking.shared.service.LogRequestFactory.LogRequestContext;
 
@@ -84,9 +87,11 @@ public class RptTimeByMonthPresenter
 
 	@Override
 	public void onMonthChanged(int selectedYear, int selectedMonth) {
-		// TODO Auto-generated method stub
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
-		rfl.initialize(this.getEventBus());
+		
+		// initialize the Request Factory with the custom Request Transport which show the 
+		// progress bar
+		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogRequestContext rcl = rfl.logRequest();
 		rcl.listAllFullDetailByMonth(selectedYear, selectedMonth).fire(new Receiver<List<LogProxy>>(){
 			@Override

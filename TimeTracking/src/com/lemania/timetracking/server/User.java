@@ -22,6 +22,9 @@ public class User extends DatastoreObject {
 	@NotSaved
 	private int currentYear = 0;
 	
+	@NotSaved
+	private int currentDay = 0;
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -92,5 +95,13 @@ public class User extends DatastoreObject {
 
 	public void setCurrentYear(int currentYear) {
 		this.currentYear = currentYear;
+	}
+
+	public int getCurrentDay() {
+		return currentDay;
+	}
+
+	public void setCurrentDay(int currentDay) {
+		this.currentDay = currentDay;
 	}
 }

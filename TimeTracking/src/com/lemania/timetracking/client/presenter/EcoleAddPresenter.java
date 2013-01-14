@@ -23,6 +23,7 @@ import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.EcoleAddUiHandler;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 
 public class EcoleAddPresenter extends
@@ -68,7 +69,7 @@ public class EcoleAddPresenter extends
 		}
 		
 		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		EcoleRequestContext rc = rf.ecoleRequest();
 		ep = rc.create(EcoleProxy.class);
 		ep.setSchoolName(ecoleNom);

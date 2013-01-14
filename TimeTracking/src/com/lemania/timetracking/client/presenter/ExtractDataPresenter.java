@@ -27,6 +27,7 @@ import com.lemania.timetracking.client.uihandler.ExtractDataUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.LogProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.LogRequestFactory;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
 import com.lemania.timetracking.shared.service.UserRequestFactory;
@@ -96,7 +97,7 @@ public class ExtractDataPresenter
 	
 	public void loadDepartmentList(){
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		UserRequestContext rc = rf.userRequest();
 		rc.getDepartments(currentUser.getUserId()).fire( new Receiver<List<CoursProxy>>(){
 			@Override
@@ -119,7 +120,7 @@ public class ExtractDataPresenter
 	@Override
 	public void onDepartmentSelected(String deptId) {
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ProfessorRequestContext rc = rf.professorRequest();
 		rc.listAllByCourse(deptId).fire(new Receiver<List<ProfessorProxy>>(){
 			@Override
@@ -136,7 +137,7 @@ public class ExtractDataPresenter
 	@Override
 	public void onProfSelected(String deptId, String profId) {
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
-		rfl.initialize(this.getEventBus());
+		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogRequestContext rcl = rfl.logRequest();
 		rcl.listAllFullDetailByProf(profId).fire(new Receiver<List<LogProxy>>(){
 			@Override

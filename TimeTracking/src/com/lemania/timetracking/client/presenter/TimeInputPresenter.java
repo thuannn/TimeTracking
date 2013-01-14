@@ -29,6 +29,7 @@ import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.LogProxy;
 import com.lemania.timetracking.shared.LogTypeProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.LogRequestFactory;
 import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
 import com.lemania.timetracking.shared.service.LogTypeRequestFactory.LogTypeRequestContext;
@@ -108,7 +109,7 @@ public class TimeInputPresenter
 	
 	private void loadDepartmentList() {
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		UserRequestContext rc = rf.userRequest();
 		rc.getDepartments(currentUser.getUserId()).fire( new Receiver<List<CoursProxy>>(){
 			@Override
@@ -142,7 +143,7 @@ public class TimeInputPresenter
 	private void loadLogTypeList(){
 		// Get LogType list
 		LogTypeRequestFactory rfl = GWT.create(LogTypeRequestFactory.class);
-		rfl.initialize(this.getEventBus());
+		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogTypeRequestContext rcl = rfl.typeRequest();
 		rcl.listAllActive().fire(new Receiver<List<LogTypeProxy>>(){
 			@Override
@@ -159,7 +160,7 @@ public class TimeInputPresenter
 	public void updateLogTypeList(final ProfessorProxy prof, final String courseId, final String year, final String month) {
 		// Load log list
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
-		rfl.initialize(this.getEventBus());
+		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogRequestContext rcl = rfl.logRequest();
 		rcl.listAll(prof.getId().toString(), courseId, year, month).fire(new Receiver<List<LogProxy>>(){
 			@Override
@@ -197,7 +198,7 @@ public class TimeInputPresenter
 		
 		if (typeIdList.size() > 0) {
 			LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
-			rfl.initialize(this.getEventBus());
+			rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 			LogRequestContext rcl = rfl.logRequest();
 			rcl.batchUpdate(prof.getId().toString(), courseId, year, month, typeIdList).fire(new Receiver<List<LogProxy>>(){
 				@Override
@@ -235,7 +236,7 @@ public class TimeInputPresenter
 	@Override
 	public void updateLogTime(LogProxy log, String value) {
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
-		rfl.initialize(this.getEventBus());
+		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogRequestContext rcl = rfl.logRequest();
 
 		LogProxy logUpdate = rcl.edit(log);
@@ -262,7 +263,7 @@ public class TimeInputPresenter
 	@Override
 	public void updateLogMemo(LogProxy log, String value) {
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
-		rfl.initialize(this.getEventBus());
+		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogRequestContext rcl = rfl.logRequest();
 
 		LogProxy logUpdate = rcl.edit(log);

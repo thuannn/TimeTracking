@@ -27,11 +27,11 @@ withOperation(new OperationKey("ZXEL4McK823kYxQGNpAGpYCyZ2I="),
   .withMethodName("listAll")
   .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
   .build());
-withOperation(new OperationKey("5zZX_ts7W41SHMrQLFBSqXa3Z30="),
+withOperation(new OperationKey("Qj3mMpCUVpjG2v4auY0Pl8wedEk="),
   new OperationData.Builder()
-  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("()Ljava/util/List;")
-  .withMethodName("listAllActive")
+  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/UserProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/User;)Ljava/util/List;")
+  .withMethodName("getDepartments")
   .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
   .build());
 withOperation(new OperationKey("I1lBOSuCVYDw1Q0QreANcbgT824="),
@@ -41,18 +41,25 @@ withOperation(new OperationKey("I1lBOSuCVYDw1Q0QreANcbgT824="),
   .withMethodName("getDepartments")
   .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
   .build());
-withOperation(new OperationKey("Qj3mMpCUVpjG2v4auY0Pl8wedEk="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/UserProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/User;)Ljava/util/List;")
-  .withMethodName("getDepartments")
-  .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
-  .build());
 withOperation(new OperationKey("9WJgz1WzkUleJz8rf16MLoU7jxU="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/UserProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
   .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/User;)V")
   .withMethodName("removeUser")
+  .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
+  .build());
+withOperation(new OperationKey("NrLxSUiKAfoZ$cHWdBXNg1fiJNY="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()V")
+  .withMethodName("initialize")
+  .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
+  .build());
+withOperation(new OperationKey("5zZX_ts7W41SHMrQLFBSqXa3Z30="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()Ljava/util/List;")
+  .withMethodName("listAllActive")
   .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
   .build());
 withOperation(new OperationKey("Vg_b1Je7K0txHHMkliUC_AQyJtU="),

@@ -11,13 +11,26 @@
 			<g:Dock direction="NORTH">
 				<g:HorizontalPanel verticalAlignment="ALIGN_BOTTOM" width="100%" height="54px" spacing="5">
 					<g:Image url="images/logo.jpg" width=""/>
-					<g:VerticalPanel horizontalAlignment="ALIGN_RIGHT">
-						<g:HorizontalPanel spacing="5">
-							<g:Label width="" horizontalAlignment="ALIGN_RIGHT" ui:field="txtWelcome"/>
-							<g:Hyperlink targetHistoryToken="newHistoryToken" width="" ui:field="cmdLogout"/>
-						</g:HorizontalPanel>
-						<g:Label ui:field="lblCurrentMonth"/>
-					</g:VerticalPanel>
+					<g:Cell verticalAlignment="ALIGN_BOTTOM">
+						<g:Grid height="60px" width="100%">
+						<g:row>
+							<g:customCell>
+								<g:Label width="" horizontalAlignment="ALIGN_LEFT" ui:field="txtWelcome"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Hyperlink targetHistoryToken="newHistoryToken" width="220px" ui:field="cmdLogout"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label ui:field="lblCurrentMonth"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Image url="images/13.gif" ui:field="imgProgressBar" width=""/>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					</g:Cell>
 					<g:Button text="Afficher/ Cacher le menu" ui:field="button"/>
 				</g:HorizontalPanel>
 			</g:Dock>
@@ -47,15 +60,16 @@
 							<g:Button text="Liste des types" ui:field="cmdTypes"/>
 							<g:Button ui:field="cmdTypesAdd">Ajouter un type</g:Button>
 						</g:TreeItem>
-						<g:TreeItem text="Gestion d&apos;accès">
+						<g:TreeItem text="Gestion d&apos;accès" state="true">
 							<g:Button text="Gestion des utilisateurs" ui:field="cmdUserMgt"/>
+							<g:Button ui:field="cmdSettings" text="Bloquer l&apos;accès"/>
 						</g:TreeItem>
 					</g:TreeItem>
 					<g:Button ui:field="cmdContact">Contact</g:Button>
 					<g:Image url="images/appengine-silver-120x30.gif"/>
 				</g:Tree>
 			</g:Dock>
-			<g:Dock direction="CENTER">
+			<g:Dock direction="CENTER" width="">
 				<g:FlowPanel ui:field="mainContentPanel" width="100%" height="100%" styleName="paneMain"/>
 			</g:Dock>
 			<g:Dock direction="SOUTH">

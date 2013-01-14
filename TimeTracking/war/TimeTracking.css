@@ -13,8 +13,29 @@ body {
   	font-size: 18px;
 }
 
+.sectionTitle {
+	padding: 3px;
+  	background-color: #D2C40B;
+  	color: white;
+  	font-style: bold;
+  	font-size: 14px;
+}
+
+.header {
+	padding: 3px;  	
+  	color: blue;
+  	font-style: gros;
+  	font-size: 14px;
+}
+
 .sideBar {
 	background-color: #F2F2F2;
+	border-style:solid;
+	border-width:1px;
+	border-color:  #D2C40B;
+}
+
+.subSection {	
 	border-style:solid;
 	border-width:1px;
 	border-color:  #D2C40B;

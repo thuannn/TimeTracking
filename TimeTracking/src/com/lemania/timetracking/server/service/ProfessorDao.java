@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.Assignment;
@@ -14,9 +15,14 @@ import com.lemania.timetracking.server.LogType;
 import com.lemania.timetracking.server.Professor;
 
 public class ProfessorDao extends DAOBase {
-	/*static {
-        ObjectifyService.register(Professor.class);        
-    }*/
+	
+//	static {
+//        ObjectifyService.register(Professor.class);
+//    }
+	
+	public void initialize(){
+		return;
+	}
 	
 	public List<Professor> listAll(){
 		Query<Professor> q = this.ofy().query(Professor.class).order("profName");
@@ -37,9 +43,16 @@ public class ProfessorDao extends DAOBase {
 		}
 		
 		Map<Key<Professor>, Professor> profs = this.ofy().get(profKeys);
-		List<Professor> returnList = new ArrayList<Professor>(profs.values());
-		java.util.Collections.sort(returnList);
-		return returnList;
+		List<Professor> returnList = new ArrayList<Professor>(profs.values());		
+		List<Professor> activeList = new ArrayList<Professor>();
+		
+		for (Professor prof : returnList) {
+			if (prof.getProfActive())
+				activeList.add(prof);
+		}
+		
+		java.util.Collections.sort(activeList);
+		return activeList;
 	}
 	
 	public List<Professor> listAllByCourseWithTime(String deptId, int year){

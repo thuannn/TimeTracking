@@ -29,6 +29,8 @@ public interface UserRequestFactory extends RequestFactory {
 		Request<List<CoursProxy>> getDepartments(Long userId);
 		
 		Request<UserProxy> authenticateUser(String userName, String password);
+		
+		Request<Void> initialize();
 	}
 	
 	UserRequestContext userRequest();

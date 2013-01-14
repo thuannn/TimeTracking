@@ -29,6 +29,8 @@ public interface LogRequestFactory extends RequestFactory {
 		Request<LogProxy> saveAndReturn(LogProxy newLog);
 		
 		Request<Void> removeLog(LogProxy log);
+		
+		Request<Void> initialize();
 	}
 	
 	LogRequestContext logRequest();

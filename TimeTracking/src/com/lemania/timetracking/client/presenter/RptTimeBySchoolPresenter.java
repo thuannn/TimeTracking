@@ -21,6 +21,7 @@ import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.RptTimeBySchoolUiHandler;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 
 public class RptTimeBySchoolPresenter
@@ -69,7 +70,7 @@ public class RptTimeBySchoolPresenter
 	
 	public void loadSchoolList(){
 		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		EcoleRequestContext rc = rf.ecoleRequest();
 		rc.listAll().fire(new Receiver<List<EcoleProxy>>(){
 			@Override

@@ -133,7 +133,10 @@ public class RptTimeByMonthView extends ViewWithUiHandlers<RptTimeByMonthUiHandl
 					tblProfs.setText(currentRow, 8, "CHF " + Double.toString(totalProfCash));
 					tblProfs.getCellFormatter().addStyleName(currentRow,7,"FlexTable-Cell-Total");
 					tblProfs.getCellFormatter().addStyleName(currentRow,8,"FlexTable-Cell-Total");
+					
+					totalHour = 0;
 					totalProf = 0;
+					totalCash = 0;
 					totalProfCash = 0;
 					
 					currentRow = currentRow + 1;					
@@ -165,7 +168,8 @@ public class RptTimeByMonthView extends ViewWithUiHandlers<RptTimeByMonthUiHandl
 						tblProfs.getCellFormatter().addStyleName(currentRow,k,"FlexTable-Cell-Divider");
 					}
 					currentRow = currentRow + 1;
-				}									
+				}
+				
 				tblProfs.setText(currentRow, 1, logs.get(i).getCourseName());
 				currentMemo = "";
 				totalHour = 0;

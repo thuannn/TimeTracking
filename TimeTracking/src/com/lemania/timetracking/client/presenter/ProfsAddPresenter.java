@@ -21,6 +21,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.ProfessorAddUiHandler;
 import com.lemania.timetracking.shared.ProfessorProxy;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory.ProfessorRequestContext;
 
@@ -80,7 +81,7 @@ public class ProfsAddPresenter
 		}
 		
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ProfessorRequestContext rc = rf.professorRequest();
 		prof = rc.create(ProfessorProxy.class);
 		prof.setProfName(profName);

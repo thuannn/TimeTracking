@@ -25,6 +25,8 @@ public interface ProfessorRequestFactory extends RequestFactory {
 		Request<ProfessorProxy> saveAndReturn(ProfessorProxy newProf);
 		
 		Request<Void> removeProfessor(ProfessorProxy prof);
+		
+		Request<Void> initialize();
 	}
 	
 	ProfessorRequestContext professorRequest();

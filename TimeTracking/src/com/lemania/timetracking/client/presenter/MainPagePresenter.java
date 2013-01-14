@@ -13,8 +13,13 @@ import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.CurrentUser;
+import com.lemania.timetracking.client.event.ActionCompletedEvent;
+import com.lemania.timetracking.client.event.ActionCompletedEvent.ActionCompletedHandler;
+import com.lemania.timetracking.client.event.ActionInProgressEvent;
+import com.lemania.timetracking.client.event.ActionInProgressEvent.ActionInProgressHandler;
 import com.lemania.timetracking.client.event.AfterUserLogOutEvent;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent.LoginAuthenticatedHandler;
@@ -23,7 +28,8 @@ import com.lemania.timetracking.client.uihandler.MainPageUiHandler;
 
 public class MainPagePresenter extends
 		Presenter<MainPagePresenter.MyView, MainPagePresenter.MyProxy>
-		implements MainPageUiHandler, LoginAuthenticatedHandler {
+		implements 	MainPageUiHandler, LoginAuthenticatedHandler, 
+					ActionInProgressHandler, ActionCompletedHandler {
 	/**
 	   * Child presenters can fire a RevealContentEvent with TYPE_SetMainContent to set themselves
 	   * as children of this presenter.
@@ -36,6 +42,7 @@ public class MainPagePresenter extends
 	public interface MyView extends View, HasUiHandlers<MainPageUiHandler> {
 		void showUserInfo(CurrentUser currentUser);
 		void initializeUi(CurrentUser currentUser);
+		void showProgressBar(boolean visible);
 	}
 	
 	@ProxyStandard
@@ -172,5 +179,24 @@ public class MainPagePresenter extends
 	public void showRptByMonth() {
 		// TODO Auto-generated method stub
 		History.newItem(NameTokens.rpttimebymonth);
+	}
+
+	@ProxyEvent
+	@Override
+	public void onActionInProgress(ActionInProgressEvent event) {
+		// TODO Auto-generated method stub
+		getView().showProgressBar(true);
+	}
+
+	@ProxyEvent
+	@Override
+	public void onActionCompleted(ActionCompletedEvent event) {
+		// TODO Auto-generated method stub
+		getView().showProgressBar(false);
+	}
+
+	@Override
+	public void showSettingsScreen() {
+		History.newItem(NameTokens.settings);		
 	}
 }

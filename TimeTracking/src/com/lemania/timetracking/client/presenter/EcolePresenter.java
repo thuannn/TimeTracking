@@ -27,6 +27,7 @@ import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.EcoleListUiHandler;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 
 public class EcolePresenter extends
@@ -42,7 +43,7 @@ public class EcolePresenter extends
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.ecolepage)
-	@UseGatekeeper(AdminGateKeeper.class)
+	@UseGatekeeper(LoggedInGatekeeper.class)
 	public interface MyProxy extends ProxyPlace<EcolePresenter> {
 	}
 	
@@ -80,7 +81,7 @@ public class EcolePresenter extends
 
 	private void getEcoleList() {
 		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		EcoleRequestContext rc = rf.ecoleRequest();
 		rc.listAll().fire(new Receiver<List<EcoleProxy>>(){
 			@Override
@@ -104,7 +105,7 @@ public class EcolePresenter extends
 	public void updateEcoleStatus(EcoleProxy ecole, Boolean value) {
 		// TODO Auto-generated method stub
 		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		EcoleRequestContext rc = rf.ecoleRequest();
 		EcoleProxy ecoleForUpdate = rc.edit(ecole);
 		ecoleForUpdate.setSchoolStatus(value);

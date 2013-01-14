@@ -9,6 +9,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.lemania.timetracking.client.AdminGateKeeper;
+import com.lemania.timetracking.client.LoggedInGatekeeper;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
@@ -28,6 +29,7 @@ import com.lemania.timetracking.shared.service.AssignmentRequestFactory;
 import com.lemania.timetracking.shared.service.AssignmentRequestFactory.AssignmentRequestContext;
 import com.lemania.timetracking.shared.service.CoursRequestFactory;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
 import com.lemania.timetracking.shared.service.CoursRequestFactory.CoursRequestContext;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
@@ -53,7 +55,7 @@ public class ProfsPresenter
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.profs)
-	@UseGatekeeper(AdminGateKeeper.class)
+	@UseGatekeeper(LoggedInGatekeeper.class)
 	public interface MyProxy extends ProxyPlace<ProfsPresenter> {
 	}
 
@@ -85,7 +87,7 @@ public class ProfsPresenter
 	private void getProfessorsList() {
 		
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ProfessorRequestContext rc = rf.professorRequest();
 		rc.listAll().fire(new Receiver<List<ProfessorProxy>>(){
 			@Override
@@ -103,7 +105,7 @@ public class ProfsPresenter
 	 * Populate list of ecoles in drop-down list */
 	private void getEcoleList(){
 		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		EcoleRequestContext rc = rf.ecoleRequest();
 		rc.listAllActive().fire(new Receiver<List<EcoleProxy>>(){
 			@Override
@@ -121,7 +123,7 @@ public class ProfsPresenter
 	public void updateProfessorStatus(ProfessorProxy prof, Boolean status) {
 		
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ProfessorRequestContext rc = rf.professorRequest();
 		ProfessorProxy profForUpdate = rc.edit(prof);
 		profForUpdate.setProfActive(status);
@@ -141,7 +143,7 @@ public class ProfsPresenter
 	public void professorSelected(ProfessorProxy prof) {
 		
 		AssignmentRequestFactory rf = GWT.create(AssignmentRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		AssignmentRequestContext rc = rf.assignmentRequest();
 		rc.listAll(prof.getId().toString()).fire(new Receiver<List<AssignmentProxy>>(){
 			@Override
@@ -161,7 +163,7 @@ public class ProfsPresenter
 			Window.alert("Veuillez choisir un cours à rajouter.");
 		
 		AssignmentRequestFactory rf = GWT.create(AssignmentRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		AssignmentRequestContext rc = rf.assignmentRequest();
 		rc.saveAndReturn(courseId, prof.getId().toString()).fire(new Receiver<AssignmentProxy>(){
 			@Override
@@ -184,7 +186,7 @@ public class ProfsPresenter
 		}
 		
 		CoursRequestFactory rf = GWT.create(CoursRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		CoursRequestContext rc = rf.coursRequest();
 		rc.listAll(ecoleId).fire(new Receiver<List<CoursProxy>>(){
 			@Override

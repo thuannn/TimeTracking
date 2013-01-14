@@ -3,6 +3,7 @@ package com.lemania.timetracking.server.service;
 import java.util.ArrayList;
 import java.util.List;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.Cours;
@@ -16,9 +17,13 @@ import com.lemania.timetracking.server.Professor;
  */
 public class LogDao extends DAOBase {
 	
-	/*static {
-        ObjectifyService.register(Log.class);
-    }*/
+//	static {
+//        ObjectifyService.register(Log.class);
+//    }
+	
+	public void initialize(){
+		return;
+	}
 	
 	public List<Log> listAll(){
 		Query<Log> q = this.ofy().query(Log.class).order("type");
@@ -57,6 +62,9 @@ public class LogDao extends DAOBase {
 				.order("type");
 		List<Log> returnList = new ArrayList<Log>();
 		for (Log log : q){
+			if ( !this.ofy().get(log.getProf()).getProfActive() )
+				continue;
+			
 			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
 			log.setProfName( this.ofy().get(log.getProf()).getProfName());
 			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );

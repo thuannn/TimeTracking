@@ -21,6 +21,8 @@ public interface EcoleRequestFactory extends RequestFactory {
 		Request<EcoleProxy> saveAndReturn(EcoleProxy newEcole);
 		
 		Request<Void> removeEcole(EcoleProxy ecole);
+		
+		Request<Void> initialize();
 	}
 	
 	EcoleRequestContext ecoleRequest();

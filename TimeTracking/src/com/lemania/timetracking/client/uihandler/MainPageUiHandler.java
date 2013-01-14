@@ -25,6 +25,7 @@ public interface MainPageUiHandler extends UiHandlers {
 	void showTypeList();
 	void showTypeAdd();
 	
+	void showSettingsScreen();
 	void showContact();
 	
 	void showExtractDataForm();

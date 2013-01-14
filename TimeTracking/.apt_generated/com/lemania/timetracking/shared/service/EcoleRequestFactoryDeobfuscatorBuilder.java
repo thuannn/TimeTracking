@@ -41,6 +41,13 @@ withOperation(new OperationKey("9EsiXw3x9Vb9cvKxBmpxVD60090="),
   .withMethodName("saveAndReturn")
   .withRequestContext("com.lemania.timetracking.shared.service.EcoleRequestFactory$EcoleRequestContext")
   .build());
+withOperation(new OperationKey("nyOQfzon2gYgV7rFlPiBRyrjGBM="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()V")
+  .withMethodName("initialize")
+  .withRequestContext("com.lemania.timetracking.shared.service.EcoleRequestFactory$EcoleRequestContext")
+  .build());
 withRawTypeToken("wEmO7GIXGVmYnHTr$bRzd1vhTHM=", "com.lemania.timetracking.shared.EcoleProxy");
 withRawTypeToken("w1Qg$YHpDaNcHrR5HZ$23y518nA=", "com.google.web.bindery.requestfactory.shared.EntityProxy");
 withRawTypeToken("FXHD5YU0TiUl3uBaepdkYaowx9k=", "com.google.web.bindery.requestfactory.shared.BaseProxy");

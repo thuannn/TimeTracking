@@ -22,6 +22,7 @@ import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.UserProxy;
 import com.lemania.timetracking.shared.service.CoursRequestFactory;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.UserRequestFactory;
 import com.lemania.timetracking.shared.service.CoursRequestFactory.CoursRequestContext;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
@@ -89,7 +90,7 @@ public class UserManagementPresenter
 
 	private void loadUsers() {
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		UserRequestContext rc = rf.userRequest();
 		rc.listAll().fire(new Receiver<List<UserProxy>>() {
 			@Override
@@ -106,7 +107,7 @@ public class UserManagementPresenter
 	@Override
 	public void addNewUser(String fullName, String userName, String password, String email) {
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		UserRequestContext rc = rf.userRequest();
 		
 		final UserProxy newUser = rc.create(UserProxy.class);
@@ -131,7 +132,7 @@ public class UserManagementPresenter
 	@Override
 	public void updateUserStatus(UserProxy user, Boolean active, Boolean admin) {
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		UserRequestContext rc = rf.userRequest();
 		final UserProxy updatedUser = rc.edit(user);
 		updatedUser.setActive(active);
@@ -150,7 +151,7 @@ public class UserManagementPresenter
 	
 	private void getEcoleList(){
 		EcoleRequestFactory rf = GWT.create(EcoleRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		EcoleRequestContext rc = rf.ecoleRequest();
 		rc.listAllActive().fire(new Receiver<List<EcoleProxy>>(){
 			@Override
@@ -171,7 +172,7 @@ public class UserManagementPresenter
 		}
 		
 		CoursRequestFactory rf = GWT.create(CoursRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		CoursRequestContext rc = rf.coursRequest();
 		rc.listAll(ecoleId).fire(new Receiver<List<CoursProxy>>(){
 			@Override
@@ -188,7 +189,7 @@ public class UserManagementPresenter
 	@Override
 	public void addDepartment(String courseId, UserProxy user) {
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		UserRequestContext rc = rf.userRequest();
 		final UserProxy updatedUser = rc.edit(user);
 		rc.addDepartment(updatedUser, courseId).fire( new Receiver<List<CoursProxy>>(){
@@ -206,7 +207,7 @@ public class UserManagementPresenter
 	@Override
 	public void userSelected(UserProxy user) {
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		UserRequestContext rc = rf.userRequest();
 		final UserProxy updatedUser = rc.edit(user);
 		rc.getDepartments(updatedUser).fire( new Receiver<List<CoursProxy>>(){

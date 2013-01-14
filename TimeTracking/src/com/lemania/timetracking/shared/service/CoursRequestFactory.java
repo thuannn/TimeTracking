@@ -23,7 +23,9 @@ public interface CoursRequestFactory extends RequestFactory {
 		Request<Void> save(CoursProxy cours, String ecoleId);
 		
 		Request<CoursProxy> saveAndReturn(CoursProxy newCours);
-		Request<Void> removeCours(CoursProxy cours);	
+		Request<Void> removeCours(CoursProxy cours);
+		
+		Request<Void> initialize();
 	}
 	
 	CoursRequestContext coursRequest();

@@ -15,19 +15,18 @@ import com.lemania.timetracking.server.Ecole;
 import com.lemania.timetracking.server.Log;
 import com.lemania.timetracking.server.LogType;
 import com.lemania.timetracking.server.Professor;
+import com.lemania.timetracking.server.SettingOption;
 import com.lemania.timetracking.server.User;
 
 public class UserDao extends DAOBase {
-
-	static {
-        ObjectifyService.register(User.class);
-        ObjectifyService.register(Professor.class); 
-        ObjectifyService.register(LogType.class);
-        ObjectifyService.register(Log.class);
-        ObjectifyService.register(Ecole.class);
-        ObjectifyService.register(Cours.class);
-        ObjectifyService.register(Assignment.class);
-    }
+	
+//	static {
+//    	ObjectifyService.register(User.class);        
+//	}
+	
+	public void initialize(){
+		return;
+	}
 	
 	public List<User> listAll(){
 		Query<User> q = this.ofy().query(User.class);
@@ -107,7 +106,7 @@ public class UserDao extends DAOBase {
 	public User authenticateUser(String userName, String password) {
 		Query<User> q = this.ofy().query(User.class)
 				.filter("active", true)
-				.filter("userName", userName)
+				.filter("userName", userName.toLowerCase())
 				.filter("password", password);
 		List<User> returnList = new ArrayList<User>();
 		
@@ -117,6 +116,7 @@ public class UserDao extends DAOBase {
 			// the months in Java start by zero, so increase one
 			user.setCurrentMonth(cal.get(Calendar.MONTH) +1);
 			user.setCurrentYear(cal.get(Calendar.YEAR));
+			user.setCurrentDay(cal.get(Calendar.DAY_OF_MONTH));
 			returnList.add(user);
 		}
 		

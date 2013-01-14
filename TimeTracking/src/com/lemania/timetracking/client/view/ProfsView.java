@@ -53,7 +53,6 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	
 	@UiField(provided=true) DataGrid<ProfessorProxy> tblProfessors = new DataGrid<ProfessorProxy>();
 	@UiField(provided=true) DataGrid<AssignmentProxy> tblAssignment = new DataGrid<AssignmentProxy>();
-	@UiField Label lblProfName;
 	@UiField Label lblProfNameAssign;
 	@UiField Button cmdAddCourse;
 	@UiField ListBox lstAddEcole;
@@ -110,7 +109,6 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	      public void onSelectionChange(SelectionChangeEvent event) {
 	        selectedProfessor = selectionModel.getSelectedObject();
 	        if (selectedProfessor != null) {
-	        	lblProfName.setText(selectedProfessor.getProfName());
 	        	lblProfNameAssign.setText(selectedProfessor.getProfName());
 	        	getUiHandlers().professorSelected(selectedProfessor);
 	        }

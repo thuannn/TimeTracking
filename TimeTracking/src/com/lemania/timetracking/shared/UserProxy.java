@@ -27,6 +27,7 @@ public interface UserProxy extends EntityProxy {
 	
 	public int getCurrentYear();
 	public int getCurrentMonth();
+	public int getCurrentDay();
 	
 	public Long getId();
 }

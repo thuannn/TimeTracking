@@ -8,6 +8,7 @@ public class CurrentUser {
 	
 	private int currentMonth;
 	private int currentYear;
+	private int currentDay;
 	
 	public int getCurrentMonth() {
 		return currentMonth;
@@ -55,5 +56,13 @@ public class CurrentUser {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public int getCurrentDay() {
+		return currentDay;
+	}
+
+	public void setCurrentDay(int currentDay) {
+		this.currentDay = currentDay;
 	}
 }

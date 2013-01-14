@@ -26,6 +26,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.LogTypeListUiHandler;
 import com.lemania.timetracking.shared.LogTypeProxy;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
 import com.lemania.timetracking.shared.service.LogTypeRequestFactory.LogTypeRequestContext;
 
@@ -42,7 +43,7 @@ public class LogTypesPresenter
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.types)
-	@UseGatekeeper(AdminGateKeeper.class)
+	@UseGatekeeper(LoggedInGatekeeper.class)
 	public interface MyProxy extends ProxyPlace<LogTypesPresenter> {
 	}
 
@@ -80,7 +81,7 @@ public class LogTypesPresenter
 	
 	private void getHourList() {
 		LogTypeRequestFactory rf = GWT.create(LogTypeRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogTypeRequestContext rc = rf.typeRequest();
 		rc.listAll().fire(new Receiver<List<LogTypeProxy>>(){
 			@Override
@@ -103,7 +104,7 @@ public class LogTypesPresenter
 	@Override
 	public void updateLogTypeStatus(LogTypeProxy hp, Boolean status) {
 		LogTypeRequestFactory rf = GWT.create(LogTypeRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogTypeRequestContext rc = rf.typeRequest();
 		LogTypeProxy hourForUpdate = rc.edit(hp);
 		hourForUpdate.setLogTypeActive(status);

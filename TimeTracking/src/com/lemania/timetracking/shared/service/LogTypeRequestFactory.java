@@ -17,12 +17,11 @@ public interface LogTypeRequestFactory extends RequestFactory {
 		
 		Request<List<LogTypeProxy>> listAll();
 		Request<List<LogTypeProxy>> listAllActive();
-		
 		Request<Void> save(LogTypeProxy type);
-	
 		Request<LogTypeProxy> saveAndReturn(LogTypeProxy newHour);
-		
 		Request<Void> removeLogType(LogTypeProxy type);
+		
+		Request<Void> initialize();
 	}
 	
 	LogTypeRequestContext typeRequest();

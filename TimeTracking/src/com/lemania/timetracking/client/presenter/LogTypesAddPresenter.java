@@ -22,6 +22,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.HourAddUiHandler;
 import com.lemania.timetracking.shared.LogTypeProxy;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
 import com.lemania.timetracking.shared.service.LogTypeRequestFactory.LogTypeRequestContext;
 
@@ -67,7 +68,7 @@ public class LogTypesAddPresenter
 		}
 		
 		LogTypeRequestFactory rf = GWT.create(LogTypeRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogTypeRequestContext rc = rf.typeRequest();
 		hp = rc.create(LogTypeProxy.class);
 		hp.setLogTypeName(nom);

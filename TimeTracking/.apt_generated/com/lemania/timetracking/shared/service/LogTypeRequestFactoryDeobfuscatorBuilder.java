@@ -34,6 +34,13 @@ withOperation(new OperationKey("a4g9gZ79OAWgJvEMb1SrFcYOYLc="),
   .withMethodName("saveAndReturn")
   .withRequestContext("com.lemania.timetracking.shared.service.LogTypeRequestFactory$LogTypeRequestContext")
   .build());
+withOperation(new OperationKey("9_d6ngqwh69Q9p5il7xLdp$O0Eo="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()V")
+  .withMethodName("initialize")
+  .withRequestContext("com.lemania.timetracking.shared.service.LogTypeRequestFactory$LogTypeRequestContext")
+  .build());
 withOperation(new OperationKey("5NNp0L2l2ZdYAvTkgphtaRygK4U="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/LogTypeProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")

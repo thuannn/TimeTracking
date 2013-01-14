@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
@@ -16,6 +17,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.lemania.timetracking.client.CurrentUser;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.Image;
 
 public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implements MainPagePresenter.MyView {
 	
@@ -46,6 +48,8 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiField Button button;
 	@UiField Tree treeMenu;
 	@UiField DockPanel dockPanel;
+	@UiField Image imgProgressBar;
+	@UiField Button cmdSettings;
 	
 	public MainPageView() {		
 		widget = uiBinder.createAndBindUi(this);
@@ -175,6 +179,13 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 			getUiHandlers().showRptByMonth();
 		}
 	}
+	
+	@UiHandler("cmdSettings")
+	void onCmdSettingsClicked(ClickEvent event){
+		if (getUiHandlers() != null) {
+			getUiHandlers().showSettingsScreen();
+		}
+	}
 
 	@Override
 	public void showUserInfo(CurrentUser currentUser) {
@@ -193,6 +204,8 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 			cmdLogout.setText("");
 			lblCurrentMonth.setText("");
 		}
+		
+		imgProgressBar.setVisible(false);
 	}
 	
 	@UiHandler("button")
@@ -206,5 +219,10 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 			dockPanel.add(treeMenu, DockPanel.WEST);
 			dockPanel.setCellWidth(treeMenu, "250px");
 		}
+	}
+
+	@Override
+	public void showProgressBar(boolean visible) {
+		imgProgressBar.setVisible(visible);
 	}
 }

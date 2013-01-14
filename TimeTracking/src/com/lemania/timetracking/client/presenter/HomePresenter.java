@@ -1,5 +1,7 @@
 package com.lemania.timetracking.client.presenter;
 
+import java.util.List;
+
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -7,6 +9,8 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.lemania.timetracking.client.CurrentUser;
+import com.lemania.timetracking.client.event.ActionCompletedEvent;
+import com.lemania.timetracking.client.event.ActionInProgressEvent;
 import com.lemania.timetracking.client.event.AfterUserLogOutEvent;
 import com.lemania.timetracking.client.event.AfterUserLogOutEvent.AfterUserLogOutHandler;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
@@ -21,8 +25,21 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.HomeUiHandler;
+import com.lemania.timetracking.shared.CoursProxy;
+import com.lemania.timetracking.shared.EcoleProxy;
+import com.lemania.timetracking.shared.LogTypeProxy;
+import com.lemania.timetracking.shared.SettingOptionProxy;
 import com.lemania.timetracking.shared.UserProxy;
+import com.lemania.timetracking.shared.service.CoursRequestFactory;
+import com.lemania.timetracking.shared.service.EcoleRequestFactory;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
+import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
+import com.lemania.timetracking.shared.service.SettingOptionRequestFactory;
 import com.lemania.timetracking.shared.service.UserRequestFactory;
+import com.lemania.timetracking.shared.service.CoursRequestFactory.CoursRequestContext;
+import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
+import com.lemania.timetracking.shared.service.LogTypeRequestFactory.LogTypeRequestContext;
+import com.lemania.timetracking.shared.service.SettingOptionRequestFactory.SettingOptionRequestContext;
 import com.lemania.timetracking.shared.service.UserRequestFactory.UserRequestContext;
 
 public class HomePresenter 
@@ -33,6 +50,10 @@ public class HomePresenter
 		
 		public void toggleLoginPanel(Boolean visible);
 	}
+	
+	
+	private Boolean systemBlocked = false;
+	private int deadLine = 32;
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.homepage)
@@ -57,6 +78,35 @@ public class HomePresenter
 		// Thuan
 		getView().setUiHandlers(this);
 	}
+	
+
+	/*
+	 * Get the current system settings */
+	private void getCurrentSettings(final String userName, final String password) {
+		SettingOptionRequestFactory rf = GWT.create(SettingOptionRequestFactory.class);
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+		SettingOptionRequestContext rc = rf.settingOptionRequest();
+		rc.listAll().fire(new Receiver<List<SettingOptionProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<SettingOptionProxy> response) {
+				for (SettingOptionProxy setting : response){
+					if (setting.getOptionName().equals("DEADLINE")) {
+						deadLine = Integer.parseInt(setting.getOptionValue());
+					}
+					if (setting.getOptionName().equals("BLOCK")) {
+						systemBlocked = Boolean.parseBoolean(setting.getOptionValue());
+					}
+				}
+				
+				authenticateUserWithSettings(userName, password);
+			}
+		});
+	}
+	
 
 	@Override
 	public void authenticateUser(String userName, String password) {
@@ -65,9 +115,15 @@ public class HomePresenter
 			return;
 		}
 		
+		// Get the current settings
+		getCurrentSettings(userName, password);
+	}
+	
+	private void authenticateUserWithSettings(String userName, String password) {
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		UserRequestContext rc = rf.userRequest();
+		
 		rc.authenticateUser(userName, password).fire( new Receiver<UserProxy>(){
 			@Override
 			public void onFailure(ServerFailure error) {
@@ -76,21 +132,41 @@ public class HomePresenter
 			@Override
 			public void onSuccess(UserProxy response) {
 				if (response!= null) {
-					CurrentUser currentUser = new CurrentUser();
-					currentUser.setFullName(response.getFullName());
-					currentUser.setLoggedIn(true);
-					currentUser.setAdmin(response.getAdmin());
-					currentUser.setUserId(response.getId());
-					currentUser.setCurrentMonth(response.getCurrentMonth());
-					currentUser.setCurrentYear(response.getCurrentYear());
-					
-					getEventBus().fireEvent(new LoginAuthenticatedEvent(currentUser));
-					getView().toggleLoginPanel(false);
+					checkAccessBlock(response);
 				}
 				else
 					Window.alert("La combination de nom d'utilisateur et mot de passe n'est pas valable.");
 			}
-		} );	
+		} );
+	}
+	
+	/*
+	 * If user pass authentication, check if he's Admin. 
+	 * If not, check if the system is being blocked by Admin.*/
+	private void checkAccessBlock(UserProxy response){		
+		CurrentUser currentUser = new CurrentUser();
+		currentUser.setFullName(response.getFullName());
+		currentUser.setLoggedIn(true);
+		currentUser.setAdmin(response.getAdmin());
+		currentUser.setUserId(response.getId());
+		currentUser.setCurrentMonth(response.getCurrentMonth());
+		currentUser.setCurrentYear(response.getCurrentYear());
+		currentUser.setCurrentDay(response.getCurrentDay());
+		
+		if (!currentUser.isAdmin()){		
+			if (systemBlocked) {
+				Window.alert("L'accès au système est limité pour l'instant.");
+				return;
+			}
+			if (currentUser.getCurrentDay() > deadLine) {
+				Window.alert("L'accès au système est limité pour l'instant.");
+				return;
+			}
+		}
+		
+		// if everything looks good, initialize the objects
+		getEventBus().fireEvent(new LoginAuthenticatedEvent(currentUser));
+		getView().toggleLoginPanel(false);
 	}
 
 	@ProxyEvent
