@@ -19,13 +19,9 @@ import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
-import com.lemania.timetracking.client.uihandler.ProfessorListUiHandler;
 import com.lemania.timetracking.client.uihandler.SettingOptionsUiHandler;
-import com.lemania.timetracking.shared.LogTypeProxy;
 import com.lemania.timetracking.shared.SettingOptionProxy;
 import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
-import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
-import com.lemania.timetracking.shared.service.LogTypeRequestFactory.LogTypeRequestContext;
 import com.lemania.timetracking.shared.service.SettingOptionRequestFactory;
 import com.lemania.timetracking.shared.service.SettingOptionRequestFactory.SettingOptionRequestContext;
 

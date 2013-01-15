@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
 jarsExcludedFromWebInfLib=
-lastWarOutDir=C\:/Users/Thuan/Documents/GitHub/TimeTracking/TimeTracking/war
+lastWarOutDir=C\:/Users/Thuan/SkyDrive/Dev/Git/TimeTracking/TimeTracking/war
 warSrcDir=war
-warSrcDirIsOutput=false
+warSrcDirIsOutput=true

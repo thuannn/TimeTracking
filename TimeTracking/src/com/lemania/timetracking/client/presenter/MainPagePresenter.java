@@ -13,7 +13,6 @@ import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.CurrentUser;
 import com.lemania.timetracking.client.event.ActionCompletedEvent;
@@ -43,6 +42,7 @@ public class MainPagePresenter extends
 		void showUserInfo(CurrentUser currentUser);
 		void initializeUi(CurrentUser currentUser);
 		void showProgressBar(boolean visible);
+		void enableMainPanel(Boolean disabled);
 	}
 	
 	@ProxyStandard
@@ -186,6 +186,7 @@ public class MainPagePresenter extends
 	public void onActionInProgress(ActionInProgressEvent event) {
 		// TODO Auto-generated method stub
 		getView().showProgressBar(true);
+		getView().enableMainPanel(false);
 	}
 
 	@ProxyEvent
@@ -193,6 +194,7 @@ public class MainPagePresenter extends
 	public void onActionCompleted(ActionCompletedEvent event) {
 		// TODO Auto-generated method stub
 		getView().showProgressBar(false);
+		getView().enableMainPanel(true);
 	}
 
 	@Override

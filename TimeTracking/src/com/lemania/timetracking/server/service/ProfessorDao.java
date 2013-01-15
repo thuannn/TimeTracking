@@ -5,20 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
-import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.Assignment;
 import com.lemania.timetracking.server.Cours;
 import com.lemania.timetracking.server.Log;
 import com.lemania.timetracking.server.LogType;
 import com.lemania.timetracking.server.Professor;
 
-public class ProfessorDao extends DAOBase {
-	
-//	static {
-//        ObjectifyService.register(Professor.class);
-//    }
+public class ProfessorDao extends MyDAOBase {
 	
 	public void initialize(){
 		return;

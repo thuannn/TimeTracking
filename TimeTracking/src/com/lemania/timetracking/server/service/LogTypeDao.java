@@ -4,16 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
-import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.LogType;
 
-public class LogTypeDao extends DAOBase {
-	
-//	static {
-//        ObjectifyService.register(LogType.class);
-//    }
+public class LogTypeDao extends MyDAOBase {
 	
 	public void initialize(){
 		return;

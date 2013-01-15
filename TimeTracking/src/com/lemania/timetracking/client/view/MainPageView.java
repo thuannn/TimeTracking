@@ -1,17 +1,20 @@
 package com.lemania.timetracking.client.view;
 
+import java.util.Iterator;
+
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
 import com.lemania.timetracking.client.uihandler.MainPageUiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.lemania.timetracking.client.CurrentUser;
@@ -224,5 +227,27 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@Override
 	public void showProgressBar(boolean visible) {
 		imgProgressBar.setVisible(visible);
+	}
+
+	@Override
+	public void enableMainPanel(Boolean enabled) {
+		enableAllChildren(enabled, mainContentPanel);
+	}
+	
+	private void enableAllChildren(boolean enable, Widget widget)
+	{
+	    if (widget instanceof HasWidgets)
+	    {
+	        Iterator<Widget> iter = ((HasWidgets)widget).iterator();
+	        while (iter.hasNext())
+	        {
+	            Widget nextWidget = iter.next();
+	            enableAllChildren(enable, nextWidget);
+	            if (nextWidget instanceof FocusWidget)
+	            {
+	                ((FocusWidget)nextWidget).setEnabled(enable);
+	            }
+	        }
+	    }
 	}
 }

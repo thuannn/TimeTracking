@@ -4,17 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
-import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.Ecole;
 
-public class EcoleDao extends DAOBase{
-	
-//	static {
-//        ObjectifyService.register(Ecole.class);
-//    }
-	
+public class EcoleDao extends MyDAOBase{
+
 	public void initialize(){
 		return;
 	}

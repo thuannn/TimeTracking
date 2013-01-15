@@ -125,7 +125,7 @@ public class TimeInputPresenter
 
 	public void loadProfessorsByCourse(String courseId) {	
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
-		rf.initialize(this.getEventBus());
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ProfessorRequestContext rc = rf.professorRequest();
 		rc.listAllByCourse(courseId).fire(new Receiver<List<ProfessorProxy>>(){
 			@Override

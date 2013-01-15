@@ -6,23 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
-import com.googlecode.objectify.util.DAOBase;
-import com.lemania.timetracking.server.Assignment;
 import com.lemania.timetracking.server.Cours;
-import com.lemania.timetracking.server.Ecole;
-import com.lemania.timetracking.server.Log;
-import com.lemania.timetracking.server.LogType;
-import com.lemania.timetracking.server.Professor;
-import com.lemania.timetracking.server.SettingOption;
 import com.lemania.timetracking.server.User;
 
-public class UserDao extends DAOBase {
-	
-//	static {
-//    	ObjectifyService.register(User.class);        
-//	}
+public class UserDao extends MyDAOBase {
 	
 	public void initialize(){
 		return;

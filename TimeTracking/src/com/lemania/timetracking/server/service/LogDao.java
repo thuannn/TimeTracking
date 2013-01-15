@@ -3,9 +3,7 @@ package com.lemania.timetracking.server.service;
 import java.util.ArrayList;
 import java.util.List;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
-import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.Cours;
 import com.lemania.timetracking.server.Log;
 import com.lemania.timetracking.server.LogType;
@@ -15,11 +13,7 @@ import com.lemania.timetracking.server.Professor;
  * @author Thuan
  *
  */
-public class LogDao extends DAOBase {
-	
-//	static {
-//        ObjectifyService.register(Log.class);
-//    }
+public class LogDao extends MyDAOBase {
 	
 	public void initialize(){
 		return;
