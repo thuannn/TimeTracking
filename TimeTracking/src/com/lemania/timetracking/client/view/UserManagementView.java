@@ -7,6 +7,7 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -19,7 +20,6 @@ import com.lemania.timetracking.client.presenter.UserManagementPresenter;
 import com.lemania.timetracking.client.uihandler.UserManagementUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
-import com.lemania.timetracking.shared.ProfessorProxy;
 import com.lemania.timetracking.shared.UserProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
@@ -112,6 +112,7 @@ public class UserManagementView extends ViewWithUiHandlers<UserManagementUiHandl
 			}
 	    };
 	    tblUser.addColumn(colFullName, "Nom & Prénom");
+	    tblUser.setColumnWidth(colFullName, 40, Unit.PCT);
 	    
 	    TextColumn<UserProxy> colUserName = new TextColumn<UserProxy>() {
 			@Override
@@ -120,6 +121,7 @@ public class UserManagementView extends ViewWithUiHandlers<UserManagementUiHandl
 			}
 	    };
 	    tblUser.addColumn(colUserName, "Nom d'utilisateur");
+	    tblUser.setColumnWidth(colUserName, 20, Unit.PCT);
 	    
 	 	// Add a text column to show the name.
  		EditTextCell passCell = new EditTextCell();
@@ -130,6 +132,7 @@ public class UserManagementView extends ViewWithUiHandlers<UserManagementUiHandl
  	      }
  	    };
  	    tblUser.addColumn(passCol, "Password");
+ 	    tblUser.setColumnWidth(passCol, 20, Unit.PCT);
      	passCol.setFieldUpdater(new FieldUpdater<UserProxy, String>(){
  	    	@Override
  	    	public void update(int index, UserProxy user, String value){
@@ -148,6 +151,7 @@ public class UserManagementView extends ViewWithUiHandlers<UserManagementUiHandl
 	    	}	    	
 	    };
 	    tblUser.addColumn(colActive, "Actif");
+	    tblUser.setColumnWidth(colActive, 10, Unit.PCT);
 	    colActive.setFieldUpdater(new FieldUpdater<UserProxy, Boolean>(){
 	    	@Override
 	    	public void update(int index, UserProxy user, Boolean value){
@@ -166,7 +170,8 @@ public class UserManagementView extends ViewWithUiHandlers<UserManagementUiHandl
 	    		return user.getAdmin();
 	    	}	    	
 	    };
-	    tblUser.addColumn(colAdmin, "Admin");	
+	    tblUser.addColumn(colAdmin, "Admin");
+	    tblUser.setColumnWidth(colAdmin, 10, Unit.PCT);	
 	    
 	    colAdmin.setFieldUpdater(new FieldUpdater<UserProxy, Boolean>(){
 	    	@Override
@@ -204,10 +209,6 @@ public class UserManagementView extends ViewWithUiHandlers<UserManagementUiHandl
 		users.add(updatedUser);
         tblUser.setRowData(selectedUserIndex, users);
 		tblUser.redraw();
-		
-		// Notify user
-		Window.alert("Statut d'utilisateur a été mis à jour.");
-		
 	}
 
 	@Override

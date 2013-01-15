@@ -52,5 +52,5 @@ public class Cours extends DatastoreObject implements Comparable<Cours>{
 	public int compareTo(Cours cours) {
 		int lastCourseName = coursNom.compareTo( cours.getCoursNom() );
 		return lastCourseName;
-	}	
+	}
 }

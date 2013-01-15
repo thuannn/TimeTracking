@@ -179,7 +179,7 @@ public class RptTimeByMonthView extends ViewWithUiHandlers<RptTimeByMonthUiHandl
 			// choose the column number base on the log type
 			if (logs.get(i).getTypeName().equals("Cours"))
 				currentCol = 2;				
-			if (logs.get(i).getTypeName().equals("Maladie"))
+			if (logs.get(i).getTypeName().equals("Maladie/ACC"))
 				currentCol = 3;
 			if (logs.get(i).getTypeName().equals("Fériés"))
 				currentCol = 4;

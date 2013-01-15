@@ -11,7 +11,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.presenter.ProfsPresenter;
@@ -90,7 +89,8 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    	public void update(int index, ProfessorProxy prof, String value){
 	    		if (getUiHandlers() != null) {	    			
 	    			selectedProf = index;
-	    			getUiHandlers().updateProfessorName(prof, value);
+	    			if (!prof.getProfName().equals(value))
+	    				getUiHandlers().updateProfessorName(prof, value);
 	    		}	    		
 	    	}
 	    });
@@ -158,7 +158,6 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 
 	@Override
 	public void refreshTable(ProfessorProxy prof) {
-		
 		List<ProfessorProxy> profs = new ArrayList<ProfessorProxy>();
 		profs.add(prof);
         tblProfessors.setRowData(selectedProf, profs);

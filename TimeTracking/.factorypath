@@ -1,3 +1,3 @@
 <factorypath>
-    <factorypathentry kind="WKSPJAR" id="/TimeTracking/war/WEB-INF/lib/requestfactory-apt.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="C:\Users\Thuan\SkyDrive\Dev_Resources\Lib\gwt-2.5.0\requestfactory-apt.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>

@@ -4,10 +4,19 @@ import java.util.Iterator;
 
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.ClosingEvent;
+import com.google.gwt.user.client.Window.ClosingHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.lemania.timetracking.client.presenter.MainPagePresenter;
@@ -17,6 +26,7 @@ import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.lemania.timetracking.client.CurrentUser;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -50,9 +60,9 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiField Button cmdRptByMonth;
 	@UiField Button button;
 	@UiField Tree treeMenu;
-	@UiField DockPanel dockPanel;
 	@UiField Image imgProgressBar;
 	@UiField Button cmdSettings;
+	@UiField DockPanel dockPanel;
 	
 	public MainPageView() {		
 		widget = uiBinder.createAndBindUi(this);
@@ -209,6 +219,20 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 		}
 		
 		imgProgressBar.setVisible(false);
+		
+		// Avoid Backspace button
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+		    @Override
+		    public void onPreviewNativeEvent(NativePreviewEvent event) {
+		        if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE) {
+		        	if (event.getNativeEvent().getEventTarget() != null) {
+		                Element as = Element.as(event.getNativeEvent().getEventTarget());
+		                as.dispatchEvent(Document.get().createClickEvent(1, 0, 0, 0, 0, false, false, false, false));
+		            }
+
+		        }
+		    }
+		});
 	}
 	
 	@UiHandler("button")

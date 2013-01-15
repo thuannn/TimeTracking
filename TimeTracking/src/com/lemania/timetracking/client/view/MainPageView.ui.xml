@@ -40,16 +40,16 @@
 				</g:HorizontalPanel>
 			</g:Dock>
 			<g:Dock direction="WEST" width="10%" height="100%">
-				<g:Tree animationEnabled="true" styleName="sideBar" height="" width="" ui:field="treeMenu">
+				<g:Tree animationEnabled="true" styleName="sideBar" height="" width="250px" ui:field="treeMenu">
 					<g:Button ui:field="cmdHomepage">Accueil</g:Button>
-					<g:Button ui:field="cmdTimeInput" text="Saisir des heures des professeurs">Mettre des heures</g:Button>
-					<g:TreeItem text="Rapports des heures" state="true">
+					<g:Button ui:field="cmdTimeInput" text="SAISIR DES HEURES">Mettre des heures</g:Button>
+					<g:TreeItem text="RAPPORTS" state="true">
 						<g:Button text="Par départements" ui:field="cmdRptByDept">Par départements</g:Button>
 						<g:Button text="Par professeurs" ui:field="cmdExtractData">Par professeurs</g:Button>
 						<g:Button ui:field="cmdRptByMonth">Par mois - Compta</g:Button>
 					</g:TreeItem>
-					<g:TreeItem text="Informations de base" state="true">
-						<g:TreeItem text="Professeurs">
+					<g:TreeItem text="INFORMATIONS DE BASE" state="true">
+						<g:TreeItem text="Professeurs" state="true">
 							<g:Button text="Liste des professeurs" ui:field="cmdProfs"/>
 							<g:Button text="Ajouter un professeur" ui:field="cmdProfsAdd"/>
 						</g:TreeItem>
@@ -65,7 +65,7 @@
 							<g:Button text="Liste des types" ui:field="cmdTypes"/>
 							<g:Button ui:field="cmdTypesAdd">Ajouter un type</g:Button>
 						</g:TreeItem>
-						<g:TreeItem text="Gestion d&apos;accès" state="true">
+						<g:TreeItem text="Gestion d&apos;accès">
 							<g:Button text="Gestion des utilisateurs" ui:field="cmdUserMgt"/>
 							<g:Button ui:field="cmdSettings" text="Bloquer l&apos;accès"/>
 						</g:TreeItem>
@@ -75,10 +75,10 @@
 				</g:Tree>
 			</g:Dock>
 			<g:Dock direction="CENTER" width="">
-				<g:FlowPanel ui:field="mainContentPanel" width="" height="" styleName="paneMain"/>
+				<g:FlowPanel ui:field="mainContentPanel" width="100%" height="" styleName="paneMain"/>
 			</g:Dock>
 			<g:Dock direction="SOUTH">
-				<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_RIGHT">
+				<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_LEFT">
 					<g:Label text="Copyright 2012 Ecole Lémania"/>
 				</g:HorizontalPanel>
 			</g:Dock>

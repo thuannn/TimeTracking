@@ -14,4 +14,7 @@ public interface LogTypeProxy extends EntityProxy {
 	
 	String getLogTypeName();
 	void setLogTypeName(String typeName);
+	
+	int getOrderNumber();
+	void setOrderNumber(int orderNumber);
 }

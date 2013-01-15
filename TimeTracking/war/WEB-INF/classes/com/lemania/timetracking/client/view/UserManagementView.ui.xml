@@ -9,8 +9,8 @@
 	<g:HTMLPanel width="100%">
 		<g:Label text="Gestion des utilisateurs" styleName="pageTitle" width="900"/>
 		<g:VerticalPanel width="100%">
-			<g:HorizontalPanel width="100%" height="100%" verticalAlignment="ALIGN_BOTTOM">
-			<g:Grid width="">
+			<g:HorizontalPanel width="100%" height="" verticalAlignment="ALIGN_BOTTOM">
+			<g:Grid width="600px">
 					<g:row>
 						<g:customCell>
 							<g:Label text="Nom &amp; Prénom :"/>
@@ -53,7 +53,7 @@
 					</g:row>
 					<g:row/>
 				</g:Grid>
-			<g:Grid width="100%">
+			<g:Grid width="300px">
 				<g:row>
 					<g:customCell>
 						<g:Label text="Ecoles :"/>
@@ -81,8 +81,8 @@
 				</g:Grid>
 		</g:HorizontalPanel>
 			<g:HorizontalPanel width="100%">
-				<p1:DataGrid width="400px" height="450px" ui:field="tblUser"/>
-				<p1:DataGrid width="250px" height="450px" ui:field="tblDepartment"/>
+				<p1:DataGrid width="600px" height="450px" ui:field="tblUser"/>
+				<p1:DataGrid width="300px" height="450px" ui:field="tblDepartment"/>
 			</g:HorizontalPanel>
 		</g:VerticalPanel>
 	</g:HTMLPanel>

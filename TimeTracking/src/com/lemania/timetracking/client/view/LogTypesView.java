@@ -5,9 +5,10 @@ import java.util.List;
 
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.CheckboxCell;
+import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.lemania.timetracking.client.uihandler.LogTypeListUiHandler;
@@ -15,7 +16,6 @@ import com.lemania.timetracking.shared.LogTypeProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.lemania.timetracking.client.presenter.LogTypesPresenter;
 
 public class LogTypesView extends ViewWithUiHandlers<LogTypeListUiHandler> implements LogTypesPresenter.MyView {
@@ -40,15 +40,48 @@ public class LogTypesView extends ViewWithUiHandlers<LogTypeListUiHandler> imple
 	
 	@Override
 	public void initializeTable() {
-		// Add a text column to show the name.
-	    TextColumn<LogTypeProxy> colName = new TextColumn<LogTypeProxy>() {
+		
+		// Order Number
+ 		EditTextCell orderCell = new EditTextCell();
+ 		Column<LogTypeProxy, String> orderCol = new Column<LogTypeProxy, String>(orderCell) {
+ 	      @Override
+ 	      public String getValue(LogTypeProxy object) {
+ 	        return Integer.toString(object.getOrderNumber());
+ 	      }
+ 	    };
+ 	    tblHours.addColumn(orderCol, "Ordre");
+ 	    tblHours.setColumnWidth(orderCol, 20, Unit.PCT);
+ 	    orderCol.setFieldUpdater(new FieldUpdater<LogTypeProxy, String>(){
+ 	    	@Override
+ 	    	public void update(int index, LogTypeProxy type, String value){
+ 	    		if (getUiHandlers() != null) {
+ 	    			selectedHour = index;
+ 	    			getUiHandlers().updateLogTypeOrder(type, value);
+ 	    		}	    		
+ 	    	}
+ 	    });
+		
+		// Type name
+ 	    EditTextCell cellName = new EditTextCell();
+	    Column<LogTypeProxy, String> colName = new Column<LogTypeProxy, String>(cellName) {
 	      @Override
 	      public String getValue(LogTypeProxy object) {
 	        return object.getLogTypeName();
 	      }
 	    };
 	    tblHours.addColumn(colName, "Nom");
+	    colName.setFieldUpdater(new FieldUpdater<LogTypeProxy, String>(){
+	    	@Override
+ 	    	public void update(int index, LogTypeProxy type, String value){
+ 	    		if (getUiHandlers() != null) {
+ 	    			selectedHour = index;
+ 	    			getUiHandlers().updateLogTypeName(type, value);
+ 	    		}	    		
+ 	    	}
+	    });
 	    
+	    
+	    // Active
 	    CheckboxCell cellActive = new CheckboxCell();
 	    Column<LogTypeProxy, Boolean> colActive = new Column<LogTypeProxy, Boolean>(cellActive) {
 	    	@Override
@@ -84,9 +117,6 @@ public class LogTypesView extends ViewWithUiHandlers<LogTypeListUiHandler> imple
 		types.add(updatedHour);
         tblHours.setRowData(selectedHour, types);
 		tblHours.redraw();
-		
-		// Notify user
-		Window.alert("Statut du type d'heure mis à jour.");
 	}
 
 	@Override

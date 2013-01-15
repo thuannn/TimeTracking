@@ -9,7 +9,6 @@ import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
@@ -114,6 +113,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		// let admin choose year and month
 		lstMonth.setEnabled(isAdmin);
 		lstYear.setEnabled(isAdmin);
+		lblProfName.setText("");
 	}
 	
 	/***/
@@ -170,6 +170,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	public void onLstCoursesChanged(ChangeEvent event){
 		clearProfTable();
 		clearLogTable();
+		lblProfName.setText("");
 		if ( !lstCourses.getItemText(lstCourses.getSelectedIndex()).equals("-") ) {
 			if (getUiHandlers() != null)
 				getUiHandlers().loadProfessorsByCourse(lstCourses.getValue(lstCourses.getSelectedIndex()));
@@ -270,8 +271,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    	@Override
 	    	public void onCellPreview(final CellPreviewEvent<LogProxy> event){
 	    		boolean isClick = "click".equals(event.getNativeEvent().getType());
-	    		boolean isKeyDown = "keydown".equals(event.getNativeEvent().getType());
-	    		if (isClick || (isKeyDown && event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE)) {
+	    		if (isClick) {
 	    			tblLog.getRowElement(event.getIndex()).getCells().getItem(event.getColumn()).dispatchEvent(
 	    				Document.get().createClickEvent(1, 0, 0, 0, 0, false, false, false, false));
 	    		}		
@@ -290,11 +290,11 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 
 	@Override
 	public void setNotification(String code) {
-		if (code.equals("log-updated"))
-			showTimer("Modification enregistrée.");
+//		if (code.equals("log-updated"))
+//			showTimer("Modification enregistrée.");
 	}
 	
-	private void showTimer(final String text) {
+//	private void showTimer(final String text) {
 		// This function is obsolete since the progress bar has been implemented
 		
 //		txtNotification.setText(text);
@@ -306,5 +306,6 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 //	    };
 //	    // Schedule the timer to run once in 1 seconds.
 //	    t.schedule(1000);
-	}
+//	}
+	
 }

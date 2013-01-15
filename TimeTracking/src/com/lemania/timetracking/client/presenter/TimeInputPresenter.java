@@ -102,7 +102,6 @@ public class TimeInputPresenter
 		getView().initializeValues(currentUser.getCurrentMonth(), currentUser.getCurrentYear(), currentUser.isAdmin());
 		
 		// Initialize active school list
-		
 		loadDepartmentList();
 		loadLogTypeList();
 	}

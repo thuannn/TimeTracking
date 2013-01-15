@@ -144,11 +144,11 @@ public class HomePresenter
 		
 		if (!currentUser.isAdmin()){		
 			if (systemBlocked) {
-				Window.alert("L'accès au système est limité pour l'instant.");
+				Window.alert("L'accès au système est bloqué dès à présent.");
 				return;
 			}
 			if (currentUser.getCurrentDay() > deadLine) {
-				Window.alert("L'accès au système est limité pour l'instant.");
+				Window.alert("L'accès au système est bloqué dès à présent.");
 				return;
 			}
 		}

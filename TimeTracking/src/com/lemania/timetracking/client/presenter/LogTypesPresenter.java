@@ -9,6 +9,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.lemania.timetracking.client.AdminGateKeeper;
 import com.lemania.timetracking.client.LoggedInGatekeeper;
 import com.lemania.timetracking.client.event.LogTypeAddedEvent;
 import com.lemania.timetracking.client.event.LogTypeAddedEvent.LogTypeAddedHandler;
@@ -42,7 +43,7 @@ public class LogTypesPresenter
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.types)
-	@UseGatekeeper(LoggedInGatekeeper.class)
+	@UseGatekeeper(AdminGateKeeper.class)
 	public interface MyProxy extends ProxyPlace<LogTypesPresenter> {
 	}
 
@@ -107,6 +108,49 @@ public class LogTypesPresenter
 		LogTypeRequestContext rc = rf.typeRequest();
 		LogTypeProxy hourForUpdate = rc.edit(hp);
 		hourForUpdate.setLogTypeActive(status);
+		rc.saveAndReturn(hourForUpdate).fire(new Receiver<LogTypeProxy>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(LogTypeProxy response) {
+				getView().refreshTable(response);
+			}
+		});
+	}
+
+	@Override
+	public void updateLogTypeOrder(LogTypeProxy hp, String orderNumber) {
+		LogTypeRequestFactory rf = GWT.create(LogTypeRequestFactory.class);
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+		LogTypeRequestContext rc = rf.typeRequest();
+		LogTypeProxy hourForUpdate = rc.edit(hp);
+		try {
+			hourForUpdate.setOrderNumber(Integer.parseInt(orderNumber));
+			rc.saveAndReturn(hourForUpdate).fire(new Receiver<LogTypeProxy>(){
+				@Override
+				public void onFailure(ServerFailure error){
+					Window.alert(error.getMessage());
+				}
+				@Override
+				public void onSuccess(LogTypeProxy response) {
+					getView().refreshTable(response);
+				}
+			});
+		} catch (Exception e) {
+			Window.alert(e.getMessage());
+		}
+		
+	}
+
+	@Override
+	public void updateLogTypeName(LogTypeProxy hp, String typeName) {
+		LogTypeRequestFactory rf = GWT.create(LogTypeRequestFactory.class);
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+		LogTypeRequestContext rc = rf.typeRequest();
+		LogTypeProxy hourForUpdate = rc.edit(hp);
+		hourForUpdate.setLogTypeName(typeName);
 		rc.saveAndReturn(hourForUpdate).fire(new Receiver<LogTypeProxy>(){
 			@Override
 			public void onFailure(ServerFailure error){

@@ -31,16 +31,17 @@
 				<g:row/>
 			</g:Grid>
 					<p1:SimplePager location="CENTER" ui:field="pager" pageSize="15"/>
-					<p1:DataGrid width="300px" height="400px" ui:field="tblProfessors" pageSize="15"/>
+					<p1:DataGrid width="300px" height="500px" ui:field="tblProfessors" pageSize="15"/>
 				</g:VerticalPanel>
-				<g:VerticalPanel width="600px" styleName="sideBar">
-					<g:Grid width="420px" borderWidth="0" cellPadding="5" cellSpacing="2">
+				<g:VerticalPanel width="600px">
+					<g:Label text="."/>
+					<g:Grid width="420px" borderWidth="0" cellPadding="5" cellSpacing="2" styleName="sideBar">
 						<g:row>
 							<g:customCell>
 								<g:Label text="Professeur :"/>
 							</g:customCell>
 							<g:customCell>
-								<g:Label ui:field="lblProfName" width=""/>
+								<g:Label ui:field="lblProfName" width="" styleName="header"/>
 							</g:customCell>
 						</g:row>
 						<g:row>

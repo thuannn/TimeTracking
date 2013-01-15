@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.CheckboxCell;
+import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -62,14 +63,25 @@ public class CoursView extends ViewWithUiHandlers<CoursListUiHandler> implements
 	@Override
 	public void initializeTable(){
 		// Add a text column to show the name.
-	    TextColumn<CoursProxy> colName = new TextColumn<CoursProxy>() {
+		EditTextCell cellName = new EditTextCell();
+	    Column<CoursProxy, String> colName = new Column<CoursProxy, String>(cellName) {
 	      @Override
 	      public String getValue(CoursProxy object) {
 	        return object.getCoursNom();
 	      }
 	    };
 	    tblCours.addColumn(colName, "Nom");
+	    colName.setFieldUpdater(new FieldUpdater<CoursProxy, String>(){
+	    	@Override
+	    	public void update(int index, CoursProxy cours, String value){
+	    		if (getUiHandlers() != null) {
+	    			selectedCours = index;
+	    			getUiHandlers().updateCoursName(cours, value);
+	    		}	    		
+	    	}
+	    });
 	    
+	    // Active
 	    CheckboxCell cellActive = new CheckboxCell();
 	    Column<CoursProxy, Boolean> colActive = new Column<CoursProxy, Boolean>(cellActive) {
 	    	@Override
@@ -78,7 +90,6 @@ public class CoursView extends ViewWithUiHandlers<CoursListUiHandler> implements
 	    	}	    	
 	    };
 	    tblCours.addColumn(colActive, "Actif");
-	    
 	    colActive.setFieldUpdater(new FieldUpdater<CoursProxy, Boolean>(){
 	    	@Override
 	    	public void update(int index, CoursProxy cours, Boolean value){
@@ -97,9 +108,6 @@ public class CoursView extends ViewWithUiHandlers<CoursListUiHandler> implements
 		listCours.add(updatedCours);
 		tblCours.setRowData(selectedCours, listCours);
 		tblCours.redraw();
-		
-		// Notify user
-		Window.alert("Statut du cours mis à jour.");
 	}
 
 	@Override

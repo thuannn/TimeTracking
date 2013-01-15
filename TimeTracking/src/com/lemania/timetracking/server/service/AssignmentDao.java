@@ -64,14 +64,20 @@ public class AssignmentDao extends MyDAOBase {
 	}
 	
 	public Assignment saveAndReturn(String courseId, String profId){
+		// if the assignment is already existed, do not add more
+		Query<Assignment> q = this.ofy().query(Assignment.class)
+				.filter("prof", new Key<Professor>(Professor.class, Long.parseLong(profId)))
+				.filter("cours", new Key<Cours>(Cours.class, Long.parseLong(courseId)));
+		if (q.list().size()>0) {
+			return null;
+		}
+		
 		Assignment a = new Assignment();
 		a.setCours(new Key<Cours>(Cours.class, Long.parseLong(courseId)));
 		a.setProf(new Key<Professor>(Professor.class, Long.parseLong(profId)));
 		Key<Assignment> key = this.ofy().put(a);		
 		try {
 			Assignment savedA = this.ofy().get(key);
-			savedA.setCourseName(this.ofy().get(a.getCours()).getCoursNom());
-			savedA.setSchoolName(this.ofy().get(this.ofy().get(a.getCours()).getEcole()).getSchoolName());
 			return savedA; 
 		} catch (Exception e) {
 			throw new RuntimeException(e);

@@ -3,10 +3,11 @@ package com.lemania.timetracking.server;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
-public class LogType extends DatastoreObject{
+public class LogType extends DatastoreObject implements Comparable<LogType> {
 
 	private String hourName;
 	private Boolean hourActive;
+	private int orderNumber = 0;
 	
 	public Boolean getLogTypeActive() {
 		return hourActive;
@@ -22,5 +23,18 @@ public class LogType extends DatastoreObject{
 	
 	public void setLogTypeName(String hourName) {
 		this.hourName = hourName;
+	}
+
+	public int getOrderNumber() {
+		return orderNumber;
+	}
+
+	public void setOrderNumber(int orderNumber) {
+		this.orderNumber = orderNumber;
+	}
+
+	@Override
+	public int compareTo(LogType otherLog) {
+		return orderNumber - otherLog.getOrderNumber();
 	}
 }

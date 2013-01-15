@@ -165,8 +165,10 @@ public class ProfsPresenter
 
 	@Override
 	public void addCourse(String courseId, final ProfessorProxy prof) {
-		if (courseId.isEmpty())
+		if (courseId.isEmpty()) {
 			Window.alert("Veuillez choisir un cours à rajouter.");
+			return;
+		}
 		
 		AssignmentRequestFactory rf = GWT.create(AssignmentRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
@@ -178,6 +180,8 @@ public class ProfsPresenter
 			}
 			@Override
 			public void onSuccess(AssignmentProxy response) {				
+				if (response == null)
+					Window.alert("Départment déjà existe dans la liste.");
 				professorSelected(prof);
 			}
 		});
