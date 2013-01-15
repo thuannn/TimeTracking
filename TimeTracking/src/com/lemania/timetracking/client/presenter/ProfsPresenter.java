@@ -7,8 +7,12 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.lemania.timetracking.client.CurrentUser;
 import com.lemania.timetracking.client.LoggedInGatekeeper;
+import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
+import com.lemania.timetracking.client.event.LoginAuthenticatedEvent.LoginAuthenticatedHandler;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
@@ -36,7 +40,10 @@ import com.lemania.timetracking.shared.service.ProfessorRequestFactory.Professor
 
 public class ProfsPresenter 
 	extends Presenter<ProfsPresenter.MyView, ProfsPresenter.MyProxy> 
-	implements ProfessorListUiHandler {
+	implements ProfessorListUiHandler, LoginAuthenticatedHandler {
+	
+	// keep the current logged in user
+	private CurrentUser currentUser;
 
 	public interface MyView extends View, HasUiHandlers<ProfessorListUiHandler> {
 		void initializeTable();
@@ -74,7 +81,7 @@ public class ProfsPresenter
 		
 		// Thuan
 		getView().setUiHandlers(this);
-		getView().initializeTable();	
+		getView().initializeTable();
 	}
 	
 	@Override
@@ -197,5 +204,33 @@ public class ProfsPresenter
 				getView().setCourseAddList(response);
 			}
 		});
+	}
+
+	@ProxyEvent
+	@Override
+	public void onLoginAuthenticated(LoginAuthenticatedEvent event) {
+		currentUser = event.getCurrentUser();
+	}
+
+	@Override
+	public void updateProfessorName(ProfessorProxy prof, String name) {
+		if (!currentUser.isAdmin())
+			return;
+		
+		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+		ProfessorRequestContext rc = rf.professorRequest();
+		ProfessorProxy profForUpdate = rc.edit(prof);
+		profForUpdate.setProfName(name);
+		rc.saveAndReturn(profForUpdate).fire(new Receiver<ProfessorProxy>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(ProfessorProxy response) {
+				getView().refreshTable(response);
+			}
+		});	
 	}
 }

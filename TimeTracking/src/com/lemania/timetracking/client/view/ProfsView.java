@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.CheckboxCell;
+import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -75,13 +76,24 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	public void initializeTable() {
 		
 		// Add a text column to show the name.
-	    TextColumn<ProfessorProxy> colName = new TextColumn<ProfessorProxy>() {
+		EditTextCell nomCell = new EditTextCell();
+		Column<ProfessorProxy, String> colName = new Column<ProfessorProxy, String>(nomCell) {
 	      @Override
 	      public String getValue(ProfessorProxy object) {
 	        return object.getProfName();
 	      }
 	    };
 	    tblProfessors.addColumn(colName, "Nom");
+	    // If user is Admin, he can edit the names of the profs
+    	colName.setFieldUpdater(new FieldUpdater<ProfessorProxy, String>(){
+	    	@Override
+	    	public void update(int index, ProfessorProxy prof, String value){
+	    		if (getUiHandlers() != null) {	    			
+	    			selectedProf = index;
+	    			getUiHandlers().updateProfessorName(prof, value);
+	    		}	    		
+	    	}
+	    });
 	    
 	    CheckboxCell cellActive = new CheckboxCell();
 	    Column<ProfessorProxy, Boolean> colActive = new Column<ProfessorProxy, Boolean>(cellActive) {
@@ -151,9 +163,6 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 		profs.add(prof);
         tblProfessors.setRowData(selectedProf, profs);
 		tblProfessors.redraw();
-		
-		// Notify user
-		Window.alert("Statut du professeur mis à jour.");
 	}
 
 	@Override

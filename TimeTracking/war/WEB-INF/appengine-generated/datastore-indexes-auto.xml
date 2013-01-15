@@ -1,50 +1,17 @@
-<!-- Indices written at Tue, 15 Jan 2013 01:10:37 CET -->
+<!-- Indices written at Tue, 15 Jan 2013 09:53:44 CET -->
 
 <datastore-indexes>
 
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="LogType" ancestor="false" source="auto">
-        <property name="hourActive" direction="asc"/>
-        <property name="hourName" direction="asc"/>
-    </datastore-index>
-
     <!-- Used 2 times in query history -->
-    <datastore-index kind="Log" ancestor="false" source="auto">
-        <property name="cours" direction="asc"/>
-        <property name="month" direction="asc"/>
-        <property name="prof" direction="asc"/>
-        <property name="year" direction="asc"/>
-        <property name="type" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="Log" ancestor="false" source="auto">
-        <property name="prof" direction="asc"/>
-        <property name="year" direction="asc"/>
-        <property name="month" direction="asc"/>
-        <property name="cours" direction="asc"/>
-        <property name="type" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="Log" ancestor="false" source="auto">
-        <property name="month" direction="asc"/>
-        <property name="year" direction="asc"/>
-        <property name="prof" direction="asc"/>
-        <property name="cours" direction="asc"/>
-        <property name="type" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 1 time in query history -->
     <datastore-index kind="Ecole" ancestor="false" source="auto">
         <property name="schoolActive" direction="asc"/>
         <property name="schoolName" direction="asc"/>
     </datastore-index>
 
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="Assignment" ancestor="false" source="auto">
-        <property name="prof" direction="asc"/>
-        <property name="cours" direction="asc"/>
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="LogType" ancestor="false" source="auto">
+        <property name="hourActive" direction="asc"/>
+        <property name="hourName" direction="asc"/>
     </datastore-index>
 
 </datastore-indexes>

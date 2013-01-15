@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.CheckboxCell;
+import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -18,6 +19,7 @@ import com.lemania.timetracking.client.presenter.UserManagementPresenter;
 import com.lemania.timetracking.client.uihandler.UserManagementUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
+import com.lemania.timetracking.shared.ProfessorProxy;
 import com.lemania.timetracking.shared.UserProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
@@ -119,6 +121,25 @@ public class UserManagementView extends ViewWithUiHandlers<UserManagementUiHandl
 	    };
 	    tblUser.addColumn(colUserName, "Nom d'utilisateur");
 	    
+	 	// Add a text column to show the name.
+ 		EditTextCell passCell = new EditTextCell();
+ 		Column<UserProxy, String> passCol = new Column<UserProxy, String>(passCell) {
+ 	      @Override
+ 	      public String getValue(UserProxy object) {
+ 	        return object.getPassword();
+ 	      }
+ 	    };
+ 	    tblUser.addColumn(passCol, "Password");
+     	passCol.setFieldUpdater(new FieldUpdater<UserProxy, String>(){
+ 	    	@Override
+ 	    	public void update(int index, UserProxy user, String value){
+ 	    		if (getUiHandlers() != null) {	    			
+ 	    			selectedUserIndex = index;
+ 	    			getUiHandlers().updateUserStatus(user, user.getActive(), user.getAdmin(), value);
+ 	    		}	    		
+ 	    	}
+ 	    });
+	    
 	    CheckboxCell cellActive = new CheckboxCell();
 	    Column<UserProxy, Boolean> colActive = new Column<UserProxy, Boolean>(cellActive) {
 	    	@Override
@@ -126,14 +147,13 @@ public class UserManagementView extends ViewWithUiHandlers<UserManagementUiHandl
 	    		return ecole.getActive();
 	    	}	    	
 	    };
-	    tblUser.addColumn(colActive, "Actif");	
-	    
+	    tblUser.addColumn(colActive, "Actif");
 	    colActive.setFieldUpdater(new FieldUpdater<UserProxy, Boolean>(){
 	    	@Override
 	    	public void update(int index, UserProxy user, Boolean value){
 	    		if (getUiHandlers() != null) {	    			
 	    			selectedUserIndex = index;
-	    			getUiHandlers().updateUserStatus(user, value, user.getAdmin());
+	    			getUiHandlers().updateUserStatus(user, value, user.getAdmin(), "");
 	    		}	    		
 	    	}
 	    });
@@ -153,7 +173,7 @@ public class UserManagementView extends ViewWithUiHandlers<UserManagementUiHandl
 	    	public void update(int index, UserProxy user, Boolean value){
 	    		if (getUiHandlers() != null) {	    			
 	    			selectedUserIndex = index;
-	    			getUiHandlers().updateUserStatus(user, user.getActive(), value);
+	    			getUiHandlers().updateUserStatus(user, user.getActive(), value, "");
 	    		}	    		
 	    	}
 	    });

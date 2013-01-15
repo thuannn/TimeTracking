@@ -130,13 +130,15 @@ public class UserManagementPresenter
 	}
 
 	@Override
-	public void updateUserStatus(UserProxy user, Boolean active, Boolean admin) {
+	public void updateUserStatus(UserProxy user, Boolean active, Boolean admin, String password) {
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		UserRequestContext rc = rf.userRequest();
 		final UserProxy updatedUser = rc.edit(user);
 		updatedUser.setActive(active);
 		updatedUser.setAdmin(admin);
+		if (!password.equals(""))
+			updatedUser.setPassword(password);
 		rc.save(updatedUser).fire( new Receiver<Void>(){
 			@Override
 			public void onFailure(ServerFailure error) {

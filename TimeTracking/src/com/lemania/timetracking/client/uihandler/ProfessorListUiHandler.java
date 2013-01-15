@@ -6,6 +6,7 @@ import com.lemania.timetracking.shared.ProfessorProxy;
 public interface ProfessorListUiHandler extends UiHandlers {
 	
 	void updateProfessorStatus(ProfessorProxy prof, Boolean status);	
+	void updateProfessorName(ProfessorProxy prof, String name);
 	
 	void professorSelected(ProfessorProxy prof);
 	

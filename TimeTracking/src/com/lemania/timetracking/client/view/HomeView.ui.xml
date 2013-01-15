@@ -8,7 +8,7 @@
 
 	<g:HTMLPanel width="100%" height="100%">
 		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER">
-			<g:Label text="Bienvenue" styleName="pageTitle"/>
+			<g:Label text="Bienvenue" styleName="pageTitle" width=""/>
 			<g:Image url="images/Capture.PNG" width="339px" height="336px"/>
 			<g:HorizontalPanel horizontalAlignment="ALIGN_LEFT">
 			<g:Grid width="" ui:field="panelLogin">
