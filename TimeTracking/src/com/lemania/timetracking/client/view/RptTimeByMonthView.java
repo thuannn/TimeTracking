@@ -177,29 +177,29 @@ public class RptTimeByMonthView extends ViewWithUiHandlers<RptTimeByMonthUiHandl
 			}
 			
 			// choose the column number base on the log type
-			if (logs.get(i).getTypeName().equals("Cours"))
+			if (logs.get(i).getTypeName().equals("1.Cours"))
 				currentCol = 2;				
-			if (logs.get(i).getTypeName().equals("Maladie/ACC"))
+			if (logs.get(i).getTypeName().equals("2.Maladie/ACC"))
 				currentCol = 3;
-			if (logs.get(i).getTypeName().equals("Fériés"))
+			if (logs.get(i).getTypeName().equals("3.Fériés"))
 				currentCol = 4;
-			if (logs.get(i).getTypeName().equals("Privé"))
+			if (logs.get(i).getTypeName().equals("4.Privé"))
 				currentCol = 5;
-			if (logs.get(i).getTypeName().equals("Supervision"))
+			if (logs.get(i).getTypeName().equals("5.Supervision"))
 				currentCol = 6;
-			if (logs.get(i).getTypeName().equals("Frais"))
+			if (logs.get(i).getTypeName().equals("6.Frais"))
 				currentCol = 8;
 			
 			// calculate the total hour
-			if (!logs.get(i).getTypeName().equals("Frais"))
+			if (!logs.get(i).getTypeName().equals("6.Frais"))
 				totalHour = totalHour + logs.get(i).getHour();
 			
 			// calculate the total cash
-			if (logs.get(i).getTypeName().equals("Frais"))
+			if (logs.get(i).getTypeName().equals("6.Frais"))
 				totalCash = totalCash + logs.get(i).getHour();
 			
 			// draw the data
-			if (logs.get(i).getTypeName().equals("Frais"))
+			if (logs.get(i).getTypeName().equals("6.Frais"))
 				tblProfs.setText(currentRow, currentCol, (logs.get(i).getHour() > 0) ? "CHF " + Double.toString(logs.get(i).getHour()) : "");
 			else
 				tblProfs.setText(currentRow, currentCol, (logs.get(i).getHour() > 0) ? Double.toString(logs.get(i).getHour()) : "");

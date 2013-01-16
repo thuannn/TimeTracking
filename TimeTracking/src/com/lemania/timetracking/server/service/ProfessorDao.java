@@ -61,10 +61,14 @@ public class ProfessorDao extends MyDAOBase {
 		}
 		Map<Key<Professor>, Professor> profs = this.ofy().get(profKeys);
 		List<Professor> returnList = new ArrayList<Professor>(profs.values());
+		for (int i=0; i<returnList.size(); i++) {
+			if (!returnList.get(i).getProfActive())
+				returnList.remove(i);
+		}
 		java.util.Collections.sort(returnList);
 		
 		// Get the key of the Frais type
-		Query<LogType> qt = this.ofy().query(LogType.class).filter("hourName", "Frais");
+		Query<LogType> qt = this.ofy().query(LogType.class).filter("hourName", "6.Frais");
 		Key<LogType> typeFrais = qt.getKey();
 		
 		// Calculate the total time for each professor
@@ -74,13 +78,14 @@ public class ProfessorDao extends MyDAOBase {
 				.order("prof")
 				.order("year")
 				.order("month")
-				.order("cours")
-				.order("type");
+				.order("cours");
 		List<Log> lstLogs = new ArrayList<Log>();
 		for (Log log : q)
 			lstLogs.add(log);
+		java.util.Collections.sort(lstLogs);
+		
 		Key<Professor> currentProfKey;
-		for (Professor p : returnList){
+		for (Professor p : returnList) {
 			currentProfKey = new Key<Professor>(Professor.class, p.getId());
 			for (Log log : lstLogs) {
 				if ( currentProfKey.equals(log.getProf()) ){

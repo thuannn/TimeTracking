@@ -35,6 +35,6 @@ public class LogType extends DatastoreObject implements Comparable<LogType> {
 
 	@Override
 	public int compareTo(LogType otherLog) {
-		return orderNumber - otherLog.getOrderNumber();
+		return hourName.compareTo(otherLog.getLogTypeName());
 	}
 }

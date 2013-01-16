@@ -127,6 +127,8 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	      }
 	    });
 	    
+	    // set pager
+	    pager.setRangeLimited(false);
 	    pager.setDisplay(tblProfessors);
 	    
 	    // Assignment table	    

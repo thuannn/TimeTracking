@@ -30,8 +30,7 @@
 				</g:row>
 				<g:row/>
 			</g:Grid>
-					<p1:SimplePager location="CENTER" ui:field="pager" pageSize="15"/>
-					<p1:DataGrid width="300px" height="500px" ui:field="tblProfessors" pageSize="15"/>
+					<p1:DataGrid width="300px" height="500px" ui:field="tblProfessors"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="600px">
 					<g:Label text="."/>
@@ -66,6 +65,89 @@
 							</g:customCell>
 							<g:customCell>
 								<g:Label ui:field="txtNotification"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="."/>
+							</g:customCell>
+							<g:customCell>
+								<g:Grid>
+									<g:row>
+										<g:customCell>
+											<g:Label text="Cours :"/>
+										</g:customCell>
+										<g:customCell>
+											<g:TextBox ui:field="txtCoursTime"/>
+										</g:customCell>
+										<g:customCell>
+											<g:TextBox ui:field="txtCoursLog"/>
+										</g:customCell>
+									</g:row>
+									<g:row>
+										<g:customCell>
+											<g:Label text="Maladie/ACC"/>
+										</g:customCell>
+										<g:customCell>
+											<g:TextBox ui:field="txtMaladieTime"/>
+										</g:customCell>
+										<g:customCell>
+											<g:TextBox ui:field="txtMaladieNote"/>
+										</g:customCell>
+									</g:row>
+									<g:row>
+										<g:customCell>
+								<g:Label text="Fériés"/>
+							</g:customCell>
+										<g:customCell>
+								<g:TextBox ui:field="txtFerieTime"/>
+							</g:customCell>
+										<g:customCell>
+											<g:TextBox ui:field="txtFerieNote"/>
+										</g:customCell>
+									</g:row>
+									<g:row>
+										<g:customCell>
+											<g:Label text="Privé"/>
+										</g:customCell>
+										<g:customCell>
+											<g:TextBox ui:field="txtPriveTime"/>
+										</g:customCell>
+										<g:customCell>
+											<g:TextBox ui:field="txtPriveNote"/>
+										</g:customCell>
+									</g:row>
+									<g:row>
+										<g:customCell>
+											<g:Label text="Supervision"/>
+										</g:customCell>
+										<g:customCell>
+											<g:TextBox ui:field="txtSupervisionTime"/>
+										</g:customCell>
+										<g:customCell>
+											<g:TextBox ui:field="txtSupervisionNote"/>
+										</g:customCell>
+									</g:row>
+									<g:row>
+										<g:customCell>
+											<g:Label text="Frais (CHF)"/>
+										</g:customCell>
+										<g:customCell>
+											<g:TextBox ui:field="txtFraisAmount"/>
+										</g:customCell>
+										<g:customCell>
+											<g:TextBox ui:field="txtFraisNote"/>
+										</g:customCell>
+									</g:row>
+									<g:row>
+										<g:customCell>
+											<g:Label text="."/>
+										</g:customCell>
+										<g:customCell>
+											<g:Button ui:field="cmdSave" text="Entregistrer"/>
+										</g:customCell>
+									</g:row>
+								</g:Grid>
 							</g:customCell>
 						</g:row>
 						<g:row>

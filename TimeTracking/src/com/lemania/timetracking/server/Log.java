@@ -2,7 +2,6 @@ package com.lemania.timetracking.server;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.NotSaved;
 
 @Entity
 public class Log extends DatastoreObject implements Comparable<Log>{
@@ -14,18 +13,11 @@ public class Log extends DatastoreObject implements Comparable<Log>{
 	int month;
 	double hour;
 	String memo = "";
-
-	@NotSaved
-	String profName;
-
-	@NotSaved
-	String typeName;
 	
-	@NotSaved
-	String schoolName;
-	
-	@NotSaved
-	String courseName;
+	String profName = "";	
+	String typeName = "";	
+	String schoolName = "";	
+	String courseName = "";
 	
 	public int getYear() {
 		return year;

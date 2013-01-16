@@ -30,6 +30,8 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Button;
 
 public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implements TimeInputPresenter.MyView {
 
@@ -56,11 +58,23 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiField ListBox lstCourses;
 	@UiField ListBox lstSchools;
 	@UiField Label lblProfName;
-	@UiField(provided=true) DataGrid<LogProxy> tblLog = new DataGrid<LogProxy>();
 	@UiField ListBox lstYear;
 	@UiField ListBox lstMonth;
 	@UiField Label txtNotification;
-	@UiField SimplePager pager;
+	@UiField TextBox txtCoursTime;
+	@UiField TextBox txtCoursLog;
+	@UiField TextBox txtMaladieNote;
+	@UiField TextBox txtMaladieTime;
+	@UiField TextBox txtFerieTime;
+	@UiField TextBox txtFerieNote;
+	@UiField TextBox txtPriveTime;
+	@UiField TextBox txtPriveNote;
+	@UiField TextBox txtSupervisionTime;
+	@UiField TextBox txtSupervisionNote;
+	@UiField TextBox txtFraisAmount;
+	@UiField TextBox txtFraisNote;
+	@UiField Button cmdSave;
+	@UiField DataGrid<LogProxy> tblLog;
 	
 	@Override
 	public void setEcoleList(List<EcoleProxy> ecoles) {
@@ -210,8 +224,6 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	      }
 	    });
 	    tblProfessors.setSelectionModel(selectionModel);
-	    
-	    pager.setDisplay(tblProfessors);
 	}
 
 	@Override

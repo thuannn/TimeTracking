@@ -26,6 +26,8 @@ public class LogDao extends MyDAOBase {
 			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
 			returnList.add(log);
 		}
+		
+		java.util.Collections.sort(returnList);
 		return returnList;
 	}
 	
@@ -34,16 +36,22 @@ public class LogDao extends MyDAOBase {
 				.order("prof")
 				.order("year")
 				.order("month")
-				.order("cours")
-				.order("type");
+				.order("cours");
+				
 		List<Log> returnList = new ArrayList<Log>();
 		for (Log log : q){
-			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
-			log.setProfName( this.ofy().get(log.getProf()).getProfName());
-			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
-			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
+			if ( !this.ofy().get(log.getProf()).getProfActive() )
+				continue;
+			
+//			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
+//			log.setProfName( this.ofy().get(log.getProf()).getProfName());
+//			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
+//			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
+			
 			returnList.add(log);
 		}
+		
+		java.util.Collections.sort(returnList);
 		return returnList;
 	}
 	
@@ -52,19 +60,21 @@ public class LogDao extends MyDAOBase {
 				.filter("year", selectedYear)
 				.filter("month", selectedMonth)
 				.order("prof")
-				.order("cours")
-				.order("type");
+				.order("cours");
+		
 		List<Log> returnList = new ArrayList<Log>();
 		for (Log log : q){
 			if ( !this.ofy().get(log.getProf()).getProfActive() )
 				continue;
 			
-			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
-			log.setProfName( this.ofy().get(log.getProf()).getProfName());
-			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
-			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
+//			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
+//			log.setProfName( this.ofy().get(log.getProf()).getProfName());
+//			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
+//			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
+			
 			returnList.add(log);
 		}
+		
 		// Sort by ProfName
 		java.util.Collections.sort(returnList);
 		return returnList;
@@ -76,16 +86,22 @@ public class LogDao extends MyDAOBase {
 				.order("prof")
 				.order("year")
 				.order("month")
-				.order("cours")
-				.order("type");
+				.order("cours");
+		
 		List<Log> returnList = new ArrayList<Log>();
 		for (Log log : q){
-			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
-			log.setProfName( this.ofy().get(log.getProf()).getProfName());
-			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
-			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
+			if ( !this.ofy().get(log.getProf()).getProfActive() )
+				continue;
+			
+//			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
+//			log.setProfName( this.ofy().get(log.getProf()).getProfName());
+//			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
+//			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
+			
 			returnList.add(log);
 		}
+		
+		java.util.Collections.sort(returnList);
 		return returnList;
 	}
 	
@@ -94,17 +110,20 @@ public class LogDao extends MyDAOBase {
 				.filter("prof",new Key<Professor>(Professor.class, Long.parseLong(profId)))
 				.order("year")
 				.order("month")
-				.order("cours")
-				.order("type");
+				.order("cours");
+		
 		List<Log> returnList = new ArrayList<Log>();
 		for (Log log : q){
-			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
-			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
-// 05.11.2012 Info of School, Department, Professor is already known when loading data
+			
+//			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
+//			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );						
 //			log.setProfName( this.ofy().get(log.getProf()).getProfName());
 //			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
+			
 			returnList.add(log);
 		}
+		
+		java.util.Collections.sort(returnList);
 		return returnList;
 	}
 	
@@ -116,22 +135,37 @@ public class LogDao extends MyDAOBase {
 				.filter("year", Integer.parseInt(year))
 				.filter("month", Integer.parseInt(month))
 				.filter("prof", profKey)
-				.filter("cours", coursKey)
-				.order("type");
+				.filter("cours", coursKey);
+		
 		List<Log> returnList = new ArrayList<Log>();
 		for (Log log : q){
-			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
+//			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );			
+			log.setProfName( "" );
+			log.setCourseName( "" );
 			returnList.add(log);
 		}
+		
+		java.util.Collections.sort(returnList);
 		return returnList;
 	}
 	
 	public void save(Log log){
+		log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );			
+		log.setProfName( this.ofy().get(log.getProf()).getProfName());
+		log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
+		log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
+		
 		this.ofy().put(log);
 	}
 	
 	public Log saveAndReturn(Log log){
+		log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );			
+		log.setProfName( this.ofy().get(log.getProf()).getProfName());
+		log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
+		log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
+		
 		Key<Log> key = this.ofy().put(log);
+		
 		try {
 			return this.ofy().get(key);
 		} catch (Exception e) {
@@ -148,14 +182,20 @@ public class LogDao extends MyDAOBase {
 		Log log;
 		for (int i=0; i<typeIdList.size(); i++) {
 			log = new Log();
+			
 			log.setProf( new Key<Professor>(Professor.class, Long.parseLong(profId)));
 			log.setCours( new Key<Cours>(Cours.class, Long.parseLong(courseId)));
 			log.setLogType( new Key<LogType>(LogType.class, Long.parseLong(typeIdList.get(i))));
 			log.setYear(Integer.parseInt(year));
-			log.setMonth(Integer.parseInt(month));
+			log.setMonth(Integer.parseInt(month));			
+			
+			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );			
+			log.setProfName( this.ofy().get(log.getProf()).getProfName());
+			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
+			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
+			
 			this.ofy().put(log);
 			
-			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
 			returnList.add(log);
 		}
 		return returnList;
