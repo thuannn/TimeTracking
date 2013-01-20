@@ -1,6 +1,5 @@
 package com.lemania.timetracking.client.presenter;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
@@ -9,6 +8,8 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.lemania.timetracking.client.event.ActionCompletedEvent;
+import com.lemania.timetracking.client.event.ActionCompletedEvent.ActionCompletedHandler;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent.LoginAuthenticatedHandler;
 import com.lemania.timetracking.client.event.UpdateTimeLogEvent;
@@ -27,12 +28,9 @@ import com.lemania.timetracking.client.uihandler.TimeInputUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.LogProxy;
-import com.lemania.timetracking.shared.LogTypeProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
 import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.LogRequestFactory;
-import com.lemania.timetracking.shared.service.LogTypeRequestFactory;
-import com.lemania.timetracking.shared.service.LogTypeRequestFactory.LogTypeRequestContext;
 import com.lemania.timetracking.shared.service.UserRequestFactory;
 import com.lemania.timetracking.shared.service.LogRequestFactory.LogRequestContext;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
@@ -43,9 +41,9 @@ import com.lemania.timetracking.client.LoggedInGatekeeper;
 
 public class TimeInputPresenter 
 		extends Presenter<TimeInputPresenter.MyView, TimeInputPresenter.MyProxy> 
-		implements TimeInputUiHandler, UpdateTimeLogHandler, LoginAuthenticatedHandler {
+		implements TimeInputUiHandler, UpdateTimeLogHandler, LoginAuthenticatedHandler, ActionCompletedHandler {
 	
-	private List<LogTypeProxy> logTypes;
+//	private List<LogTypeProxy> logTypes;
 	private CurrentUser currentUser;
 
 	public interface MyView extends View, HasUiHandlers<TimeInputUiHandler> {
@@ -58,6 +56,7 @@ public class TimeInputPresenter
 		
 		// Initialize values
 		void initializeValues(int currentMonth, int currentYear, boolean isAdmin);
+		void initializeUI(boolean isAdmin);
 		void initializeProfTable();
 		void initializeLogTable();
 		
@@ -103,14 +102,15 @@ public class TimeInputPresenter
 		
 		// Initialize active school list
 		loadDepartmentList();
-		loadLogTypeList();
+		
+//		loadLogTypeList();
 	}
 	
 	private void loadDepartmentList() {
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		UserRequestContext rc = rf.userRequest();
-		rc.getDepartments(currentUser.getUserId()).fire( new Receiver<List<CoursProxy>>(){
+		rc.getDepartments(currentUser.getUserId()).fire( new Receiver<List<CoursProxy>>() {
 			@Override
 			public void onFailure(ServerFailure error) {
 				Window.alert(error.getMessage());
@@ -139,24 +139,96 @@ public class TimeInputPresenter
 	}
 	
 	
-	private void loadLogTypeList(){
-		// Get LogType list
-		LogTypeRequestFactory rfl = GWT.create(LogTypeRequestFactory.class);
-		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
-		LogTypeRequestContext rcl = rfl.typeRequest();
-		rcl.listAllActive().fire(new Receiver<List<LogTypeProxy>>(){
-			@Override
-			public void onFailure(ServerFailure error){
-				Window.alert(error.getMessage());
-			}
-			@Override
-			public void onSuccess(List<LogTypeProxy> response) {
-				logTypes = response;
-			}
-		});
+//	private void loadLogTypeList(){
+//		// Get LogType list
+//		LogTypeRequestFactory rfl = GWT.create(LogTypeRequestFactory.class);
+//		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+//		LogTypeRequestContext rcl = rfl.typeRequest();
+//		rcl.listAllActive().fire(new Receiver<List<LogTypeProxy>>(){
+//			@Override
+//			public void onFailure(ServerFailure error){
+//				Window.alert(error.getMessage());
+//			}
+//			@Override
+//			public void onSuccess(List<LogTypeProxy> response) {
+//				logTypes = response;
+//			}
+//		});
+//	}
+	
+//	public void updateLogTypeList(final ProfessorProxy prof, final String courseId, final String year, final String month) {
+//		// Load log list
+//		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
+//		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+//		LogRequestContext rcl = rfl.logRequest();
+//		rcl.listAll(prof.getId().toString(), courseId, year, month).fire(new Receiver<List<LogProxy>>(){
+//			@Override
+//			public void onFailure(ServerFailure error){
+//				Window.alert(error.getMessage());
+//			}
+//			@Override
+//			public void onSuccess(List<LogProxy> response) {
+//				populateLogTypeList(response, prof, courseId, year, month);
+//			}
+//		});
+//	}
+	
+//	// Find and add missing LogType
+//	public void populateLogTypeList(final List<LogProxy> logList, ProfessorProxy prof, String courseId, String year, String month){
+//		
+//		List<String> typeIdList = new ArrayList<String>();
+//		boolean found = false;
+//		for (int i=0; i<logTypes.size(); i++) {
+//			found = false;
+//			for (int j=0; j<logList.size(); j++) {
+//				if (logTypes.get(i).getId().toString().equals(logList.get(j).getTypeId())) {
+//					found = true;
+//					break;
+//				}
+//			}
+//			
+//			if (found) {
+//				continue;
+//			}
+//			else {
+//				typeIdList.add(logTypes.get(i).getId().toString());
+//			}
+//		}
+//		
+//		if (typeIdList.size() > 0) {
+//			LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
+//			rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+//			LogRequestContext rcl = rfl.logRequest();
+//			rcl.batchUpdate(prof.getId().toString(), courseId, year, month, typeIdList).fire(new Receiver<List<LogProxy>>(){
+//				@Override
+//				public void onFailure(ServerFailure error){
+//					Window.alert(error.getMessage());
+//				}
+//				@Override
+//				public void onSuccess(List<LogProxy> response) {
+//					logList.addAll(response);
+//					getView().setLogData(logList);
+//				}
+//			});
+//		} else {
+//			getView().setLogData(logList);
+//		}
+//	}
+
+	@Override
+	public void loadCoursesBySchool(String ecoleId) {
+		// empty
+	}
+
+	@ProxyEvent
+	@Override
+	public void onUpdateTimeLog(UpdateTimeLogEvent event) {
+//		updateLogTypeList(event.getProf(), event.getCourseId(), event.getYear(), event.getMonth());
+		
+		loadLogData(event.getProf(), event.getCourseId(), event.getYear(), event.getMonth());
 	}
 	
-	public void updateLogTypeList(final ProfessorProxy prof, final String courseId, final String year, final String month) {
+	public void loadLogData(final ProfessorProxy prof, final String courseId, final String year, final String month) {
 		// Load log list
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
 		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
@@ -168,67 +240,14 @@ public class TimeInputPresenter
 			}
 			@Override
 			public void onSuccess(List<LogProxy> response) {
-				populateLogTypeList(response, prof, courseId, year, month);
+				getView().setLogData(response);
 			}
 		});
 	}
 	
-	// Find and add missing LogType
-	public void populateLogTypeList(final List<LogProxy> logList, ProfessorProxy prof, String courseId, String year, String month){
-		
-		List<String> typeIdList = new ArrayList<String>();
-		boolean found = false;
-		for (int i=0; i<logTypes.size(); i++) {
-			found = false;
-			for (int j=0; j<logList.size(); j++) {
-				if (logTypes.get(i).getId().toString().equals(logList.get(j).getTypeId())) {
-					found = true;
-					break;
-				}
-			}
-			
-			if (found) {
-				continue;
-			}
-			else {
-				typeIdList.add(logTypes.get(i).getId().toString());
-			}
-		}
-		
-		if (typeIdList.size() > 0) {
-			LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
-			rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
-			LogRequestContext rcl = rfl.logRequest();
-			rcl.batchUpdate(prof.getId().toString(), courseId, year, month, typeIdList).fire(new Receiver<List<LogProxy>>(){
-				@Override
-				public void onFailure(ServerFailure error){
-					Window.alert(error.getMessage());
-				}
-				@Override
-				public void onSuccess(List<LogProxy> response) {
-					logList.addAll(response);
-					getView().setLogData(logList);
-				}
-			});
-		} else {
-			getView().setLogData(logList);
-		}
-	}
-
-	@Override
-	public void loadCoursesBySchool(String ecoleId) {
-		// empty
-	}
-
-	@ProxyEvent
-	@Override
-	public void onUpdateTimeLog(UpdateTimeLogEvent event) {
-		updateLogTypeList(event.getProf(), event.getCourseId(), event.getYear(), event.getMonth());
-	}
-
+	
 	@Override
 	public void professorSelected(ProfessorProxy prof, String courseId, String year, String month) {
-		getView().clearLogTable();
 		getEventBus().fireEvent(new UpdateTimeLogEvent(prof, courseId, year, month));
 	}
 
@@ -278,5 +297,44 @@ public class TimeInputPresenter
 				getView().setNotification("log-updated");
 			}
 		});
+	}
+
+	@Override
+	public void updateLogTime(
+			ProfessorProxy prof, String courseId, String year, String month,
+			String coursTime, String coursNote,
+			String maladieTime, String maladieNote, String ferieTime,
+			String ferieNote, String priveTime, String priveNote,
+			String supervisionTime, String supervisionNote, String fraisAmount,
+			String fraisNote) {
+		
+		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
+		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+		LogRequestContext rcl = rfl.logRequest();
+		rcl.batchUpdate(
+				prof.getId().toString(), courseId, year, month, 
+				coursTime, coursNote,
+				maladieTime, maladieNote, 
+				ferieTime, ferieNote, 
+				priveTime, priveNote,
+				supervisionTime, supervisionNote, 
+				fraisAmount, fraisNote)
+				.fire(new Receiver<List<LogProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<LogProxy> response) {
+				getView().setLogData(response);
+			}
+		});
+	}
+
+	@ProxyEvent
+	@Override
+	public void onActionCompleted(ActionCompletedEvent event) {
+		if (this.currentUser != null)
+			getView().initializeUI(this.currentUser.isAdmin());
 	}
 }

@@ -200,4 +200,76 @@ public class LogDao extends MyDAOBase {
 		}
 		return returnList;
 	}
+	
+	public List<Log> batchUpdate(
+			String profId, String courseId, String year, String month,
+			String coursTime, String coursNote,
+			String maladieTime, String maladieNote,
+			String ferieTime, String ferieNote,
+			String priveTime, String priveNote, 
+			String supervisionTime, String supervisionNote, 
+			String fraisAmount, String fraisNote ) {				
+		
+		// Return list
+		List<Log> returnList = new ArrayList<Log>();
+		
+		// Get all the LogType
+		// For each LogType, try to find the existing record, if not found, save a new one
+		Query<LogType> q = this.ofy().query(LogType.class).filter("hourActive", true).order("orderNumber");
+		Log saveLog;
+		for (LogType lt : q) {
+			Query<Log> qlog = this.ofy().query(Log.class)
+					.filter("prof", new Key<Professor>(Professor.class, Long.parseLong(profId)))
+					.filter("cours", new Key<Cours>(Cours.class, Long.parseLong(courseId)))
+					.filter("type", new Key<LogType>(LogType.class, lt.getId()) )
+					.filter("year", Integer.parseInt(year))
+					.filter("month", Integer.parseInt(month));
+			
+			if (qlog.listKeys().size()>0) {
+				saveLog = qlog.list().get(0);	
+			} else {
+				saveLog = new Log();
+				saveLog.setProf( new Key<Professor>(Professor.class, Long.parseLong(profId)));
+				saveLog.setCours( new Key<Cours>(Cours.class, Long.parseLong(courseId)));
+				saveLog.setLogType( new Key<LogType>(LogType.class, lt.getId()));
+				saveLog.setYear(Integer.parseInt(year));
+				saveLog.setMonth(Integer.parseInt(month));			
+				
+				saveLog.setTypeName( this.ofy().get(new Key<LogType>(LogType.class, lt.getId())).getLogTypeName() );			
+				saveLog.setProfName( this.ofy().get(new Key<Professor>(Professor.class, Long.parseLong(profId))).getProfName());
+				saveLog.setCourseName( this.ofy().get(new Key<Cours>(Cours.class, Long.parseLong(courseId))).getCoursNom() );
+				saveLog.setSchoolName( this.ofy().get( this.ofy().get(new Key<Cours>(Cours.class, Long.parseLong(courseId))).getEcole()).getSchoolName() );
+			}	
+			
+			if (lt.getLogTypeName().toLowerCase().equals(TimeTypeNames.cours)) {
+				saveLog.setHour(Double.parseDouble(coursTime));
+				saveLog.setMemo(coursNote);
+			}
+			if (lt.getLogTypeName().toLowerCase().equals(TimeTypeNames.maladie)) {
+				saveLog.setHour(Double.parseDouble(maladieTime));
+				saveLog.setMemo(maladieNote);
+			}
+			if (lt.getLogTypeName().toLowerCase().equals(TimeTypeNames.ferie)) {
+				saveLog.setHour(Double.parseDouble(ferieTime));
+				saveLog.setMemo(ferieNote);
+			}
+			if (lt.getLogTypeName().toLowerCase().equals(TimeTypeNames.prive)) {
+				saveLog.setHour(Double.parseDouble(priveTime));
+				saveLog.setMemo(priveNote);
+			}
+			if (lt.getLogTypeName().toLowerCase().equals(TimeTypeNames.supervision)) {
+				saveLog.setHour(Double.parseDouble(supervisionTime));
+				saveLog.setMemo(supervisionNote);
+			}
+			if (lt.getLogTypeName().toLowerCase().equals(TimeTypeNames.frais)) {
+				saveLog.setHour(Double.parseDouble(fraisAmount));
+				saveLog.setMemo(fraisNote);
+			}
+			
+			this.ofy().put(saveLog);
+			returnList.add(saveLog);
+		}
+		
+		return returnList;
+	}
 }

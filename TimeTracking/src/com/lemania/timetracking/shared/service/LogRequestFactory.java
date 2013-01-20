@@ -25,6 +25,15 @@ public interface LogRequestFactory extends RequestFactory {
 		
 		Request<List<LogProxy>> batchUpdate(String profId, String courseId, String year, String month, List<String> typeIdList);
 		
+		Request<List<LogProxy>> batchUpdate(
+				String profId, String courseId, String year, String month,
+				String coursTime, String coursNote,
+				String maladieTime, String maladieNote,
+				String ferieTime, String ferieNote,
+				String priveTime, String priveNote, 
+				String supervisionTime, String supervisionNote, 
+				String fraisAmount, String fraisNote );
+		
 		Request<Void> save(LogProxy log);
 		Request<LogProxy> saveAndReturn(LogProxy newLog);
 		

@@ -22,7 +22,6 @@ import com.lemania.timetracking.shared.ProfessorProxy;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
-import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.view.client.ListDataProvider;
@@ -57,7 +56,6 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	@UiField Button cmdAddCourse;
 	@UiField ListBox lstAddEcole;
 	@UiField ListBox lstAddCourse;
-	@UiField SimplePager pager;
 	
 	@UiHandler("cmdAddCourse")
 	public void onCmdAddCourseClicked(ClickEvent event){
@@ -127,9 +125,6 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	      }
 	    });
 	    
-	    // set pager
-	    pager.setRangeLimited(false);
-	    pager.setDisplay(tblProfessors);
 	    
 	    // Assignment table	    
 	    TextColumn<AssignmentProxy> colSchoolName = new TextColumn<AssignmentProxy>() {
@@ -151,11 +146,12 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 
 	@Override
 	public void setData(List<ProfessorProxy> profs) {
-		// tblProfessors.setRowCount(profs.size(), true);
-		// tblProfessors.setRowData(0, profs);
-		professorProvider = new ListDataProvider<ProfessorProxy>();
-		professorProvider.setList(profs);
-		professorProvider.addDataDisplay(tblProfessors);
+		tblProfessors.setRowCount(profs.size(), true);
+		tblProfessors.setRowData(0, profs);
+		
+//		professorProvider = new ListDataProvider<ProfessorProxy>();
+//		professorProvider.setList(profs);
+//		professorProvider.addDataDisplay(tblProfessors);
 	}
 
 	@Override

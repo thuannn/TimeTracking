@@ -4,15 +4,13 @@ package com.lemania.timetracking.client.view;
 import java.util.ArrayList;
 import java.util.List;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
-import com.google.gwt.cell.client.EditTextCell;
-import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.lemania.timetracking.client.TimeTypeNames;
 import com.lemania.timetracking.client.presenter.TimeInputPresenter;
 import com.lemania.timetracking.client.uihandler.TimeInputUiHandler;
 import com.lemania.timetracking.shared.CoursProxy;
@@ -20,26 +18,22 @@ import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.LogProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.event.dom.client.ClickEvent;
 
 public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implements TimeInputPresenter.MyView {
 
 	private final Widget widget;
 	private ProfessorProxy selectedProfessor;
-	private LogProxy selectedLog;
 	private ListDataProvider<ProfessorProxy> professorProvider;
-	private ListDataProvider<LogProxy> logProvider;
 
 	public interface Binder extends UiBinder<Widget, TimeInputView> {
 	}
@@ -62,7 +56,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiField ListBox lstMonth;
 	@UiField Label txtNotification;
 	@UiField TextBox txtCoursTime;
-	@UiField TextBox txtCoursLog;
+	@UiField TextBox txtCoursNote;
 	@UiField TextBox txtMaladieNote;
 	@UiField TextBox txtMaladieTime;
 	@UiField TextBox txtFerieTime;
@@ -74,7 +68,6 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiField TextBox txtFraisAmount;
 	@UiField TextBox txtFraisNote;
 	@UiField Button cmdSave;
-	@UiField DataGrid<LogProxy> tblLog;
 	
 	@Override
 	public void setEcoleList(List<EcoleProxy> ecoles) {
@@ -94,9 +87,11 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	
 	@Override
 	public void setProfData(List<ProfessorProxy> profs) {
-		professorProvider = new ListDataProvider<ProfessorProxy>();
-		professorProvider.setList(profs);
-		professorProvider.addDataDisplay(tblProfessors);
+//		professorProvider = new ListDataProvider<ProfessorProxy>();
+//		professorProvider.setList(profs);
+//		professorProvider.addDataDisplay(tblProfessors);
+		
+		tblProfessors.setRowData(profs);
 	}
 
 	@Override
@@ -122,12 +117,37 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 			lstYear.addItem( Integer.toString(i + currentYear), Integer.toString(i + currentYear));
 			if ((i + currentYear) == currentYear)
 				lstYear.setSelectedIndex(i+2);
-		}		
+		}
 		
-		// let admin choose year and month
-		lstMonth.setEnabled(isAdmin);
-		lstYear.setEnabled(isAdmin);
+		// Set UI options
+		initializeUI(isAdmin);
+		
+		// 
 		lblProfName.setText("");
+		
+		// 
+		clearValues();
+	}
+	
+	private void clearValues() {
+		// clear text fields
+		txtCoursTime.setText("");
+		txtCoursNote.setText("");
+		// Maladie
+		txtMaladieTime.setText("");
+		txtMaladieNote.setText("");
+		// Fériés
+		txtFerieTime.setText("");
+		txtFerieNote.setText("");
+		// Privé
+		txtPriveTime.setText("");
+		txtPriveNote.setText("");
+		// Supervision	
+		txtSupervisionTime.setText("");
+		txtSupervisionNote.setText("");
+		// Frais
+		txtFraisAmount.setText("");
+		txtFraisNote.setText("");
 	}
 	
 	/***/
@@ -174,10 +194,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	
 	@Override
 	public void clearLogTable() {
-		List<LogProxy> temp = new ArrayList<LogProxy>();
-		logProvider = new ListDataProvider<LogProxy>();
-		logProvider.setList(temp);
-		logProvider.addDataDisplay(tblLog);
+		// Datagrid removed, not being used
 	}
 
 	@UiHandler("lstCourses")
@@ -215,6 +232,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	        selectedProfessor = selectionModel.getSelectedObject();
 	        if (selectedProfessor != null) {
 	        	lblProfName.setText(selectedProfessor.getProfName());
+	        	clearValues();
 	        	getUiHandlers().professorSelected(
 	        			selectedProfessor, 
 	        			lstCourses.getValue(lstCourses.getSelectedIndex()),
@@ -228,96 +246,89 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 
 	@Override
 	public void setLogData(List<LogProxy> logs) {
-		// TODO Auto-generated method stub
-		tblLog.setRowCount(logs.size(), true);
-		tblLog.setRowData(logs);
-		tblLog.setRowCount(logs.size());
+		for (LogProxy log : logs) {
+			// Cours
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.cours)) {
+				txtCoursTime.setText(Double.toString(log.getHour()));
+				txtCoursNote.setText(log.getMemo());
+			}
+			// Maladie
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.maladie)) {
+				txtMaladieTime.setText(Double.toString(log.getHour()));
+				txtMaladieNote.setText(log.getMemo());
+			}
+			// Fériés
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.ferie)) {
+				txtFerieTime.setText(Double.toString(log.getHour()));
+				txtFerieNote.setText(log.getMemo());
+			}
+			// Privé
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.prive)) {
+				txtPriveTime.setText(Double.toString(log.getHour()));
+				txtPriveNote.setText(log.getMemo());
+			}
+			// Supervision
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.supervision)) {
+				txtSupervisionTime.setText(Double.toString(log.getHour()));
+				txtSupervisionNote.setText(log.getMemo());
+			}
+			// Frais
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.frais)) {
+				txtFraisAmount.setText(Double.toString(log.getHour()));
+				txtFraisNote.setText(log.getMemo());
+			}
+		}
 	}
 
 	@Override
 	public void initializeLogTable() {
-		TextColumn<LogProxy> colType = new TextColumn<LogProxy>() {
-			@Override
-			public String getValue(LogProxy object) {
-				return object.getTypeName();
-			}
-	    };
-	    
-	    EditTextCell hourCell = new EditTextCell();
-	    Column<LogProxy,String> hourColl = new Column<LogProxy,String>(hourCell) {
-	    	@Override
-	    	public String getValue(LogProxy log){
-	    		return Double.toString(log.getHour());
-	    	}
-	    };
-	    hourColl.setFieldUpdater(new FieldUpdater<LogProxy,String>(){
-	    	@Override
-	    	public void update(int index, LogProxy log, String value){
-	    		if (getUiHandlers() != null) {
-	    			selectedLog = log;
-	    			if (value.equals(""))
-	    				value = "0";
-	    			getUiHandlers().updateLogTime(log, value);
-	    		}	    		
-	    	}
-	    });
-	    
-	    EditTextCell memoCell = new EditTextCell();
-	    Column<LogProxy, String> memoCol = new Column<LogProxy, String>(memoCell) {
-	    	@Override
-	    	public String getValue(LogProxy log){
-	    		return log.getMemo();
-	    	}	    	   
-	    };
-	    memoCol.setFieldUpdater(new FieldUpdater<LogProxy, String>(){
-	    	@Override
-	    	public void update(int index, LogProxy log, String value){
-	    		if (getUiHandlers() != null){
-	    			selectedLog = log;
-	    			getUiHandlers().updateLogMemo(log,  value);
-	    		}
-	    	}
-	    });
-	    
-	    tblLog.addCellPreviewHandler(new CellPreviewEvent.Handler<LogProxy>(){
-	    	@Override
-	    	public void onCellPreview(final CellPreviewEvent<LogProxy> event){
-	    		boolean isClick = "click".equals(event.getNativeEvent().getType());
-	    		if (isClick) {
-	    			tblLog.getRowElement(event.getIndex()).getCells().getItem(event.getColumn()).dispatchEvent(
-	    				Document.get().createClickEvent(1, 0, 0, 0, 0, false, false, false, false));
-	    		}		
-	    	}
-	    });
-	    
-	    tblLog.addColumn(colType, "Type");
-	    tblLog.setColumnWidth(colType, 20, Unit.PCT);
-	    
-	    tblLog.addColumn(hourColl, "Somme");
-	    tblLog.setColumnWidth(hourColl, 20, Unit.PCT);
-	    
-	    tblLog.addColumn(memoCol, "Memo");
-	    tblLog.setColumnWidth(memoCol, 60, Unit.PCT);
+		// Datagrid removed, not being used	   
 	}
 
 	@Override
 	public void setNotification(String code) {
-//		if (code.equals("log-updated"))
-//			showTimer("Modification enregistrée.");
+		// This function is not being used
 	}
 	
-//	private void showTimer(final String text) {
-		// This function is obsolete since the progress bar has been implemented
+	@UiHandler("cmdSave")
+	void onCmdSaveClick(ClickEvent event) {
 		
-//		txtNotification.setText(text);
-//		txtNotification.setVisible(true);
-//		Timer t = new Timer() {
-//	      public void run() {
-//	        txtNotification.setVisible(false);
-//	      }
-//	    };
-//	    // Schedule the timer to run once in 1 seconds.
-//	    t.schedule(1000);
-//	}
-	
+		// if there is nothing, set 0
+		if (txtCoursTime.getText().equals("")) txtCoursTime.setText("0.0");
+		if (txtMaladieTime.getText().equals("")) txtMaladieTime.setText("0.0");
+		if (txtFerieTime.getText().equals("")) txtFerieTime.setText("0.0");
+		if (txtPriveTime.getText().equals("")) txtPriveTime.setText("0.0");
+		if (txtSupervisionTime.getText().equals("")) txtSupervisionTime.setText("0.0");
+		if (txtFraisAmount.getText().equals("")) txtFraisAmount.setText("0.0");
+		
+		// validate numbers
+		if (!txtCoursTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
+			!txtMaladieTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") || 
+			!txtFerieTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
+			!txtPriveTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
+			!txtSupervisionTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
+			!txtFraisAmount.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ) {
+			Window.alert("Veuillez introduire des heures en chiffre.");
+			return;
+		}
+		
+		getUiHandlers().updateLogTime (
+				selectedProfessor, 
+				lstCourses.getValue(lstCourses.getSelectedIndex()),
+    			lstYear.getItemText(lstYear.getSelectedIndex()),
+    			lstMonth.getItemText(lstMonth.getSelectedIndex()),
+				txtCoursTime.getText(), txtCoursNote.getText(), 
+				txtMaladieTime.getText(), txtMaladieNote.getText(), 
+				txtFerieTime.getText(), txtFerieNote.getText(), 
+				txtPriveTime.getText(), txtPriveNote.getText(), 
+				txtSupervisionTime.getText(), txtSupervisionNote.getText(), 
+				txtFraisAmount.getText(), txtFraisNote.getText() );
+	}
+
+	@Override
+	public void initializeUI(boolean isAdmin) {
+		// let admin choose year and month
+		lstMonth.setEnabled(isAdmin);
+		lstYear.setEnabled(isAdmin);
+	}
 }

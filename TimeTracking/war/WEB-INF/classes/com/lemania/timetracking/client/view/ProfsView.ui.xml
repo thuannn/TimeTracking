@@ -11,8 +11,7 @@
 			<g:Label text="Liste de professeurs" styleName="pageTitle"/>
 			<g:HorizontalPanel width="850px">
 				<g:VerticalPanel width="400px">
-					<p1:SimplePager location="CENTER" ui:field="pager" pageSize="15"/>
-					<p1:DataGrid width="400px" height="550px" ui:field="tblProfessors" pageSize="15"/>
+					<p1:DataGrid width="400px" height="550px" ui:field="tblProfessors" keyboardPagingPolicy="INCREASE_RANGE" keyboardSelectionPolicy="DISABLED" pageSize="1000"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="400px">
 					<g:Label ui:field="lblProfNameAssign" styleName="header"/>
@@ -45,7 +44,7 @@
 					</g:Grid>
 					<g:Label text="."/>
 					<g:Label text="Liste des département assignés" styleName="sectionTitle"/>
-					<p1:DataGrid width="400px" height="400px" ui:field="tblAssignment" styleName="subSection"/>
+					<p1:DataGrid width="400px" height="350PX" ui:field="tblAssignment" styleName="subSection"/>
 				</g:VerticalPanel>
 			</g:HorizontalPanel>
 		</g:VerticalPanel>

@@ -8,7 +8,7 @@
 
 	<g:HTMLPanel width="100%" height="100%">
 		<g:VerticalPanel width="100%" height="">
-			<g:Label text="Mettre des heures" styleName="pageTitle" width=""/>
+			<g:Label text="SAISIR DES HEURES" styleName="pageTitle" width=""/>
 			<g:HorizontalPanel width="100%" height="100%" horizontalAlignment="ALIGN_LEFT" borderWidth="0">
 				<g:VerticalPanel width="300px" horizontalAlignment="ALIGN_CENTER">
 					<g:Grid width="100%">
@@ -30,14 +30,14 @@
 				</g:row>
 				<g:row/>
 			</g:Grid>
-					<p1:DataGrid width="300px" height="500px" ui:field="tblProfessors"/>
+					<p1:DataGrid width="300px" height="500px" ui:field="tblProfessors" keyboardSelectionPolicy="DISABLED"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="600px">
 					<g:Label text="."/>
 					<g:Grid width="420px" borderWidth="0" cellPadding="5" cellSpacing="2" styleName="sideBar">
 						<g:row>
 							<g:customCell>
-								<g:Label text="Professeur :"/>
+								<g:Label text="Professeur :" width="78px"/>
 							</g:customCell>
 							<g:customCell>
 								<g:Label ui:field="lblProfName" width="" styleName="header"/>
@@ -69,7 +69,7 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:Label text="."/>
+								<g:Label text="Heures :"/>
 							</g:customCell>
 							<g:customCell>
 								<g:Grid>
@@ -78,10 +78,10 @@
 											<g:Label text="Cours :"/>
 										</g:customCell>
 										<g:customCell>
-											<g:TextBox ui:field="txtCoursTime"/>
+											<g:TextBox ui:field="txtCoursTime" width="100px"/>
 										</g:customCell>
 										<g:customCell>
-											<g:TextBox ui:field="txtCoursLog"/>
+											<g:TextBox ui:field="txtCoursNote" width="300px"/>
 										</g:customCell>
 									</g:row>
 									<g:row>
@@ -89,10 +89,10 @@
 											<g:Label text="Maladie/ACC"/>
 										</g:customCell>
 										<g:customCell>
-											<g:TextBox ui:field="txtMaladieTime"/>
+											<g:TextBox ui:field="txtMaladieTime" width="100px"/>
 										</g:customCell>
 										<g:customCell>
-											<g:TextBox ui:field="txtMaladieNote"/>
+											<g:TextBox ui:field="txtMaladieNote" width="300px"/>
 										</g:customCell>
 									</g:row>
 									<g:row>
@@ -100,10 +100,10 @@
 								<g:Label text="Fériés"/>
 							</g:customCell>
 										<g:customCell>
-								<g:TextBox ui:field="txtFerieTime"/>
+								<g:TextBox ui:field="txtFerieTime" width="100px"/>
 							</g:customCell>
 										<g:customCell>
-											<g:TextBox ui:field="txtFerieNote"/>
+											<g:TextBox ui:field="txtFerieNote" width="300px"/>
 										</g:customCell>
 									</g:row>
 									<g:row>
@@ -111,10 +111,10 @@
 											<g:Label text="Privé"/>
 										</g:customCell>
 										<g:customCell>
-											<g:TextBox ui:field="txtPriveTime"/>
+											<g:TextBox ui:field="txtPriveTime" width="100px"/>
 										</g:customCell>
 										<g:customCell>
-											<g:TextBox ui:field="txtPriveNote"/>
+											<g:TextBox ui:field="txtPriveNote" width="300px"/>
 										</g:customCell>
 									</g:row>
 									<g:row>
@@ -122,10 +122,10 @@
 											<g:Label text="Supervision"/>
 										</g:customCell>
 										<g:customCell>
-											<g:TextBox ui:field="txtSupervisionTime"/>
+											<g:TextBox ui:field="txtSupervisionTime" width="100px"/>
 										</g:customCell>
 										<g:customCell>
-											<g:TextBox ui:field="txtSupervisionNote"/>
+											<g:TextBox ui:field="txtSupervisionNote" width="300px"/>
 										</g:customCell>
 									</g:row>
 									<g:row>
@@ -133,10 +133,10 @@
 											<g:Label text="Frais (CHF)"/>
 										</g:customCell>
 										<g:customCell>
-											<g:TextBox ui:field="txtFraisAmount"/>
+											<g:TextBox ui:field="txtFraisAmount" width="100px"/>
 										</g:customCell>
 										<g:customCell>
-											<g:TextBox ui:field="txtFraisNote"/>
+											<g:TextBox ui:field="txtFraisNote" width="300px"/>
 										</g:customCell>
 									</g:row>
 									<g:row>
@@ -148,14 +148,6 @@
 										</g:customCell>
 									</g:row>
 								</g:Grid>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Heures :"/>
-							</g:customCell>
-							<g:customCell>
-								<p1:DataGrid width="550px" height="300px" ui:field="tblLog"/>
 							</g:customCell>
 						</g:row>
 					</g:Grid>

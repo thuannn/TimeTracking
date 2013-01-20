@@ -220,19 +220,10 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 		
 		imgProgressBar.setVisible(false);
 		
-		// Avoid Backspace button
-		Event.addNativePreviewHandler(new NativePreviewHandler() {
-		    @Override
-		    public void onPreviewNativeEvent(NativePreviewEvent event) {
-		        if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE) {
-		        	if (event.getNativeEvent().getEventTarget() != null) {
-		                Element as = Element.as(event.getNativeEvent().getEventTarget());
-		                as.dispatchEvent(Document.get().createClickEvent(1, 0, 0, 0, 0, false, false, false, false));
-		            }
-
-		        }
-		    }
-		});
+		// Set tree menu
+		dockPanel.remove(treeMenu);
+		dockPanel.add(treeMenu, DockPanel.WEST);
+		dockPanel.setCellWidth(treeMenu, "250px");
 	}
 	
 	@UiHandler("button")
