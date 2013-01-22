@@ -128,6 +128,11 @@ public class ProfsPresenter
 	@Override
 	public void updateProfessorStatus(ProfessorProxy prof, Boolean status) {
 		
+		if (!currentUser.isAdmin()) {
+			Window.alert("Veuillez vous connecter avec le code d'accès de l'administrateur. La modification n'a pas été effectuée.");
+			return;
+		}
+		
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ProfessorRequestContext rc = rf.professorRequest();
@@ -218,8 +223,11 @@ public class ProfsPresenter
 
 	@Override
 	public void updateProfessorName(ProfessorProxy prof, String name) {
-		if (!currentUser.isAdmin())
+		
+		if (!currentUser.isAdmin()) {
+			Window.alert("Veuillez vous connecter avec le code d'accès de l'administrateur. La modification n'a pas été effectuée.");
 			return;
+		}
 		
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));

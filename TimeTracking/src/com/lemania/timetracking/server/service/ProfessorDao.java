@@ -60,10 +60,11 @@ public class ProfessorDao extends MyDAOBase {
 			profKeys.add( a.getProf() );
 		}
 		Map<Key<Professor>, Professor> profs = this.ofy().get(profKeys);
-		List<Professor> returnList = new ArrayList<Professor>(profs.values());
-		for (int i=0; i<returnList.size(); i++) {
-			if (!returnList.get(i).getProfActive())
-				returnList.remove(i);
+		List<Professor> returnListAll = new ArrayList<Professor>(profs.values());
+		List<Professor> returnList = new ArrayList<Professor>();
+		for (int i=0; i<returnListAll.size(); i++) {
+			if (returnListAll.get(i).getProfActive())
+				returnList.add(returnListAll.get(i));
 		}
 		java.util.Collections.sort(returnList);
 		

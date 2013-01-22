@@ -201,6 +201,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	public void onLstCoursesChanged(ChangeEvent event){
 		clearProfTable();
 		clearLogTable();
+		clearValues();
 		lblProfName.setText("");
 		if ( !lstCourses.getItemText(lstCourses.getSelectedIndex()).equals("-") ) {
 			if (getUiHandlers() != null)

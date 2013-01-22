@@ -99,7 +99,7 @@ public class RptTimeByMonthView extends ViewWithUiHandlers<RptTimeByMonthUiHandl
 		tblProfs.setText(0, 4, "Fériés");
 		tblProfs.setText(0, 5, "Privé");
 		tblProfs.setText(0, 6, "Supervision");
-		tblProfs.setText(0, 7, "Totale");
+		tblProfs.setText(0, 7, "Total");
 		tblProfs.setText(0, 8, "Frais");
 		tblProfs.setText(0, 9, "Remarque");
 		

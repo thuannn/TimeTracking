@@ -42,7 +42,7 @@
     <url-pattern>/_ah/spi/*</url-pattern>
   </servlet-mapping>
 
-  <servlet>
+  	<servlet>
 		<servlet-name>requestFactoryServlet</servlet-name>
 		<servlet-class>com.google.web.bindery.requestfactory.server.RequestFactoryServlet</servlet-class>
 		<init-param>
@@ -52,7 +52,6 @@
 			<param-value>WEB-INF/classes/symbolMaps/</param-value>
 		</init-param>
 	</servlet>
-	
 	<servlet-mapping>
 		<servlet-name>requestFactoryServlet</servlet-name>
 		<url-pattern>/gwtRequest</url-pattern>

@@ -79,7 +79,7 @@
 			</g:Dock>
 			<g:Dock direction="SOUTH">
 				<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_LEFT">
-					<g:Label text="Copyright 2012 Ecole Lémania"/>
+					<g:Label text="Copyright Ecole Lémania"/>
 				</g:HorizontalPanel>
 			</g:Dock>
 		</g:DockPanel>
