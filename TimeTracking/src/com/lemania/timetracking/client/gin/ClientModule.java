@@ -13,7 +13,6 @@ import com.lemania.timetracking.client.view.CoursAddView;
 import com.lemania.timetracking.client.view.CoursView;
 import com.lemania.timetracking.client.view.EcoleAddView;
 import com.lemania.timetracking.client.view.EcoleView;
-import com.lemania.timetracking.client.view.ExtractDataView;
 import com.lemania.timetracking.client.view.HomeView;
 import com.lemania.timetracking.client.view.LogTypesAddView;
 import com.lemania.timetracking.client.view.LogTypesView;
@@ -22,6 +21,7 @@ import com.lemania.timetracking.client.view.ProfsAddView;
 import com.lemania.timetracking.client.view.ProfsView;
 import com.lemania.timetracking.client.view.RptTimeByDepartmentView;
 import com.lemania.timetracking.client.view.RptTimeByMonthView;
+import com.lemania.timetracking.client.view.RptTimeByProfView;
 import com.lemania.timetracking.client.view.RptTimeBySchoolView;
 import com.lemania.timetracking.client.view.SettingsView;
 import com.lemania.timetracking.client.view.TimeInputView;
@@ -30,13 +30,13 @@ import com.lemania.timetracking.client.presenter.EcoleAddPresenter;
 import com.lemania.timetracking.client.presenter.LogTypesAddPresenter;
 import com.lemania.timetracking.client.presenter.LogTypesPresenter;
 import com.lemania.timetracking.client.presenter.RptTimeByDepartmentPresenter;
+import com.lemania.timetracking.client.presenter.RptTimeByProfPresenter;
 import com.lemania.timetracking.client.presenter.TimeInputPresenter;
 import com.lemania.timetracking.client.presenter.CoursPresenter;
 import com.lemania.timetracking.client.presenter.CoursAddPresenter;
 import com.lemania.timetracking.client.presenter.ProfsPresenter;
 import com.lemania.timetracking.client.presenter.ProfsAddPresenter;
 import com.lemania.timetracking.client.presenter.ContactPresenter;
-import com.lemania.timetracking.client.presenter.ExtractDataPresenter;
 import com.lemania.timetracking.client.presenter.UserManagementPresenter;
 import com.lemania.timetracking.client.presenter.RptTimeBySchoolPresenter;
 import com.lemania.timetracking.client.presenter.RptTimeByMonthPresenter;
@@ -90,9 +90,9 @@ public class ClientModule extends AbstractPresenterModule {
 		bindPresenter(ContactPresenter.class, ContactPresenter.MyView.class,
 				ContactView.class, ContactPresenter.MyProxy.class);
 
-		bindPresenter(ExtractDataPresenter.class,
-				ExtractDataPresenter.MyView.class, ExtractDataView.class,
-				ExtractDataPresenter.MyProxy.class);
+		bindPresenter(RptTimeByProfPresenter.class,
+				RptTimeByProfPresenter.MyView.class, RptTimeByProfView.class,
+				RptTimeByProfPresenter.MyProxy.class);
 
 		bindPresenter(UserManagementPresenter.class,
 				UserManagementPresenter.MyView.class, UserManagementView.class,
