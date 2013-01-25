@@ -12,6 +12,7 @@ import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent.LoginAuthenticatedHandler;
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.lemania.timetracking.client.AdminGateKeeper;
 import com.lemania.timetracking.client.CurrentUser;
 import com.lemania.timetracking.client.LoggedInGatekeeper;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
@@ -44,7 +45,7 @@ public class RptTimeByMonthPresenter
 
 	@ProxyCodeSplit
 	@NameToken(NameTokens.rpttimebymonth)
-	@UseGatekeeper(LoggedInGatekeeper.class)
+	@UseGatekeeper(AdminGateKeeper.class)
 	public interface MyProxy extends ProxyPlace<RptTimeByMonthPresenter> {
 	}
 

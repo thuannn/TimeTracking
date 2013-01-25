@@ -1,4 +1,23 @@
-<!-- Indices written at Tue, 22 Jan 2013 16:54:01 CET -->
+<!-- Indices written at Fri, 25 Jan 2013 15:09:48 CET -->
 
-<datastore-indexes/>
+<datastore-indexes>
 
+    <!-- Used 2 times in query history -->
+    <datastore-index kind="Ecole" ancestor="false" source="auto">
+        <property name="schoolActive" direction="asc"/>
+        <property name="schoolName" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Assignment" ancestor="false" source="auto">
+        <property name="prof" direction="asc"/>
+        <property name="cours" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Cours" ancestor="false" source="auto">
+        <property name="ecole" direction="asc"/>
+        <property name="coursNom" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>

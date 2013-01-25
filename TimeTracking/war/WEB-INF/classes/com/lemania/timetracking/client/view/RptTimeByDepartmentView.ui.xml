@@ -9,9 +9,9 @@
 	<g:HTMLPanel width="100%" height="100%">
 		<g:FlowPanel width="100%" height="100%">
 			<g:VerticalPanel width="100%" height="" horizontalAlignment="ALIGN_LEFT" spacing="2">
-				<g:Label text="Informations des heures par département" styleName="pageTitle" width="830" height="30"/>
+				<g:Label text="RAPPORT DES HEURES PAR DEPARTEMENT" styleName="pageTitle" width="830" height="30"/>
 				<g:HorizontalPanel width="80%" spacing="2" verticalAlignment="ALIGN_MIDDLE">
-					<g:Label text="Départements :"/>
+					<g:Label text="Choisir un département :"/>
 					<g:ListBox ui:field="lstDepartments"/>
 				</g:HorizontalPanel>
 				<g:FlexTable ui:field="tblProf" width="100%" height="100%"/>

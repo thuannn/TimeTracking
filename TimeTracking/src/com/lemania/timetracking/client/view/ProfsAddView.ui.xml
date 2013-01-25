@@ -8,7 +8,7 @@
 
 	<g:HTMLPanel width="100%">
 		<g:VerticalPanel width="100%">
-			<g:Label text="Ajouter un professeur" styleName="pageTitle" width=""/>
+			<g:Label text="AJOUTER UN NOUVEAU PROFESSEUR" styleName="pageTitle" width=""/>
 			<g:HorizontalPanel width="800px">
 				<g:Grid width="320px">
 					<g:row>

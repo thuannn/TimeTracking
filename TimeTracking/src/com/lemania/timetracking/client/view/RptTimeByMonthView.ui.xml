@@ -9,11 +9,11 @@
 	<g:HTMLPanel width="100%" height="100%">
 		<g:FlowPanel width="" height="">
 			<g:VerticalPanel width="100%" height="" horizontalAlignment="ALIGN_LEFT" spacing="2">
-				<g:Label text="Informations des heures par mois" styleName="pageTitle" width="830" height="30"/>
+				<g:Label text="RAPPORT DES HEURES PAR MOIS" styleName="pageTitle" width="830" height="30"/>
 				<g:HorizontalPanel width="80%" spacing="2" verticalAlignment="ALIGN_MIDDLE">
-					<g:Label text="Année :"/>
+					<g:Label text="Choisir une année :"/>
 					<g:ListBox ui:field="lstYear"/>
-					<g:Label text="Mois :"/>
+					<g:Label text="Choisir un mois :"/>
 					<g:ListBox ui:field="lstMonth"/>
 				</g:HorizontalPanel>
 				<g:FlexTable ui:field="tblProfs" width="100%" height="100%"/>

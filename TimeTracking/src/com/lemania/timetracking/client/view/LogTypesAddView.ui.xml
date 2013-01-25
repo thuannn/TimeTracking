@@ -8,11 +8,11 @@
 
 	<g:HTMLPanel>
 		<g:VerticalPanel width="100%">
-			<g:Label text="Ajouter un type d&apos;heure" styleName="pageTitle"/>
+			<g:Label text="RAJOUTER UN TYPE D&apos;HEURE" styleName="pageTitle"/>
 			<g:Grid>
 				<g:row>
 					<g:customCell>
-						<g:Label text="Nom de type :"/>
+						<g:Label text="Nom du type :"/>
 					</g:customCell>
 					<g:customCell>
 						<g:TextBox width="250px" ui:field="txtHourName"/>
@@ -23,7 +23,7 @@
 						<g:Label text="Actif :"/>
 					</g:customCell>
 					<g:customCell>
-						<g:CheckBox ui:field="txtHourActive"/>
+						<g:CheckBox ui:field="txtHourActive" checked="true"/>
 					</g:customCell>
 				</g:row>
 				<g:row>

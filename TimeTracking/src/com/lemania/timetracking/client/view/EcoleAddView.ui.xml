@@ -8,7 +8,7 @@
 
 	<g:HTMLPanel width="100%" height="100%">
 		<g:VerticalPanel width="100%" height="">
-			<g:Label text="Ajouter une école" styleName="pageTitle"/>
+			<g:Label text="AJOUTER UNE ECOLE" styleName="pageTitle"/>
 			<g:Grid width="253px">
 			<g:row>
 				<g:customCell>
@@ -28,7 +28,7 @@
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label text="Activé :"/>
+					<g:Label text="Active :"/>
 				</g:customCell>
 				<g:customCell>
 					<g:SimpleCheckBox checked="true" ui:field="chkActive"/>

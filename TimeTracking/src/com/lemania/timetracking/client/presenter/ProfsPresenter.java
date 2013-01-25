@@ -175,6 +175,11 @@ public class ProfsPresenter
 			return;
 		}
 		
+		if (!currentUser.isAdmin()) {
+			Window.alert("Veuillez vous connecter avec le code d'accès de l'administrateur. La modification n'a pas été effectuée.");
+			return;
+		}
+		
 		AssignmentRequestFactory rf = GWT.create(AssignmentRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		AssignmentRequestContext rc = rf.assignmentRequest();

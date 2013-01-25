@@ -44,8 +44,8 @@
 					<g:Button ui:field="cmdHomepage">Accueil</g:Button>
 					<g:Button ui:field="cmdTimeInput" text="SAISIR DES HEURES">Mettre des heures</g:Button>
 					<g:TreeItem text="RAPPORTS" state="true">
-						<g:Button text="Par départements" ui:field="cmdRptByDept">Par départements</g:Button>
-						<g:Button text="Par professeurs" ui:field="cmdExtractData">Par professeurs</g:Button>
+						<g:Button text="Par département" ui:field="cmdRptByDept">Par départements</g:Button>
+						<g:Button text="Par professeur" ui:field="cmdExtractData">Par professeurs</g:Button>
 						<g:Button ui:field="cmdRptByMonth">Par mois - Compta</g:Button>
 					</g:TreeItem>
 					<g:TreeItem text="INFORMATIONS DE BASE" state="true">

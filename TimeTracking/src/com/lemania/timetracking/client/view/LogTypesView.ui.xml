@@ -8,7 +8,7 @@
 
 	<g:HTMLPanel>
 		<g:VerticalPanel width="100%">
-			<g:Label text="List des types d&apos;heure" styleName="pageTitle"/>
+			<g:Label text="LISTE DES TYPES DES HEURES" styleName="pageTitle"/>
 			<p1:DataGrid width="800px" height="600px" ui:field="tblHours"/>
 		</g:VerticalPanel>
 	</g:HTMLPanel>

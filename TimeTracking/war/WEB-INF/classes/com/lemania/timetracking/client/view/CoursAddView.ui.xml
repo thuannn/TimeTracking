@@ -8,11 +8,11 @@
 
 	<g:HTMLPanel>
 		<g:VerticalPanel width="100%">
-			<g:Label text="Ajouter un nom de cours" styleName="pageTitle"/>
+			<g:Label text="AJOUTER UN NOUVEAU DEPARTEMENT" styleName="pageTitle"/>
 			<g:Grid>
 				<g:row>
 					<g:customCell>
-						<g:Label text="Nom de cours :"/>
+						<g:Label text="Nom du Département :"/>
 					</g:customCell>
 					<g:customCell>
 						<g:TextBox width="250px" ui:field="txtCoursNom"/>
@@ -20,7 +20,7 @@
 				</g:row>
 				<g:row>
 					<g:customCell>
-						<g:Label text="Nom d&apos;école :"/>
+						<g:Label text="Nom de l&apos;école :"/>
 					</g:customCell>
 					<g:customCell>
 						<g:ListBox ui:field="lstEcoles"/>
@@ -31,7 +31,7 @@
 						<g:Label text="Actif :"/>
 					</g:customCell>
 					<g:customCell>
-						<g:CheckBox ui:field="chkActif"/>
+						<g:CheckBox ui:field="chkActif" checked="true"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
