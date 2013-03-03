@@ -194,7 +194,8 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	
 	@Override
 	public void clearLogTable() {
-		// Datagrid removed, not being used
+		//
+		clearValues();
 	}
 
 	@UiHandler("lstCourses")

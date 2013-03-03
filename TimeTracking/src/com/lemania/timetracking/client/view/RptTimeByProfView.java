@@ -69,20 +69,12 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 	}
 	
 	@Override
-	public void initializeTable() {
-//		tblLogs.setWidth("90%");
-//		tblLogs.setText(0, 0, "Année");
-//		tblLogs.setText(0, 1, "Mois");
-//		tblLogs.setText(0, 2, "Département");
-//		tblLogs.setText(0, 3, "Type");
-//		tblLogs.setText(0, 4, "Totale");
-//		tblLogs.setText(0, 5, "Remarque");
-		
+	public void initializeTable() {		
 		clearTable();
 		
 		// Draw the table structure
 		tblLogs.setWidth("100%");
-		tblLogs.setText(0, 0, "Professeur");
+		tblLogs.setText(0, 0, "Mois");
 		tblLogs.setText(0, 1, "Département");
 		tblLogs.setText(0, 2, "Cours");
 		tblLogs.setText(0, 3, "Maladie");
@@ -91,8 +83,7 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 		tblLogs.setText(0, 6, "Supervision");
 		tblLogs.setText(0, 7, "Total");
 		tblLogs.setText(0, 8, "Frais");
-		tblLogs.setText(0, 9, "Remarque");
-		tblLogs.setText(0, 10, "Mois");
+		tblLogs.setText(0, 9, "Remarque");		
 		
 		styleTable();
 	}
@@ -100,48 +91,15 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 	public void clearTable(){
 		tblLogs.removeAllRows();
 	}
-
-//	@Override
-//	public void setLogData(List<LogProxy> logs) {
-//		initializeTable();
-//		
-//		int prevYear = 0;
-//		int prevMonth = 0;
-//		String prevDept = "";
-//		
-//		// Set the data
-//		for (int i=0; i<logs.size(); i++){
-//			if (prevYear != logs.get(i).getYear())
-//				tblLogs.setText(i+1, 0, Integer.toString(logs.get(i).getYear()));
-//			
-//			if ((prevMonth != logs.get(i).getMonth()) || (!prevDept.equals(logs.get(i).getCourseName()))){
-//				tblLogs.setText(i+1, 1, Integer.toString(logs.get(i).getMonth()));
-//				tblLogs.setText(i+1, 2, logs.get(i).getCourseName());
-//			}
-//			
-//			tblLogs.setText(i+1, 3, logs.get(i).getTypeName());
-//			tblLogs.setText(i+1, 4, 
-//					logs.get(i).getTypeName().equals("6.Frais") ? 
-//							(logs.get(i).getHour()>0) ? "CHF " + Double.toString(logs.get(i).getHour()) : ""
-//							: (logs.get(i).getHour()>0) ? Double.toString(logs.get(i).getHour()) : "" );
-//			tblLogs.setText(i+1, 5, logs.get(i).getMemo());
-//			
-//			prevYear = logs.get(i).getYear();
-//			prevMonth = logs.get(i).getMonth();
-//			prevDept = logs.get(i).getCourseName();
-//		}
-//		
-//		// Set the stylesheet
-//		styleTable();
-//	}
+	
 	
 	@Override
 	public void setLogData(List<LogProxy> logs) {
 		// Draw data to the table
 		initializeTable();
-		
-		String prevProf = "";
-		String prevDept = "";		
+				
+		String prevDept = "";
+		int prevMonth = -1;
 		String currentMemo = "";
 		int currentRow = 0; 	// keep the current row to write time details
 		int currentCol = 0;
@@ -149,13 +107,15 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 		double totalProf = 0;
 		double totalCash = 0;
 		double totalProfCash = 0;
+		
 		// Set the data
 		for (int i=0; i<logs.size(); i++){
 			// if it's the same professor, does not need to display the name again 
-			// otherwise, add a blank line and show the new name							
-			if (!prevProf.equals(logs.get(i).getProfName())) {
+			// otherwise, add a blank line and show the new name
+			if (prevMonth != logs.get(i).getMonth()) {				
 				currentRow = i+1;
 				if (currentRow > 1) {
+					//
 					totalProf = totalProf + totalHour;
 					totalProfCash = totalProfCash + totalCash;
 					tblLogs.setText(currentRow, 7, Double.toString(totalProf));					
@@ -177,22 +137,21 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 				}
 				currentMemo = "";
 				
-				tblLogs.setText(currentRow, 0, logs.get(i).getProfName());				
-				tblLogs.setText(currentRow, 1, logs.get(i).getCourseName());
-				tblLogs.setText(currentRow, 10, Integer.toString(logs.get(i).getMonth()));
+				tblLogs.setText(currentRow, 0, Integer.toString(logs.get(i).getMonth()));
+				tblLogs.setText(currentRow, 1, logs.get(i).getCourseName());				
 			}
 			
 			// if the name of department changes, check if prof name changes too,
 			// if yes, add a blank line
 			if ((!prevDept.equals(logs.get(i).getCourseName()))){						
 				currentRow = i+1;
-								
-				if (prevProf.equals(logs.get(i).getProfName())) {
+				
+				if (prevMonth == logs.get(i).getMonth()) {
 					totalProf = totalProf + totalHour;
 					totalProfCash = totalProfCash + totalCash;
 				}
-								
-				if (!prevProf.equals(logs.get(i).getProfName()) && (currentRow > 1)) {
+				
+				if ((prevMonth != logs.get(i).getMonth()) && (currentRow > 1)) {					
 					currentRow = currentRow + 1;
 					for (int k=0; k<10; k++){
 						tblLogs.setText(currentRow, 0, "");
@@ -201,10 +160,11 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 					currentRow = currentRow + 1;
 				}
 				
-				tblLogs.setText(currentRow, 1, logs.get(i).getCourseName());
 				currentMemo = "";
 				totalHour = 0;
 				totalCash = 0;
+				
+				tblLogs.setText(currentRow, 1, logs.get(i).getCourseName());
 			}
 			
 			// choose the column number base on the log type
@@ -243,9 +203,9 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 				currentMemo = logs.get(i).getMemo() + ". " + currentMemo;
 			tblLogs.setText(currentRow, 9, currentMemo);
 			
-			// keep the current data to compare with the following row		
-			prevProf = logs.get(i).getProfName();
+			// keep the current data to compare with the following row			
 			prevDept = logs.get(i).getCourseName();
+			prevMonth = logs.get(i).getMonth();
 			
 			if (i==logs.size()-1) {
 				currentRow = i+2;
@@ -261,6 +221,7 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 		// Set the stylesheet
 		styleTable();
 	}
+		
 	
 	public void styleTable(){
 		for (int j=0; j<tblLogs.getRowCount(); j++){

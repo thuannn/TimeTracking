@@ -1,6 +1,12 @@
-<!-- Indices written at Fri, 25 Jan 2013 16:40:29 CET -->
+<!-- Indices written at Fri, 25 Jan 2013 19:23:03 CET -->
 
 <datastore-indexes>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="LogType" ancestor="false" source="auto">
+        <property name="hourActive" direction="asc"/>
+        <property name="orderNumber" direction="asc"/>
+    </datastore-index>
 
     <!-- Used 1 time in query history -->
     <datastore-index kind="Log" ancestor="false" source="auto">
@@ -11,9 +17,37 @@
     </datastore-index>
 
     <!-- Used 1 time in query history -->
-    <datastore-index kind="LogType" ancestor="false" source="auto">
-        <property name="hourActive" direction="asc"/>
-        <property name="orderNumber" direction="asc"/>
+    <datastore-index kind="Log" ancestor="false" source="auto">
+        <property name="prof" direction="asc"/>
+        <property name="year" direction="asc"/>
+        <property name="month" direction="asc"/>
+        <property name="cours" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Log" ancestor="false" source="auto">
+        <property name="month" direction="asc"/>
+        <property name="year" direction="asc"/>
+        <property name="prof" direction="asc"/>
+        <property name="cours" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Ecole" ancestor="false" source="auto">
+        <property name="schoolActive" direction="asc"/>
+        <property name="schoolName" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 2 times in query history -->
+    <datastore-index kind="Assignment" ancestor="false" source="auto">
+        <property name="prof" direction="asc"/>
+        <property name="cours" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 2 times in query history -->
+    <datastore-index kind="Cours" ancestor="false" source="auto">
+        <property name="ecole" direction="asc"/>
+        <property name="coursNom" direction="asc"/>
     </datastore-index>
 
 </datastore-indexes>

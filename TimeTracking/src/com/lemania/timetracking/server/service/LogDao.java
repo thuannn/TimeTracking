@@ -123,7 +123,7 @@ public class LogDao extends MyDAOBase {
 			returnList.add(log);
 		}
 		
-		java.util.Collections.sort(returnList);
+//		java.util.Collections.sort(returnList);
 		return returnList;
 	}
 	
