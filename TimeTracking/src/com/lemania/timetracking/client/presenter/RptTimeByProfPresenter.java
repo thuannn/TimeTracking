@@ -8,6 +8,8 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
+import com.lemania.timetracking.client.event.CoursesLoadedEvent;
+import com.lemania.timetracking.client.event.CoursesLoadedEvent.CoursesLoadedHandler;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent.LoginAuthenticatedHandler;
 import com.lemania.timetracking.client.place.NameTokens;
@@ -37,10 +39,15 @@ import com.lemania.timetracking.shared.service.UserRequestFactory.UserRequestCon
 
 public class RptTimeByProfPresenter 
 		extends Presenter<RptTimeByProfPresenter.MyView, RptTimeByProfPresenter.MyProxy> 
-		implements ExtractDataUiHandler, LoginAuthenticatedHandler {
+		implements ExtractDataUiHandler, LoginAuthenticatedHandler, CoursesLoadedHandler {
+	
+	
 	
 	private CurrentUser currentUser;
-
+	private List<CoursProxy> courses;
+	
+	
+	
 	public interface MyView extends View, HasUiHandlers<ExtractDataUiHandler> {
 		
 		public void initializeTable();
@@ -72,6 +79,9 @@ public class RptTimeByProfPresenter
 		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent, this);
 	}
 
+	/*
+	 * 
+	 * */
 	@Override
 	protected void onBind() {
 		super.onBind();
@@ -82,7 +92,10 @@ public class RptTimeByProfPresenter
 		// Prepare the table structure
 		getView().initializeTable();
 	}
+	
 
+	/*
+	 * */
 	@Override
 	protected void onReset() {
 		super.onReset();
@@ -95,6 +108,11 @@ public class RptTimeByProfPresenter
 		loadDepartmentList();
 	}
 	
+	
+	/*
+	 * List of departments belong to this user
+	 * On successful, load the list of professors accordingly
+	 * */
 	public void loadDepartmentList(){
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
@@ -106,17 +124,45 @@ public class RptTimeByProfPresenter
 			}
 			@Override
 			public void onSuccess( List<CoursProxy> response ) {
-				getView().setDepartmentList(response);
+				// getView().setDepartmentList(response);				
+				// loadProfessorList(response);
+				courses = response;
+				getEventBus().fireEvent(new CoursesLoadedEvent());
 			}
 		} );
 	}
+	
+	
+	public void loadProfessorList(List<CoursProxy> courses){		
+		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+		ProfessorRequestContext rc = rf.professorRequest();		
+		rc.listAllByCourseList(courses).fire(new Receiver<List<ProfessorProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<ProfessorProxy> response) {
+				getView().setProfList(response);
+			}
+		});
+	}
 
+	
+	/*
+	 * When user log in successfully, keep the current user info */
 	@ProxyEvent
 	@Override
 	public void onLoginAuthenticated(LoginAuthenticatedEvent event) {
 		this.currentUser = event.getCurrentUser();
 	}
 
+	
+	/*
+	 * OBSOLETE
+	 * List of Professors need to be loaded at once for all departments
+	 * */
 	@Override
 	public void onDepartmentSelected(String deptId) {
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
@@ -134,8 +180,11 @@ public class RptTimeByProfPresenter
 		});
 	}
 
+	/*
+	 * Show time data
+	 * */
 	@Override
-	public void onProfSelected(String deptId, String profId) {
+	public void onProfSelected(String profId) {
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
 		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogRequestContext rcl = rfl.logRequest();
@@ -149,5 +198,11 @@ public class RptTimeByProfPresenter
 				getView().setLogData(response);
 			}
 		});
+	}
+
+	@ProxyEvent
+	@Override
+	public void onCoursesLoaded(CoursesLoadedEvent event) {
+		loadProfessorList(courses);		
 	}
 }

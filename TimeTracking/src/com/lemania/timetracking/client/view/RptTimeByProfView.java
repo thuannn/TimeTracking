@@ -58,9 +58,7 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 		if (lstProfs.getValue(lstProfs.getSelectedIndex()).equals(""))
 			return;
 		if (getUiHandlers() != null)
-			getUiHandlers().onProfSelected( 
-					lstDepartments.getValue(lstDepartments.getSelectedIndex()), 
-					lstProfs.getValue(lstProfs.getSelectedIndex()) );
+			getUiHandlers().onProfSelected( lstProfs.getValue(lstProfs.getSelectedIndex()) );
 	}
 	
 	@Override

@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.lemania.timetracking.client.CurrentUser;
@@ -77,7 +78,7 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	}
 	
 	@Override
-	public void setInSlot(Object slot, Widget content){
+	public void setInSlot(Object slot, IsWidget content){
 		if (slot == MainPagePresenter.TYPE_SetMainContent) {
 			setMainContent(content);
 		} else {
@@ -85,7 +86,7 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 		}
 	}
 	
-	private void setMainContent(Widget content) {
+	private void setMainContent(IsWidget content) {
 	    mainContentPanel.clear();
 	    
 	    if (content != null) {

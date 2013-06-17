@@ -49,6 +49,53 @@ public class ProfessorDao extends MyDAOBase {
 		return activeList;
 	}
 	
+	
+	public List<Professor> listAllByCourseList(List<Cours> courses){
+		
+		Key<Cours> course;
+		List<Key<? extends Professor>> profKeys;
+		Map<Key<Professor>, Professor> profs;
+		List<Professor> returnList;
+		Query<Assignment> qa;		
+		List<Professor> activeList = new ArrayList<Professor>();
+		List<Professor> activeListUnique = new ArrayList<Professor>();
+		
+		for (Cours curr_course : courses)
+		{				
+			course = new Key<Cours>(Cours.class, curr_course.getId());
+			qa = this.ofy().query(Assignment.class).filter("cours", course);
+			
+			profKeys = new ArrayList<Key<? extends Professor>>();
+			for (Assignment a : qa){
+				profKeys.add( a.getProf() );
+			}
+			
+			profs = this.ofy().get(profKeys);
+			returnList = new ArrayList<Professor>(profs.values());			
+			
+			for (Professor prof : returnList) {
+				if (prof.getProfActive()) {
+					activeList.add(prof);					
+				}
+			}
+			
+			profKeys.clear();
+			profs.clear();
+			returnList.clear();
+		}
+		
+		java.util.Collections.sort(activeList);
+		for (int i=0; i < activeList.size()-1; i++){
+			if (activeList.get(i).getId().compareTo( activeList.get(i+1).getId()) != 0)
+				activeListUnique.add(activeList.get(i));
+		}
+		activeListUnique.add(activeList.get(activeList.size()-1));
+		
+		java.util.Collections.sort(activeListUnique);
+		return activeListUnique;
+	}
+	
+	
 	public List<Professor> listAllByCourseWithTime(String deptId, int year){
 		// Query a list of keys of all the professors from a department
 		Key<Cours> course = new Key<Cours>(Cours.class, Long.parseLong(deptId));
