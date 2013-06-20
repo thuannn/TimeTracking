@@ -201,4 +201,9 @@ public class MainPagePresenter extends
 	public void showSettingsScreen() {
 		History.newItem(NameTokens.settings);		
 	}
+
+	@Override
+	public void showFrmPassword() {
+		History.newItem(NameTokens.password);		
+	}
 }

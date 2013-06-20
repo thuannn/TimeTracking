@@ -24,7 +24,6 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
@@ -34,8 +33,8 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 
 	private final Widget widget;
 	private int selectedProf;
+	private int selectedIndexAssignment;
 	private ProfessorProxy selectedProfessor;
-	private ListDataProvider<ProfessorProxy> professorProvider;
 
 	public interface Binder extends UiBinder<Widget, ProfsView> {
 	}
@@ -141,17 +140,32 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	        return object.getCourseName();
 	      }
 	    };
-	    tblAssignment.addColumn(colCourseName, "Cours");	    
+	    tblAssignment.addColumn(colCourseName, "Cours");
+	    
+	    CheckboxCell cellAssignmentActive = new CheckboxCell();
+	    Column<AssignmentProxy, Boolean> colAssignmentActive = new Column<AssignmentProxy, Boolean>(cellAssignmentActive) {
+	    	@Override
+	    	public Boolean getValue(AssignmentProxy object){
+	    		return object.getActive();
+	    	}	    	
+	    };
+	    tblAssignment.addColumn(colAssignmentActive, "Active");
+	    
+	    colAssignmentActive.setFieldUpdater(new FieldUpdater<AssignmentProxy, Boolean>(){
+	    	@Override
+	    	public void update(int index, AssignmentProxy assignment, Boolean value){
+	    		if (getUiHandlers() != null) {
+	    			selectedIndexAssignment = index;
+	    			getUiHandlers().updateAssignmentStatus(assignment, value);
+	    		}	    		
+	    	}
+	    });
 	}
 
 	@Override
 	public void setData(List<ProfessorProxy> profs) {
 		tblProfessors.setRowCount(profs.size(), true);
 		tblProfessors.setRowData(0, profs);
-		
-//		professorProvider = new ListDataProvider<ProfessorProxy>();
-//		professorProvider.setList(profs);
-//		professorProvider.addDataDisplay(tblProfessors);
 	}
 
 	@Override

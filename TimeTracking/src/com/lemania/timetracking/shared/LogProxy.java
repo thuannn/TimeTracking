@@ -30,4 +30,6 @@ public interface LogProxy extends EntityProxy {
 	
 	public String getSchoolName();
 	public String getCourseName();
+	
+	public String getModifyDate();
 }

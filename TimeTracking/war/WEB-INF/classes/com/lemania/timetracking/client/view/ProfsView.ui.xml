@@ -8,7 +8,7 @@
 
 	<g:HTMLPanel width="100%">
 		<g:VerticalPanel width="100%">
-			<g:Label text="LISTE DES PROFESSEURS" styleName="pageTitle"/>
+			<g:Label text="LISTE DES PROFESSEURS" styleName="pageTitle" horizontalAlignment="ALIGN_CENTER"/>
 			<g:HorizontalPanel width="850px">
 				<g:VerticalPanel width="400px">
 					<p1:DataGrid width="400px" height="550px" ui:field="tblProfessors" keyboardPagingPolicy="INCREASE_RANGE" keyboardSelectionPolicy="DISABLED" pageSize="1000"/>

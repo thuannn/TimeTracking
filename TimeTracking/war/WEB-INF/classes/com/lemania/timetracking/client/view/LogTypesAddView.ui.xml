@@ -8,7 +8,7 @@
 
 	<g:HTMLPanel>
 		<g:VerticalPanel width="100%">
-			<g:Label text="RAJOUTER UN TYPE D&apos;HEURE" styleName="pageTitle"/>
+			<g:Label text="RAJOUTER UN TYPE D&apos;HEURE" styleName="pageTitle" horizontalAlignment="ALIGN_CENTER"/>
 			<g:Grid>
 				<g:row>
 					<g:customCell>

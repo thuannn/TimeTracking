@@ -13,6 +13,7 @@ import com.lemania.timetracking.client.view.CoursAddView;
 import com.lemania.timetracking.client.view.CoursView;
 import com.lemania.timetracking.client.view.EcoleAddView;
 import com.lemania.timetracking.client.view.EcoleView;
+import com.lemania.timetracking.client.view.FrmPasswordView;
 import com.lemania.timetracking.client.view.HomeView;
 import com.lemania.timetracking.client.view.LogTypesAddView;
 import com.lemania.timetracking.client.view.LogTypesView;
@@ -41,6 +42,7 @@ import com.lemania.timetracking.client.presenter.UserManagementPresenter;
 import com.lemania.timetracking.client.presenter.RptTimeBySchoolPresenter;
 import com.lemania.timetracking.client.presenter.RptTimeByMonthPresenter;
 import com.lemania.timetracking.client.presenter.SettingsPresenter;
+import com.lemania.timetracking.client.presenter.FrmPasswordPresenter;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -114,5 +116,9 @@ public class ClientModule extends AbstractPresenterModule {
 
 		bindPresenter(SettingsPresenter.class, SettingsPresenter.MyView.class,
 				SettingsView.class, SettingsPresenter.MyProxy.class);
+
+		bindPresenter(FrmPasswordPresenter.class,
+				FrmPasswordPresenter.MyView.class, FrmPasswordView.class,
+				FrmPasswordPresenter.MyProxy.class);
 	}
 }

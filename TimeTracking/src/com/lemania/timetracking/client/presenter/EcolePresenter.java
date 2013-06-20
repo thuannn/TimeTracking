@@ -10,7 +10,6 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.lemania.timetracking.client.AdminGateKeeper;
-import com.lemania.timetracking.client.LoggedInGatekeeper;
 import com.lemania.timetracking.client.event.EcoleAddedEvent;
 import com.lemania.timetracking.client.event.EcoleAddedEvent.EcoleAddedHandler;
 import com.lemania.timetracking.client.place.NameTokens;

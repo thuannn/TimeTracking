@@ -20,6 +20,13 @@ withOperation(new OperationKey("IAiZWd5l08yJfHM9yN8_PPbImY4="),
   .withMethodName("save")
   .withRequestContext("com.lemania.timetracking.shared.service.ProfessorRequestFactory$ProfessorRequestContext")
   .build());
+withOperation(new OperationKey("V$DB2$k$L6KOdOLJxLo83lbU2I8="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;")
+  .withMethodName("listAllActiveByCourse")
+  .withRequestContext("com.lemania.timetracking.shared.service.ProfessorRequestFactory$ProfessorRequestContext")
+  .build());
 withOperation(new OperationKey("BOpvP4Molsxs_uC9xiPbDEYeJZw="),
   new OperationData.Builder()
   .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")

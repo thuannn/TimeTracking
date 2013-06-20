@@ -15,6 +15,9 @@ public interface ProfessorProxy extends EntityProxy {
 	public Boolean getProfActive();
 	public void setProfActive(Boolean profActive);
 	
+	public String getLogModifyDate();
+	public void setLogModifyDate(String date);
+	
 	public double getTotal_01();
 	public double getTotal_02();
 	public double getTotal_03();

@@ -7,7 +7,7 @@
 	ui:generateLocales='default' xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
 
 	<g:HTMLPanel width="100%">
-		<g:Label text="Gestion des utilisateurs" styleName="pageTitle" width="900"/>
+		<g:Label text="GESTION DES UTILISATEURS" styleName="pageTitle" width="900" horizontalAlignment="ALIGN_CENTER"/>
 		<g:VerticalPanel width="100%">
 			<g:HorizontalPanel width="100%" height="" verticalAlignment="ALIGN_BOTTOM">
 			<g:Grid width="600px">

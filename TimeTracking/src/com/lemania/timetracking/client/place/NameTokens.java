@@ -18,6 +18,7 @@ public class NameTokens {
 	public static final String rptbyschool = "rptbyschool";
 	public static final String rpttimebymonth = "rpttimebymonth";
 	public static final String settings = "settings";
+	public static final String password = "password";
 
 	public static String getHomePage() {
 	    return homepage;
@@ -85,5 +86,9 @@ public class NameTokens {
 
 	public static String getSettings() {
 		return settings;
+	}
+
+	public static String getPassword() {
+		return password;
 	}
 }

@@ -8,7 +8,7 @@
 
 	<g:HTMLPanel>
 		<g:VerticalPanel width="100%">
-			<g:Label text="AJOUTER UN NOUVEAU DEPARTEMENT" styleName="pageTitle"/>
+			<g:Label text="AJOUTER UN NOUVEAU DEPARTEMENT" styleName="pageTitle" horizontalAlignment="ALIGN_CENTER"/>
 			<g:Grid>
 				<g:row>
 					<g:customCell>

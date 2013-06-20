@@ -4,6 +4,7 @@ package com.lemania.timetracking.client.view;
 import java.util.ArrayList;
 import java.util.List;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -17,6 +18,9 @@ import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.LogProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
+import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
+import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
+import com.lemania.timetracking.shared.service.ProfessorRequestFactory.ProfessorRequestContext;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -33,7 +37,10 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 
 	private final Widget widget;
 	private ProfessorProxy selectedProfessor;
+	private int selectedProfessorIndex;
+	
 	private ListDataProvider<ProfessorProxy> professorProvider;
+	private List<ProfessorProxy> currentProfList;
 
 	public interface Binder extends UiBinder<Widget, TimeInputView> {
 	}
@@ -87,11 +94,8 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	
 	@Override
 	public void setProfData(List<ProfessorProxy> profs) {
-//		professorProvider = new ListDataProvider<ProfessorProxy>();
-//		professorProvider.setList(profs);
-//		professorProvider.addDataDisplay(tblProfessors);
-		
-		tblProfessors.setRowData(profs);
+		currentProfList = profs;
+		tblProfessors.setRowData(currentProfList);
 	}
 
 	@Override
@@ -197,6 +201,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		//
 		clearValues();
 	}
+	
 
 	@UiHandler("lstCourses")
 	public void onLstCoursesChanged(ChangeEvent event){
@@ -206,9 +211,14 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		lblProfName.setText("");
 		if ( !lstCourses.getItemText(lstCourses.getSelectedIndex()).equals("-") ) {
 			if (getUiHandlers() != null)
-				getUiHandlers().loadProfessorsByCourse(lstCourses.getValue(lstCourses.getSelectedIndex()));
+				getUiHandlers().loadProfessorsByCourse(
+						lstCourses.getValue(lstCourses.getSelectedIndex()),
+						lstYear.getItemText(lstYear.getSelectedIndex()),
+		    			lstMonth.getItemText(lstMonth.getSelectedIndex())
+				);
 		}
 	}
+	
 	
 	@Override
 	public void initializeProfTable() {
@@ -221,6 +231,15 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    };
 	    tblProfessors.addColumn(colName, "Nom");
 	    
+	    // Initialize table structure of Professor table
+ 		TextColumn<ProfessorProxy> colDate = new TextColumn<ProfessorProxy>() {
+ 	      @Override
+ 	      public String getValue(ProfessorProxy object) {
+ 	        return object.getLogModifyDate();
+ 	      }
+ 	    };
+ 	    tblProfessors.addColumn(colDate, "Date de modification");
+    
 	    // Add a selection model to handle user selection.
 	    final SingleSelectionModel<ProfessorProxy> selectionModel = new SingleSelectionModel<ProfessorProxy>() {
 	    	@Override
@@ -230,24 +249,26 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	    };
 	    
 	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-	      public void onSelectionChange(SelectionChangeEvent event) {
-	        selectedProfessor = selectionModel.getSelectedObject();
-	        if (selectedProfessor != null) {
-	        	lblProfName.setText(selectedProfessor.getProfName());
-	        	clearValues();
-	        	getUiHandlers().professorSelected(
-	        			selectedProfessor, 
-	        			lstCourses.getValue(lstCourses.getSelectedIndex()),
-	        			lstYear.getItemText(lstYear.getSelectedIndex()),
-	        			lstMonth.getItemText(lstMonth.getSelectedIndex()));
-	        }
-	      }
+	    	public void onSelectionChange(SelectionChangeEvent event) {
+	    		selectedProfessor = selectionModel.getSelectedObject();
+    			if (selectedProfessor != null) {
+    				selectedProfessorIndex = currentProfList.indexOf(selectedProfessor);
+    				lblProfName.setText(selectedProfessor.getProfName());
+    				clearValues();
+    				getUiHandlers().professorSelected(
+						selectedProfessor, 
+						lstCourses.getValue(lstCourses.getSelectedIndex()),
+						lstYear.getItemText(lstYear.getSelectedIndex()),
+						lstMonth.getItemText(lstMonth.getSelectedIndex()));
+    			}
+	      	}
 	    });
 	    tblProfessors.setSelectionModel(selectionModel);
 	}
+	
 
 	@Override
-	public void setLogData(List<LogProxy> logs) {
+	public void setLogData(List<LogProxy> logs, Boolean logUpdated) {
 		for (LogProxy log : logs) {
 			// Cours
 			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.cours)) {
@@ -280,7 +301,20 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 				txtFraisNote.setText(log.getMemo());
 			}
 		}
+		
+		// Show date
+		if (selectedProfessor != null && logUpdated) {
+			ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
+			ProfessorRequestContext rc = rf.professorRequest();
+			ProfessorProxy prof = rc.edit(selectedProfessor);
+			prof.setLogModifyDate(logs.get(0).getModifyDate());
+			currentProfList.remove(selectedProfessorIndex);
+			currentProfList.add(selectedProfessorIndex, prof);
+			tblProfessors.setRowData(currentProfList);
+			tblProfessors.getSelectionModel().setSelected(prof, true);
+		}
 	}
+	
 
 	@Override
 	public void initializeLogTable() {

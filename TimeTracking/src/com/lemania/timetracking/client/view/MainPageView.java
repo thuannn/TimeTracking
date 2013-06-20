@@ -64,6 +64,7 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	@UiField Image imgProgressBar;
 	@UiField Button cmdSettings;
 	@UiField DockPanel dockPanel;
+	@UiField Button cmdPassword;
 	
 	public MainPageView() {		
 		widget = uiBinder.createAndBindUi(this);
@@ -265,5 +266,13 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 	            }
 	        }
 	    }
+	}
+	
+	
+	@UiHandler("cmdPassword")
+	void onCmdPasswordClick(ClickEvent event) {
+		if (getUiHandlers() != null) {
+			getUiHandlers().showFrmPassword();
+		}
 	}
 }

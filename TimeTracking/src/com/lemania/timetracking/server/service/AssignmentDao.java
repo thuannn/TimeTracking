@@ -2,12 +2,14 @@ package com.lemania.timetracking.server.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Query;
 import com.lemania.timetracking.server.Assignment;
 import com.lemania.timetracking.server.Cours;
 import com.lemania.timetracking.server.Professor;
+import com.lemania.timetracking.server.User;
 
 public class AssignmentDao extends MyDAOBase {
 	
@@ -63,6 +65,7 @@ public class AssignmentDao extends MyDAOBase {
 		}
 	}
 	
+	
 	public Assignment saveAndReturn(String courseId, String profId){
 		// if the assignment is already existed, do not add more
 		Query<Assignment> q = this.ofy().query(Assignment.class)
@@ -83,6 +86,34 @@ public class AssignmentDao extends MyDAOBase {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	
+	public Assignment updateAssignmentStatus(Long userId, Assignment assignment, Boolean status){
+		Boolean found = false;
+		User user = this.ofy().get(new Key<User>(User.class, userId));
+		List<Cours> returnList = new ArrayList<Cours>();
+			if (user.getDepartments() != null) {
+			Map<Key<Cours>, Cours> cours = this.ofy().get( user.getDepartments() );
+			returnList = new ArrayList<Cours>(cours.values());
+			for (Cours c : returnList){
+				if (assignment.getCours().equals(new Key<Cours>(Cours.class, c.getId()))){
+					found = true;
+					break;
+				}
+			}
+		}		
+		if (found) {
+			assignment.setActive(status);
+			Key<Assignment> key = this.ofy().put(assignment);
+			try {
+				return this.ofy().get(key);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		} else
+			return null;
+	}
+	
 	
 	public void removeAssignment(Assignment a){
 		this.ofy().delete(a);

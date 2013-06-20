@@ -8,7 +8,7 @@
 
 	<g:HTMLPanel width="100%" height="100%">
 		<g:VerticalPanel width="100%" height="">
-			<g:Label text="AJOUTER UNE ECOLE" styleName="pageTitle"/>
+			<g:Label text="AJOUTER UNE ECOLE" styleName="pageTitle" horizontalAlignment="ALIGN_CENTER"/>
 			<g:Grid width="253px">
 			<g:row>
 				<g:customCell>

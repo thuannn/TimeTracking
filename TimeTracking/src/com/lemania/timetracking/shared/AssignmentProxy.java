@@ -13,4 +13,7 @@ public interface AssignmentProxy extends EntityProxy {
 	String getSchoolName();
 	
 	String getCourseName();
+	
+	Boolean getActive();
+	void setActive(Boolean active);
 }

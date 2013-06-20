@@ -7,23 +7,23 @@
 	ui:generateLocales='default'>
 
 	<g:HTMLPanel width="100%" height="100%">
-		<g:VerticalPanel width="1010px" horizontalAlignment="ALIGN_CENTER">
-			<g:Label text="BIENVENUE" styleName="pageTitle" width=""/>
+		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER">
+			<g:Label text="BIENVENUE" styleName="pageTitle" width="100%"/>
 			<g:Grid width="" ui:field="panelLogin" styleName="sideBar">
 				<g:row>
 					<g:customCell>
-						<g:Label text="Nom d&apos;utilisateur :"/>
+						<g:Label text="Nom d&apos;utilisateur :" horizontalAlignment="ALIGN_LEFT"/>
 					</g:customCell>
 					<g:customCell>
-						<g:TextBox ui:field="txtUserName"/>
+						<g:TextBox ui:field="txtUserName" alignment="LEFT"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
 					<g:customCell>
-						<g:Label text="Mot de passe :"/>
+						<g:Label text="Mot de passe :" horizontalAlignment="ALIGN_LEFT"/>
 					</g:customCell>
 					<g:customCell>
-						<g:PasswordTextBox ui:field="txtPassword"/>
+						<g:PasswordTextBox ui:field="txtPassword" alignment="LEFT"/>
 					</g:customCell>
 				</g:row>
 				<g:row>

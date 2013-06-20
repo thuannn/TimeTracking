@@ -27,6 +27,9 @@ public class ProfessorDao extends MyDAOBase {
 		return returnList;
 	}
 	
+	
+	/*
+	 * List all professor belong to a department */
 	public List<Professor> listAllByCourse(String courseId){
 		Key<Cours> course = new Key<Cours>(Cours.class, Long.parseLong(courseId));
 		Query<Assignment> qa = this.ofy().query(Assignment.class).filter("cours", course);
@@ -41,10 +44,49 @@ public class ProfessorDao extends MyDAOBase {
 		List<Professor> activeList = new ArrayList<Professor>();
 		
 		for (Professor prof : returnList) {
+			activeList.add(prof);
+		}
+		
+		java.util.Collections.sort(activeList);
+		return activeList;
+	}
+	
+	
+	/*
+	 * List all professor ACTIVE belong to a department */
+	public List<Professor> listAllActiveByCourse(String courseId, String year, String month){
+		Key<Cours> course = new Key<Cours>(Cours.class, Long.parseLong(courseId));
+		Query<Assignment> qa = this.ofy().query(Assignment.class).filter("cours", course);
+		
+		// Go through all the assignments of this department, select only the profs of the active ones
+		List<Key<? extends Professor>> profKeys = new ArrayList<Key<? extends Professor>>();
+		for (Assignment a : qa){
+			if (a.getActive())
+				profKeys.add( a.getProf() );
+		}
+		
+		// Go through the list of professor and select only the active professors
+		Map<Key<Professor>, Professor> profs = this.ofy().get(profKeys);
+		List<Professor> returnList = new ArrayList<Professor>(profs.values());		
+		List<Professor> activeList = new ArrayList<Professor>();
+		for (Professor prof : returnList) {
 			if (prof.getProfActive())
 				activeList.add(prof);
 		}
 		
+		// Go through the list of professor and get the latest modification date
+		Query<Log> qLog;
+		for (Professor curProf : activeList){
+			qLog = this.ofy().query(Log.class)
+					.filter("year", Integer.parseInt(year))
+					.filter("month", Integer.parseInt(month))
+					.filter("prof", new Key<Professor>(Professor.class, curProf.getId()))
+					.filter("cours", course);
+			if (qLog.count()>0)
+				curProf.setLogModifyDate(qLog.get().getModifyDate());
+		}
+		
+		// Sort the professor list by name and return
 		java.util.Collections.sort(activeList);
 		return activeList;
 	}

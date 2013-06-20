@@ -40,13 +40,11 @@ import com.lemania.timetracking.shared.service.UserRequestFactory.UserRequestCon
 public class RptTimeByProfPresenter 
 		extends Presenter<RptTimeByProfPresenter.MyView, RptTimeByProfPresenter.MyProxy> 
 		implements ExtractDataUiHandler, LoginAuthenticatedHandler, CoursesLoadedHandler {
-	
-	
-	
+		
+	//
 	private CurrentUser currentUser;
 	private List<CoursProxy> courses;
-	
-	
+	//	
 	
 	public interface MyView extends View, HasUiHandlers<ExtractDataUiHandler> {
 		

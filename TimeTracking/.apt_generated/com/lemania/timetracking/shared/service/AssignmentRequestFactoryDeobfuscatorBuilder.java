@@ -34,6 +34,13 @@ withOperation(new OperationKey("3fPbw27cOetNE4BqwD3xZbsy_Jw="),
   .withMethodName("removeAssignment")
   .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
   .build());
+withOperation(new OperationKey("wTN7hnq44xI6mTddO_$6oG2pB$Y="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Ljava/lang/Long;Lcom/lemania/timetracking/shared/AssignmentProxy;Ljava/lang/Boolean;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Ljava/lang/Long;Lcom/lemania/timetracking/server/Assignment;Ljava/lang/Boolean;)Lcom/lemania/timetracking/server/Assignment;")
+  .withMethodName("updateAssignmentStatus")
+  .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
+  .build());
 withOperation(new OperationKey("CA8Tcwn2pHVY3qEQdMGoeXJlqEM="),
   new OperationData.Builder()
   .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")

@@ -41,33 +41,35 @@
 			</g:Dock>
 			<g:Dock direction="WEST" width="10%" height="100%">
 				<g:Tree animationEnabled="true" styleName="sideBar" height="" width="250px" ui:field="treeMenu">
-					<g:Button ui:field="cmdHomepage">Accueil</g:Button>
-					<g:Button ui:field="cmdTimeInput" text="SAISIR DES HEURES">Mettre des heures</g:Button>
+					<g:Button ui:field="cmdHomepage" width="220px" height="">ACCUEIL</g:Button>
+					<g:TreeItem text="MON COMPTE" state="true">
+						<g:Button ui:field="cmdTimeInput" text="SAISIR DES HEURES" width="200px">Mettre des heures</g:Button>
+						<g:Button text="Changer le MDP" ui:field="cmdPassword" width="200px"/></g:TreeItem>
 					<g:TreeItem text="RAPPORTS" state="true">
-						<g:Button text="Par département" ui:field="cmdRptByDept">Par départements</g:Button>
-						<g:Button text="Par professeur" ui:field="cmdExtractData">Par professeurs</g:Button>
-						<g:Button ui:field="cmdRptByMonth">Par mois - Compta</g:Button>
+						<g:Button text="Par département" ui:field="cmdRptByDept" width="200px">Par départements</g:Button>
+						<g:Button text="Par professeur" ui:field="cmdExtractData" width="200px">Par professeurs</g:Button>
+						<g:Button ui:field="cmdRptByMonth" width="200px">Par mois - Compta</g:Button>
 					</g:TreeItem>
 					<g:TreeItem text="INFORMATIONS DE BASE" state="true">
 						<g:TreeItem text="Professeurs" state="true">
-							<g:Button text="Liste des professeurs" ui:field="cmdProfs"/>
-							<g:Button text="Ajouter un professeur" ui:field="cmdProfsAdd"/>
+							<g:Button text="Liste des professeurs" ui:field="cmdProfs" width="180px"/>
+							<g:Button text="Ajouter un professeur" ui:field="cmdProfsAdd" width="180px"/>
 						</g:TreeItem>
 						<g:TreeItem text="Ecoles">
-						<g:Button ui:field="cmdEcolePage" text="Liste des écoles">Liste d'écoles</g:Button>
-						<g:Button text="Ajouter une école" ui:field="cmdEcoleAdd"/>
+						<g:Button ui:field="cmdEcolePage" text="Liste des écoles" width="180px">Liste d'écoles</g:Button>
+						<g:Button text="Ajouter une école" ui:field="cmdEcoleAdd" width="180px"/>
 					</g:TreeItem>
 						<g:TreeItem text="Départements">
-							<g:Button ui:field="cmdCours" text="Liste des départements">Liste de cours</g:Button>
-							<g:Button ui:field="cmdCoursAdd" text="Ajouter un département">Ajouter un cours</g:Button>
+							<g:Button ui:field="cmdCours" text="Liste des départements" width="180px">Liste de cours</g:Button>
+							<g:Button ui:field="cmdCoursAdd" text="Ajouter un département" width="180px">Ajouter un cours</g:Button>
 						</g:TreeItem>
 						<g:TreeItem text="Types d&apos;heure">
-							<g:Button text="Liste des types" ui:field="cmdTypes"/>
-							<g:Button ui:field="cmdTypesAdd">Ajouter un type</g:Button>
+							<g:Button text="Liste des types" ui:field="cmdTypes" width="180px"/>
+							<g:Button ui:field="cmdTypesAdd" width="180px">Ajouter un type</g:Button>
 						</g:TreeItem>
 						<g:TreeItem text="Gestion d&apos;accès">
-							<g:Button text="Gestion des utilisateurs" ui:field="cmdUserMgt"/>
-							<g:Button ui:field="cmdSettings" text="Bloquer l&apos;accès"/>
+							<g:Button text="Gestion des utilisateurs" ui:field="cmdUserMgt" width="180px"/>
+							<g:Button ui:field="cmdSettings" text="Bloquer l&apos;accès" width="180px"/>
 						</g:TreeItem>
 					</g:TreeItem>
 					<g:Button ui:field="cmdContact">Contact</g:Button>

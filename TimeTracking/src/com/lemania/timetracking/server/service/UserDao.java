@@ -64,7 +64,7 @@ public class UserDao extends MyDAOBase {
 	public List<Cours> getDepartments(Long userId) {
 		User user = this.ofy().get(new Key<User>(User.class, userId));
 		List<Cours> returnList = new ArrayList<Cours>();
-			if (user.getDepartments() != null) {
+		if (user.getDepartments() != null) {
 			Map<Key<Cours>, Cours> cours = this.ofy().get( user.getDepartments() );
 			returnList = new ArrayList<Cours>(cours.values());
 			for (int i=0; i<returnList.size(); i++)
@@ -110,6 +110,25 @@ public class UserDao extends MyDAOBase {
 		
 		if (returnList.size() > 0)
 			return returnList.get(0);
+		else
+			return null;
+	}
+	
+	public User changePassword(String userName, String password, String newPassword) {
+		Query<User> q = this.ofy().query(User.class)
+				.filter("active", true)
+				.filter("userName", userName.toLowerCase())
+				.filter("password", password);
+		List<User> returnList = new ArrayList<User>();
+		for (User user : q){		
+			returnList.add(user);
+		}
+		
+		if (returnList.size() > 0) {
+			returnList.get(0).setPassword(newPassword);
+			this.ofy().put(returnList.get(0));
+			return returnList.get(0);
+		}
 		else
 			return null;
 	}

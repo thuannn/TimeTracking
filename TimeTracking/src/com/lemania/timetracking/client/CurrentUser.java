@@ -1,8 +1,12 @@
 package com.lemania.timetracking.client;
 
 public class CurrentUser {
+	
 	private Long userId;
 	private String fullName;
+	private String userName;
+	private String userPassword;
+	
 	private boolean isAdmin = false;
 	private boolean isLoggedIn = false;
 	
@@ -64,5 +68,21 @@ public class CurrentUser {
 
 	public void setCurrentDay(int currentDay) {
 		this.currentDay = currentDay;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserPassword() {
+		return userPassword;
+	}
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 }

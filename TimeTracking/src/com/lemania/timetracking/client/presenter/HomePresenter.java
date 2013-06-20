@@ -148,6 +148,8 @@ public class HomePresenter
 		currentUser.setCurrentMonth(response.getCurrentMonth());
 		currentUser.setCurrentYear(response.getCurrentYear());
 		currentUser.setCurrentDay(response.getCurrentDay());
+		currentUser.setUserName(response.getUserName());
+		currentUser.setUserPassword(response.getPassword());
 		
 		if (!currentUser.isAdmin()){		
 			if (systemBlocked) {
@@ -168,6 +170,6 @@ public class HomePresenter
 	@ProxyEvent
 	@Override
 	public void onAfterUserLogOut(AfterUserLogOutEvent event) {
-		getView().toggleLoginPanel(true);
+		getView().toggleLoginPanel(true);		
 	}
 }

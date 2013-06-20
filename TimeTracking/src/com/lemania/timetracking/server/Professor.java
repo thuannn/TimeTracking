@@ -8,6 +8,7 @@ public class Professor extends DatastoreObject implements Comparable<Professor> 
 
 	private String profName;
 	private Boolean profActive;
+	private String logModifyDate = "";
 	
 	@NotSaved
 	double total_01 = 0;
@@ -271,5 +272,13 @@ public class Professor extends DatastoreObject implements Comparable<Professor> 
 
 	public void setFee_12(double fee_12) {
 		this.fee_12 = fee_12;
+	}
+
+	public String getLogModifyDate() {
+		return logModifyDate;
+	}
+
+	public void setLogModifyDate(String logModifyDate) {
+		this.logModifyDate = logModifyDate;
 	}	
 }

@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.NotSaved;
 public class Assignment extends DatastoreObject {
 	private Key<Professor> prof;
 	private Key<Cours> cours;
+	private Boolean active = false;
 	
 	@NotSaved
 	private String courseName;
@@ -45,5 +46,13 @@ public class Assignment extends DatastoreObject {
 	
 	public void setCours(Key<Cours> cours) {
 		this.cours = cours;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 }

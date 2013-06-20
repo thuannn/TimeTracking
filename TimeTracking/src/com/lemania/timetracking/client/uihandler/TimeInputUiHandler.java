@@ -12,7 +12,7 @@ public interface TimeInputUiHandler extends UiHandlers {
 	void updateLogMemo(LogProxy log, String value);
 		
 	void loadCoursesBySchool(String ecoleId);
-	void loadProfessorsByCourse(String courseId);
+	void loadProfessorsByCourse(String courseId, String year, String month);
 	
 	void updateLogTime ( 
 			ProfessorProxy prof, String courseId, String year, String month,
