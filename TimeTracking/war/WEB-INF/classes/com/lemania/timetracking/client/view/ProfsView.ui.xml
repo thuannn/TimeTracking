@@ -27,7 +27,7 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:Label text="Cours : " width=""/>
+								<g:Label text="Département :" width=""/>
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="lstAddCourse"/>

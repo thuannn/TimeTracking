@@ -10,7 +10,7 @@
 		<g:DockPanel width="100%" height="100%" spacing="5" ui:field="dockPanel">
 			<g:Dock direction="NORTH">
 				<g:HorizontalPanel verticalAlignment="ALIGN_BOTTOM" width="100%" height="54px" spacing="5">
-					<g:Image url="images/logo.jpg" width=""/>
+					<g:Image url="images/logo_pv.jpg" width=""/>
 					<g:Cell verticalAlignment="ALIGN_BOTTOM">
 						<g:Grid height="" width="600px" cellPadding="3" cellSpacing="2" borderWidth="0">
 						<g:row>

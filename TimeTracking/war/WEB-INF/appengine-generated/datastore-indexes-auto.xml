@@ -1,47 +1,4 @@
-<!-- Indices written at Thu, 20 Jun 2013 14:49:01 CEST -->
+<!-- Indices written at Fri, 21 Jun 2013 15:21:59 CEST -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="Log" ancestor="false" source="auto">
-        <property name="cours" direction="asc"/>
-        <property name="year" direction="asc"/>
-        <property name="prof" direction="asc"/>
-        <property name="month" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="Log" ancestor="false" source="auto">
-        <property name="prof" direction="asc"/>
-        <property name="year" direction="asc"/>
-        <property name="month" direction="asc"/>
-        <property name="cours" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="Log" ancestor="false" source="auto">
-        <property name="month" direction="asc"/>
-        <property name="year" direction="asc"/>
-        <property name="prof" direction="asc"/>
-        <property name="cours" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="Ecole" ancestor="false" source="auto">
-        <property name="schoolActive" direction="asc"/>
-        <property name="schoolName" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 4 times in query history -->
-    <datastore-index kind="Assignment" ancestor="false" source="auto">
-        <property name="prof" direction="asc"/>
-        <property name="cours" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="Cours" ancestor="false" source="auto">
-        <property name="ecole" direction="asc"/>
-        <property name="coursNom" direction="asc"/>
-    </datastore-index>
-
-</datastore-indexes>

@@ -189,7 +189,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 		lstAddCourse.clear();
 		lstAddCourse.addItem("-","");
 		for (int i=0; i<cours.size(); i++)
-			lstAddCourse.addItem(cours.get(i).getCoursNom(), cours.get(i).getId().toString());				
+			lstAddCourse.addItem(cours.get(i).getCoursNom(), cours.get(i).getId().toString());
 	}
 
 	@Override

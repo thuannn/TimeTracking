@@ -30,7 +30,7 @@
 				</g:row>
 				<g:row/>
 			</g:Grid>
-					<p1:DataGrid width="300px" height="500px" ui:field="tblProfessors" keyboardSelectionPolicy="DISABLED"/>
+					<p1:DataGrid width="400px" height="500px" ui:field="tblProfessors" keyboardSelectionPolicy="DISABLED"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="600px">
 					<g:Label text="."/>

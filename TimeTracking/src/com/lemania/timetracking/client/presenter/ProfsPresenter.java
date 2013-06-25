@@ -183,14 +183,14 @@ public class ProfsPresenter
 	@Override
 	public void addCourse(String courseId, final ProfessorProxy prof) {
 		if (courseId.isEmpty()) {
-			Window.alert("Veuillez choisir un cours à rajouter.");
+			Window.alert("Veuillez choisir un département à rajouter.");
 			return;
 		}
 		
-		if (!currentUser.isAdmin()) {
-			Window.alert("Veuillez vous connecter avec le code d'accès de l'administrateur. La modification n'a pas été effectuée.");
-			return;
-		}
+//		if (!currentUser.isAdmin()) {
+//			Window.alert("Veuillez vous connecter avec le code d'accès de l'administrateur. La modification n'a pas été effectuée.");
+//			return;
+//		}
 		
 		AssignmentRequestFactory rf = GWT.create(AssignmentRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
