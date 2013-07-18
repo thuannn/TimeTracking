@@ -168,22 +168,30 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	
 	@UiHandler("lstYear")
 	public void onLstYearChanged(ChangeEvent event) {
-		clearLogTable();
-		getUiHandlers().professorSelected(
-    			selectedProfessor, 
-    			lstCourses.getValue(lstCourses.getSelectedIndex()),
-    			lstYear.getItemText(lstYear.getSelectedIndex()),
-    			lstMonth.getItemText(lstMonth.getSelectedIndex()));
+//		clearLogTable();
+//		getUiHandlers().professorSelected(
+//    			selectedProfessor, 
+//    			lstCourses.getValue(lstCourses.getSelectedIndex()),
+//    			lstYear.getItemText(lstYear.getSelectedIndex()),
+//    			lstMonth.getItemText(lstMonth.getSelectedIndex()));
+		
+		/*Thuan - 17.07.2013 - Everytime the year or month value is changed, reload the professor list.
+		 */
+		reloadProfList();
 	}
 	
 	@UiHandler("lstMonth")
 	public void onLstMonthChanged(ChangeEvent event) {
-		clearLogTable();
-		getUiHandlers().professorSelected(
-    			selectedProfessor, 
-    			lstCourses.getValue(lstCourses.getSelectedIndex()),
-    			lstYear.getItemText(lstYear.getSelectedIndex()),
-    			lstMonth.getItemText(lstMonth.getSelectedIndex()));
+//		clearLogTable();
+//		getUiHandlers().professorSelected(
+//    			selectedProfessor, 
+//    			lstCourses.getValue(lstCourses.getSelectedIndex()),
+//    			lstYear.getItemText(lstYear.getSelectedIndex()),
+//    			lstMonth.getItemText(lstMonth.getSelectedIndex()));
+		
+		/*Thuan - 17.07.2013 - Everytime the year or month value is changed, reload the professor list.
+		 */
+		reloadProfList();
 	}
 	
 	@Override
@@ -205,6 +213,11 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 
 	@UiHandler("lstCourses")
 	public void onLstCoursesChanged(ChangeEvent event){
+		reloadProfList();
+	}
+	
+	
+	public void reloadProfList(){
 		clearProfTable();
 		clearLogTable();
 		clearValues();

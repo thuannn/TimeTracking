@@ -212,20 +212,20 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 
 	@Override
 	public void initializeUi(CurrentUser currentUser) {
-		if ( currentUser!=null && currentUser.isLoggedIn() )
+		if ( currentUser!=null && currentUser.isLoggedIn() ){
 			showUserInfo(currentUser);
+			// Set tree menu		
+			dockPanel.add(treeMenu, DockPanel.WEST);
+			dockPanel.setCellWidth(treeMenu, "250px");
+		}
 		else {
 			txtWelcome.setText("");
 			cmdLogout.setText("");
 			lblCurrentMonth.setText("");
+			dockPanel.remove(treeMenu);
 		}
 		
 		imgProgressBar.setVisible(false);
-		
-		// Set tree menu
-		dockPanel.remove(treeMenu);
-		dockPanel.add(treeMenu, DockPanel.WEST);
-		dockPanel.setCellWidth(treeMenu, "250px");
 	}
 	
 	@UiHandler("button")

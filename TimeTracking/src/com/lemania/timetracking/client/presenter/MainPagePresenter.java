@@ -53,9 +53,6 @@ public class MainPagePresenter extends
 	public MainPagePresenter(final EventBus eventBus, final MyView view,
 			final MyProxy proxy) {
 		super(eventBus, view, proxy);
-		
-		// Thuan: attach Ui handler
-		getView().setUiHandlers(this);
 	}
 
 	@Override
@@ -66,6 +63,10 @@ public class MainPagePresenter extends
 	@Override
 	protected void onBind() {
 		super.onBind();
+		
+		// Thuan: attach Ui handler
+		getView().setUiHandlers(this);
+		getView().initializeUi(currentUser);
 	}
 	
 	@Override
@@ -157,7 +158,7 @@ public class MainPagePresenter extends
 	@Override
 	public void onLoginAuthenticated(LoginAuthenticatedEvent event) {
 		currentUser = event.getCurrentUser();
-		getView().showUserInfo(currentUser);
+		getView().initializeUi(currentUser);
 	}
 
 	@Override
