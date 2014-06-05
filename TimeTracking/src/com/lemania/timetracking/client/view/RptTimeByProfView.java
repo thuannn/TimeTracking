@@ -36,11 +36,15 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 	@UiField ListBox lstDepartments;
 	@UiField ListBox lstProfs;
 	@UiField FlexTable tblLogs;
+	@UiField ListBox lstYears;
 	
 	@UiHandler("lstDepartments")
 	public void onListDepartmentsSelected(ChangeEvent event){
+		//
 		clearLogTable();
+		//
 		clearProfList();
+		//
 		if (lstDepartments.getValue(lstDepartments.getSelectedIndex()).equals(""))
 			return;
 		if (getUiHandlers() != null)
@@ -49,16 +53,20 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 	
 	@Override
 	public void clearProfList(){
+		//
 		lstProfs.clear();
+		//
+		populateYearList();
 	}
 	
+	
+	/*
+	 * 
+	 * */
 	@UiHandler("lstProfs")
 	public void onListProfsSelected(ChangeEvent event){
-		clearLogTable();
-		if (lstProfs.getValue(lstProfs.getSelectedIndex()).equals(""))
-			return;
-		if (getUiHandlers() != null)
-			getUiHandlers().onProfSelected( lstProfs.getValue(lstProfs.getSelectedIndex()) );
+		//
+		populateYearList();
 	}
 	
 	@Override
@@ -67,7 +75,8 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 	}
 	
 	@Override
-	public void initializeTable() {		
+	public void initializeTable() {	
+		//
 		clearTable();
 		
 		// Draw the table structure
@@ -83,9 +92,26 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 		tblLogs.setText(0, 8, "Frais");
 		tblLogs.setText(0, 9, "Remarque");		
 		
+		//
 		styleTable();
 	}
 	
+	/*
+	 * 
+	 * */
+	private void populateYearList() {
+		//
+		lstYears.clear();
+		lstYears.addItem("-","");
+		lstYears.addItem("2013","2013");
+		lstYears.addItem("2014","2014");
+		lstYears.addItem("2015","2015");
+		lstYears.addItem("2016","2016");
+	}
+
+	/*
+	 * 
+	 * */
 	public void clearTable(){
 		tblLogs.removeAllRows();
 	}
@@ -244,5 +270,19 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 		for (ProfessorProxy p : profs) {
 			lstProfs.addItem(p.getProfName(), p.getId().toString());
 		}
+	}
+	
+	
+	/*
+	 * 
+	 * */
+	@UiHandler("lstYears")
+	void onLstYearsChange(ChangeEvent event) {
+		//
+		clearLogTable();
+		if (lstProfs.getValue(lstProfs.getSelectedIndex()).equals("") || lstYears.getValue(lstYears.getSelectedIndex()).equals(""))
+			return;
+		if (getUiHandlers() != null)
+			getUiHandlers().onProfSelected( lstProfs.getValue(lstProfs.getSelectedIndex()), lstYears.getValue(lstYears.getSelectedIndex()) );
 	}
 }

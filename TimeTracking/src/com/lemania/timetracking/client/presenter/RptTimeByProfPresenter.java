@@ -182,11 +182,11 @@ public class RptTimeByProfPresenter
 	 * Show time data
 	 * */
 	@Override
-	public void onProfSelected(String profId) {
+	public void onProfSelected(String profId, String year) {
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
 		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogRequestContext rcl = rfl.logRequest();
-		rcl.listAllFullDetailByProf(profId).fire(new Receiver<List<LogProxy>>(){
+		rcl.listAllFullDetailByProf(profId, year).fire(new Receiver<List<LogProxy>>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());

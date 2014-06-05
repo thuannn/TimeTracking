@@ -7,9 +7,10 @@
 	ui:generateLocales='default'>
 
 	<g:HTMLPanel width="100%" height="100%">
-		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER">
-			<g:Label text="BIENVENUE" styleName="pageTitle" width="100%"/>
-			<g:Grid width="" ui:field="panelLogin" styleName="sideBar">
+		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER" spacing="2">
+			<g:Label text="HEURES DU MOIS" styleName="pageTitle" width=""/>
+			<g:Label text="." styleName="hiddenText"/>
+			<g:Grid width="300px" ui:field="panelLogin" styleName="sideBar" cellPadding="5" cellSpacing="5">
 				<g:row>
 					<g:customCell>
 						<g:Label text="Nom d&apos;utilisateur :" horizontalAlignment="ALIGN_LEFT"/>

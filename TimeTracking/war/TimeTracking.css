@@ -7,11 +7,11 @@ body {
 
 /* stock list header row */
 .pageTitle {
+	color: White;
 	padding: 5px;
-  	background-color: #052f6d;
-  	color: #FFB840;
-  	font-style: gros;
-  	font-size: 18px;
+	font-size: 18px;
+	font-style: gros;
+	background-color: mediumturquoise;
 }
 
 .sectionTitle {
@@ -30,16 +30,13 @@ body {
 }
 
 .sideBar {
+	border: 1px solid limegreen;
 	background-color: #EDF2FA;
-	border-style:solid;
-	border-width:1px;
-	border-color:  #D2C40B;
 }
 
-.subSection {	
-	border-style:solid;
-	border-width:1px;
-	border-color:  #D2C40B;
+.subSection {
+	border: 1px solid mediumseagreen;
+	background-color: mintcream;
 }
 
 .btnFocus {
@@ -47,9 +44,7 @@ body {
 }
 
 .paneMain {
-	border-style:solid;
-	border-width:1px;
-	border-color: #D2C40B;
+	border: 1px solid limegreen;
 }
 
 .FlexTable {
@@ -111,3 +106,14 @@ body {
 	position: relative;
 	width: 100px;
 }
+
+.buttonBleu {
+	color: blue;
+}
+.button {
+	color: Black;
+}
+.hiddenText {
+	color: white;
+}
+

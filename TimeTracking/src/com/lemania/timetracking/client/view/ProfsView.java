@@ -84,6 +84,11 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
     	colName.setFieldUpdater(new FieldUpdater<ProfessorProxy, String>(){
 	    	@Override
 	    	public void update(int index, ProfessorProxy prof, String value){
+	    		//
+	    		if ( prof != selectedProfessor ) {
+	    			return;
+	    		}
+	    		//
 	    		if (getUiHandlers() != null) {	    			
 	    			selectedProf = index;
 	    			if (!prof.getProfName().equals(value))
@@ -104,6 +109,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    colActive.setFieldUpdater(new FieldUpdater<ProfessorProxy, Boolean>(){
 	    	@Override
 	    	public void update(int index, ProfessorProxy prof, Boolean value){
+	    		//
 	    		if (getUiHandlers() != null) {	    			
 	    			selectedProf = index;
 	    			getUiHandlers().updateProfessorStatus(prof, value);
@@ -116,12 +122,14 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    tblProfessors.setSelectionModel(selectionModel);
 	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 	      public void onSelectionChange(SelectionChangeEvent event) {
-	        selectedProfessor = selectionModel.getSelectedObject();
-	        if (selectedProfessor != null) {
-	        	lblProfNameAssign.setText(selectedProfessor.getProfName());
-	        	getUiHandlers().professorSelected(selectedProfessor);
-	        }
-	      }
+	    	  //
+	          selectedProfessor = selectionModel.getSelectedObject();
+	          //
+	          if (selectedProfessor != null) {
+	        	  lblProfNameAssign.setText(selectedProfessor.getProfName());
+	        	  getUiHandlers().professorSelected(selectedProfessor);
+	          }
+	       }
 	    });
 	    
 	    

@@ -1,11 +1,4 @@
-<!-- Indices written at Wed, 17 Jul 2013 21:46:17 CEST -->
+<!-- Indices written at Thu, 5 Jun 2014 14:17:22 CEST -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="Ecole" ancestor="false" source="auto">
-        <property name="schoolActive" direction="asc"/>
-        <property name="schoolName" direction="asc"/>
-    </datastore-index>
-
-</datastore-indexes>

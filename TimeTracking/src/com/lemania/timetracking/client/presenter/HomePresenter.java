@@ -70,6 +70,7 @@ public class HomePresenter
 	
 
 	/*
+	 * 
 	 * Get the current system settings */
 	private void getCurrentSettings(final String userName, final String password) {
 		SettingOptionRequestFactory rf = GWT.create(SettingOptionRequestFactory.class);
@@ -97,6 +98,9 @@ public class HomePresenter
 	}
 	
 
+	/*
+	 * 
+	 * */
 	@Override
 	public void authenticateUser(String userName, String password) {
 		if (userName.equals("") || password.equals("")) {
@@ -115,6 +119,10 @@ public class HomePresenter
 			getCurrentSettings(userName, password);
 	}
 	
+	
+	/*
+	 * 
+	 * */
 	private void authenticateUserWithSettings(String userName, String password) {
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
@@ -153,12 +161,10 @@ public class HomePresenter
 		
 		if (!currentUser.isAdmin()){		
 			if (systemBlocked) {
-				Window.alert("L'accès au système est bloqué dès à présent.");
-				return;
+				currentUser.setReadOnly(true);
 			}
 			if (currentUser.getCurrentDay() > deadLine) {
-				Window.alert("L'accès au système est bloqué dès à présent.");
-				return;
+				currentUser.setReadOnly(true);
 			}
 		}
 		
@@ -166,7 +172,11 @@ public class HomePresenter
 		getEventBus().fireEvent(new LoginAuthenticatedEvent(currentUser));
 		getView().toggleLoginPanel(false);
 	}
+	
 
+	/*
+	 * 
+	 * */
 	@ProxyEvent
 	@Override
 	public void onAfterUserLogOut(AfterUserLogOutEvent event) {

@@ -9,6 +9,7 @@ public class CurrentUser {
 	
 	private boolean isAdmin = false;
 	private boolean isLoggedIn = false;
+	private boolean isReadOnly = false;
 	
 	private int currentMonth;
 	private int currentYear;
@@ -84,5 +85,13 @@ public class CurrentUser {
 
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
+	}
+
+	public boolean isReadOnly() {
+		return isReadOnly;
+	}
+
+	public void setReadOnly(boolean isReadOnly) {
+		this.isReadOnly = isReadOnly;
 	}
 }

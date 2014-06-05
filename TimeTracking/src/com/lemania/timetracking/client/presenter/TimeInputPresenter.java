@@ -1,6 +1,7 @@
 package com.lemania.timetracking.client.presenter;
 
 import java.util.List;
+
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -17,6 +18,7 @@ import com.lemania.timetracking.client.event.UpdateTimeLogEvent.UpdateTimeLogHan
 import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -95,8 +97,17 @@ public class TimeInputPresenter
 		getView().initializeLogTable();
 	}
 	
+	/*
+	 * 
+	 * */
 	@Override
 	protected void onReset(){
+		// Check if the current user can Read Only, tell him and move him to the home page
+		if (currentUser.isReadOnly()) {
+			Window.alert("L'accès à cette fonction est bloqué dès à présent.");
+			History.newItem( NameTokens.homepage );
+		}
+		
 		// Initialize values
 		getView().initializeValues(currentUser.getCurrentMonth(), currentUser.getCurrentYear(), currentUser.isAdmin());
 		

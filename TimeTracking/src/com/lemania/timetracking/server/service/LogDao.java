@@ -41,13 +41,7 @@ public class LogDao extends MyDAOBase {
 		List<Log> returnList = new ArrayList<Log>();
 		for (Log log : q){
 			if ( !this.ofy().get(log.getProf()).getProfActive() )
-				continue;
-			
-//			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
-//			log.setProfName( this.ofy().get(log.getProf()).getProfName());
-//			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
-//			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
-			
+				continue;	
 			returnList.add(log);
 		}
 		
@@ -66,12 +60,6 @@ public class LogDao extends MyDAOBase {
 		for (Log log : q){
 			if ( !this.ofy().get(log.getProf()).getProfActive() )
 				continue;
-			
-//			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
-//			log.setProfName( this.ofy().get(log.getProf()).getProfName());
-//			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
-//			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
-			
 			returnList.add(log);
 		}
 		
@@ -93,11 +81,6 @@ public class LogDao extends MyDAOBase {
 			if ( !this.ofy().get(log.getProf()).getProfActive() )
 				continue;
 			
-//			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
-//			log.setProfName( this.ofy().get(log.getProf()).getProfName());
-//			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );
-//			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
-			
 			returnList.add(log);
 		}
 		
@@ -105,25 +88,19 @@ public class LogDao extends MyDAOBase {
 		return returnList;
 	}
 	
-	public List<Log> listAllFullDetailByProf(String profId){
+	public List<Log> listAllFullDetailByProf(String profId, String year){
 		Query<Log> q = this.ofy().query(Log.class)
 				.filter("prof",new Key<Professor>(Professor.class, Long.parseLong(profId)))
+				.filter("year", Integer.parseInt(year) )
 				.order("year")
 				.order("month")
 				.order("cours");
 		
 		List<Log> returnList = new ArrayList<Log>();
-		for (Log log : q){
-			
-//			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );
-//			log.setCourseName( this.ofy().get(log.getCours()).getCoursNom() );						
-//			log.setProfName( this.ofy().get(log.getProf()).getProfName());
-//			log.setSchoolName( this.ofy().get( this.ofy().get(log.getCours()).getEcole()).getSchoolName() );
-			
+		for (Log log : q){	
 			returnList.add(log);
 		}
 		
-//		java.util.Collections.sort(returnList);
 		return returnList;
 	}
 	
@@ -138,8 +115,7 @@ public class LogDao extends MyDAOBase {
 				.filter("cours", coursKey);
 		
 		List<Log> returnList = new ArrayList<Log>();
-		for (Log log : q){
-//			log.setTypeName( this.ofy().get(log.getLogType()).getLogTypeName() );			
+		for (Log log : q){			
 			log.setProfName( "" );
 			log.setCourseName( "" );
 			returnList.add(log);

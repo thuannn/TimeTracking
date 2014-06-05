@@ -43,28 +43,29 @@
 			</g:Dock>
 			<g:Dock direction="WEST" width="10%" height="100%">
 				<g:Tree animationEnabled="true" styleName="sideBar" height="" width="250px" ui:field="treeMenu">
+					<g:Label height="20px" styleName="pageTitle"/>
 					<g:Button ui:field="cmdHomepage" width="220px" height="">ACCUEIL</g:Button>
-					<g:TreeItem text="MON COMPTE" state="true">
+					<g:TreeItem text="Mon compte" state="true">
 						<g:Button ui:field="cmdTimeInput" text="SAISIR DES HEURES" width="200px">Mettre des heures</g:Button>
 						<g:Button text="Changer le MDP" ui:field="cmdPassword" width="200px"/></g:TreeItem>
-					<g:TreeItem text="RAPPORTS" state="true">
+					<g:TreeItem text="Statistiques" state="true">
 						<g:Button text="Par département" ui:field="cmdRptByDept" width="200px">Par départements</g:Button>
 						<g:Button text="Par professeur" ui:field="cmdExtractData" width="200px">Par professeurs</g:Button>
 						<g:Button ui:field="cmdRptByMonth" width="200px">Par mois - Compta</g:Button>
 					</g:TreeItem>
-					<g:TreeItem text="INFORMATIONS DE BASE" state="true">
+					<g:TreeItem text="Information de base" state="true">
 						<g:TreeItem text="Professeurs" state="true">
 							<g:Button text="Liste des professeurs" ui:field="cmdProfs" width="180px"/>
 							<g:Button text="Ajouter un professeur" ui:field="cmdProfsAdd" width="180px"/>
+						</g:TreeItem>
+						<g:TreeItem text="Départements">
+							<g:Button ui:field="cmdCours" text="Liste des départements" width="180px">Liste de cours</g:Button>
+							<g:Button ui:field="cmdCoursAdd" text="Ajouter un département" width="180px">Ajouter un cours</g:Button>
 						</g:TreeItem>
 						<g:TreeItem text="Ecoles">
 						<g:Button ui:field="cmdEcolePage" text="Liste des écoles" width="180px">Liste d'écoles</g:Button>
 						<g:Button text="Ajouter une école" ui:field="cmdEcoleAdd" width="180px"/>
 					</g:TreeItem>
-						<g:TreeItem text="Départements">
-							<g:Button ui:field="cmdCours" text="Liste des départements" width="180px">Liste de cours</g:Button>
-							<g:Button ui:field="cmdCoursAdd" text="Ajouter un département" width="180px">Ajouter un cours</g:Button>
-						</g:TreeItem>
 						<g:TreeItem text="Types d&apos;heure">
 							<g:Button text="Liste des types" ui:field="cmdTypes" width="180px"/>
 							<g:Button ui:field="cmdTypesAdd" width="180px">Ajouter un type</g:Button>

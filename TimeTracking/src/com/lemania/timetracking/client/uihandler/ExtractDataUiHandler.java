@@ -6,5 +6,5 @@ public interface ExtractDataUiHandler extends UiHandlers {
 	
 	void onDepartmentSelected(String deptId);
 
-	void onProfSelected(String profId);
+	void onProfSelected(String profId, String year);
 }
