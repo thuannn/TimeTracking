@@ -22,6 +22,7 @@ public class RptTimeByDepartmentView extends ViewWithUiHandlers<RptTimeByDepartm
 	private final Widget widget;
 	@UiField ListBox lstDepartments;
 	@UiField FlexTable tblProf;
+	@UiField ListBox lstYears;
 	
 	public interface Binder extends UiBinder<Widget, RptTimeByDepartmentView> {
 	}
@@ -36,14 +37,30 @@ public class RptTimeByDepartmentView extends ViewWithUiHandlers<RptTimeByDepartm
 		return widget;
 	}
 	
+	
+	/*
+	 * 
+	 * */
 	@UiHandler("lstDepartments")
 	void onLstDepartmentsChange(ChangeEvent event) {
-		clearLogTable();
-		if (lstDepartments.getValue(lstDepartments.getSelectedIndex()).equals(""))
-			return;
-		if (getUiHandlers() != null)
-			getUiHandlers().onDepartmentSelected( lstDepartments.getValue( lstDepartments.getSelectedIndex() ));
+		//
+		populateYearList();
 	}
+	
+	
+	/*
+	 * 
+	 * */
+	private void populateYearList() {
+		//
+		lstYears.clear();
+		lstYears.addItem("-","");
+		lstYears.addItem("2013","2013");
+		lstYears.addItem("2014","2014");
+		lstYears.addItem("2015","2015");
+		lstYears.addItem("2016","2016");
+	}
+	
 	
 	@Override
 	public void clearLogTable() {
@@ -211,5 +228,19 @@ public class RptTimeByDepartmentView extends ViewWithUiHandlers<RptTimeByDepartm
 		
 		// Set the stylesheet
 		styleTable();
+	}
+	
+	
+	/*
+	 * 
+	 * */
+	@UiHandler("lstYears")
+	void onLstYearsChange(ChangeEvent event) {
+		//
+		clearLogTable();
+		if (lstDepartments.getValue(lstDepartments.getSelectedIndex()).equals(""))
+			return;
+		if (getUiHandlers() != null)
+			getUiHandlers().onDepartmentSelected( lstDepartments.getValue(lstDepartments.getSelectedIndex()), lstYears.getValue(lstYears.getSelectedIndex()) );
 	}
 }

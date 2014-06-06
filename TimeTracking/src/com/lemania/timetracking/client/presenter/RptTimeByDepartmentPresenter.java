@@ -73,6 +73,10 @@ public class RptTimeByDepartmentPresenter
 		getView().initializeTable();
 	}
 	
+	
+	/*
+	 * 
+	 * */
 	@Override
 	protected void onReset(){
 		super.onReset();
@@ -86,6 +90,10 @@ public class RptTimeByDepartmentPresenter
 		
 	}
 	
+	
+	/*
+	 * 
+	 * */
 	public void loadDepartmentList(){
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
@@ -101,19 +109,27 @@ public class RptTimeByDepartmentPresenter
 			}
 		} );
 	}
+	
 
+	/*
+	 * 
+	 * */
 	@ProxyEvent
 	@Override
 	public void onLoginAuthenticated(LoginAuthenticatedEvent event) {
 		this.currentUser = event.getCurrentUser();	
 	}
+	
 
+	/*
+	 * 
+	 * */
 	@Override
-	public void onDepartmentSelected(String deptId) {
+	public void onDepartmentSelected(String deptId, String year) {
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ProfessorRequestContext rc = rf.professorRequest();
-		rc.listAllByCourseWithTime(deptId, currentUser.getCurrentYear()).fire(new Receiver<List<ProfessorProxy>>(){
+		rc.listAllByCourseWithTime(deptId, Integer.parseInt(year)).fire(new Receiver<List<ProfessorProxy>>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());

@@ -32,10 +32,8 @@ import com.lemania.timetracking.shared.ProfessorProxy;
 import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.LogRequestFactory;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
-import com.lemania.timetracking.shared.service.UserRequestFactory;
 import com.lemania.timetracking.shared.service.LogRequestFactory.LogRequestContext;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory.ProfessorRequestContext;
-import com.lemania.timetracking.shared.service.UserRequestFactory.UserRequestContext;
 
 public class RptTimeByProfPresenter 
 		extends Presenter<RptTimeByProfPresenter.MyView, RptTimeByProfPresenter.MyProxy> 
@@ -102,40 +100,19 @@ public class RptTimeByProfPresenter
 		getView().clearLogTable();
 		getView().clearProfList();
 		
-		// Thuan
-		loadDepartmentList();
+		// 06.06.2014 - Obsolete
+		loadProfessorList();
 	}
 	
 	
 	/*
-	 * List of departments belong to this user
-	 * On successful, load the list of professors accordingly
+	 * 
 	 * */
-	public void loadDepartmentList(){
-		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
-		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
-		UserRequestContext rc = rf.userRequest();
-		rc.getDepartments(currentUser.getUserId()).fire( new Receiver<List<CoursProxy>>(){
-			@Override
-			public void onFailure(ServerFailure error) {
-				Window.alert(error.getMessage());
-			}
-			@Override
-			public void onSuccess( List<CoursProxy> response ) {
-				// getView().setDepartmentList(response);				
-				// loadProfessorList(response);
-				courses = response;
-				getEventBus().fireEvent(new CoursesLoadedEvent());
-			}
-		} );
-	}
-	
-	
-	public void loadProfessorList(List<CoursProxy> courses){		
+	public void loadProfessorList(){		
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ProfessorRequestContext rc = rf.professorRequest();		
-		rc.listAllByCourseList(courses).fire(new Receiver<List<ProfessorProxy>>(){
+		rc.listAllActive(true).fire(new Receiver<List<ProfessorProxy>>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
@@ -156,27 +133,6 @@ public class RptTimeByProfPresenter
 		this.currentUser = event.getCurrentUser();
 	}
 
-	
-	/*
-	 * OBSOLETE
-	 * List of Professors need to be loaded at once for all departments
-	 * */
-	@Override
-	public void onDepartmentSelected(String deptId) {
-		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
-		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
-		ProfessorRequestContext rc = rf.professorRequest();
-		rc.listAllByCourse(deptId).fire(new Receiver<List<ProfessorProxy>>(){
-			@Override
-			public void onFailure(ServerFailure error){
-				Window.alert(error.getMessage());
-			}
-			@Override
-			public void onSuccess(List<ProfessorProxy> response) {
-				getView().setProfList(response);
-			}
-		});
-	}
 
 	/*
 	 * Show time data
@@ -198,9 +154,21 @@ public class RptTimeByProfPresenter
 		});
 	}
 
+	/*
+	 * 
+	 * */
 	@ProxyEvent
 	@Override
 	public void onCoursesLoaded(CoursesLoadedEvent event) {
-		loadProfessorList(courses);		
+		//
+	}
+
+	/*
+	 * 
+	 * */
+	@Override
+	public void onDepartmentSelected(String deptId) {
+		// TODO Auto-generated method stub
+		
 	}
 }

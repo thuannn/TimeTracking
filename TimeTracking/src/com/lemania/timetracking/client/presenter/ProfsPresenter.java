@@ -91,19 +91,25 @@ public class ProfsPresenter
 	}
 	
 	
+	/*
+	 * 
+	 * */
 	@Override
 	protected void onReset(){
-		getProfessorsList();
+		//
+		getProfessorsList("1");
 		getEcoleList();
 	}
 	
-	
-	private void getProfessorsList() {
+	/*
+	 * 
+	 * */
+	private void getProfessorsList(String status) {
 		
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ProfessorRequestContext rc = rf.professorRequest();
-		rc.listAll().fire(new Receiver<List<ProfessorProxy>>(){
+		rc.listAllActive( status.equals("1")?true:false ).fire(new Receiver<List<ProfessorProxy>>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
@@ -281,8 +287,17 @@ public class ProfsPresenter
 			public void onSuccess(AssignmentProxy response) {
 				if (response == null)
 					Window.alert("ERREUR : Le statut n'a pas été modifié pour ce professeur.");
-				//TODO : add some notification here
 			}
 		});
+	}
+
+
+	/*
+	 * 
+	 * */
+	@Override
+	public void onStatusChange(String status) {
+		//
+		getProfessorsList(status);
 	}
 }

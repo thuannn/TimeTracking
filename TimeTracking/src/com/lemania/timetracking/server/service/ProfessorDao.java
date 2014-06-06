@@ -29,6 +29,20 @@ public class ProfessorDao extends MyDAOBase {
 	
 	
 	/*
+	 * */
+	public List<Professor> listAllActive(Boolean active){
+		Query<Professor> q = this.ofy().query(Professor.class)
+				.filter("profActive", active)
+				.order("profName");
+		List<Professor> returnList = new ArrayList<Professor>();
+		for (Professor prof : q){
+			returnList.add(prof);
+		}
+		return returnList;
+	}
+	
+	
+	/*
 	 * List all professor belong to a department */
 	public List<Professor> listAllByCourse(String courseId){
 		Key<Cours> course = new Key<Cours>(Cours.class, Long.parseLong(courseId));

@@ -7,12 +7,18 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.TextInputCell;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.DomEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.lemania.timetracking.client.CustomEditTextCell;
 import com.lemania.timetracking.client.presenter.ProfsPresenter;
 import com.lemania.timetracking.client.uihandler.ProfessorListUiHandler;
 import com.lemania.timetracking.shared.AssignmentProxy;
@@ -28,6 +34,8 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.client.ui.ToggleButton;
 
 public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implements ProfsPresenter.MyView {
 
@@ -49,13 +57,21 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 		return widget;
 	}
 	
-	@UiField(provided=true) DataGrid<ProfessorProxy> tblProfessors = new DataGrid<ProfessorProxy>();
-	@UiField(provided=true) DataGrid<AssignmentProxy> tblAssignment = new DataGrid<AssignmentProxy>();
+	@UiField DataGrid<AssignmentProxy> tblAssignments = new DataGrid<AssignmentProxy>();
 	@UiField Label lblProfNameAssign;
 	@UiField Button cmdAddCourse;
 	@UiField ListBox lstAddEcole;
 	@UiField ListBox lstAddCourse;
+	@UiField ListBox lstStatus;
+	@UiField DataGrid<ProfessorProxy> tblProfessors = new DataGrid<ProfessorProxy>();
 	
+	//
+	CustomEditTextCell nomCell = new CustomEditTextCell();
+
+	
+	/*
+	 * 
+	 * */
 	@UiHandler("cmdAddCourse")
 	public void onCmdAddCourseClicked(ClickEvent event){
 		if (getUiHandlers() != null)
@@ -70,9 +86,10 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 
 	@Override
 	public void initializeTable() {
+		//
+		populateStatusList();
 		
-		// Add a text column to show the name.
-		EditTextCell nomCell = new EditTextCell();
+		// Add a text column to show the name
 		Column<ProfessorProxy, String> colName = new Column<ProfessorProxy, String>(nomCell) {
 	      @Override
 	      public String getValue(ProfessorProxy object) {
@@ -85,15 +102,12 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    	@Override
 	    	public void update(int index, ProfessorProxy prof, String value){
 	    		//
-	    		if ( prof != selectedProfessor ) {
-	    			return;
-	    		}
-	    		//
 	    		if (getUiHandlers() != null) {	    			
 	    			selectedProf = index;
 	    			if (!prof.getProfName().equals(value))
 	    				getUiHandlers().updateProfessorName(prof, value);
-	    		}	    		
+	    		}
+	    		nomCell.isFirst(true);
 	    	}
 	    });
 	    
@@ -140,7 +154,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 		        return object.getSchoolName();
 		      }
 		    };
-		tblAssignment.addColumn(colSchoolName, "Ecole");
+		tblAssignments.addColumn(colSchoolName, "Ecole");
 		    
 	    TextColumn<AssignmentProxy> colCourseName = new TextColumn<AssignmentProxy>() {
 	      @Override
@@ -148,7 +162,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	        return object.getCourseName();
 	      }
 	    };
-	    tblAssignment.addColumn(colCourseName, "Cours");
+	    tblAssignments.addColumn(colCourseName, "Cours");
 	    
 	    CheckboxCell cellAssignmentActive = new CheckboxCell();
 	    Column<AssignmentProxy, Boolean> colAssignmentActive = new Column<AssignmentProxy, Boolean>(cellAssignmentActive) {
@@ -157,7 +171,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    		return object.getActive();
 	    	}	    	
 	    };
-	    tblAssignment.addColumn(colAssignmentActive, "Active");
+	    tblAssignments.addColumn(colAssignmentActive, "Active");
 	    
 	    colAssignmentActive.setFieldUpdater(new FieldUpdater<AssignmentProxy, Boolean>(){
 	    	@Override
@@ -170,14 +184,25 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    });
 	}
 
+	
+	/*
+	 * */
+	private void populateStatusList() {
+		//
+		lstStatus.addItem("Actif", "1");
+		lstStatus.addItem("Inactif", "0");
+	}
+
 	@Override
 	public void setData(List<ProfessorProxy> profs) {
+		//
 		tblProfessors.setRowCount(profs.size(), true);
 		tblProfessors.setRowData(0, profs);
 	}
 
 	@Override
 	public void refreshTable(ProfessorProxy prof) {
+		//
 		List<ProfessorProxy> profs = new ArrayList<ProfessorProxy>();
 		profs.add(prof);
         tblProfessors.setRowData(selectedProf, profs);
@@ -207,7 +232,17 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 
 	@Override
 	public void setAssignmentList(List<AssignmentProxy> assignments) {		
-		tblAssignment.setRowData(assignments);
-		tblAssignment.setRowCount(assignments.size());
+		tblAssignments.setRowData(assignments);
+		tblAssignments.setRowCount(assignments.size());
+	}
+	
+	
+	/*
+	 * 
+	 * */
+	@UiHandler("lstStatus")
+	void onLstStatusChange(ChangeEvent event) {
+		//
+		getUiHandlers().onStatusChange( lstStatus.getValue(lstStatus.getSelectedIndex()) );
 	}
 }

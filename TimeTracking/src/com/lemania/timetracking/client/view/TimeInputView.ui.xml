@@ -28,12 +28,13 @@
 						<g:ListBox ui:field="lstCourses"/>
 					</g:customCell>
 				</g:row>
-				<g:row/>
 			</g:Grid>
+					<g:Label text="." styleName="hiddenText"/>
 					<p1:DataGrid width="400px" height="500px" ui:field="tblProfessors" keyboardSelectionPolicy="DISABLED"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="600px">
-					<g:Label text="."/>
+					<g:Label text="." styleName="hiddenText"/>
+					<g:Label styleName="sectionTitle"/>
 					<g:Grid width="420px" borderWidth="0" cellPadding="5" cellSpacing="2" styleName="sideBar">
 						<g:row>
 							<g:customCell>
@@ -61,7 +62,7 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:Label text="."/>
+								<g:Label text="." styleName="hiddenText"/>
 							</g:customCell>
 							<g:customCell>
 								<g:Label ui:field="txtNotification"/>
@@ -141,7 +142,7 @@
 									</g:row>
 									<g:row>
 										<g:customCell>
-											<g:Label text="."/>
+											<g:Label text="." styleName="hiddenText"/>
 										</g:customCell>
 										<g:customCell>
 											<g:Button ui:field="cmdSave" text="Enregistrer"/>
@@ -151,6 +152,8 @@
 							</g:customCell>
 						</g:row>
 					</g:Grid>
+					<g:Label text="." styleName="hiddenText"/>
+					<g:Hyperlink text="Vue d&apos;ensemble" targetHistoryToken="rptbydept"/>
 				</g:VerticalPanel>
 			</g:HorizontalPanel>
 		</g:VerticalPanel>

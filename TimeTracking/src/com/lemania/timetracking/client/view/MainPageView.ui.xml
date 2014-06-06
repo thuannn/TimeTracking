@@ -9,41 +9,23 @@
 	<g:FlowPanel width="100%" height="100%">
 		<g:DockPanel width="100%" height="100%" spacing="5" ui:field="dockPanel">
 			<g:Dock direction="NORTH">
-				<g:HorizontalPanel verticalAlignment="ALIGN_BOTTOM" width="100%" height="54px" spacing="5">
+				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE" width="100%" height="54px">
 					<g:Image url="images/logo.jpg" width=""/>
-					<g:Cell horizontalAlignment="ALIGN_RIGHT">
-						<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_RIGHT">
-						<g:Grid height="" width="600px" cellPadding="3" cellSpacing="2" borderWidth="0">
-						<g:row>
-							<g:customCell>
-								<g:Label width="" horizontalAlignment="ALIGN_LEFT" ui:field="txtWelcome"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label ui:field="lblCurrentMonth"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Hyperlink targetHistoryToken="newHistoryToken" width="" ui:field="cmdLogout"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Image url="images/13.gif" ui:field="imgProgressBar" width=""/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label/>
-							</g:customCell>
-							<g:customCell>
-								<g:Button text="Afficher/ Cacher le menu" ui:field="button"/>
-							</g:customCell>
-						</g:row>
-					</g:Grid>
-					</g:HorizontalPanel>
-					</g:Cell>
+					<g:Label ui:field="lblCurrentMonth"/>
+					<g:Label width="" horizontalAlignment="ALIGN_LEFT" ui:field="txtWelcome"/>
+					<g:Label/>
+					<g:Hyperlink targetHistoryToken="newHistoryToken" width="" ui:field="cmdLogout"/>
+				</g:HorizontalPanel>
+			</g:Dock>
+			<g:Dock direction="NORTH">
+				<g:HorizontalPanel verticalAlignment="ALIGN_BOTTOM" spacing="5">
+					<g:Button text="Afficher/ Cacher le menu" ui:field="button" styleName="smallButton"/>
+					<g:Image url="images/13.gif" ui:field="imgProgressBar" width=""/>
 				</g:HorizontalPanel>
 			</g:Dock>
 			<g:Dock direction="WEST" width="10%" height="100%">
 				<g:Tree animationEnabled="true" styleName="sideBar" height="" width="250px" ui:field="treeMenu">
-					<g:Label height="20px" styleName="pageTitle"/>
+					<g:Label height="20px" styleName="menuPaneTitle"/>
 					<g:Button ui:field="cmdHomepage" width="220px" height="">ACCUEIL</g:Button>
 					<g:TreeItem text="Mon compte" state="true">
 						<g:Button ui:field="cmdTimeInput" text="SAISIR DES HEURES" width="200px">Mettre des heures</g:Button>

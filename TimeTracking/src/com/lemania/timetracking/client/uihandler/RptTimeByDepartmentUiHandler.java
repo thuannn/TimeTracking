@@ -4,5 +4,5 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface RptTimeByDepartmentUiHandler extends UiHandlers {
 	
-	public void onDepartmentSelected(String deptId);
+	public void onDepartmentSelected(String deptId, String year);
 }

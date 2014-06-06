@@ -11,7 +11,7 @@
 			<g:VerticalPanel width="100%" height="" horizontalAlignment="ALIGN_CENTER" spacing="2">
 				<g:Label text="RAPPORT DES HEURES PAR PROFESSEUR" styleName="pageTitle" width="830" height="30" horizontalAlignment="ALIGN_CENTER"/>
 				<g:Label text="." styleName="hiddenText"/>
-				<g:HorizontalPanel width="80%" spacing="2" verticalAlignment="ALIGN_MIDDLE" styleName="subSection" horizontalAlignment="ALIGN_LEFT">
+				<g:HorizontalPanel width="70%" spacing="2" verticalAlignment="ALIGN_MIDDLE" styleName="subSection" horizontalAlignment="ALIGN_LEFT">
 					<g:Label text="Choisir un département :" visible="false"/>
 					<g:ListBox ui:field="lstDepartments" visible="false"/>
 					<g:Label text="Nom du professeur :" horizontalAlignment="ALIGN_RIGHT"/>

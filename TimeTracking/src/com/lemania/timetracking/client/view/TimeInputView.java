@@ -55,7 +55,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		return widget;
 	}
 	
-	@UiField(provided=true) DataGrid<ProfessorProxy> tblProfessors = new DataGrid<ProfessorProxy>();
+	@UiField DataGrid<ProfessorProxy> tblProfessors = new DataGrid<ProfessorProxy>();
 	@UiField ListBox lstCourses;
 	@UiField ListBox lstSchools;
 	@UiField Label lblProfName;
