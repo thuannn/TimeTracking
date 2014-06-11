@@ -33,6 +33,7 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 	public Widget asWidget() {
 		return widget;
 	}
+	
 	@UiField ListBox lstDepartments;
 	@UiField ListBox lstProfs;
 	@UiField FlexTable tblLogs;
@@ -132,8 +133,12 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 		double totalCash = 0;
 		double totalProfCash = 0;
 		
+		//
+		double totalYearHour = 0;
+		double totalYearCash = 0;
+		
 		// Set the data
-		for (int i=0; i<logs.size(); i++){
+		for (int i=0; i<logs.size(); i++) {
 			// if it's the same professor, does not need to display the name again 
 			// otherwise, add a blank line and show the new name
 			if (prevMonth != logs.get(i).getMonth()) {				
@@ -147,6 +152,11 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 					tblLogs.getCellFormatter().addStyleName(currentRow,7,"FlexTable-Cell-Total");
 					tblLogs.getCellFormatter().addStyleName(currentRow,8,"FlexTable-Cell-Total");
 					
+					//
+					totalYearHour = totalYearHour + totalProf;
+					totalYearCash = totalYearCash + totalProfCash;
+					
+					//
 					totalHour = 0;
 					totalProf = 0;
 					totalCash = 0;
@@ -232,6 +242,7 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 			prevMonth = logs.get(i).getMonth();
 			
 			if (i==logs.size()-1) {
+				//
 				currentRow = i+2;
 				totalProf = totalProf + totalHour;
 				totalProfCash = totalProfCash + totalCash;
@@ -239,8 +250,19 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 				tblLogs.setText(currentRow, 8, "CHF " + Double.toString(totalProfCash));
 				tblLogs.getCellFormatter().addStyleName(currentRow,7,"FlexTable-Cell-Total");
 				tblLogs.getCellFormatter().addStyleName(currentRow,8,"FlexTable-Cell-Total");
+				//
+				totalYearHour = totalYearHour + totalProf;
+				totalYearCash = totalYearCash + totalProfCash;
 			}
 		}
+		
+		//
+		currentRow++;
+		tblLogs.setText(currentRow, 6, "Total : ");					
+		tblLogs.setText(currentRow, 7, Double.toString(totalYearHour));					
+		tblLogs.setText(currentRow, 8, "CHF " + Double.toString(totalYearCash));
+		tblLogs.getCellFormatter().addStyleName(currentRow,7,"FlexTable-Cell-Total");
+		tblLogs.getCellFormatter().addStyleName(currentRow,8,"FlexTable-Cell-Total");
 		
 		// Set the stylesheet
 		styleTable();
@@ -248,12 +270,16 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 		
 	
 	public void styleTable(){
+		//
 		for (int j=0; j<tblLogs.getRowCount(); j++){
 			for (int k=0; k<tblLogs.getCellCount(j); k++){
-				tblLogs.getCellFormatter().addStyleName(j,k,"FlexTable-Cell");
+				tblLogs.getCellFormatter().addStyleName( j, k, "FlexTable-Cell");
 			}
 		}
-		// tblLogs.setStyleName("FlexTable");
+		//
+		for (int k=0; k<tblLogs.getCellCount(0); k++){
+			tblLogs.getCellFormatter().addStyleName( tblLogs.getRowCount()-1, k, "FlexTable-Cell-Total");
+		}
 	}
 
 	@Override

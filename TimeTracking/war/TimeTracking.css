@@ -15,18 +15,18 @@ body {
 }
 
 .sectionTitle {
+	color: White;
 	padding: 5px;
-  	background-color: #052f6d;
-  	color: #FFB840;
-  	font-style: bold;
-  	font-size: 14px;
+	font-size: 14px;
+	font-style: bold;
+	background-color: mediumturquoise;
 }
 
 .header {
-	padding: 5px;  	
-  	color: blue;
-  	font-style: gros;
-  	font-size: 16px;
+	color: orangered;
+	padding: 5px;
+	font-size: 16px;
+	font-style: gros;
 }
 
 .sideBar {
@@ -68,7 +68,7 @@ body {
   height: 5px; 
   border-width: 5px 0px 0px 0px;
   border-style: solid;
-  border-color: red;
+  border-color: orangered;
   margin-top: 5px; 
 }
 
@@ -115,5 +115,16 @@ body {
 }
 .hiddenText {
 	color: white;
+}
+.menuPaneTitle {
+	color: White;
+	pading:5px;
+	margin-left:-20px;
+	font-size: 18px;
+	font-style: gros;
+	background-color: mediumturquoise;
+}
+.smallButton {
+	background-color: snow;
 }
 

@@ -32,6 +32,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 
 public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implements TimeInputPresenter.MyView {
 
@@ -379,5 +380,55 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		// let admin choose year and month
 		lstMonth.setEnabled(isAdmin);
 		lstYear.setEnabled(isAdmin);
+	}
+	
+	//
+	@UiHandler("txtPriveTime")
+	void onTxtPriveTimeChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
+	}
+	@UiHandler("txtFerieNote")
+	void onTxtFerieNoteChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
+	}
+	@UiHandler("txtSupervisionTime")
+	void onTxtSupervisionTimeChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
+	}
+	@UiHandler("txtPriveNote")
+	void onTxtPriveNoteChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
+	}
+	@UiHandler("txtMaladieNote")
+	void onTxtMaladieNoteChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
+	}
+	@UiHandler("txtCoursTime")
+	void onTxtCoursTimeChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
+	}
+	@UiHandler("txtFraisNote")
+	void onTxtFraisNoteChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
+	}
+	@UiHandler("txtFraisAmount")
+	void onTxtFraisAmountChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
+	}
+	@UiHandler("txtFerieTime")
+	void onTxtFerieTimeChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
+	}
+	@UiHandler("txtCoursNote")
+	void onTxtCoursNoteChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
+	}
+	@UiHandler("txtMaladieTime")
+	void onTxtMaladieTimeChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
+	}
+	@UiHandler("txtSupervisionNote")
+	void onTxtSupervisionNoteChange(ChangeEvent event) {
+		getUiHandlers().toggleEditStatus(true);
 	}
 }

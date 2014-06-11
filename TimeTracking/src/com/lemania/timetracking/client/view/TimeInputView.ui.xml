@@ -32,7 +32,7 @@
 					<g:Label text="." styleName="hiddenText"/>
 					<p1:DataGrid width="400px" height="500px" ui:field="tblProfessors" keyboardSelectionPolicy="DISABLED"/>
 				</g:VerticalPanel>
-				<g:VerticalPanel width="600px">
+				<g:VerticalPanel width="600px" horizontalAlignment="ALIGN_CENTER">
 					<g:Label text="." styleName="hiddenText"/>
 					<g:Label styleName="sectionTitle"/>
 					<g:Grid width="420px" borderWidth="0" cellPadding="5" cellSpacing="2" styleName="sideBar">
@@ -76,7 +76,18 @@
 								<g:Grid>
 									<g:row>
 										<g:customCell>
-											<g:Label text="Cours :"/>
+											<g:Label text="."/>
+										</g:customCell>
+										<g:customCell>
+											<g:Label text="Nombre d&apos;heures"/>
+										</g:customCell>
+										<g:customCell>
+											<g:Label text="Commentaires"/>
+										</g:customCell>
+									</g:row>
+									<g:row>
+										<g:customCell>
+											<g:Label text="Cours"/>
 										</g:customCell>
 										<g:customCell>
 											<g:TextBox ui:field="txtCoursTime" width="100px"/>
@@ -153,7 +164,12 @@
 						</g:row>
 					</g:Grid>
 					<g:Label text="." styleName="hiddenText"/>
-					<g:Hyperlink text="Vue d&apos;ensemble" targetHistoryToken="rptbydept"/>
+					<g:HorizontalPanel width="" spacing="5">
+						<g:Label text="Récapitulatif des heures :"/>
+						<g:Hyperlink targetHistoryToken="rptbydept" text="Par département"/>
+						<g:Label text="-"/>
+						<g:Hyperlink text="Par chaque professeur" targetHistoryToken="#extractdata"/>
+					</g:HorizontalPanel>
 				</g:VerticalPanel>
 			</g:HorizontalPanel>
 		</g:VerticalPanel>

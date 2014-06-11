@@ -16,6 +16,7 @@ import com.lemania.timetracking.client.event.LoginAuthenticatedEvent.LoginAuthen
 import com.lemania.timetracking.client.event.UpdateTimeLogEvent;
 import com.lemania.timetracking.client.event.UpdateTimeLogEvent.UpdateTimeLogHandler;
 import com.lemania.timetracking.client.place.NameTokens;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.History;
@@ -47,6 +48,8 @@ public class TimeInputPresenter
 	
 //	private List<LogTypeProxy> logTypes;
 	private CurrentUser currentUser;
+	
+	private final PlaceManager placeManager;
 
 	public interface MyView extends View, HasUiHandlers<TimeInputUiHandler> {
 		
@@ -74,12 +77,20 @@ public class TimeInputPresenter
 	public interface MyProxy extends ProxyPlace<TimeInputPresenter> {
 	}
 
+	/*
+	 * 
+	 * */
 	@Inject
-	public TimeInputPresenter(final EventBus eventBus, final MyView view,
-			final MyProxy proxy) {
+	public TimeInputPresenter(final EventBus eventBus, final MyView view, PlaceManager placeManager, final MyProxy proxy) {
+		//
 		super(eventBus, view, proxy);
+		//
+		this.placeManager = placeManager;
 	}
 
+	/*
+	 * 
+	 * */
 	@Override
 	protected void revealInParent() {
 		RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetMainContent, this);
@@ -268,15 +279,29 @@ public class TimeInputPresenter
 			}
 			@Override
 			public void onSuccess(List<LogProxy> response) {
+				//
+				placeManager.setOnLeaveConfirmation(null);
 				getView().setLogData(response, true);
 			}
 		});
 	}
 
+	/*
+	 * 
+	 * */
 	@ProxyEvent
 	@Override
 	public void onActionCompleted(ActionCompletedEvent event) {
 		if (this.currentUser != null)
 			getView().initializeUI(this.currentUser.isAdmin());
+	}
+
+	/*
+	 * 
+	 * */
+	@Override
+	public void toggleEditStatus(boolean notsaved) {
+		//
+		placeManager.setOnLeaveConfirmation("Données non sauvegardées! CLIQUEZ ANULLER (ou CANCEL) pour rester sur cette page.");
 	}
 }

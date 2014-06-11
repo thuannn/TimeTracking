@@ -87,13 +87,23 @@ public class RptTimeByDepartmentView extends ViewWithUiHandlers<RptTimeByDepartm
 		tblProf.setText(0, 13, "Total par Prof");
 	}
 	
+	
+	/*
+	 * 
+	 * */
 	public void styleTable(){
+		//
 		for (int j=0; j<tblProf.getRowCount(); j++){
 			for (int k=0; k<tblProf.getCellCount(j); k++){
 				tblProf.getCellFormatter().addStyleName(j,k,"FlexTable-Cell");
 			}
 		}
-		// tblProf.setStyleName("FlexTable");
+		//
+		for (int j=tblProf.getRowCount()-2; j<tblProf.getRowCount(); j++){
+			for (int k=0; k<tblProf.getCellCount(0); k++){
+				tblProf.getCellFormatter().addStyleName( j, k, "FlexTable-Cell-Total");
+			}
+		}
 	}
 
 	@Override
@@ -126,6 +136,19 @@ public class RptTimeByDepartmentView extends ViewWithUiHandlers<RptTimeByDepartm
 		double total11 = 0;
 		double total12 = 0;
 		
+		double totalFee01 = 0;
+		double totalFee02 = 0;
+		double totalFee03 = 0;
+		double totalFee04 = 0;
+		double totalFee05 = 0;
+		double totalFee06 = 0;
+		double totalFee07 = 0;
+		double totalFee08 = 0;
+		double totalFee09 = 0;
+		double totalFee10 = 0;
+		double totalFee11 = 0;
+		double totalFee12 = 0;
+		
 		for (int i=0; i<profs.size(); i++){
 			totalHour = 0;
 			totalFee = 0;
@@ -142,6 +165,19 @@ public class RptTimeByDepartmentView extends ViewWithUiHandlers<RptTimeByDepartm
 			total10 = total10 + profs.get(i).getTotal_10();
 			total11 = total11 + profs.get(i).getTotal_11();
 			total12 = total12 + profs.get(i).getTotal_12();
+			
+			totalFee01 = totalFee01 + profs.get(i).getFee_01();
+			totalFee02 = totalFee02 + profs.get(i).getFee_02();
+			totalFee03 = totalFee03 + profs.get(i).getFee_03();
+			totalFee04 = totalFee04 + profs.get(i).getFee_04();
+			totalFee05 = totalFee05 + profs.get(i).getFee_05();
+			totalFee06 = totalFee06 + profs.get(i).getFee_06();
+			totalFee07 = totalFee07 + profs.get(i).getFee_07();
+			totalFee08 = totalFee08 + profs.get(i).getFee_08();
+			totalFee09 = totalFee09 + profs.get(i).getFee_09();
+			totalFee10 = totalFee10 + profs.get(i).getFee_10();
+			totalFee11 = totalFee11 + profs.get(i).getFee_11();
+			totalFee12 = totalFee12 + profs.get(i).getFee_12();
 			
 			tblProf.setText(currentRow, 0, profs.get(i).getProfName());
 			
@@ -225,6 +261,21 @@ public class RptTimeByDepartmentView extends ViewWithUiHandlers<RptTimeByDepartm
 		tblProf.setText(currentRow + 1, 10, (total10>0) ? String.valueOf(total10) : "");
 		tblProf.setText(currentRow + 1, 11, (total11>0) ? String.valueOf(total11) : "");
 		tblProf.setText(currentRow + 1, 12, (total12>0) ? String.valueOf(total12) : "");
+		
+		//
+		tblProf.setText(currentRow + 2, 0, "");
+		tblProf.setText(currentRow + 2, 1, (totalFee01>0) ? "CHF " + String.valueOf(totalFee01) : "");
+		tblProf.setText(currentRow + 2, 2, (totalFee02>0) ? "CHF " + String.valueOf(totalFee02) : "");
+		tblProf.setText(currentRow + 2, 3, (totalFee03>0) ? "CHF " + String.valueOf(totalFee03) : "");
+		tblProf.setText(currentRow + 2, 4, (totalFee04>0) ? "CHF " + String.valueOf(totalFee04) : "");
+		tblProf.setText(currentRow + 2, 5, (totalFee05>0) ? "CHF " + String.valueOf(totalFee05) : "");
+		tblProf.setText(currentRow + 2, 6, (totalFee06>0) ? "CHF " + String.valueOf(totalFee06) : "");
+		tblProf.setText(currentRow + 2, 7, (totalFee07>0) ? "CHF " + String.valueOf(totalFee07) : "");
+		tblProf.setText(currentRow + 2, 8, (totalFee08>0) ? "CHF " + String.valueOf(totalFee08) : "");
+		tblProf.setText(currentRow + 2, 9, (totalFee09>0) ? "CHF " + String.valueOf(totalFee09) : "");
+		tblProf.setText(currentRow + 2, 10, (totalFee10>0) ? "CHF " + String.valueOf(totalFee10) : "");
+		tblProf.setText(currentRow + 2, 11, (totalFee11>0) ? "CHF " + String.valueOf(totalFee11) : "");
+		tblProf.setText(currentRow + 2, 12, (totalFee12>0) ? "CHF " + String.valueOf(totalFee12) : "");
 		
 		// Set the stylesheet
 		styleTable();

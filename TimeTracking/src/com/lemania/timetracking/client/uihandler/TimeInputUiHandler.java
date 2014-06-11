@@ -22,4 +22,6 @@ public interface TimeInputUiHandler extends UiHandlers {
 			String priveTime, String priveNote, 
 			String supervisionTime, String supervisionNote, 
 			String fraisAmount, String fraisNote );
+	
+	void toggleEditStatus(boolean notsaved);
 }
