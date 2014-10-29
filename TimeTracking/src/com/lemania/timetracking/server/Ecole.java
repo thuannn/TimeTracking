@@ -1,8 +1,10 @@
 package com.lemania.timetracking.server;
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
+@Index
 public class Ecole extends DatastoreObject{
 	private String schoolName;
 	private String schoolAddress;

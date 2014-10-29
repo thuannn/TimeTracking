@@ -1,12 +1,15 @@
 package com.lemania.timetracking.server;
 
 import java.util.List;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.NotSaved;
+import com.googlecode.objectify.annotation.IgnoreSave;
+import com.googlecode.objectify.annotation.Index;
 
 
 @Entity
+@Index
 public class User extends DatastoreObject {
 	private String fullName;
 	private String userName;
@@ -16,13 +19,13 @@ public class User extends DatastoreObject {
 	private Boolean admin = false;
 	private List<Key<Cours>> departments;
 	
-	@NotSaved
+	@IgnoreSave
 	private int currentMonth = 0;
 
-	@NotSaved
+	@IgnoreSave
 	private int currentYear = 0;
 	
-	@NotSaved
+	@IgnoreSave
 	private int currentDay = 0;
 	
 	public String getUserName() {

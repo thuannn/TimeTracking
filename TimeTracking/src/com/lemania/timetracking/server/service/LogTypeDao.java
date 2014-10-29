@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Query;
+import com.googlecode.objectify.cmd.Query;
 import com.lemania.timetracking.server.LogType;
 
 public class LogTypeDao extends MyDAOBase {
@@ -14,7 +14,7 @@ public class LogTypeDao extends MyDAOBase {
 	}
 	
 	public List<LogType> listAll(){
-		Query<LogType> q = this.ofy().query(LogType.class).order("hourName");
+		Query<LogType> q = ofy().load().type(LogType.class).order("hourName");
 		List<LogType> returnList = new ArrayList<LogType>();
 		for (LogType type : q){
 			returnList.add(type);
@@ -24,7 +24,7 @@ public class LogTypeDao extends MyDAOBase {
 	}
 	
 	public List<LogType> listAllActive(){
-		Query<LogType> q = this.ofy().query(LogType.class).filter("hourActive", true).order("orderNumber");
+		Query<LogType> q = ofy().load().type(LogType.class).filter("hourActive", true).order("orderNumber");
 		List<LogType> returnList = new ArrayList<LogType>();
 		for (LogType type : q){
 			returnList.add(type);
@@ -34,19 +34,22 @@ public class LogTypeDao extends MyDAOBase {
 	}
 	
 	public void save(LogType type){
-		this.ofy().put(type);
+		//
+		ofy().save().entities(type).now();
 	}
 	
-	public LogType saveAndReturn(LogType type){
-		Key<LogType> key = this.ofy().put(type);
+	public LogType saveAndReturn(LogType type) {
+		//
+		Key<LogType> key = ofy().save().entities(type).now().keySet().iterator().next();
 		try {
-			return this.ofy().get(key);
+			return ofy().load().key(key).now();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
 	public void removeLogType(LogType type){
-		this.ofy().delete(type);
+		//
+		ofy().delete().entities( type ).now();
 	}
 }

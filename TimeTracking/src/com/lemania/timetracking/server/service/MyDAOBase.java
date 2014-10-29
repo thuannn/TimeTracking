@@ -1,7 +1,8 @@
 package com.lemania.timetracking.server.service;
 
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.util.DAOBase;
 import com.lemania.timetracking.server.Assignment;
 import com.lemania.timetracking.server.Cours;
 import com.lemania.timetracking.server.Ecole;
@@ -11,7 +12,15 @@ import com.lemania.timetracking.server.Professor;
 import com.lemania.timetracking.server.SettingOption;
 import com.lemania.timetracking.server.User;
 
-public class MyDAOBase extends DAOBase {
+public class MyDAOBase {
+	
+	public static Objectify ofy() {
+        return ObjectifyService.ofy();
+    }
+
+    public static ObjectifyFactory factory() {
+        return ObjectifyService.factory();
+    }
 
 	static {
 		try {

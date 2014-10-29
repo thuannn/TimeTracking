@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Query;
+import com.googlecode.objectify.cmd.Query;
 import com.lemania.timetracking.server.Assignment;
 import com.lemania.timetracking.server.Cours;
 import com.lemania.timetracking.server.Log;
@@ -19,7 +19,7 @@ public class ProfessorDao extends MyDAOBase {
 	}
 	
 	public List<Professor> listAll(){
-		Query<Professor> q = this.ofy().query(Professor.class).order("profName");
+		Query<Professor> q = ofy().load().type(Professor.class).order("profName");
 		List<Professor> returnList = new ArrayList<Professor>();
 		for (Professor prof : q){
 			returnList.add(prof);
@@ -31,7 +31,7 @@ public class ProfessorDao extends MyDAOBase {
 	/*
 	 * */
 	public List<Professor> listAllActive(Boolean active){
-		Query<Professor> q = this.ofy().query(Professor.class)
+		Query<Professor> q = ofy().load().type(Professor.class)
 				.filter("profActive", active)
 				.order("profName");
 		List<Professor> returnList = new ArrayList<Professor>();
@@ -45,15 +45,15 @@ public class ProfessorDao extends MyDAOBase {
 	/*
 	 * List all professor belong to a department */
 	public List<Professor> listAllByCourse(String courseId){
-		Key<Cours> course = new Key<Cours>(Cours.class, Long.parseLong(courseId));
-		Query<Assignment> qa = this.ofy().query(Assignment.class).filter("cours", course);
+		Key<Cours> course = Key.create(Cours.class, Long.parseLong(courseId));
+		Query<Assignment> qa = ofy().load().type(Assignment.class).filter("cours", course);
 		
-		List<Key<? extends Professor>> profKeys = new ArrayList<Key<? extends Professor>>();
+		List<Key<Professor>> profKeys = new ArrayList<Key<Professor>>();
 		for (Assignment a : qa){
 			profKeys.add( a.getProf() );
 		}
 		
-		Map<Key<Professor>, Professor> profs = this.ofy().get(profKeys);
+		Map<Key<Professor>, Professor> profs = ofy().load().keys( profKeys );
 		List<Professor> returnList = new ArrayList<Professor>(profs.values());		
 		List<Professor> activeList = new ArrayList<Professor>();
 		
@@ -68,19 +68,20 @@ public class ProfessorDao extends MyDAOBase {
 	
 	/*
 	 * List all professor ACTIVE belong to a department */
-	public List<Professor> listAllActiveByCourse(String courseId, String year, String month){
-		Key<Cours> course = new Key<Cours>(Cours.class, Long.parseLong(courseId));
-		Query<Assignment> qa = this.ofy().query(Assignment.class).filter("cours", course);
+	public List<Professor> listAllActiveByCourse(String courseId, String year, String month) {
+		//
+		Key<Cours> course = Key.create(Cours.class, Long.parseLong(courseId));
+		Query<Assignment> qa = ofy().load().type(Assignment.class).filter("cours", course);
 		
 		// Go through all the assignments of this department, select only the profs of the active ones
-		List<Key<? extends Professor>> profKeys = new ArrayList<Key<? extends Professor>>();
+		List<Key<Professor>> profKeys = new ArrayList<Key<Professor>>();
 		for (Assignment a : qa){
 			if (a.getActive())
 				profKeys.add( a.getProf() );
 		}
 		
 		// Go through the list of professor and select only the active professors
-		Map<Key<Professor>, Professor> profs = this.ofy().get(profKeys);
+		Map<Key<Professor>, Professor> profs = ofy().load().keys(profKeys);
 		List<Professor> returnList = new ArrayList<Professor>(profs.values());		
 		List<Professor> activeList = new ArrayList<Professor>();
 		for (Professor prof : returnList) {
@@ -91,13 +92,13 @@ public class ProfessorDao extends MyDAOBase {
 		// Go through the list of professor and get the latest modification date
 		Query<Log> qLog;
 		for (Professor curProf : activeList){
-			qLog = this.ofy().query(Log.class)
+			qLog = ofy().load().type(Log.class)
 					.filter("year", Integer.parseInt(year))
 					.filter("month", Integer.parseInt(month))
-					.filter("prof", new Key<Professor>(Professor.class, curProf.getId()))
+					.filter("prof", Key.create(Professor.class, curProf.getId()))
 					.filter("cours", course);
 			if (qLog.count()>0)
-				curProf.setLogModifyDate(qLog.get().getModifyDate());
+				curProf.setLogModifyDate( qLog.list().get(0).getModifyDate() );
 		}
 		
 		// Sort the professor list by name and return
@@ -109,7 +110,7 @@ public class ProfessorDao extends MyDAOBase {
 	public List<Professor> listAllByCourseList(List<Cours> courses){
 		
 		Key<Cours> course;
-		List<Key<? extends Professor>> profKeys;
+		List<Key<Professor>> profKeys;
 		Map<Key<Professor>, Professor> profs;
 		List<Professor> returnList;
 		Query<Assignment> qa;		
@@ -118,15 +119,15 @@ public class ProfessorDao extends MyDAOBase {
 		
 		for (Cours curr_course : courses)
 		{				
-			course = new Key<Cours>(Cours.class, curr_course.getId());
-			qa = this.ofy().query(Assignment.class).filter("cours", course);
+			course = Key.create(Cours.class, curr_course.getId());
+			qa = ofy().load().type(Assignment.class).filter("cours", course);
 			
-			profKeys = new ArrayList<Key<? extends Professor>>();
+			profKeys = new ArrayList<Key<Professor>>();
 			for (Assignment a : qa){
 				profKeys.add( a.getProf() );
 			}
 			
-			profs = this.ofy().get(profKeys);
+			profs = ofy().load().keys(profKeys);
 			returnList = new ArrayList<Professor>(profs.values());			
 			
 			for (Professor prof : returnList) {
@@ -154,15 +155,15 @@ public class ProfessorDao extends MyDAOBase {
 	
 	public List<Professor> listAllByCourseWithTime(String deptId, int year){
 		// Query a list of keys of all the professors from a department
-		Key<Cours> course = new Key<Cours>(Cours.class, Long.parseLong(deptId));
-		Query<Assignment> qa = this.ofy().query(Assignment.class).filter("cours", course);
+		Key<Cours> course = Key.create(Cours.class, Long.parseLong(deptId));
+		Query<Assignment> qa = ofy().load().type(Assignment.class).filter("cours", course);
 		
 		// Get a list of object of those professors and sort by name
-		List<Key<? extends Professor>> profKeys = new ArrayList<Key<? extends Professor>>();
+		List<Key<Professor>> profKeys = new ArrayList<Key<Professor>>();
 		for (Assignment a : qa){
 			profKeys.add( a.getProf() );
 		}
-		Map<Key<Professor>, Professor> profs = this.ofy().get(profKeys);
+		Map<Key<Professor>, Professor> profs = ofy().load().keys(profKeys);
 		List<Professor> returnListAll = new ArrayList<Professor>(profs.values());
 		List<Professor> returnList = new ArrayList<Professor>();
 		for (int i=0; i<returnListAll.size(); i++) {
@@ -172,12 +173,12 @@ public class ProfessorDao extends MyDAOBase {
 		java.util.Collections.sort(returnList);
 		
 		// Get the key of the Frais type
-		Query<LogType> qt = this.ofy().query(LogType.class).filter("hourName", "6.Frais");
-		Key<LogType> typeFrais = qt.getKey();
+		Query<LogType> qt = ofy().load().type(LogType.class).filter("hourName", "6.Frais");
+		Key<LogType> typeFrais = qt.keys().iterator().next();
 		
 		// Calculate the total time for each professor
-		Query<Log> q = this.ofy().query(Log.class)
-				.filter("cours",new Key<Cours>(Cours.class, Long.parseLong(deptId)))
+		Query<Log> q = ofy().load().type(Log.class)
+				.filter("cours",Key.create(Cours.class, Long.parseLong(deptId)))
 				.filter("year", year)
 				.order("prof")
 				.order("year")
@@ -190,7 +191,7 @@ public class ProfessorDao extends MyDAOBase {
 		
 		Key<Professor> currentProfKey;
 		for (Professor p : returnList) {
-			currentProfKey = new Key<Professor>(Professor.class, p.getId());
+			currentProfKey = Key.create(Professor.class, p.getId());
 			for (Log log : lstLogs) {
 				if ( currentProfKey.equals(log.getProf()) ){
 					switch (log.getMonth()){
@@ -275,19 +276,22 @@ public class ProfessorDao extends MyDAOBase {
 	}
 	
 	public void save(Professor prof){
-		this.ofy().put(prof);
+		//
+		ofy().save().entities(prof).now();
 	}
 	
-	public Professor saveAndReturn(Professor prof){
-		Key<Professor> key = this.ofy().put(prof);
+	public Professor saveAndReturn(Professor prof) {
+		//
+		Key<Professor> key = ofy().save().entities(prof).now().keySet().iterator().next();
 		try {
-			return this.ofy().get(key);
+			return ofy().load().key(key).now();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
 	public void removeProfessor(Professor prof) {
-		this.ofy().delete(prof);
+		//
+		ofy().delete().entities(prof).now();
 	}
 }

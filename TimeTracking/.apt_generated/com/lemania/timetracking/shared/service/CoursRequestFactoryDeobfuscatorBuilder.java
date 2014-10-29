@@ -6,17 +6,17 @@ import com.google.web.bindery.requestfactory.vm.impl.OperationData;
 import com.google.web.bindery.requestfactory.vm.impl.OperationKey;
 public final class CoursRequestFactoryDeobfuscatorBuilder extends com.google.web.bindery.requestfactory.vm.impl.Deobfuscator.Builder {
 {
-withOperation(new OperationKey("yN7F8RR6LGTv$2c$d_vWYQc7I9k="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/CoursProxy;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Cours;Ljava/lang/String;)V")
-  .withMethodName("save")
-  .withRequestContext("com.lemania.timetracking.shared.service.CoursRequestFactory$CoursRequestContext")
-  .build());
 withOperation(new OperationKey("8ZfojIzS2mRmrMJ9upuqVN0IfPc="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/CoursProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
   .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Cours;)V")
+  .withMethodName("save")
+  .withRequestContext("com.lemania.timetracking.shared.service.CoursRequestFactory$CoursRequestContext")
+  .build());
+withOperation(new OperationKey("yN7F8RR6LGTv$2c$d_vWYQc7I9k="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/CoursProxy;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Cours;Ljava/lang/String;)V")
   .withMethodName("save")
   .withRequestContext("com.lemania.timetracking.shared.service.CoursRequestFactory$CoursRequestContext")
   .build());

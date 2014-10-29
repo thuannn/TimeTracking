@@ -1,17 +1,11 @@
-<!-- Indices written at Tue, 10 Jun 2014 11:32:39 CEST -->
+<!-- Indices written at Wed, 29 Oct 2014 17:44:39 CET -->
 
 <datastore-indexes>
 
-    <!-- Used 3 times in query history -->
-    <datastore-index kind="LogType" ancestor="false" source="auto">
-        <property name="hourActive" direction="asc"/>
-        <property name="orderNumber" direction="asc"/>
-    </datastore-index>
-
     <!-- Used 1 time in query history -->
-    <datastore-index kind="Professor" ancestor="false" source="auto">
-        <property name="profActive" direction="asc"/>
-        <property name="profName" direction="asc"/>
+    <datastore-index kind="Ecole" ancestor="false" source="auto">
+        <property name="schoolActive" direction="asc"/>
+        <property name="schoolName" direction="asc"/>
     </datastore-index>
 
 </datastore-indexes>

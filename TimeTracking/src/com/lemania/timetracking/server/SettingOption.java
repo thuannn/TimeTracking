@@ -1,8 +1,10 @@
 package com.lemania.timetracking.server;
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
+@Index
 public class SettingOption extends DatastoreObject {
 	private String optionName;
 	private String optionValue;

@@ -2,8 +2,10 @@ package com.lemania.timetracking.server;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
+@Index
 public class Log extends DatastoreObject implements Comparable<Log>{
 	
 	Key<Professor> prof;
