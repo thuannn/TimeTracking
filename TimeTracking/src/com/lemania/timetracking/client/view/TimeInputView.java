@@ -3,8 +3,10 @@ package com.lemania.timetracking.client.view;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -18,7 +20,6 @@ import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.LogProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
-import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory.ProfessorRequestContext;
 import com.google.gwt.uibinder.client.UiField;
@@ -29,10 +30,17 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 
 public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implements TimeInputPresenter.MyView {
 
@@ -59,12 +67,11 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiField DataGrid<ProfessorProxy> tblProfessors = new DataGrid<ProfessorProxy>();
 	@UiField ListBox lstCourses;
 	@UiField ListBox lstSchools;
+	@UiField TextBox txtCoursTime;
 	@UiField Label lblProfName;
+	@UiField TextBox txtCoursNote;
 	@UiField ListBox lstYear;
 	@UiField ListBox lstMonth;
-	@UiField Label txtNotification;
-	@UiField TextBox txtCoursTime;
-	@UiField TextBox txtCoursNote;
 	@UiField TextBox txtMaladieNote;
 	@UiField TextBox txtMaladieTime;
 	@UiField TextBox txtFerieTime;
@@ -253,6 +260,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
  	      }
  	    };
  	    tblProfessors.addColumn(colDate, "Date de modification");
+ 	    tblProfessors.setColumnWidth(colDate, 40, Unit.PCT);
     
 	    // Add a selection model to handle user selection.
 	    final SingleSelectionModel<ProfessorProxy> selectionModel = new SingleSelectionModel<ProfessorProxy>() {
@@ -430,5 +438,86 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiHandler("txtSupervisionNote")
 	void onTxtSupervisionNoteChange(ChangeEvent event) {
 		getUiHandlers().toggleEditStatus(true);
+	}
+	
+	@UiHandler("txtCoursNote")
+	void onTxtCoursNoteMouseDown(MouseDownEvent event) {
+		//
+		showNoteBox((TextBox)event.getSource());
+	}
+	
+	@UiHandler("txtMaladieNote")
+	void onTxtMaladieNoteMouseDown(MouseDownEvent event) {
+		//
+		showNoteBox((TextBox)event.getSource());
+	}
+	
+	@UiHandler("txtFerieNote")
+	void onTxtFerieNoteMouseDown(MouseDownEvent event) {
+		//
+		showNoteBox((TextBox)event.getSource());
+	}
+	
+	@UiHandler("txtPriveNote")
+	void onTxtPriveNoteMouseDown(MouseDownEvent event) {
+		//
+		showNoteBox((TextBox)event.getSource());
+	}
+	
+	@UiHandler("txtSupervisionNote")
+	void onTxtSupervisionNoteMouseDown(MouseDownEvent event) {
+		//
+		showNoteBox((TextBox)event.getSource());
+	}
+	
+	@UiHandler("txtFraisNote")
+	void onTxtFraisNoteMouseDown(MouseDownEvent event) {
+		//
+		showNoteBox((TextBox)event.getSource());
+	}
+
+	
+	/*
+	 * Show popup to type comments
+	 * */
+	private void showNoteBox( final TextBox tb ) {
+		//
+		tb.setEnabled(false);
+		final PopupPanel popup = new PopupPanel();
+		VerticalPanel vp = new VerticalPanel();
+		final TextArea ta = new TextArea();
+		ta.setSize("400px", "300px");
+		ta.setText( tb.getText() );
+		//
+		Button closeButton = new Button("Valider");
+		closeButton.setStyleName("button-highlight");
+		closeButton.addClickHandler( new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				//
+				popup.hide();
+				tb.setEnabled(true);
+			}
+			
+		});
+		//
+		vp.add(ta);
+		vp.add(closeButton);
+		popup.add(vp);
+		popup.setGlassEnabled(true);
+		popup.setAutoHideEnabled(false);
+		//
+		popup.addCloseHandler( new CloseHandler<PopupPanel>(){
+
+			@Override
+			public void onClose(CloseEvent<PopupPanel> event) {
+				//
+				tb.setText( ta.getText() );
+			}
+			
+		});
+		//
+		popup.center();
 	}
 }

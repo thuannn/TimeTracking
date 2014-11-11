@@ -286,7 +286,7 @@ public class ProfsPresenter
 			@Override
 			public void onSuccess(AssignmentProxy response) {
 				if (response == null)
-					Window.alert("ERREUR : Le statut n'a pas été modifié pour ce professeur.");
+					Window.alert("ERREUR : Vous n'êtes pas le responsable de ce département.");
 			}
 		});
 	}

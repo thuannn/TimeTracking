@@ -7,10 +7,10 @@
 	ui:generateLocales='default' xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
 
 	<g:HTMLPanel width="100%">
-		<g:VerticalPanel width="100%" spacing="2">
+		<g:VerticalPanel width="100%">
 			<g:Label text="AJOUTER UN NOUVEAU PROFESSEUR" styleName="pageTitle" width="" horizontalAlignment="ALIGN_CENTER"/>
-			<g:HorizontalPanel width="800px">
-				<g:Grid width="320px">
+			<g:HorizontalPanel width="800px" spacing="5">
+				<g:Grid width="447px">
 					<g:row>
 						<g:customCell>
 							<g:Label text="Nom : "/>
@@ -32,9 +32,9 @@
 							<g:Label/>
 						</g:customCell>
 						<g:customCell>
-							<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_RIGHT">
-								<g:Button ui:field="cmdCancel">Annuler</g:Button>
-								<g:Button ui:field="cmdAdd">Ajouter</g:Button>
+							<g:HorizontalPanel width="269px" horizontalAlignment="ALIGN_RIGHT">
+								<g:Button ui:field="cmdCancel" styleName="button-normal">Annuler</g:Button>
+								<g:Button ui:field="cmdAdd" styleName="button-highlight">Ajouter</g:Button>
 							</g:HorizontalPanel>
 						</g:customCell>
 					</g:row>

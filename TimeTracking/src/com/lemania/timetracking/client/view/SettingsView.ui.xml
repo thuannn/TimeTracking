@@ -7,7 +7,7 @@
 	ui:generateLocales='default'>
 
 	<g:HTMLPanel width="100%">
-		<g:VerticalPanel width="100%" spacing="2">
+		<g:VerticalPanel width="100%">
 			<g:Label text="GESTION DE L&apos;ACCES" styleName="pageTitle" horizontalAlignment="ALIGN_CENTER"/>
 			<g:Grid cellPadding="10" borderWidth="0">
 				<g:row>
@@ -42,7 +42,7 @@
 						<g:Label/>
 					</g:customCell>
 					<g:customCell>
-						<g:Button text="Enregistrer" ui:field="cmdSave"/>
+						<g:Button text="Enregistrer" ui:field="cmdSave" styleName="button-highlight"/>
 					</g:customCell>
 				</g:row>
 			</g:Grid>

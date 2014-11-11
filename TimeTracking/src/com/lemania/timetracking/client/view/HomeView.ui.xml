@@ -7,7 +7,7 @@
 	ui:generateLocales='default'>
 
 	<g:HTMLPanel width="100%" height="100%">
-		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER" spacing="2">
+		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER">
 			<g:Label text="HEURES DU MOIS" styleName="pageTitle" width=""/>
 			<g:Label text="." styleName="hiddenText"/>
 			<g:Grid width="300px" ui:field="panelLogin" styleName="subSection" cellPadding="5" cellSpacing="5">
@@ -32,7 +32,7 @@
 						<g:Label/>
 					</g:customCell>
 					<g:customCell>
-						<g:Button text="Se connecter" ui:field="cmdLogin"/>
+						<g:Button text="Se connecter" ui:field="cmdLogin" styleName="button-highlight"/>
 					</g:customCell>
 				</g:row>
 			</g:Grid>
