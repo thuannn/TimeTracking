@@ -11,6 +11,8 @@ import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.lemania.timetracking.client.event.ActionCompletedEvent;
 import com.lemania.timetracking.client.event.ActionCompletedEvent.ActionCompletedHandler;
+import com.lemania.timetracking.client.event.LoadAllProfessorLogsEvent;
+import com.lemania.timetracking.client.event.LoadAllProfessorLogsEvent.LoadAllProfessorLogsHandler;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent;
 import com.lemania.timetracking.client.event.LoginAuthenticatedEvent.LoginAuthenticatedHandler;
 import com.lemania.timetracking.client.event.UpdateTimeLogEvent;
@@ -44,7 +46,8 @@ import com.lemania.timetracking.client.LoggedInGatekeeper;
 
 public class TimeInputPresenter 
 		extends Presenter<TimeInputPresenter.MyView, TimeInputPresenter.MyProxy> 
-		implements TimeInputUiHandler, UpdateTimeLogHandler, LoginAuthenticatedHandler, ActionCompletedHandler {
+		implements TimeInputUiHandler, UpdateTimeLogHandler, LoginAuthenticatedHandler, ActionCompletedHandler,
+					LoadAllProfessorLogsHandler {
 	
 //	private List<LogTypeProxy> logTypes;
 	private CurrentUser currentUser;
@@ -52,9 +55,11 @@ public class TimeInputPresenter
 	private final PlaceManager placeManager;
 
 	public interface MyView extends View, HasUiHandlers<TimeInputUiHandler> {
-		
+		//
 		void setProfData(List<ProfessorProxy> profs);
+		//
 		void setLogData(List<LogProxy> logs, Boolean logUpdated);
+		void setOtherLogData(List<LogProxy> logs, Boolean logUpdated);
 		
 		void setEcoleList(List<EcoleProxy> ecoles);
 		void setCourseList(List<CoursProxy> cours);
@@ -167,13 +172,20 @@ public class TimeInputPresenter
 	}
 	
 
+	/*
+	 * 
+	 * */
 	@ProxyEvent
 	@Override
-	public void onUpdateTimeLog(UpdateTimeLogEvent event) {		
+	public void onUpdateTimeLog(UpdateTimeLogEvent event) {
+		//
 		loadLogData(event.getProf(), event.getCourseId(), event.getYear(), event.getMonth());
 	}
 	
 	
+	/*
+	 * 
+	 * */
 	public void loadLogData(final ProfessorProxy prof, final String courseId, final String year, final String month) {
 		// Load log list
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
@@ -194,7 +206,9 @@ public class TimeInputPresenter
 	
 	@Override
 	public void professorSelected(ProfessorProxy prof, String courseId, String year, String month) {
+		//
 		getEventBus().fireEvent(new UpdateTimeLogEvent(prof, courseId, year, month));
+		getEventBus().fireEvent(new LoadAllProfessorLogsEvent( prof.getId().toString(), Integer.parseInt(year), Integer.parseInt(month)) );
 	}
 
 	@Override
@@ -303,5 +317,28 @@ public class TimeInputPresenter
 	public void toggleEditStatus(boolean notsaved) {
 		//
 		placeManager.setOnLeaveConfirmation("Données non sauvegardées! CLIQUEZ ANULLER (ou CANCEL) pour rester sur cette page.");
+	}
+
+	
+	/*
+	 * When a professor is selected, load all the logs from other departments and show on screen
+	 * */
+	@ProxyEvent
+	@Override
+	public void onLoadAllProfessorLogs(LoadAllProfessorLogsEvent event) {
+		// Load log list
+		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
+		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+		LogRequestContext rcl = rfl.logRequest();
+		rcl.listAllFullDetailByProf( event.getProfId(), event.getYear(), event.getMonth() ).fire(new Receiver<List<LogProxy>>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<LogProxy> response) {
+				getView().setOtherLogData(response, false);
+			}
+		});
 	}
 }

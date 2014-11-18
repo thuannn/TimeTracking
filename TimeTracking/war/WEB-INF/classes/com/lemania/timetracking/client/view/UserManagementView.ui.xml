@@ -45,10 +45,10 @@
 					</g:row>
 					<g:row>
 						<g:customCell>
-							<g:Label text="."/>
+							<g:Label text="." styleName="hiddenText"/>
 						</g:customCell>
 						<g:customCell>
-							<g:Button text="Ajouter" ui:field="cmdAdd"/>
+							<g:Button text="Ajouter" ui:field="cmdAdd" styleName="button-highlight"/>
 						</g:customCell>
 					</g:row>
 					<g:row/>
@@ -75,7 +75,7 @@
 							<g:Label/>
 						</g:customCell>
 						<g:customCell>
-							<g:Button text="Assigner" ui:field="cmdAddCourse"/>
+							<g:Button text="Assigner" ui:field="cmdAddCourse" styleName="button-highlight"/>
 						</g:customCell>
 					</g:row>
 				</g:Grid>

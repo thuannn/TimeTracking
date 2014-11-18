@@ -7,21 +7,22 @@
 	ui:generateLocales='default' xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
 
 	<g:HTMLPanel width="100%">
-		<g:VerticalPanel width="100%"  spacing="2">
+		<g:VerticalPanel width="100%">
 			<g:Label text="LISTE DES PROFESSEURS" styleName="pageTitle" horizontalAlignment="ALIGN_CENTER"/>
 			<g:HorizontalPanel width="850px">
 				<g:VerticalPanel width="400px" spacing="5" horizontalAlignment="ALIGN_CENTER">
 					<g:HorizontalPanel width="95%">
-						<g:Label text="Statut :" horizontalAlignment="ALIGN_RIGHT"/>
+						<g:Label text="Statut : " horizontalAlignment="ALIGN_RIGHT"/>
 						<g:ListBox ui:field="lstStatus"/>
 					</g:HorizontalPanel>
-					<p1:DataGrid width="400px" height="550px" ui:field="tblProfessors" keyboardPagingPolicy="INCREASE_RANGE" keyboardSelectionPolicy="DISABLED" pageSize="1000"/>
+					<p1:DataGrid width="400px" height="550px" ui:field="tblProfessors" keyboardPagingPolicy="INCREASE_RANGE" keyboardSelectionPolicy="DISABLED" pageSize="200" alwaysShowScrollBars="false" focus="false" styleName="body"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="400px">
-					<g:Label ui:field="lblProfNameAssign" styleName="header"/>
 					<g:Label text="." styleName="hiddenText"/>
-					<g:Label text="Rajouter un département" width="" styleName="sectionTitle"/>
-					<g:Grid width="100%" styleName="subSection">
+					<g:Label ui:field="lblProfNameAssign" styleName="header"/>
+					<g:VerticalPanel width="100%" styleName="subSection">
+						<g:Label text="Assigner un département" width="" styleName="sectionTitle"/>
+						<g:Grid width="100%">
 						<g:row>
 							<g:customCell>
 								<g:Label text="Ecole : " width=""/>
@@ -43,13 +44,16 @@
 								<g:Label/>
 							</g:customCell>
 							<g:customCell>
-								<g:Button ui:field="cmdAddCourse">Ajouter</g:Button>
+								<g:Button ui:field="cmdAddCourse" styleName="button-highlight">Ajouter</g:Button>
 							</g:customCell>
 						</g:row>
 					</g:Grid>
+					</g:VerticalPanel>
 					<g:Label text="." styleName="hiddenText"/>
-					<g:Label text="Liste des département assignés" styleName="sectionTitle"/>
-					<p1:DataGrid width="400px" height="350PX" ui:field="tblAssignments" styleName="subSection"/>
+					<g:VerticalPanel styleName="subSection" width="100%">
+						<g:Label text="Liste des département assignés" styleName="sectionTitle"/>
+						<p1:DataGrid width="400px" height="350PX" ui:field="tblAssignments"/>
+					</g:VerticalPanel>
 				</g:VerticalPanel>
 			</g:HorizontalPanel>
 		</g:VerticalPanel>

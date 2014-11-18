@@ -105,6 +105,25 @@ public class LogDao extends MyDAOBase {
 		return returnList;
 	}
 	
+	/*
+	 * List all logs by prof and month
+	 * */
+	public List<Log> listAllFullDetailByProf(String profId, int year, int month){
+		Query<Log> q = ofy().load().type(Log.class)
+				.filter("prof", Key.create(Professor.class, Long.parseLong(profId)))
+				.filter("year", year )
+				.filter("month", month)
+				.order("cours");
+		
+		List<Log> returnList = new ArrayList<Log>();
+		for (Log log : q){	
+			returnList.add(log);
+		}
+		
+		return returnList;
+	}
+	
+	
 	public List<Log> listAll(String profId, String coursId, String year, String month){				
 		Key<Professor> profKey = Key.create(Professor.class, Long.parseLong(profId));
 		Key<Cours> coursKey = Key.create(Cours.class, Long.parseLong(coursId));

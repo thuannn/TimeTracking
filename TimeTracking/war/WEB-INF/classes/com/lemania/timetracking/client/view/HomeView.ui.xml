@@ -7,16 +7,17 @@
 	ui:generateLocales='default'>
 
 	<g:HTMLPanel width="100%" height="100%">
-		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER" spacing="2">
+		<g:VerticalPanel width="100%" horizontalAlignment="ALIGN_CENTER">
 			<g:Label text="HEURES DU MOIS" styleName="pageTitle" width=""/>
 			<g:Label text="." styleName="hiddenText"/>
-			<g:Grid width="300px" ui:field="panelLogin" styleName="subSection" cellPadding="5" cellSpacing="5">
+			<g:Image url="images/Capture.PNG" width="339px" height="336px"/>
+			<g:Grid width="" ui:field="panelLogin" styleName="subSection" cellPadding="5" cellSpacing="5">
 				<g:row>
 					<g:customCell>
 						<g:Label text="Nom d&apos;utilisateur :" horizontalAlignment="ALIGN_LEFT"/>
 					</g:customCell>
 					<g:customCell>
-						<g:TextBox ui:field="txtUserName" alignment="LEFT"/>
+						<g:TextBox ui:field="txtUserName" alignment="LEFT" width="200px"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -24,7 +25,7 @@
 						<g:Label text="Mot de passe :" horizontalAlignment="ALIGN_LEFT"/>
 					</g:customCell>
 					<g:customCell>
-						<g:PasswordTextBox ui:field="txtPassword" alignment="LEFT"/>
+						<g:PasswordTextBox ui:field="txtPassword" alignment="LEFT" width="200px"/>
 					</g:customCell>
 				</g:row>
 				<g:row>
@@ -32,10 +33,9 @@
 						<g:Label/>
 					</g:customCell>
 					<g:customCell>
-						<g:Button text="Se connecter" ui:field="cmdLogin"/>
+						<g:Button text="Se connecter" ui:field="cmdLogin" styleName="button-highlight"/>
 					</g:customCell>
 				</g:row>
 			</g:Grid>
-			<g:Image url="images/Capture.PNG" width="339px" height="336px"/>
 		</g:VerticalPanel></g:HTMLPanel>
 </ui:UiBinder>

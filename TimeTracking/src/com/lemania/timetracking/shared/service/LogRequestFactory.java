@@ -6,6 +6,7 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.Service;
+import com.lemania.timetracking.server.Log;
 import com.lemania.timetracking.server.service.DaoServiceLocator;
 import com.lemania.timetracking.server.service.LogDao;
 import com.lemania.timetracking.shared.LogProxy;
@@ -20,6 +21,7 @@ public interface LogRequestFactory extends RequestFactory {
 		Request<List<LogProxy>> listAllFullDetailByMonth(int selectedYear, int selectedMonth);
 		Request<List<LogProxy>> listAllFullDetailByDepartment(String deptId);
 		Request<List<LogProxy>> listAllFullDetailByProf(String profId, String year);
+		Request<List<LogProxy>> listAllFullDetailByProf(String profId, int year, int month);
 		
 		Request<List<LogProxy>> listAll(String profId, String courseId, String year, String month);
 		

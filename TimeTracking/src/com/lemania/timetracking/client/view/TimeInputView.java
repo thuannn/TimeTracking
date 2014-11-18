@@ -41,6 +41,7 @@ import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
+import com.google.gwt.user.client.ui.FlexTable;
 
 public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implements TimeInputPresenter.MyView {
 
@@ -83,6 +84,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiField TextBox txtFraisAmount;
 	@UiField TextBox txtFraisNote;
 	@UiField Button cmdSave;
+	@UiField FlexTable tblHours;
 	
 	@Override
 	public void setEcoleList(List<EcoleProxy> ecoles) {
@@ -519,5 +521,52 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		});
 		//
 		popup.center();
+	}
+
+	
+	/*
+	 * Show the log data of other departments
+	 * */
+	@Override
+	public void setOtherLogData(List<LogProxy> logs, Boolean logUpdated) {
+		//
+		LogProxy log;
+		String prevCourse = "";
+		int row = -1;
+		for (int i=0; i < logs.size(); i++ ) {
+			//
+			log = logs.get(i);
+			//
+			if ( prevCourse.equals("") || !prevCourse.equals(logs.get(i).getCourseName()) ) {
+				prevCourse = log.getCourseName();
+				row++;
+			}
+			//
+			tblHours.setText(row, 0, log.getCourseName() );
+			// Cours
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.cours)) {
+				tblHours.setText( row, 1, Double.toString(log.getHour()) );
+			}
+			// Maladie
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.maladie)) {
+				tblHours.setText( row, 2, Double.toString(log.getHour()) );
+			}
+			// Fériés
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.ferie)) {
+				tblHours.setText( row, 3, Double.toString(log.getHour()) );
+			}
+			// Privé
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.prive)) {
+				tblHours.setText( row, 4, Double.toString(log.getHour()) );
+			}
+			// Supervision
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.supervision)) {
+				tblHours.setText( row, 5, Double.toString(log.getHour()) );
+			}
+			// Frais
+			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.frais)) {
+				tblHours.setText( row, 6, Double.toString(log.getHour()) );
+			}
+		}
 	}
 }

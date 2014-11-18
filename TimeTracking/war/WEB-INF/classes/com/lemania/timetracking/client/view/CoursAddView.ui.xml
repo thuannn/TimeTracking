@@ -7,9 +7,9 @@
 	ui:generateLocales='default'>
 
 	<g:HTMLPanel>
-		<g:VerticalPanel width="100%" spacing="2">
+		<g:VerticalPanel width="100%">
 			<g:Label text="AJOUTER UN NOUVEAU DEPARTEMENT" styleName="pageTitle" horizontalAlignment="ALIGN_CENTER"/>
-			<g:Grid>
+			<g:Grid cellPadding="5">
 				<g:row>
 					<g:customCell>
 						<g:Label text="Nom du Département :"/>
@@ -40,8 +40,8 @@
 					</g:customCell>
 					<g:customCell>
 						<g:HorizontalPanel width="100%" horizontalAlignment="ALIGN_RIGHT">
-							<g:Button ui:field="cmdAnnuler">Annuler</g:Button>
-							<g:Button ui:field="cmdAjouter">Ajouter</g:Button>
+							<g:Button ui:field="cmdAnnuler" styleName="button-normal">Annuler</g:Button>
+							<g:Button ui:field="cmdAjouter" styleName="button-highlight">Ajouter</g:Button>
 						</g:HorizontalPanel>
 					</g:customCell>
 				</g:row>
