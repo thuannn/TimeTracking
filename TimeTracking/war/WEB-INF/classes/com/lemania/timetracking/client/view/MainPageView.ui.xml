@@ -18,9 +18,9 @@
 				</g:HorizontalPanel>
 			</g:Dock>
 			<g:Dock direction="NORTH">
-				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE">
+				<g:HorizontalPanel verticalAlignment="ALIGN_MIDDLE" width="480px" height="30px">
 					<g:Button text="Afficher/ Cacher le menu" ui:field="button" styleName="hidemenu"/>
-					<g:Image url="images/13.gif" ui:field="imgProgressBar" width=""/>
+					<g:Image url="images/13.GIF" ui:field="imgProgressBar" width="" height="25px"/>
 				</g:HorizontalPanel>
 			</g:Dock>
 			<g:Dock direction="WEST" width="10%" height="100%">

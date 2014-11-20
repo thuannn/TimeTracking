@@ -29,6 +29,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -218,11 +219,14 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	public void clearLogTable() {
 		//
 		clearValues();
+		//
+		tblHours.removeAllRows();
 	}
 	
 
 	@UiHandler("lstCourses")
-	public void onLstCoursesChanged(ChangeEvent event){
+	public void onLstCoursesChanged(ChangeEvent event) {
+		//
 		reloadProfList();
 	}
 	
@@ -330,7 +334,8 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		if (selectedProfessor != null && logUpdated) {
 			ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
 			ProfessorRequestContext rc = rf.professorRequest();
-			ProfessorProxy prof = rc.edit(selectedProfessor);
+			ProfessorProxy editProf = selectedProfessor;
+			ProfessorProxy prof = rc.edit( editProf );
 			prof.setLogModifyDate(logs.get(0).getModifyDate());
 			currentProfList.remove(selectedProfessorIndex);
 			currentProfList.add(selectedProfessorIndex, prof);
@@ -533,11 +538,28 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		LogProxy log;
 		String prevCourse = "";
 		int row = -1;
+		int lastColumn = -1;
+		//
+		// Clear the current table data
+		tblHours.removeAllRows();
+		//
 		for (int i=0; i < logs.size(); i++ ) {
 			//
 			log = logs.get(i);
 			//
+			// If the department name changes, add the approval checkbox to last column
 			if ( prevCourse.equals("") || !prevCourse.equals(logs.get(i).getCourseName()) ) {
+				//
+				if ( ! prevCourse.equals("") ) {
+					//
+					if (lastColumn == -1)
+						lastColumn = tblHours.getCellCount(0);
+					//
+					CheckBox cb = new CheckBox("");
+					cb.setValue(true);
+					tblHours.setWidget(row, lastColumn, cb );
+				}
+				//
 				prevCourse = log.getCourseName();
 				row++;
 			}
@@ -566,6 +588,33 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 			// Frais
 			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.frais)) {
 				tblHours.setText( row, 6, Double.toString(log.getHour()) );
+			}
+			
+			//
+			// if it's the last log, add the checkbox
+			if ( i == logs.size()-1 ) {
+				//
+				CheckBox cb = new CheckBox("");
+				cb.setValue(true);
+				// If it's the only line, get the cell count directly
+				if ( row == 0 )
+					tblHours.setWidget(row, tblHours.getCellCount(row), cb );
+				else
+					tblHours.setWidget(row, lastColumn, cb );
+			}
+		}
+		//
+		styleTable();
+	}
+	
+	
+	/*
+	 * 
+	 * */
+	public void styleTable() {
+		for ( int row=0; row < tblHours.getRowCount(); row++ ) {
+			for (int col=0; col < tblHours.getCellCount(0); col++ ) {
+				tblHours.getCellFormatter().setStyleName(row, col, "hourCell");
 			}
 		}
 	}

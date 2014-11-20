@@ -37,5 +37,6 @@
 					</g:customCell>
 				</g:row>
 			</g:Grid>
+			<g:Label height="20px"/>
 		</g:VerticalPanel></g:HTMLPanel>
 </ui:UiBinder>

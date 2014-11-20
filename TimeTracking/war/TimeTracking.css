@@ -165,7 +165,17 @@ body {
 }
 
 .paneMain {
-	border: 1px solid limegreen;
+	border: 1px solid Silver;
+}
+
+/*
+	Tables
+*/
+
+.hourCell {
+	background-color: white;
+	padding: 1px;
+	width: 14%;
 }
 
 .FlexTable {
@@ -193,8 +203,7 @@ body {
   margin-top: 5px; 
 }
 
-.FlexTable-Cell-Total {    
-  height: 10px; 
+.FlexTable-Cell-Total { 
   background-color: #f2f2f2;
   font-weight: bold;
   font-size: bigger;

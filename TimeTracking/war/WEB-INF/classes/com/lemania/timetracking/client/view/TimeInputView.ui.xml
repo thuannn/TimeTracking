@@ -30,7 +30,7 @@
 				</g:row>
 			</g:Grid>
 					<g:Label text="." styleName="hiddenText"/>
-					<p1:DataGrid width="350px" height="500px" ui:field="tblProfessors" keyboardSelectionPolicy="DISABLED"/>
+					<p1:DataGrid width="400px" height="500px" ui:field="tblProfessors" keyboardSelectionPolicy="DISABLED"/>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="600px" horizontalAlignment="ALIGN_CENTER" styleName="subSection">
 					<g:Label text="." styleName="hiddenText"/>
@@ -85,10 +85,13 @@
 							<g:customCell>
 								<g:Label text="Frais (CHF)"/>
 							</g:customCell>
+							<g:customCell>
+								<g:Label width="25px"/>
+							</g:customCell>
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:Label text="Heures :"/>
+								<g:Label text="Heures :" width="100px"/>
 							</g:customCell>
 							<g:customCell>
 								<g:TextBox ui:field="txtCoursTime" width="100px"/>
@@ -136,7 +139,10 @@
 					<g:Label height="20px"/>
 					<g:Button ui:field="cmdSave" text="Enregistrer" styleName="button-highlight"/>
 					<g:Label styleName="hiddenText" text="."/>
-					<g:FlexTable width="770px" ui:field="tblHours"/>
+					<g:VerticalPanel width="100%" spacing="5">
+						<g:Label text="Récapitulatif des heures du mois :" horizontalAlignment="ALIGN_LEFT"/>
+					</g:VerticalPanel>
+					<g:FlexTable width="800px" ui:field="tblHours"/>
 					<g:Label text="." styleName="hiddenText"/>
 					<g:HorizontalPanel width="" spacing="5">
 						<g:Label text="Récapitulatif des heures :"/>
