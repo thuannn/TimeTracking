@@ -1,5 +1,6 @@
 package com.lemania.timetracking.client.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -7,6 +8,8 @@ import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.SelectionCell;
+import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.cell.client.TextInputCell;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
@@ -14,6 +17,8 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.DomEvent;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
@@ -37,6 +42,8 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implements ProfsPresenter.MyView {
 
@@ -65,8 +72,15 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	@UiField ListBox lstAddCourse;
 	@UiField ListBox lstStatus;
 	@UiField DataGrid<ProfessorProxy> tblProfessors = new DataGrid<ProfessorProxy>();
+	@UiField VerticalPanel pnlManagerList;
+	@UiField Button cmdSaveManager;
+	@UiField ListBox lstManagers;
 	
 	ListDataProvider<ProfessorProxy> professorsProvider = new ListDataProvider<ProfessorProxy>();
+	PopupPanel popup = new PopupPanel();
+	
+	// List of manager names
+	List<String> managerNames = new ArrayList<String>();
 	
 	// 20141104 - No need anymore
 //	CustomEditTextCell nomCell = new CustomEditTextCell();
@@ -152,7 +166,6 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 		        return "Choisir";
 		      }
 	    };
-	    // If user is Admin, he can edit the names of the profs
 	    colName.setFieldUpdater(new FieldUpdater<ProfessorProxy, String>(){
 	    	@Override
 	    	public void update(int index, ProfessorProxy prof, String value){
@@ -161,6 +174,48 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    	}
 	    });
 	    tblProfessors.addColumn(colSelect, "");
+	    
+	    
+	    // Manager
+	    Column<ProfessorProxy, String> colManagerName = new Column<ProfessorProxy, String>( new TextCell() ) {
+		      @Override
+		      public String getValue(ProfessorProxy object) {
+		        return object.getManagerName();
+		      }
+	    };
+	    tblProfessors.addColumn(colManagerName, "Responsable");
+	    //
+    	Column<ProfessorProxy, String> colManagerNameEdit = new Column<ProfessorProxy, String>( new ButtonCell() ) {
+		      @Override
+		      public String getValue(ProfessorProxy object) {
+		        return "Editer";
+		      }
+	    };
+	    //
+	    colManagerNameEdit.setFieldUpdater(new FieldUpdater<ProfessorProxy, String>() {
+	    	@Override
+	    	public void update(int index, ProfessorProxy prof, String value) {
+	    		//
+	    		selectedProfessor = prof;
+	    		selectedProfIndex = index;
+	    		//
+	    		if (popup.isVisible()) {
+	    			for (int i=0; i<lstManagers.getItemCount(); i++) {
+	    				if (lstManagers.getItemText(i).equals(prof.getManagerName())) {
+	    						lstManagers.setSelectedIndex(i);
+	    						break;
+	    				}
+	    			}
+	    			//
+	    			if (popup.getWidget() == null) {
+	    				pnlManagerList.setVisible(true);
+	    				popup.add(pnlManagerList);
+	    			}
+	    			popup.center();
+	    		}
+	    	}
+	    });
+	    tblProfessors.addColumn(colManagerNameEdit, "");
 	    
     	
 	    //
@@ -299,5 +354,32 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	void onLstStatusChange(ChangeEvent event) {
 		//
 		getUiHandlers().onStatusChange( lstStatus.getValue(lstStatus.getSelectedIndex()) );
+	}
+
+	
+	/*
+	 * */
+	@Override
+	public void setManagerNameList(List<String> managerNames) {
+		//
+		this.managerNames.clear();
+		this.managerNames.addAll(managerNames);
+		//
+		lstManagers.clear();
+		for (int i=0; i<managerNames.size(); i++) {
+			//
+			lstManagers.addItem( managerNames.get(i), managerNames.get(i));
+		}
+	}
+	
+	
+	/*
+	 * Save the current selected manager
+	 * */
+	@UiHandler("cmdSaveManager")
+	void onCmdSaveManagerClick(ClickEvent event) {
+		//
+		getUiHandlers().updateManager( selectedProfessor, lstManagers.getItemText( lstManagers.getSelectedIndex()) );
+		popup.hide();
 	}
 }

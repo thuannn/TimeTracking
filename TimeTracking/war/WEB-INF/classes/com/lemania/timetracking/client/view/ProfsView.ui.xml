@@ -15,7 +15,12 @@
 						<g:Label text="Statut : " horizontalAlignment="ALIGN_RIGHT"/>
 						<g:ListBox ui:field="lstStatus"/>
 					</g:HorizontalPanel>
-					<p1:DataGrid width="400px" height="550px" ui:field="tblProfessors" keyboardPagingPolicy="INCREASE_RANGE" keyboardSelectionPolicy="DISABLED" pageSize="200" alwaysShowScrollBars="false" focus="false" styleName="body"/>
+					<p1:DataGrid width="600px" height="550px" ui:field="tblProfessors" keyboardPagingPolicy="INCREASE_RANGE" keyboardSelectionPolicy="DISABLED" pageSize="200" alwaysShowScrollBars="false" focus="false" styleName="body"/>
+					<g:VerticalPanel width="250px" horizontalAlignment="ALIGN_CENTER" spacing="2" ui:field="pnlManagerList" visible="false">
+						<g:Label text="Responsable" styleName="sectionTitle"/>
+						<g:ListBox ui:field="lstManagers"/>
+						<g:Button text="Valider" styleName="button-highlight" ui:field="cmdSaveManager"/>
+					</g:VerticalPanel>
 				</g:VerticalPanel>
 				<g:VerticalPanel width="400px">
 					<g:Label text="." styleName="hiddenText"/>

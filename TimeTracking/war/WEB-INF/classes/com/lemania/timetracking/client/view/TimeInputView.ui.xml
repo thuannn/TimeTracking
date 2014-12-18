@@ -34,15 +34,8 @@
 				</g:VerticalPanel>
 				<g:VerticalPanel width="600px" horizontalAlignment="ALIGN_CENTER" styleName="subSection">
 					<g:Label text="." styleName="hiddenText"/>
+					<g:Label ui:field="lblProfName" width="" styleName="header"/>
 					<g:Grid width="300px">
-						<g:row>
-							<g:customCell>
-								<g:Label text="Professeur :" width="78px"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label ui:field="lblProfName" width="" styleName="header"/>
-							</g:customCell>
-						</g:row>
 						<g:row>
 							<g:customCell>
 								<g:Label text="Année :"/>

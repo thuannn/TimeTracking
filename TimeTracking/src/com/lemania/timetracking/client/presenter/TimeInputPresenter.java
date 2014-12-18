@@ -94,7 +94,6 @@ public class TimeInputPresenter
 	}
 
 	/*
-	 * 
 	 * */
 	@Override
 	protected void revealInParent() {
@@ -114,7 +113,6 @@ public class TimeInputPresenter
 	}
 	
 	/*
-	 * 
 	 * */
 	@Override
 	protected void onReset(){
@@ -133,6 +131,10 @@ public class TimeInputPresenter
 //		loadLogTypeList();
 	}
 	
+	
+	
+	/*
+	 * */
 	private void loadDepartmentList() {
 		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
@@ -149,6 +151,9 @@ public class TimeInputPresenter
 		} );		
 	}
 
+	
+	/*
+	 * */
 	public void loadProfessorsByCourse(String courseId, String year, String month) {
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
@@ -166,6 +171,8 @@ public class TimeInputPresenter
 	}
 	
 
+	/*
+	 * */
 	@Override
 	public void loadCoursesBySchool(String ecoleId) {
 		// empty
@@ -173,7 +180,6 @@ public class TimeInputPresenter
 	
 
 	/*
-	 * 
 	 * */
 	@ProxyEvent
 	@Override
@@ -184,7 +190,6 @@ public class TimeInputPresenter
 	
 	
 	/*
-	 * 
 	 * */
 	public void loadLogData(final ProfessorProxy prof, final String courseId, final String year, final String month) {
 		// Load log list
@@ -204,6 +209,8 @@ public class TimeInputPresenter
 	}
 	
 	
+	/*
+	 * */
 	@Override
 	public void professorSelected(ProfessorProxy prof, String courseId, String year, String month) {
 		//
@@ -211,6 +218,9 @@ public class TimeInputPresenter
 		getEventBus().fireEvent(new LoadAllProfessorLogsEvent( prof.getId().toString(), Integer.parseInt(year), Integer.parseInt(month)) );
 	}
 
+	
+	/*
+	 * */
 	@Override
 	public void updateLogTime(LogProxy log, String value) {
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
@@ -231,13 +241,19 @@ public class TimeInputPresenter
 			}
 		});		
 	}
+	
 
+	/*
+	 * */
 	@ProxyEvent
 	@Override
 	public void onLoginAuthenticated(LoginAuthenticatedEvent event) {
 		this.currentUser = event.getCurrentUser();
 	}
+	
 
+	/*
+	 * */
 	@Override
 	public void updateLogMemo(LogProxy log, String value) {
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
@@ -259,9 +275,12 @@ public class TimeInputPresenter
 		});
 	}
 
+	
+	/*
+	 * */
 	@Override
 	public void updateLogTime(
-			ProfessorProxy prof, String courseId, String year, String month,
+			final ProfessorProxy prof, String courseId, final String year, final String month,
 			String coursTime, String coursNote,
 			String maladieTime, String maladieNote, String ferieTime,
 			String ferieNote, String priveTime, String priveNote,
@@ -296,12 +315,15 @@ public class TimeInputPresenter
 				//
 				placeManager.setOnLeaveConfirmation(null);
 				getView().setLogData(response, true);
+				// 
+				// Update the list of log times
+				getEventBus().fireEvent(new LoadAllProfessorLogsEvent( prof.getId().toString(), Integer.parseInt(year), Integer.parseInt(month)) );
 			}
 		});
 	}
 
+	
 	/*
-	 * 
 	 * */
 	@ProxyEvent
 	@Override
@@ -311,7 +333,6 @@ public class TimeInputPresenter
 	}
 
 	/*
-	 * 
 	 * */
 	@Override
 	public void toggleEditStatus(boolean notsaved) {
@@ -321,7 +342,7 @@ public class TimeInputPresenter
 
 	
 	/*
-	 * When a professor is selected, load all the logs from other departments and show on screen
+	 * When a professor is selected, load all the logs from other departments and show on screen.
 	 * */
 	@ProxyEvent
 	@Override

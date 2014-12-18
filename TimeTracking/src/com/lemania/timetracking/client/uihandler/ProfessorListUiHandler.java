@@ -17,4 +17,6 @@ public interface ProfessorListUiHandler extends UiHandlers {
 	void addSchoolSelected(String ecoleId);
 	
 	void onStatusChange(String status);
+	
+	void updateManager( ProfessorProxy prof, String managerName );
 }

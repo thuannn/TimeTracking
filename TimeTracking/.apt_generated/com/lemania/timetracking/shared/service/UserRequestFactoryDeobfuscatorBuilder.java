@@ -55,6 +55,13 @@ withOperation(new OperationKey("NrLxSUiKAfoZ$cHWdBXNg1fiJNY="),
   .withMethodName("initialize")
   .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
   .build());
+withOperation(new OperationKey("ZJb$LZL6L3R4WgMRpZTqmk4ea1s="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()Ljava/util/List;")
+  .withMethodName("getManagerNameList")
+  .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
+  .build());
 withOperation(new OperationKey("5zZX_ts7W41SHMrQLFBSqXa3Z30="),
   new OperationData.Builder()
   .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")

@@ -28,15 +28,18 @@ import com.lemania.timetracking.shared.AssignmentProxy;
 import com.lemania.timetracking.shared.CoursProxy;
 import com.lemania.timetracking.shared.EcoleProxy;
 import com.lemania.timetracking.shared.ProfessorProxy;
+import com.lemania.timetracking.shared.UserProxy;
 import com.lemania.timetracking.shared.service.AssignmentRequestFactory;
 import com.lemania.timetracking.shared.service.AssignmentRequestFactory.AssignmentRequestContext;
 import com.lemania.timetracking.shared.service.CoursRequestFactory;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory;
 import com.lemania.timetracking.shared.service.EventSourceRequestTransport;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory;
+import com.lemania.timetracking.shared.service.UserRequestFactory;
 import com.lemania.timetracking.shared.service.CoursRequestFactory.CoursRequestContext;
 import com.lemania.timetracking.shared.service.EcoleRequestFactory.EcoleRequestContext;
 import com.lemania.timetracking.shared.service.ProfessorRequestFactory.ProfessorRequestContext;
+import com.lemania.timetracking.shared.service.UserRequestFactory.UserRequestContext;
 
 public class ProfsPresenter 
 	extends Presenter<ProfsPresenter.MyView, ProfsPresenter.MyProxy> 
@@ -59,6 +62,8 @@ public class ProfsPresenter
 		
 		void setEcoleAddList(List<EcoleProxy> ecoles);
 		void setCourseAddList(List<CoursProxy> cours);
+		
+		void setManagerNameList( List<String> managerNames );
 	}
 
 	
@@ -97,10 +102,35 @@ public class ProfsPresenter
 	@Override
 	protected void onReset(){
 		//
-		getProfessorsList("1");
+		getManagerNameList();
+		//
 		getEcoleList();
 	}
 	
+	
+	/*
+	 * */
+	private void getManagerNameList() {
+		//
+		UserRequestFactory rf = GWT.create(UserRequestFactory.class);
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+		UserRequestContext rc = rf.userRequest();
+		rc.getManagerNameList().fire(new Receiver<List<String>>() {
+			@Override
+			public void onFailure(ServerFailure error) {
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(List<String> managerNames) {
+				//
+				getView().setManagerNameList(managerNames);
+				//
+				getProfessorsList("1");
+			}
+		});
+	}
+
+
 	/*
 	 * 
 	 * */
@@ -293,11 +323,34 @@ public class ProfsPresenter
 
 
 	/*
-	 * 
 	 * */
 	@Override
 	public void onStatusChange(String status) {
 		//
 		getProfessorsList(status);
+	}
+
+
+	/*
+	 * */
+	@Override
+	public void updateManager( ProfessorProxy prof, String managerName) {
+		//
+		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+		ProfessorRequestContext rc = rf.professorRequest();
+		rc.updateManager( prof, managerName ).fire(new Receiver<ProfessorProxy>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(ProfessorProxy response) {
+				if (response != null)
+					getView().refreshTable(response);
+				else
+					Window.alert("Une erreur s'est produite. Les données n'étaient pas enregistrées.");
+			}
+		});
 	}
 }

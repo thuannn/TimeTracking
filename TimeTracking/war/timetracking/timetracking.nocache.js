@@ -338,16 +338,16 @@ function timetracking(){
   $stats && $stats({moduleName:'timetracking', sessionId:$sessionId_0, subSystem:'startup', evtGroup:'bootstrap', millis:(new Date).getTime(), type:'selectingPermutation'});
   if (!isHostedMode()) {
     try {
-      unflattenKeylistIntoAnswers(['fr', 'ie8'], '36869AC60E1A7274801C9B1AC0F6CFEF');
-      unflattenKeylistIntoAnswers(['default', 'ie10'], '442A3D957A47530E1B33574B8FAE61A9');
-      unflattenKeylistIntoAnswers(['default', 'ie9'], '50686956FAEE0D556DA7CA13DBCE3FC0');
-      unflattenKeylistIntoAnswers(['fr', 'gecko1_8'], '782688896A7C4A7CC843BCB2DB89C2D3');
-      unflattenKeylistIntoAnswers(['default', 'ie8'], '8598184C159BF73871E67C66AD8C8F99');
-      unflattenKeylistIntoAnswers(['fr', 'ie10'], '8720D81E771D4238127FF9063FC02C3B');
-      unflattenKeylistIntoAnswers(['fr', 'safari'], '896243B1177E4B631B77CC841E1A878F');
-      unflattenKeylistIntoAnswers(['fr', 'ie9'], '98653C322C18FD94490C240B48CB56B5');
-      unflattenKeylistIntoAnswers(['default', 'gecko1_8'], 'A4EB59163937B7B0E40A191C5794EBAB');
-      unflattenKeylistIntoAnswers(['default', 'safari'], 'E07723A0E44AE8499A2B37688D2A8F30');
+      unflattenKeylistIntoAnswers(['fr', 'gecko1_8'], '0F512E957010544D4B8A42C0B56C02AA');
+      unflattenKeylistIntoAnswers(['default', 'safari'], '4EFC8D674B91F80482EA4BE22BF6D141');
+      unflattenKeylistIntoAnswers(['default', 'ie10'], '65A7283D8F8CC41FD1ADEB27C311EF00');
+      unflattenKeylistIntoAnswers(['fr', 'ie9'], '75B360B523C334ABFCDE5897FADC2A19');
+      unflattenKeylistIntoAnswers(['default', 'ie9'], '9EFF3A2CA3CDEF490215A48037CBA302');
+      unflattenKeylistIntoAnswers(['default', 'gecko1_8'], 'AEA3ECD1027B508F3984BC87F4B60FB1');
+      unflattenKeylistIntoAnswers(['fr', 'ie8'], 'B4A92B615834CA2B661157D3867FC22C');
+      unflattenKeylistIntoAnswers(['default', 'ie8'], 'B9DC400D610720FBD18C1EF141AFD2DE');
+      unflattenKeylistIntoAnswers(['fr', 'ie10'], 'C95C844808F327270A30DFE15C4E95DF');
+      unflattenKeylistIntoAnswers(['fr', 'safari'], 'E899CC697041D5F5EA2467E7BC8BC55C');
       strongName = answers[computePropValue('locale')][computePropValue('user.agent')];
       var idx = strongName.indexOf(':');
       if (idx != -1) {

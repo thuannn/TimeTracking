@@ -332,15 +332,20 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		
 		// Show date
 		if (selectedProfessor != null && logUpdated) {
-			ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
-			ProfessorRequestContext rc = rf.professorRequest();
-			ProfessorProxy editProf = selectedProfessor;
-			ProfessorProxy prof = rc.edit( editProf );
-			prof.setLogModifyDate(logs.get(0).getModifyDate());
-			currentProfList.remove(selectedProfessorIndex);
-			currentProfList.add(selectedProfessorIndex, prof);
-			tblProfessors.setRowData(currentProfList);
-			tblProfessors.getSelectionModel().setSelected(prof, true);
+			// Show the update time in professors list
+			try {
+				selectedProfessor.setLogModifyDate( logs.get(0).getModifyDate() );
+			} catch (Exception e) {
+				ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
+				ProfessorRequestContext rc = rf.professorRequest();
+				ProfessorProxy editProf = selectedProfessor;
+				ProfessorProxy prof = rc.edit( editProf );
+				prof.setLogModifyDate( logs.get(0).getModifyDate() );
+				currentProfList.remove( selectedProfessorIndex );
+				currentProfList.add( selectedProfessorIndex, prof );
+				tblProfessors.setRowData( currentProfList );
+				tblProfessors.getSelectionModel().setSelected(prof, true);
+			}
 		}
 	}
 	

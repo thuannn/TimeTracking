@@ -18,6 +18,8 @@ public interface ProfessorProxy extends EntityProxy {
 	public String getLogModifyDate();
 	public void setLogModifyDate(String date);
 	
+	public String getManagerName();
+	
 	public double getTotal_01();
 	public double getTotal_02();
 	public double getTotal_03();

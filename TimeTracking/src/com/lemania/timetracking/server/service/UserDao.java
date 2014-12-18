@@ -35,6 +35,22 @@ public class UserDao extends MyDAOBase {
 		return returnList;
 	}
 	
+	
+	/*
+	 * Get list of manager names
+	 * */
+	public List<String> getManagerNameList() {
+		//
+		List<String> managerNames = new ArrayList<String>();
+		Query<User> q = ofy().load().type(User.class)
+				.filter("active", true);
+		for (User user : q){
+			managerNames.add( user.getFullName() );
+		}
+		return managerNames;
+	}
+	
+	
 	public List<Cours> addDepartment(User user, String courseId){
 		if (user.getDepartments() != null)
 			user.getDepartments().add( Key.create(Cours.class, Long.parseLong(courseId)) );

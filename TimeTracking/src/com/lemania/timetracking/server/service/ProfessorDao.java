@@ -11,6 +11,7 @@ import com.lemania.timetracking.server.Cours;
 import com.lemania.timetracking.server.Log;
 import com.lemania.timetracking.server.LogType;
 import com.lemania.timetracking.server.Professor;
+import com.lemania.timetracking.server.User;
 
 public class ProfessorDao extends MyDAOBase {
 	
@@ -21,7 +22,8 @@ public class ProfessorDao extends MyDAOBase {
 	public List<Professor> listAll(){
 		Query<Professor> q = ofy().load().type(Professor.class).order("profName");
 		List<Professor> returnList = new ArrayList<Professor>();
-		for (Professor prof : q){
+		for (Professor prof : q) {
+			populateUnsavedData( prof );
 			returnList.add(prof);
 		}
 		return returnList;
@@ -36,10 +38,12 @@ public class ProfessorDao extends MyDAOBase {
 				.order("profName");
 		List<Professor> returnList = new ArrayList<Professor>();
 		for (Professor prof : q){
+			populateUnsavedData( prof );
 			returnList.add(prof);
 		}
 		return returnList;
 	}
+	
 	
 	
 	/*
@@ -58,6 +62,7 @@ public class ProfessorDao extends MyDAOBase {
 		List<Professor> activeList = new ArrayList<Professor>();
 		
 		for (Professor prof : returnList) {
+			populateUnsavedData( prof );
 			activeList.add(prof);
 		}
 		
@@ -293,5 +298,31 @@ public class ProfessorDao extends MyDAOBase {
 	public void removeProfessor(Professor prof) {
 		//
 		ofy().delete().entities(prof).now();
+	}
+	
+	
+	/*
+	 * */
+	private void populateUnsavedData( Professor prof ) {
+		//
+		if ( prof.getManager() != null)
+			prof.setManagerName( ofy().load().key(prof.getManager()).now().getFullName() );
+		else 
+			prof.setManagerName("");
+	}
+	
+	
+	/*
+	 * */
+	public Professor updateManager( Professor prof, String managerName ) {
+		//
+		Query<User> q = ofy().load().type(User.class).filter("fullName", managerName);
+		if (q.list().size() < 1)
+			return null;
+		//
+		prof.setManager( q.keys().iterator().next() );
+		ofy().save().entities(prof).now();
+		prof.setManagerName( managerName );
+		return prof;
 	}
 }

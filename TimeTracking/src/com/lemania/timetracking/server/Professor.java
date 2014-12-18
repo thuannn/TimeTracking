@@ -1,5 +1,6 @@
 package com.lemania.timetracking.server;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.IgnoreSave;
 import com.googlecode.objectify.annotation.Index;
@@ -11,6 +12,10 @@ public class Professor extends DatastoreObject implements Comparable<Professor> 
 	private String profName;
 	private Boolean profActive;
 	private String logModifyDate = "";
+	
+	// Manager of this professor
+	private Key<User> manager = null;
+	@IgnoreSave private String managerName = "";
 	
 	@IgnoreSave
 	double total_01 = 0;
@@ -282,5 +287,21 @@ public class Professor extends DatastoreObject implements Comparable<Professor> 
 
 	public void setLogModifyDate(String logModifyDate) {
 		this.logModifyDate = logModifyDate;
+	}
+
+	public Key<User> getManager() {
+		return manager;
+	}
+
+	public void setManager(Key<User> manager) {
+		this.manager = manager;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
 	}	
 }
