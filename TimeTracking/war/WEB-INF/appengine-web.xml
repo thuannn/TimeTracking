@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 
-	<application>lemania-timetracking</application>
-	<version>1-6-2</version>
+	<application>heuresdumois-dev</application>
+	<version>1-6-20150120-1</version>
 	<threadsafe>true</threadsafe>
 
 	<!-- Configure serving/caching of GWT files -->
