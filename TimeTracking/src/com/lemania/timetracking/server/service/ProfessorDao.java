@@ -106,6 +106,10 @@ public class ProfessorDao extends MyDAOBase {
 				curProf.setLogModifyDate( qLog.list().get(0).getModifyDate() );
 		}
 		
+		//
+		for (Professor prof : activeList)
+			populateUnsavedData( prof );
+		
 		// Sort the professor list by name and return
 		java.util.Collections.sort(activeList);
 		return activeList;
@@ -161,7 +165,8 @@ public class ProfessorDao extends MyDAOBase {
 	public List<Professor> listAllByCourseWithTime(String deptId, int year){
 		// Query a list of keys of all the professors from a department
 		Key<Cours> course = Key.create(Cours.class, Long.parseLong(deptId));
-		Query<Assignment> qa = ofy().load().type(Assignment.class).filter("cours", course);
+		Query<Assignment> qa = ofy().load().type(Assignment.class).filter("cours", course)
+				.filter("active", true);
 		
 		// Get a list of object of those professors and sort by name
 		List<Key<Professor>> profKeys = new ArrayList<Key<Professor>>();
@@ -314,13 +319,15 @@ public class ProfessorDao extends MyDAOBase {
 	
 	/*
 	 * */
-	public Professor updateManager( Professor prof, String managerName ) {
+	public Professor updateManager( Professor prof, String managerName, String profName ) {
 		//
 		Query<User> q = ofy().load().type(User.class).filter("fullName", managerName);
 		if (q.list().size() < 1)
 			return null;
 		//
 		prof.setManager( q.keys().iterator().next() );
+		prof.setProfName( profName );
+		//
 		ofy().save().entities(prof).now();
 		prof.setManagerName( managerName );
 		return prof;

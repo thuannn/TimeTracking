@@ -39,19 +39,24 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.ui.FlexTable;
 
 public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implements TimeInputPresenter.MyView {
 
+	//
+	
 	private final Widget widget;
 	private ProfessorProxy selectedProfessor;
 	private int selectedProfessorIndex;
 	
 	private ListDataProvider<ProfessorProxy> professorProvider;
 	private List<ProfessorProxy> currentProfList;
+	
+	String directorName = "";
+	
+	//
 
 	public interface Binder extends UiBinder<Widget, TimeInputView> {
 	}
@@ -86,6 +91,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	@UiField TextBox txtFraisNote;
 	@UiField Button cmdSave;
 	@UiField FlexTable tblHours;
+	@UiField Label txtResponsable;
 	
 	@Override
 	public void setEcoleList(List<EcoleProxy> ecoles) {
@@ -110,7 +116,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	}
 
 	@Override
-	public void initializeValues(int currentMonth, int currentYear, boolean isAdmin) {
+	public void initializeValues(int currentMonth, int currentYear, boolean isAdmin, String directorName) {
 		// Clear school list and course list
 		lstSchools.clear();
 		lstCourses.clear();
@@ -139,6 +145,9 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		
 		// 
 		lblProfName.setText("");
+		
+		//
+		this.directorName = directorName;
 		
 		// 
 		clearValues();
@@ -275,13 +284,13 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
     	      	super.setSelected(object, selected);
 	    	}
 	    };
-	    
 	    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 	    	public void onSelectionChange(SelectionChangeEvent event) {
 	    		selectedProfessor = selectionModel.getSelectedObject();
     			if (selectedProfessor != null) {
     				selectedProfessorIndex = currentProfList.indexOf(selectedProfessor);
     				lblProfName.setText(selectedProfessor.getProfName());
+    				txtResponsable.setText( selectedProfessor.getManagerName() );
     				clearValues();
     				getUiHandlers().professorSelected(
 						selectedProfessor, 
@@ -541,9 +550,12 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	public void setOtherLogData(List<LogProxy> logs, Boolean logUpdated) {
 		//
 		LogProxy log;
+		LogProxy prevLog = null;
 		String prevCourse = "";
 		int row = -1;
 		int lastColumn = -1;
+		boolean logStatus = true;
+		
 		//
 		// Clear the current table data
 		tblHours.removeAllRows();
@@ -560,12 +572,12 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 					if (lastColumn == -1)
 						lastColumn = tblHours.getCellCount(0);
 					//
-					CheckBox cb = new CheckBox("");
-					cb.setValue(true);
-					tblHours.setWidget(row, lastColumn, cb );
+					createCheckBox( prevLog, row, lastColumn, logStatus );
 				}
 				//
 				prevCourse = log.getCourseName();
+				prevLog = log;
+				logStatus = true;
 				row++;
 			}
 			//
@@ -573,39 +585,42 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 			// Cours
 			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.cours)) {
 				tblHours.setText( row, 1, Double.toString(log.getHour()) );
+				logStatus = logStatus & log.isApproved();
 			}
 			// Maladie
 			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.maladie)) {
 				tblHours.setText( row, 2, Double.toString(log.getHour()) );
+				logStatus = logStatus & log.isApproved();
 			}
 			// Fériés
 			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.ferie)) {
 				tblHours.setText( row, 3, Double.toString(log.getHour()) );
+				logStatus = logStatus & log.isApproved();
 			}
 			// Privé
 			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.prive)) {
 				tblHours.setText( row, 4, Double.toString(log.getHour()) );
+				logStatus = logStatus & log.isApproved();
 			}
 			// Supervision
 			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.supervision)) {
 				tblHours.setText( row, 5, Double.toString(log.getHour()) );
+				logStatus = logStatus & log.isApproved();
 			}
 			// Frais
 			if (log.getTypeName().toLowerCase().equals(TimeTypeNames.frais)) {
 				tblHours.setText( row, 6, Double.toString(log.getHour()) );
+				logStatus = logStatus & log.isApproved();
 			}
 			
 			//
-			// if it's the last log, add the checkbox
+			// if it's the last log, add the checkbox and Course ID
 			if ( i == logs.size()-1 ) {
 				//
-				CheckBox cb = new CheckBox("");
-				cb.setValue(true);
-				// If it's the only line, get the cell count directly
-				if ( row == 0 )
-					tblHours.setWidget(row, tblHours.getCellCount(row), cb );
-				else
-					tblHours.setWidget(row, lastColumn, cb );
+				if (lastColumn == -1)
+					lastColumn = tblHours.getCellCount(0);
+				//
+				createCheckBox( log, row, lastColumn, logStatus );
 			}
 		}
 		//
@@ -614,9 +629,43 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 	
 	
 	/*
+	 * */
+	void createCheckBox( LogProxy log, int row, int col, boolean status ) {
+		//
+		CheckBox cb;
+		cb = new CheckBox("");
+		cb.setValue( status );
+		cb.setFormValue( log.getCourseId() );
+		//
+		cb.addClickHandler( new ClickHandler () {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				//
+				if ( ! selectedProfessor.getManagerName().equals(directorName)) {
+					((CheckBox) event.getSource()).setValue( !((CheckBox) event.getSource()).getValue() );
+					return;
+				}
+				//
+				getUiHandlers().updateLogStatus(
+						selectedProfessor, 
+						((CheckBox) event.getSource()).getFormValue(),
+						lstYear.getItemText(lstYear.getSelectedIndex()),
+						lstMonth.getItemText(lstMonth.getSelectedIndex()),
+						((CheckBox) event.getSource()).getValue() );
+			}
+		});
+		//
+		tblHours.setWidget(row, col, cb );
+		tblHours.getWidget(row, col).setVisible( selectedProfessor.getManagerName().equals(directorName) );
+	}
+	
+	
+	/*
 	 * 
 	 * */
 	public void styleTable() {
+		//
 		for ( int row=0; row < tblHours.getRowCount(); row++ ) {
 			for (int col=0; col < tblHours.getCellCount(0); col++ ) {
 				tblHours.getCellFormatter().setStyleName(row, col, "hourCell");

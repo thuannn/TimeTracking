@@ -32,4 +32,7 @@ public interface LogProxy extends EntityProxy {
 	public String getCourseName();
 	
 	public String getModifyDate();
+	
+	public boolean isApproved();
+	public void setApproved(boolean approved);
 }

@@ -129,13 +129,18 @@
 							</g:customCell>
 						</g:row>
 					</g:Grid>
-					<g:Label height="20px"/>
 					<g:Button ui:field="cmdSave" text="Enregistrer" styleName="button-highlight"/>
 					<g:Label styleName="hiddenText" text="."/>
-					<g:VerticalPanel width="100%" spacing="5">
-						<g:Label text="Récapitulatif des heures du mois :" horizontalAlignment="ALIGN_LEFT"/>
+					<g:VerticalPanel width="100%">
+						<g:Label text="Récapitulatif des heures du mois" horizontalAlignment="ALIGN_LEFT" styleName="sectionTitle"/>
+						<g:HorizontalPanel spacing="5">
+							<g:Label text="Responsable du prof :"/>
+							<g:Label text="..." ui:field="txtResponsable" width="300px" styleName="boldBlue"/>
+						</g:HorizontalPanel>
+						<g:FlexTable width="800px" ui:field="tblHours"/>
 					</g:VerticalPanel>
-					<g:FlexTable width="800px" ui:field="tblHours"/>
+					<g:Label text="Décocher pour désapprouver les heures saisies par les autres sections. Une notification sera envoyée à la direction de la section." styleName="blue"/>
+					<g:Label text="Les heures désaprouvées ne seront pas comptabilisées." styleName="boldRed"/>
 					<g:Label text="." styleName="hiddenText"/>
 					<g:HorizontalPanel width="" spacing="5">
 						<g:Label text="Récapitulatif des heures :"/>

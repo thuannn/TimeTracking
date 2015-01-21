@@ -62,10 +62,10 @@ withOperation(new OperationKey("oY1IS4WJEW8Vu8$ZlpCgUnGA1AI="),
   .withMethodName("listAllActive")
   .withRequestContext("com.lemania.timetracking.shared.service.ProfessorRequestFactory$ProfessorRequestContext")
   .build());
-withOperation(new OperationKey("bnZNMHZfUqK6ZvREm3WGz3CzyzM="),
+withOperation(new OperationKey("5v29ik9na_skBd7mtwr107$bQkc="),
   new OperationData.Builder()
-  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/ProfessorProxy;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Professor;Ljava/lang/String;)Lcom/lemania/timetracking/server/Professor;")
+  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/ProfessorProxy;Ljava/lang/String;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Professor;Ljava/lang/String;Ljava/lang/String;)Lcom/lemania/timetracking/server/Professor;")
   .withMethodName("updateManager")
   .withRequestContext("com.lemania.timetracking.shared.service.ProfessorRequestFactory$ProfessorRequestContext")
   .build());

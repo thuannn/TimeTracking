@@ -44,6 +44,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.TextBox;
 
 public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implements ProfsPresenter.MyView {
 
@@ -75,6 +76,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	@UiField VerticalPanel pnlManagerList;
 	@UiField Button cmdSaveManager;
 	@UiField ListBox lstManagers;
+	@UiField TextBox txtProfNom;
 	
 	ListDataProvider<ProfessorProxy> professorsProvider = new ListDataProvider<ProfessorProxy>();
 	PopupPanel popup = new PopupPanel();
@@ -132,48 +134,50 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    tblProfessors.setColumnWidth( colActive, 50, Unit.PX);
 		
 		//
+	    // 20150120 - Name can be changed in the Edit button
 	    // Add a text column to show the name
-	    EditTextCell tic = new EditTextCell();
+//	    EditTextCell tic = new EditTextCell();
+	    TextCell tic = new TextCell();
 		Column<ProfessorProxy, String> colName = new Column<ProfessorProxy, String>( tic ) {
 		      @Override
 		      public String getValue(ProfessorProxy object) {
 		        return object.getProfName();
 		      }
 	    };
-	    // If user is Admin, he can edit the names of the profs
-	    colName.setFieldUpdater(new FieldUpdater<ProfessorProxy, String>(){
-	    	@Override
-	    	public void update(int index, ProfessorProxy prof, String value){
-	    		//
-	    		if (getUiHandlers() != null) {	    			
-	    			selectedProfIndex = index;
-	    			if (!prof.getProfName().equals(value) && !value.equals("")) {
-	    				getUiHandlers().updateProfessorName(prof, value);
-	    				tblProfessors.getSelectionModel().setSelected(prof, true);
-	    			}
-	    		}
-//	    		nomCell.isFirst(true);
-	    	}
-	    });
+//	    // If user is Admin, he can edit the names of the profs
+//	    colName.setFieldUpdater(new FieldUpdater<ProfessorProxy, String>(){
+//	    	@Override
+//	    	public void update(int index, ProfessorProxy prof, String value){
+//	    		//
+//	    		if (getUiHandlers() != null) {
+//	    			selectedProfIndex = index;
+//	    			if (!prof.getProfName().equals(value) && !value.equals("")) {
+//	    				getUiHandlers().updateProfessorName(prof, value);
+//	    				tblProfessors.getSelectionModel().setSelected(prof, true);
+//	    			}
+//	    		}
+////	    		nomCell.isFirst(true);
+//	    	}
+//	    });
 	    //
     	tblProfessors.addColumn(colName, "Nom");
     	tblProfessors.setColumnWidth( colName, 200, Unit.PX);
     	
-    	//
-    	Column<ProfessorProxy, String> colSelect = new Column<ProfessorProxy, String>( new ButtonCell() ) {
-		      @Override
-		      public String getValue(ProfessorProxy object) {
-		        return "Choisir";
-		      }
-	    };
-	    colName.setFieldUpdater(new FieldUpdater<ProfessorProxy, String>(){
-	    	@Override
-	    	public void update(int index, ProfessorProxy prof, String value){
-	    		//
-	    		tblProfessors.getSelectionModel().setSelected(prof, true);
-	    	}
-	    });
-	    tblProfessors.addColumn(colSelect, "");
+//    	//
+//    	Column<ProfessorProxy, String> colSelect = new Column<ProfessorProxy, String>( new ButtonCell() ) {
+//		      @Override
+//		      public String getValue(ProfessorProxy object) {
+//		        return "Choisir";
+//		      }
+//	    };
+//	    colName.setFieldUpdater(new FieldUpdater<ProfessorProxy, String>(){
+//	    	@Override
+//	    	public void update(int index, ProfessorProxy prof, String value){
+//	    		//
+//	    		tblProfessors.getSelectionModel().setSelected(prof, true);
+//	    	}
+//	    });
+//	    tblProfessors.addColumn(colSelect, "");
 	    
 	    
 	    // Manager
@@ -206,6 +210,7 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	    						break;
 	    				}
 	    			}
+	    			txtProfNom.setText( prof.getProfName() );
 	    			//
 	    			if (popup.getWidget() == null) {
 	    				pnlManagerList.setVisible(true);
@@ -379,7 +384,23 @@ public class ProfsView extends ViewWithUiHandlers<ProfessorListUiHandler> implem
 	@UiHandler("cmdSaveManager")
 	void onCmdSaveManagerClick(ClickEvent event) {
 		//
-		getUiHandlers().updateManager( selectedProfessor, lstManagers.getItemText( lstManagers.getSelectedIndex()) );
+		getUiHandlers().updateManager( selectedProfessor, lstManagers.getItemText( lstManagers.getSelectedIndex()), txtProfNom.getText() );
 		popup.hide();
+	}
+
+	
+	/*
+	 * Hide the Edit professor button and Active check
+	 * */
+	@Override
+	public void hideAdminFunction(boolean isAdmin) {
+		//
+		if (!isAdmin) {
+			tblProfessors.setColumnWidth(0, "0px");
+			tblProfessors.setColumnWidth(3, "0px");
+		} else {
+			tblProfessors.setColumnWidth(0, "100px");
+			tblProfessors.setColumnWidth(3, "100px");
+		}
 	}
 }

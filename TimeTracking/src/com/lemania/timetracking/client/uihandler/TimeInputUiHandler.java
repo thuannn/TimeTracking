@@ -24,4 +24,6 @@ public interface TimeInputUiHandler extends UiHandlers {
 			String fraisAmount, String fraisNote );
 	
 	void toggleEditStatus(boolean notsaved);
+	
+	void updateLogStatus (ProfessorProxy prof, String courseId, String year, String month, boolean status);
 }

@@ -6,10 +6,10 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.Service;
-import com.lemania.timetracking.server.Log;
 import com.lemania.timetracking.server.service.DaoServiceLocator;
 import com.lemania.timetracking.server.service.LogDao;
 import com.lemania.timetracking.shared.LogProxy;
+import com.lemania.timetracking.shared.ProfessorProxy;
 
 public interface LogRequestFactory extends RequestFactory {
 	
@@ -42,6 +42,8 @@ public interface LogRequestFactory extends RequestFactory {
 		Request<Void> removeLog(LogProxy log);
 		
 		Request<Void> initialize();
+		
+		Request<Void> updateLogStatus( ProfessorProxy prof, String courseId, String year, String month, boolean status);
 	}
 	
 	LogRequestContext logRequest();

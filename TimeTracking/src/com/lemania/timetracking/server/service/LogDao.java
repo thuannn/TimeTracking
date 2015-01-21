@@ -61,6 +61,8 @@ public class LogDao extends MyDAOBase {
 		for (Log log : q){
 			if ( ! ofy().load().key(log.getProf()).now().getProfActive() )
 				continue;
+			if ( !log.isApproved() )
+				continue;
 			returnList.add(log);
 		}
 		
@@ -269,5 +271,27 @@ public class LogDao extends MyDAOBase {
 		}
 		
 		return returnList;
+	}
+	
+	
+	/*
+	 * */
+	public void updateLogStatus( Professor prof, String courseId, String year, String month, boolean status) {
+		//
+		Key<Professor> profKey = Key.create(Professor.class, prof.getId() );
+		Key<Cours> coursKey = Key.create(Cours.class, Long.parseLong( courseId ));
+		
+		Query<Log> q = ofy().load().type(Log.class)
+				.filter("year", Integer.parseInt(year))
+				.filter("month", Integer.parseInt(month))
+				.filter("prof", profKey)
+				.filter("cours", coursKey);
+		
+		List<Log> returnList = new ArrayList<Log>();
+		for (Log log : q){			
+			log.setApproved(status);
+			returnList.add( log );
+		}
+		ofy().save().entities(returnList);
 	}
 }

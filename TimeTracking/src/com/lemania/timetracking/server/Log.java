@@ -21,6 +21,8 @@ public class Log extends DatastoreObject implements Comparable<Log>{
 	String schoolName = "";	
 	String courseName = "";
 	
+	boolean approved = true;
+	
 	public int getYear() {
 		return year;
 	}
@@ -70,11 +72,11 @@ public class Log extends DatastoreObject implements Comparable<Log>{
 	}
 	
 	public String getCourseId(){
-		return Long.toString(prof.getId());
+		return Long.toString( cours.getId() );
 	}
 	
 	public String getTypeId() {
-		return Long.toString(type.getId());
+		return Long.toString( type.getId() );
 	}
 	
 	public String getTypeName() {
@@ -115,6 +117,14 @@ public class Log extends DatastoreObject implements Comparable<Log>{
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
 	}
 
 	@Override

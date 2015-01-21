@@ -57,6 +57,8 @@ public class ProfsPresenter
 		
 		void refreshTable(ProfessorProxy prof);
 		
+		void hideAdminFunction( boolean isAdmin );
+		
 		void setAssignmentList(List<AssignmentProxy> courses);
 		void addToAssignmentList(AssignmentProxy a);
 		
@@ -100,11 +102,15 @@ public class ProfsPresenter
 	 * 
 	 * */
 	@Override
-	protected void onReset(){
+	protected void onReset() {
+		super.onReset();
+		
 		//
 		getManagerNameList();
 		//
 		getEcoleList();
+		//
+		getView().hideAdminFunction( currentUser.isAdmin() );
 	}
 	
 	
@@ -334,12 +340,12 @@ public class ProfsPresenter
 	/*
 	 * */
 	@Override
-	public void updateManager( ProfessorProxy prof, String managerName) {
+	public void updateManager( ProfessorProxy prof, String managerName, String profName ) {
 		//
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ProfessorRequestContext rc = rf.professorRequest();
-		rc.updateManager( prof, managerName ).fire(new Receiver<ProfessorProxy>(){
+		rc.updateManager( prof, managerName, profName ).fire(new Receiver<ProfessorProxy>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());

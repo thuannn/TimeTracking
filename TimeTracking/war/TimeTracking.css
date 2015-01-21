@@ -7,6 +7,26 @@ body {
 
 
 /*
+	Text format
+*/
+.bold {
+	font-weight: bold;
+}
+.blue {
+	color: blue;
+}
+.boldBlue {
+	font-weight: bold;
+	color: blue;
+}
+.boldRed {
+	font-weight: bold;
+	color: red;
+}
+
+
+
+/*
 	Buttons
 */
 

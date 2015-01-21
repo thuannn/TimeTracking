@@ -9,6 +9,8 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.lemania.timetracking.shared.service.ContactRequestFactory;
+import com.lemania.timetracking.shared.service.ContactRequestFactory.ContactRequestContext;
 import com.lemania.timetracking.client.event.ActionCompletedEvent;
 import com.lemania.timetracking.client.event.ActionCompletedEvent.ActionCompletedHandler;
 import com.lemania.timetracking.client.event.LoadAllProfessorLogsEvent;
@@ -65,7 +67,7 @@ public class TimeInputPresenter
 		void setCourseList(List<CoursProxy> cours);
 		
 		// Initialize values
-		void initializeValues(int currentMonth, int currentYear, boolean isAdmin);
+		void initializeValues(int currentMonth, int currentYear, boolean isAdmin, String directorName);
 		void initializeUI(boolean isAdmin);
 		void initializeProfTable();
 		void initializeLogTable();
@@ -123,7 +125,7 @@ public class TimeInputPresenter
 		}
 		
 		// Initialize values
-		getView().initializeValues(currentUser.getCurrentMonth(), currentUser.getCurrentYear(), currentUser.isAdmin());
+		getView().initializeValues(currentUser.getCurrentMonth(), currentUser.getCurrentYear(), currentUser.isAdmin(), currentUser.getFullName());
 		
 		// Initialize active school list
 		loadDepartmentList();
@@ -155,6 +157,7 @@ public class TimeInputPresenter
 	/*
 	 * */
 	public void loadProfessorsByCourse(String courseId, String year, String month) {
+		//
 		ProfessorRequestFactory rf = GWT.create(ProfessorRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ProfessorRequestContext rc = rf.professorRequest();
@@ -359,6 +362,51 @@ public class TimeInputPresenter
 			@Override
 			public void onSuccess(List<LogProxy> response) {
 				getView().setOtherLogData(response, false);
+			}
+		});
+	}
+
+	
+	/*
+	 * When a director check or uncheck the approval checkbox, update the logs status accordingly
+	 * */
+	@Override
+	public void updateLogStatus( final ProfessorProxy prof, final String courseId,
+			final String year, final String month, final boolean status) {
+		//
+		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
+		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+		LogRequestContext rcl = rfl.logRequest();
+		rcl.updateLogStatus( prof, courseId, year, month, status ).fire(new Receiver<Void>() {
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(Void response) {
+				//
+				sendNotification( prof, courseId, year, month, status );
+			}
+		});
+	}
+	
+	
+	/*
+	 * */
+	public void sendNotification( ProfessorProxy prof, String courseId,
+			String year, String month, boolean status) {
+		//
+		ContactRequestFactory rf = GWT.create(ContactRequestFactory.class);
+		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
+		ContactRequestContext rc = rf.contactRequest();
+		rc.sendNotification( prof, courseId, year, month, status ).fire(new Receiver<Void>(){
+			@Override
+			public void onFailure(ServerFailure error){
+				Window.alert(error.getMessage());
+			}
+			@Override
+			public void onSuccess(Void response) {
+				// TODO
 			}
 		});
 	}

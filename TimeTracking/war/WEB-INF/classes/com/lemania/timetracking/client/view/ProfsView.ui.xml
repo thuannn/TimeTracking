@@ -17,8 +17,25 @@
 					</g:HorizontalPanel>
 					<p1:DataGrid width="600px" height="550px" ui:field="tblProfessors" keyboardPagingPolicy="INCREASE_RANGE" keyboardSelectionPolicy="DISABLED" pageSize="200" alwaysShowScrollBars="false" focus="false" styleName="body"/>
 					<g:VerticalPanel width="250px" horizontalAlignment="ALIGN_CENTER" spacing="2" ui:field="pnlManagerList" visible="false">
-						<g:Label text="Responsable" styleName="sectionTitle"/>
-						<g:ListBox ui:field="lstManagers"/>
+						<g:Label text="Edit Professeur" styleName="sectionTitle"/>
+						<g:Grid width="100%">
+							<g:row>
+								<g:customCell>
+									<g:Label text="Responsable"/>
+								</g:customCell>
+								<g:customCell>
+									<g:ListBox ui:field="lstManagers"/>
+								</g:customCell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="Nom"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox width="300px" ui:field="txtProfNom"/>
+								</g:customCell>
+							</g:row>
+						</g:Grid>
 						<g:Button text="Valider" styleName="button-highlight" ui:field="cmdSaveManager"/>
 					</g:VerticalPanel>
 				</g:VerticalPanel>

@@ -34,7 +34,7 @@ public interface ProfessorRequestFactory extends RequestFactory {
 		
 		Request<Void> initialize();
 		
-		Request<ProfessorProxy> updateManager( ProfessorProxy prof, String managerName );
+		Request<ProfessorProxy> updateManager( ProfessorProxy prof, String managerName, String profName );
 	}
 	
 	ProfessorRequestContext professorRequest();
