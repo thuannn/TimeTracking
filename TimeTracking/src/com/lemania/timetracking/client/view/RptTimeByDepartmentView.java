@@ -45,6 +45,8 @@ public class RptTimeByDepartmentView extends ViewWithUiHandlers<RptTimeByDepartm
 	void onLstDepartmentsChange(ChangeEvent event) {
 		//
 		populateYearList();
+		//
+		tblProf.removeAllRows();
 	}
 	
 	
