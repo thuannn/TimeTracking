@@ -25,5 +25,5 @@ public interface TimeInputUiHandler extends UiHandlers {
 	
 	void toggleEditStatus(boolean notsaved);
 	
-	void updateLogStatus (ProfessorProxy prof, String courseId, String year, String month, boolean status);
+	void updateLogStatus (String profId, String courseId, String year, String month, boolean status);
 }

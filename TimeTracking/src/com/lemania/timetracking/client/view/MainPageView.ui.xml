@@ -32,6 +32,7 @@
 					<g:TreeItem text="Statistiques" state="true">
 						<g:Button text="Par département" ui:field="cmdRptByDept" width="200px" styleName="button-normal">Par départements</g:Button>
 						<g:Button text="Par professeur" ui:field="cmdExtractData" width="200px" styleName="button-normal">Par professeurs</g:Button>
+						<g:Button text="Par responsable" ui:field="cmdRptByStatus" width="200px" styleName="button-normal">Par responsable</g:Button>
 						<g:Button ui:field="cmdRptByMonth" width="200px" styleName="button-normal">Par mois - Compta</g:Button>
 					</g:TreeItem>
 					<g:TreeItem text="Information de base" state="true">

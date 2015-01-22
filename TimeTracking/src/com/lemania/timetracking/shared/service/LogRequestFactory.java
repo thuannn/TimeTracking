@@ -22,6 +22,7 @@ public interface LogRequestFactory extends RequestFactory {
 		Request<List<LogProxy>> listAllFullDetailByDepartment(String deptId);
 		Request<List<LogProxy>> listAllFullDetailByProf(String profId, String year);
 		Request<List<LogProxy>> listAllFullDetailByProf(String profId, int year, int month);
+		Request<List<LogProxy>> listAllFullDetailByManager(int selectedYear, int selectedMonth, String managerId );
 		
 		Request<List<LogProxy>> listAll(String profId, String courseId, String year, String month);
 		
@@ -43,7 +44,7 @@ public interface LogRequestFactory extends RequestFactory {
 		
 		Request<Void> initialize();
 		
-		Request<Void> updateLogStatus( ProfessorProxy prof, String courseId, String year, String month, boolean status);
+		Request<Void> updateLogStatus( String profId, String courseId, String year, String month, boolean status);
 	}
 	
 	LogRequestContext logRequest();

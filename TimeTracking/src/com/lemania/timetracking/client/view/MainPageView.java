@@ -265,4 +265,14 @@ public class MainPageView extends ViewWithUiHandlers<MainPageUiHandler> implemen
 			getUiHandlers().showFrmPassword();
 		}
 	}
+	
+	
+	/*
+	 * */
+	@UiHandler("cmdRptByStatus")
+	void onCmdRptByStatusClick(ClickEvent event) {
+		if (getUiHandlers() != null) {
+			getUiHandlers().showRptByStatus();
+		}
+	}
 }

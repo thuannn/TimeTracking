@@ -1,18 +1,12 @@
-<!-- Indices written at Tue, 20 Jan 2015 22:56:02 CET -->
+<!-- Indices written at Thu, 22 Jan 2015 19:09:17 CET -->
 
 <datastore-indexes>
-
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="Ecole" ancestor="false" source="auto">
-        <property name="schoolActive" direction="asc"/>
-        <property name="schoolName" direction="asc"/>
-    </datastore-index>
 
     <!-- Used 2 times in query history -->
     <datastore-index kind="Log" ancestor="false" source="auto">
         <property name="month" direction="asc"/>
-        <property name="year" direction="asc"/>
         <property name="prof" direction="asc"/>
+        <property name="year" direction="asc"/>
         <property name="cours" direction="asc"/>
     </datastore-index>
 

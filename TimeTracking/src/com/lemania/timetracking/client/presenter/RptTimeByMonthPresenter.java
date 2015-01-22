@@ -14,7 +14,6 @@ import com.lemania.timetracking.client.place.NameTokens;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.lemania.timetracking.client.AdminGateKeeper;
 import com.lemania.timetracking.client.CurrentUser;
-import com.lemania.timetracking.client.LoggedInGatekeeper;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;

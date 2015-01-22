@@ -1,6 +1,8 @@
 package com.lemania.timetracking.client.place;
 
 public class NameTokens {
+	public static final String rptbystatus = "rptbystatus";
+
 	public static final String homepage = "!homepage";
 	public static final String ecolepage = "!ecolepage";
 	public static final String addecole = "!addecole";
@@ -21,7 +23,7 @@ public class NameTokens {
 	public static final String password = "password";
 
 	public static String getHomePage() {
-	    return homepage;
+		return homepage;
 	}
 
 	public static String getEcolepage() {
@@ -91,4 +93,9 @@ public class NameTokens {
 	public static String getPassword() {
 		return password;
 	}
+
+	public static String getRptbystatus() {
+		return rptbystatus;
+	}
+
 }

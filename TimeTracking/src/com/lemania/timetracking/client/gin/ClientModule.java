@@ -43,6 +43,7 @@ import com.lemania.timetracking.client.presenter.RptTimeBySchoolPresenter;
 import com.lemania.timetracking.client.presenter.RptTimeByMonthPresenter;
 import com.lemania.timetracking.client.presenter.SettingsPresenter;
 import com.lemania.timetracking.client.presenter.FrmPasswordPresenter;
+import com.lemania.timetracking.client.rpttimebystatus.RptTimeByStatusModule;
 
 public class ClientModule extends AbstractPresenterModule {
 
@@ -50,6 +51,9 @@ public class ClientModule extends AbstractPresenterModule {
 	protected void configure() {
 		// Singletons
 		install(new DefaultModule(TimeTrackingPlaceManager.class));
+		
+		//
+		install(new RptTimeByStatusModule());
 		
 		// Set DefaultPlace to homepage
 		bindConstant().annotatedWith(DefaultPlace.class).to(

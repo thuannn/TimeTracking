@@ -3,6 +3,7 @@ package com.lemania.timetracking.server.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lemania.timetracking.server.User;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 import com.lemania.timetracking.server.Cours;
@@ -70,6 +71,41 @@ public class LogDao extends MyDAOBase {
 		java.util.Collections.sort(returnList);
 		return returnList;
 	}
+	
+	
+	/*
+	 * */
+	public List<Log> listAllFullDetailByManager(int selectedYear, int selectedMonth, String managerId ){
+		//
+		// Get the list of professors of this manager, if not found, return empty list
+		Query<Professor> qProfs = ofy().load().type(Professor.class)
+				.filter( "manager", Key.create(User.class, Long.parseLong(managerId)));
+		if ( qProfs.list().size() < 1)
+			return new ArrayList<Log>();
+		//
+		Query<Log> q = ofy().load().type(Log.class)
+				.filter("year", selectedYear)
+				.filter("month", selectedMonth)
+				.filter("prof in", qProfs.keys().list() )
+				.order("prof")
+				.order("cours");
+		
+		List<Log> returnList = new ArrayList<Log>();
+		for (Log log : q){
+			//
+			if ( ! ofy().load().key(log.getProf()).now().getProfActive() )
+				continue;
+			//
+			log.setMemo("");
+			//
+			returnList.add(log);
+		}
+		
+		// Sort by ProfName
+		java.util.Collections.sort(returnList);
+		return returnList;
+	}
+	
 	
 	public List<Log> listAllFullDetailByDepartment(String deptId){
 		Query<Log> q = ofy().load().type(Log.class)
@@ -276,9 +312,9 @@ public class LogDao extends MyDAOBase {
 	
 	/*
 	 * */
-	public void updateLogStatus( Professor prof, String courseId, String year, String month, boolean status) {
+	public void updateLogStatus( String profId, String courseId, String year, String month, boolean status) {
 		//
-		Key<Professor> profKey = Key.create(Professor.class, prof.getId() );
+		Key<Professor> profKey = Key.create(Professor.class, Long.parseLong(profId) );
 		Key<Cours> coursKey = Key.create(Cours.class, Long.parseLong( courseId ));
 		
 		Query<Log> q = ofy().load().type(Log.class)

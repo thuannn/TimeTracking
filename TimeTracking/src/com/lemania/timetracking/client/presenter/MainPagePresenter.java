@@ -175,6 +175,11 @@ public class MainPagePresenter extends
 	public void showRptBySchool() {
 		History.newItem(NameTokens.rptbyschool);		
 	}
+	
+	@Override
+	public void showRptByStatus() {
+		History.newItem(NameTokens.rptbystatus);		
+	}
 
 	@Override
 	public void showRptByMonth() {

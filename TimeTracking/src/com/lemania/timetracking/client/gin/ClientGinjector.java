@@ -6,7 +6,6 @@ import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 import com.google.inject.Provider;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
-
 import com.lemania.timetracking.client.AdminGateKeeper;
 import com.lemania.timetracking.client.LoggedInGatekeeper;
 import com.lemania.timetracking.client.presenter.HomePresenter;
@@ -28,6 +27,7 @@ import com.lemania.timetracking.client.presenter.RptTimeBySchoolPresenter;
 import com.lemania.timetracking.client.presenter.RptTimeByMonthPresenter;
 import com.lemania.timetracking.client.presenter.SettingsPresenter;
 import com.lemania.timetracking.client.presenter.FrmPasswordPresenter;
+import com.lemania.timetracking.client.rpttimebystatus.RptTimeByStatusPresenter;
 
 @GinModules({ ClientModule.class })
 public interface ClientGinjector extends Ginjector {
@@ -77,4 +77,6 @@ public interface ClientGinjector extends Ginjector {
 	AsyncProvider<SettingsPresenter> getSettingsPresenter();
 
 	AsyncProvider<FrmPasswordPresenter> getFrmPasswordPresenter();
+	
+	AsyncProvider<RptTimeByStatusPresenter> getRptByStatusPresenter();
 }

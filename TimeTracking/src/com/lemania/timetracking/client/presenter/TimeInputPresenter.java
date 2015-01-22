@@ -371,13 +371,13 @@ public class TimeInputPresenter
 	 * When a director check or uncheck the approval checkbox, update the logs status accordingly
 	 * */
 	@Override
-	public void updateLogStatus( final ProfessorProxy prof, final String courseId,
+	public void updateLogStatus( final String profId, final String courseId,
 			final String year, final String month, final boolean status) {
 		//
 		LogRequestFactory rfl = GWT.create(LogRequestFactory.class);
 		rfl.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		LogRequestContext rcl = rfl.logRequest();
-		rcl.updateLogStatus( prof, courseId, year, month, status ).fire(new Receiver<Void>() {
+		rcl.updateLogStatus( profId, courseId, year, month, status ).fire(new Receiver<Void>() {
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());
@@ -385,7 +385,7 @@ public class TimeInputPresenter
 			@Override
 			public void onSuccess(Void response) {
 				//
-				sendNotification( prof, courseId, year, month, status );
+				sendNotification( profId, courseId, year, month, status );
 			}
 		});
 	}
@@ -393,13 +393,13 @@ public class TimeInputPresenter
 	
 	/*
 	 * */
-	public void sendNotification( ProfessorProxy prof, String courseId,
+	public void sendNotification( String profId, String courseId,
 			String year, String month, boolean status) {
 		//
 		ContactRequestFactory rf = GWT.create(ContactRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ContactRequestContext rc = rf.contactRequest();
-		rc.sendNotification( prof, courseId, year, month, status ).fire(new Receiver<Void>(){
+		rc.sendNotification( profId, courseId, year, month, status ).fire(new Receiver<Void>(){
 			@Override
 			public void onFailure(ServerFailure error){
 				Window.alert(error.getMessage());

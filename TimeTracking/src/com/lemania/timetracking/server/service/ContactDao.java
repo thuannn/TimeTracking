@@ -54,9 +54,10 @@ public class ContactDao extends MyDAOBase {
 	
 	/*
 	 * */
-	public void sendNotification( Professor prof, String courseId, String year, String month, boolean status) {
+	public void sendNotification( String profId, String courseId, String year, String month, boolean status) {
 		//
 		User directorTo;
+		Professor prof = ofy().load().key( Key.create(Professor.class, Long.parseLong(profId))).now();
 		User directorFrom = ofy().load().key( prof.getManager() ).now();
 		Cours course = ofy().load().key( Key.create(Cours.class, Long.parseLong(courseId)) ).now();
 		//

@@ -648,7 +648,7 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 				}
 				//
 				getUiHandlers().updateLogStatus(
-						selectedProfessor, 
+						selectedProfessor.getId().toString(), 
 						((CheckBox) event.getSource()).getFormValue(),
 						lstYear.getItemText(lstYear.getSelectedIndex()),
 						lstMonth.getItemText(lstMonth.getSelectedIndex()),
