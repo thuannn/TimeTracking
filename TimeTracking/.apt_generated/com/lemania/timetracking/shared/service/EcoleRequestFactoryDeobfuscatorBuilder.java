@@ -13,13 +13,6 @@ withOperation(new OperationKey("B57efEqQlqOYC_qMXPpn$_IMuYc="),
   .withMethodName("save")
   .withRequestContext("com.lemania.timetracking.shared.service.EcoleRequestFactory$EcoleRequestContext")
   .build());
-withOperation(new OperationKey("8ASuoEZfzTuorFp4rjYOW8w8jYg="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("()Ljava/util/List;")
-  .withMethodName("listAll")
-  .withRequestContext("com.lemania.timetracking.shared.service.EcoleRequestFactory$EcoleRequestContext")
-  .build());
 withOperation(new OperationKey("Fs$dWINWMromRUPDXKZdyrOQnOs="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/EcoleProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
@@ -46,6 +39,13 @@ withOperation(new OperationKey("nyOQfzon2gYgV7rFlPiBRyrjGBM="),
   .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
   .withDomainMethodDescriptor("()V")
   .withMethodName("initialize")
+  .withRequestContext("com.lemania.timetracking.shared.service.EcoleRequestFactory$EcoleRequestContext")
+  .build());
+withOperation(new OperationKey("8ASuoEZfzTuorFp4rjYOW8w8jYg="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()Ljava/util/List;")
+  .withMethodName("listAll")
   .withRequestContext("com.lemania.timetracking.shared.service.EcoleRequestFactory$EcoleRequestContext")
   .build());
 withRawTypeToken("wEmO7GIXGVmYnHTr$bRzd1vhTHM=", "com.lemania.timetracking.shared.EcoleProxy");

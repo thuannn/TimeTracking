@@ -56,16 +56,21 @@ public class ContactDao extends MyDAOBase {
 	 * */
 	public void sendNotification( String profId, String courseId, String year, String month, boolean status) {
 		//
-		User directorTo;
+		User directorTo = null;
 		Professor prof = ofy().load().key( Key.create(Professor.class, Long.parseLong(profId))).now();
 		User directorFrom = ofy().load().key( prof.getManager() ).now();
 		Cours course = ofy().load().key( Key.create(Cours.class, Long.parseLong(courseId)) ).now();
 		//
 		Query<User> qUser = ofy().load().type(User.class)
 				.filter("departments", Key.create(Cours.class, Long.parseLong(courseId)));
-		if (qUser.list().size() > 0) {
-			//
-			directorTo = qUser.list().get(0);
+		for ( User us : qUser.list() ) {
+			if ( us.getAdmin() )
+				continue;
+			directorTo = us;
+			break;
+		}
+		//
+		if ( directorTo != null ) {
 			//
 			Properties props = new Properties();
 	        Session session = Session.getDefaultInstance(props, null);
@@ -77,10 +82,11 @@ public class ContactDao extends MyDAOBase {
 	        try {
 		        Message msg = new MimeMessage(session);
 		        //
-		        msg.setFrom(new InternetAddress("thuannn@gmail.com", "Lemania eProfil"));
+		        msg.setFrom(new InternetAddress("thuannn@gmail.com", "Heures du mois"));
 		        //
 		        msg.addRecipient(Message.RecipientType.TO, new InternetAddress(directorTo.getEmail(), directorTo.getFullName()));
 		        msg.addRecipient(Message.RecipientType.CC, new InternetAddress(directorFrom.getEmail(), directorFrom.getFullName()));
+		        msg.addRecipient(Message.RecipientType.BCC, new InternetAddress( "thuannn@gmail.com", "Heures du mois" ));
 		        //
 		        // Reply to
 	 	        Address[] rraa = new Address[1];

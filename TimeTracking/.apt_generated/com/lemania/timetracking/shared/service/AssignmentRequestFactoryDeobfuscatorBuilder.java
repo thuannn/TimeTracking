@@ -13,6 +13,41 @@ withOperation(new OperationKey("DzrCPIbz7HAHVRh7Cw3NWos3LKI="),
   .withMethodName("save")
   .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
   .build());
+withOperation(new OperationKey("3fPbw27cOetNE4BqwD3xZbsy_Jw="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/AssignmentProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Assignment;)V")
+  .withMethodName("removeAssignment")
+  .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
+  .build());
+withOperation(new OperationKey("CA8Tcwn2pHVY3qEQdMGoeXJlqEM="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()Ljava/util/List;")
+  .withMethodName("listAllActive")
+  .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
+  .build());
+withOperation(new OperationKey("PUeI7jOsqr7P1vAiRnnbF_Xyb5Q="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/AssignmentProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Assignment;)Lcom/lemania/timetracking/server/Assignment;")
+  .withMethodName("saveAndReturn")
+  .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
+  .build());
+withOperation(new OperationKey("t4VxZpmpymI5EZBHunEw3I6vgq4="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;)Lcom/lemania/timetracking/server/Assignment;")
+  .withMethodName("saveAndReturn")
+  .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
+  .build());
+withOperation(new OperationKey("5q$pWRhDRZ$T_ymCJvAaeMg$dKU="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()V")
+  .withMethodName("initialize")
+  .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
+  .build());
 withOperation(new OperationKey("vNQGa_4pIcVG7TpJJ6B0kLJ3Dos="),
   new OperationData.Builder()
   .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
@@ -27,46 +62,11 @@ withOperation(new OperationKey("nXzBSZ9$tRbKBBgjUY2gRKt05FY="),
   .withMethodName("listAll")
   .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
   .build());
-withOperation(new OperationKey("3fPbw27cOetNE4BqwD3xZbsy_Jw="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/AssignmentProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Assignment;)V")
-  .withMethodName("removeAssignment")
-  .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
-  .build());
 withOperation(new OperationKey("wTN7hnq44xI6mTddO_$6oG2pB$Y="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Ljava/lang/Long;Lcom/lemania/timetracking/shared/AssignmentProxy;Ljava/lang/Boolean;)Lcom/google/web/bindery/requestfactory/shared/Request;")
   .withDomainMethodDescriptor("(Ljava/lang/Long;Lcom/lemania/timetracking/server/Assignment;Ljava/lang/Boolean;)Lcom/lemania/timetracking/server/Assignment;")
   .withMethodName("updateAssignmentStatus")
-  .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
-  .build());
-withOperation(new OperationKey("CA8Tcwn2pHVY3qEQdMGoeXJlqEM="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("()Ljava/util/List;")
-  .withMethodName("listAllActive")
-  .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
-  .build());
-withOperation(new OperationKey("t4VxZpmpymI5EZBHunEw3I6vgq4="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;)Lcom/lemania/timetracking/server/Assignment;")
-  .withMethodName("saveAndReturn")
-  .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
-  .build());
-withOperation(new OperationKey("PUeI7jOsqr7P1vAiRnnbF_Xyb5Q="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/AssignmentProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/Assignment;)Lcom/lemania/timetracking/server/Assignment;")
-  .withMethodName("saveAndReturn")
-  .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
-  .build());
-withOperation(new OperationKey("5q$pWRhDRZ$T_ymCJvAaeMg$dKU="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("()V")
-  .withMethodName("initialize")
   .withRequestContext("com.lemania.timetracking.shared.service.AssignmentRequestFactory$AssignmentRequestContext")
   .build());
 withRawTypeToken("nZbZVLrq3Nvi3xgPJFIvRwOnXEo=", "com.lemania.timetracking.shared.AssignmentProxy");

@@ -17,8 +17,8 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-gwt-17.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-5.0.3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/maven-artifact-3.2.1.jar"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine (2)"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

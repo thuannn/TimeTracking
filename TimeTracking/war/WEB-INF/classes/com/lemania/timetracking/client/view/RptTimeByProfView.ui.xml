@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default' xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+
+	<g:HTMLPanel width="100%" height="100%">
+		<g:FlowPanel width="100%" height="100%">
+			<g:VerticalPanel width="100%" height="" horizontalAlignment="ALIGN_CENTER">
+				<g:Label text="RAPPORT DES HEURES PAR PROFESSEUR" styleName="pageTitle" width="830" height="30" horizontalAlignment="ALIGN_CENTER"/>
+				<g:HorizontalPanel width="60%" spacing="5" verticalAlignment="ALIGN_MIDDLE" styleName="subSection" horizontalAlignment="ALIGN_LEFT">
+					<g:Label text="Choisir un département :" visible="false"/>
+					<g:ListBox ui:field="lstDepartments" visible="false"/>
+					<g:Label text="Nom du professeur :" horizontalAlignment="ALIGN_RIGHT"/>
+					<g:ListBox ui:field="lstProfs"/>
+					<g:Label text="Année :" horizontalAlignment="ALIGN_RIGHT"/>
+					<g:ListBox ui:field="lstYears"/>
+				</g:HorizontalPanel>
+				<g:Label text="." styleName="hiddenText"/>
+				<g:FlexTable ui:field="tblLogs" width="100%" height="100%" borderWidth="0"/>
+			</g:VerticalPanel>
+		</g:FlowPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>
