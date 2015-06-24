@@ -672,4 +672,14 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 			}
 		}
 	}
+
+	
+	/*
+	 * */
+	@Override
+	public boolean isCurrentManager() {
+		//
+		return selectedProfessor.getManagerName().equals(directorName);
+	}
+	
 }

@@ -13,6 +13,7 @@ import javax.mail.internet.MimeUtility;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 import com.lemania.timetracking.server.Cours;
+import com.lemania.timetracking.server.Log;
 import com.lemania.timetracking.server.Professor;
 import com.lemania.timetracking.server.User;
 
@@ -54,7 +55,13 @@ public class ContactDao extends MyDAOBase {
 	
 	/*
 	 * */
-	public void sendNotification( String profId, String courseId, String year, String month, boolean status) {
+	public void sendNotification( String profId, String courseId, String year, String month, boolean status, boolean isWithLog ) {
+		//
+		if ( isWithLog ) {
+			sendNotificationWithLog( profId, courseId, year, month );
+			return;
+		}
+		
 		//
 		User directorTo = null;
 		Professor prof = ofy().load().key( Key.create(Professor.class, Long.parseLong(profId))).now();
@@ -104,6 +111,92 @@ public class ContactDao extends MyDAOBase {
 	}
 	
 	
+	/*
+	 * */
+	private void sendNotificationWithLog(String profId, String courseId,
+			String year, String month) {
+		//
+		User directorFrom = null;
+		Professor prof = ofy().load().key( Key.create(Professor.class, Long.parseLong(profId))).now();
+		User directorTo = ofy().load().key( prof.getManager() ).now();
+		Cours course = ofy().load().key( Key.create(Cours.class, Long.parseLong(courseId)) ).now();
+		//
+		Query<User> qUser = ofy().load().type(User.class)
+				.filter("departments", Key.create(Cours.class, Long.parseLong(courseId)));
+		for ( User us : qUser.list() ) {
+			if ( us.getAdmin() )
+				continue;
+			directorFrom = us;
+			break;
+		}
+		
+		//
+		Key<Professor> profKey = Key.create(Professor.class, Long.parseLong(profId));
+		Key<Cours> coursKey = Key.create(Cours.class, Long.parseLong(courseId));
+		
+		// Check if the manager of this professor has already input hours
+		boolean logFromManagerFound = false;
+		Query<Log> qAll = ofy().load().type(Log.class)
+				.filter("year", Integer.parseInt(year))
+				.filter("month", Integer.parseInt(month))
+				.filter("prof", profKey);
+		for ( Log qLog : qAll ) {
+			for ( Key<Cours> kc : directorTo.getDepartments() ) {
+				if ( kc.getId() == qLog.getCours().getId() ) {
+					logFromManagerFound = true;
+					break;
+				}
+			}
+		}
+		if ( !logFromManagerFound )
+			return;
+		
+		// Load the hours input by another manager
+		Query<Log> q = ofy().load().type(Log.class)
+				.filter("year", Integer.parseInt(year))
+				.filter("month", Integer.parseInt(month))
+				.filter("prof", profKey)
+				.filter("cours", coursKey)
+				.order("cours");
+		//
+		if ( directorTo != null ) {
+			//
+			Properties props = new Properties();
+	        Session session = Session.getDefaultInstance(props, null);
+	
+	        String strSubject = "ALERTE : Les heures du professeur " + prof.getProfName() + " ont été saisies par " + directorFrom.getFullName() + ".";
+	        
+	        String msgBody = "Les heures du professeur " + prof.getProfName() + " pour le cours " + course.getCoursNom() + " ont été saisies par " + directorFrom.getFullName() + ".";
+	        msgBody = msgBody + "\n\n";
+	        for ( Log log : q ) {
+	        	msgBody = msgBody + log.getTypeName().substring(2) + " \t\t: " + log.getHour() + "\n";
+	        }
+	        
+	        try {
+		        Message msg = new MimeMessage(session);
+		        //
+		        msg.setFrom(new InternetAddress("thuannn@gmail.com", "Heures du mois"));
+		        //
+		        msg.addRecipient(Message.RecipientType.TO, new InternetAddress(directorTo.getEmail(), directorTo.getFullName()));
+		        msg.addRecipient(Message.RecipientType.CC, new InternetAddress(directorFrom.getEmail(), directorFrom.getFullName()));
+		        msg.addRecipient(Message.RecipientType.BCC, new InternetAddress( "thuannn@gmail.com", "Heures du mois" ));
+		        //
+		        // Reply to
+	 	        Address[] rraa = new Address[1];
+	 	        rraa[0] = new InternetAddress( directorFrom.getEmail(), directorFrom.getFullName() );
+		        msg.setReplyTo( rraa );
+		        //
+		        msg.setSubject(MimeUtility.encodeText( strSubject, "utf-8", "B"));
+		        msg.setText( msgBody );
+		        //
+		        Transport.send( msg );
+		    } catch (Exception e) {
+		    	throw new RuntimeException(e);
+		    }
+		}
+	}
+
+
 	/*
 	 * 
 	 * */

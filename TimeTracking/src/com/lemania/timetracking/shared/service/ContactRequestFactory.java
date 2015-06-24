@@ -24,7 +24,7 @@ public interface ContactRequestFactory extends RequestFactory {
 				String number,
 				String messageBody );
 		
-		Request<Void> sendNotification( String profId, String courseId, String year, String month, boolean status);
+		Request<Void> sendNotification( String profId, String courseId, String year, String month, boolean status, boolean isWithLog );
 	}
 	
 	ContactRequestContext contactRequest();

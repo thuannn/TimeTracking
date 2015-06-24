@@ -66,6 +66,9 @@ public class TimeInputPresenter
 		void setEcoleList(List<EcoleProxy> ecoles);
 		void setCourseList(List<CoursProxy> cours);
 		
+		//
+		boolean isCurrentManager();
+		
 		// Initialize values
 		void initializeValues(int currentMonth, int currentYear, boolean isAdmin, String directorName);
 		void initializeUI(boolean isAdmin);
@@ -283,7 +286,7 @@ public class TimeInputPresenter
 	 * */
 	@Override
 	public void updateLogTime(
-			final ProfessorProxy prof, String courseId, final String year, final String month,
+			final ProfessorProxy prof, final String courseId, final String year, final String month,
 			String coursTime, String coursNote,
 			String maladieTime, String maladieNote, String ferieTime,
 			String ferieNote, String priveTime, String priveNote,
@@ -318,9 +321,16 @@ public class TimeInputPresenter
 				//
 				placeManager.setOnLeaveConfirmation(null);
 				getView().setLogData(response, true);
+				
 				// 
 				// Update the list of log times
 				getEventBus().fireEvent(new LoadAllProfessorLogsEvent( prof.getId().toString(), Integer.parseInt(year), Integer.parseInt(month)) );
+				
+				//
+				// If the manager of this professor has already input the hours, send a notification to him
+				// This control is in the DAO file
+				if ( !getView().isCurrentManager() )
+					sendNotification( prof.getId().toString(), courseId, year, month, true, true ); 
 			}
 		});
 	}
@@ -385,23 +395,24 @@ public class TimeInputPresenter
 			@Override
 			public void onSuccess(Void response) {
 				//
-				sendNotification( profId, courseId, year, month, status );
+				sendNotification( profId, courseId, year, month, status, false );
 			}
 		});
 	}
 	
 	
 	/*
+	 * isWithLog : with hours information
 	 * */
 	public void sendNotification( String profId, String courseId,
-			String year, String month, boolean status) {
+			String year, String month, boolean status, boolean isWithLog ) {
 		//
 		ContactRequestFactory rf = GWT.create(ContactRequestFactory.class);
 		rf.initialize(this.getEventBus(), new EventSourceRequestTransport(this.getEventBus()));
 		ContactRequestContext rc = rf.contactRequest();
-		rc.sendNotification( profId, courseId, year, month, status ).fire(new Receiver<Void>(){
+		rc.sendNotification( profId, courseId, year, month, status, isWithLog ).fire(new Receiver<Void>(){
 			@Override
-			public void onFailure(ServerFailure error){
+			public void onFailure(ServerFailure error) {
 				Window.alert(error.getMessage());
 			}
 			@Override
