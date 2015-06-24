@@ -62,17 +62,17 @@ withOperation(new OperationKey("Vg_b1Je7K0txHHMkliUC_AQyJtU="),
   .withMethodName("saveAndReturn")
   .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
   .build());
-withOperation(new OperationKey("I1lBOSuCVYDw1Q0QreANcbgT824="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("(Ljava/lang/Long;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Ljava/lang/Long;)Ljava/util/List;")
-  .withMethodName("getDepartments")
-  .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
-  .build());
 withOperation(new OperationKey("Qj3mMpCUVpjG2v4auY0Pl8wedEk="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Lcom/lemania/timetracking/shared/UserProxy;)Lcom/google/web/bindery/requestfactory/shared/Request;")
   .withDomainMethodDescriptor("(Lcom/lemania/timetracking/server/User;)Ljava/util/List;")
+  .withMethodName("getDepartments")
+  .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
+  .build());
+withOperation(new OperationKey("I1lBOSuCVYDw1Q0QreANcbgT824="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Ljava/lang/Long;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Ljava/lang/Long;)Ljava/util/List;")
   .withMethodName("getDepartments")
   .withRequestContext("com.lemania.timetracking.shared.service.UserRequestFactory$UserRequestContext")
   .build());
