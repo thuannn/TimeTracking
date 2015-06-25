@@ -138,15 +138,14 @@ public class UserDao extends MyDAOBase {
 				.filter("active", true)
 				.filter("userName", userName.toLowerCase())
 				.filter("password", password);
-		List<User> returnList = new ArrayList<User>();
-		for (User user : q){		
-			returnList.add(user);
-		}
-		
-		if (returnList.size() > 0) {
-			returnList.get(0).setPassword(newPassword);
-			ofy().save().entities( returnList.get(0) ).now();
-			return returnList.get(0);
+		//
+		User u = null;
+		Key<User> ku = null;
+		if ( q.list().size() > 0) {
+			u = q.list().get(0);
+			u.setPassword(newPassword);
+			ku = ofy().save().entities( q.list().get(0) ).now().keySet().iterator().next();
+			return ofy().load().key( ku ).now();
 		}
 		else
 			return null;
