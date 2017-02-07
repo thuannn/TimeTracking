@@ -4,6 +4,8 @@ package com.lemania.timetracking.shared.service;
 import java.util.Arrays;
 import com.google.web.bindery.requestfactory.vm.impl.OperationData;
 import com.google.web.bindery.requestfactory.vm.impl.OperationKey;
+import com.google.gwt.core.shared.GwtIncompatible;
+@GwtIncompatible("Server-side only but loaded through naming convention so must be in same package as shared ProfessorRequestFactory interface")
 public final class ProfessorRequestFactoryDeobfuscatorBuilder extends com.google.web.bindery.requestfactory.vm.impl.Deobfuscator.Builder {
 {
 withOperation(new OperationKey("ywncKjv4F7rkiVzVbLxtJTCHnls="),

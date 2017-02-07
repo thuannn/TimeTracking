@@ -4,6 +4,8 @@ package com.lemania.timetracking.shared.service;
 import java.util.Arrays;
 import com.google.web.bindery.requestfactory.vm.impl.OperationData;
 import com.google.web.bindery.requestfactory.vm.impl.OperationKey;
+import com.google.gwt.core.shared.GwtIncompatible;
+@GwtIncompatible("Server-side only but loaded through naming convention so must be in same package as shared CoursRequestFactory interface")
 public final class CoursRequestFactoryDeobfuscatorBuilder extends com.google.web.bindery.requestfactory.vm.impl.Deobfuscator.Builder {
 {
 withOperation(new OperationKey("8ZfojIzS2mRmrMJ9upuqVN0IfPc="),
@@ -48,17 +50,17 @@ withOperation(new OperationKey("hvWsNaBOzjcfkZRuwbvEedLLpDw="),
   .withMethodName("initialize")
   .withRequestContext("com.lemania.timetracking.shared.service.CoursRequestFactory$CoursRequestContext")
   .build());
-withOperation(new OperationKey("BD99uupV94bnmaljBiFceseWORw="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("()Ljava/util/List;")
-  .withMethodName("listAll")
-  .withRequestContext("com.lemania.timetracking.shared.service.CoursRequestFactory$CoursRequestContext")
-  .build());
 withOperation(new OperationKey("BLIV222KyyIVKvUHXh4RiZPB5Sg="),
   new OperationData.Builder()
   .withClientMethodDescriptor("(Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
   .withDomainMethodDescriptor("(Ljava/lang/String;)Ljava/util/List;")
+  .withMethodName("listAll")
+  .withRequestContext("com.lemania.timetracking.shared.service.CoursRequestFactory$CoursRequestContext")
+  .build());
+withOperation(new OperationKey("BD99uupV94bnmaljBiFceseWORw="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("()Ljava/util/List;")
   .withMethodName("listAll")
   .withRequestContext("com.lemania.timetracking.shared.service.CoursRequestFactory$CoursRequestContext")
   .build());

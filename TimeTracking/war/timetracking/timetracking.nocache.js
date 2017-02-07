@@ -416,16 +416,16 @@ function timetracking(){
     }
     var strongName;
     try {
-      unflattenKeylistIntoAnswers(['default', 'ie9'], '0D54554BDC97EDD165E667D9B4901886');
-      unflattenKeylistIntoAnswers(['default', 'ie10'], '44D66E328BF8E91413077A667A1CD268');
-      unflattenKeylistIntoAnswers(['default', 'safari'], '54E72BB87886490207606F9B9A525913');
-      unflattenKeylistIntoAnswers(['fr', 'ie9'], '87D77699C662BAE6E4EF1EAE36807F9C');
-      unflattenKeylistIntoAnswers(['fr', 'ie8'], '95CAC74D3B93B9E3C815BFAA731828DB');
-      unflattenKeylistIntoAnswers(['fr', 'safari'], 'B6A6DE490B67844B469A5D056A642E45');
-      unflattenKeylistIntoAnswers(['default', 'ie8'], 'BC8A8213F96B62035B8886BF44FC60B4');
-      unflattenKeylistIntoAnswers(['default', 'gecko1_8'], 'C6ACC74892C77115AE01D05A00408A85');
-      unflattenKeylistIntoAnswers(['fr', 'gecko1_8'], 'DC8393C9CE91946E18D1973C592371B1');
-      unflattenKeylistIntoAnswers(['fr', 'ie10'], 'F3E30A3B721927BFF6FC68F0C7D9DF05');
+      unflattenKeylistIntoAnswers(['default', 'ie8'], '0764AF314324488FDC8BE91720C6777C');
+      unflattenKeylistIntoAnswers(['default', 'gecko1_8'], '23844B14E272D605ED61894A8E662A8C');
+      unflattenKeylistIntoAnswers(['default', 'ie10'], '302A62432A8F9FD801B11D2A4378453D');
+      unflattenKeylistIntoAnswers(['default', 'safari'], '3436A990FEDEF385B4D1BE4364405995');
+      unflattenKeylistIntoAnswers(['fr', 'ie9'], '547B04EEF6AD9108A8A0CF89A91069FE');
+      unflattenKeylistIntoAnswers(['fr', 'ie8'], '56622A1CBD4711FE7D87721CB0EB8E63');
+      unflattenKeylistIntoAnswers(['fr', 'ie10'], '67FC80C760959D3811BF55C4042461AA');
+      unflattenKeylistIntoAnswers(['fr', 'safari'], '86494324C9279C5DD88ABA0E3FE65F51');
+      unflattenKeylistIntoAnswers(['fr', 'gecko1_8'], 'A78D2BDFB659A5EA1C6817CABFD41634');
+      unflattenKeylistIntoAnswers(['default', 'ie9'], 'A8B700B835B8BC81EBCA200A944380CD');
       strongName = answers[computePropValue('locale')][computePropValue('user.agent')];
       var idx = strongName.indexOf(':');
       if (idx != -1) {

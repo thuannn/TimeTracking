@@ -4,6 +4,8 @@ package com.lemania.timetracking.shared.service;
 import java.util.Arrays;
 import com.google.web.bindery.requestfactory.vm.impl.OperationData;
 import com.google.web.bindery.requestfactory.vm.impl.OperationKey;
+import com.google.gwt.core.shared.GwtIncompatible;
+@GwtIncompatible("Server-side only but loaded through naming convention so must be in same package as shared LogRequestFactory interface")
 public final class LogRequestFactoryDeobfuscatorBuilder extends com.google.web.bindery.requestfactory.vm.impl.Deobfuscator.Builder {
 {
 withOperation(new OperationKey("O7gb32zJhuWVMfKLRpcrbA5ufds="),
@@ -83,17 +85,17 @@ withOperation(new OperationKey("FOoPXC2CiNB9rNCivSfcImstgfE="),
   .withMethodName("initialize")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());
-withOperation(new OperationKey("jYwYNZ2GdAHpRkHITOENfbCme_E="),
-  new OperationData.Builder()
-  .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
-  .withDomainMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;")
-  .withMethodName("listAll")
-  .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
-  .build());
 withOperation(new OperationKey("rPl4K6fdVW7Khbh5XG__wSa8jn4="),
   new OperationData.Builder()
   .withClientMethodDescriptor("()Lcom/google/web/bindery/requestfactory/shared/Request;")
   .withDomainMethodDescriptor("()Ljava/util/List;")
+  .withMethodName("listAll")
+  .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
+  .build());
+withOperation(new OperationKey("jYwYNZ2GdAHpRkHITOENfbCme_E="),
+  new OperationData.Builder()
+  .withClientMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/google/web/bindery/requestfactory/shared/Request;")
+  .withDomainMethodDescriptor("(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;")
   .withMethodName("listAll")
   .withRequestContext("com.lemania.timetracking.shared.service.LogRequestFactory$LogRequestContext")
   .build());

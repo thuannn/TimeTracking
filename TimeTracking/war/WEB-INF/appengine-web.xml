@@ -2,8 +2,21 @@
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 
 	<application>lemania-timetracking</application>
-	<version>1-6-20150625-1</version>
+	
+	<version>1-6-20170207-1</version>
+	
 	<threadsafe>true</threadsafe>
+	
+	<instance-class>F4</instance-class>
+	<automatic-scaling>
+		<min-idle-instances>automatic</min-idle-instances>
+		<!-- ‘automatic’ is the default value. -->
+		<max-idle-instances>automatic</max-idle-instances>
+		<!-- ‘automatic’ is the default value. -->
+		<min-pending-latency>30ms</min-pending-latency>
+		<max-pending-latency>300ms</max-pending-latency>
+		<max-concurrent-requests>16</max-concurrent-requests>
+	</automatic-scaling>
 
 	<!-- Configure serving/caching of GWT files -->
 	<static-files>
@@ -22,3 +35,12 @@
 	</system-properties>
 
 </appengine-web-app>
+
+
+<!-- 
+
+1-6-20170207-1 
+...............
+- BUG FIX : Liste des années jusqu'à 2020
+
+-->

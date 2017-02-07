@@ -61,6 +61,10 @@ public class RptTimeByDepartmentView extends ViewWithUiHandlers<RptTimeByDepartm
 		lstYears.addItem("2014","2014");
 		lstYears.addItem("2015","2015");
 		lstYears.addItem("2016","2016");
+		lstYears.addItem("2017","2017");
+		lstYears.addItem("2018","2018");
+		lstYears.addItem("2019","2019");
+		lstYears.addItem("2020","2020");
 	}
 	
 	
