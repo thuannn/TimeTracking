@@ -200,9 +200,9 @@ public class RptTimeByMonthView extends ViewWithUiHandlers<RptTimeByMonthUiHandl
 			
 			// draw the data
 			if (logs.get(i).getTypeName().equals("6.Frais"))
-				tblProfs.setText(currentRow, currentCol, (logs.get(i).getHour() > 0) ? "CHF " + Double.toString(logs.get(i).getHour()) : "");
+				tblProfs.setText(currentRow, currentCol, (logs.get(i).getHour() != 0) ? "CHF " + Double.toString(logs.get(i).getHour()) : "" );
 			else
-				tblProfs.setText(currentRow, currentCol, (logs.get(i).getHour() > 0) ? Double.toString(logs.get(i).getHour()) : "");
+				tblProfs.setText(currentRow, currentCol, (logs.get(i).getHour() != 0) ? Double.toString(logs.get(i).getHour()) : "" );
 			
 			// show the total hour of previous department
 			tblProfs.setText(currentRow, 7, Double.toString(totalHour));			

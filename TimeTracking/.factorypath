@@ -3,4 +3,5 @@
     <factorypathentry kind="EXTJAR" id="/Users/ngocthuannguyen13/OneDrive/Dev_Resources/Lib/gwt-2.7.0/requestfactory-apt.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="EXTJAR" id="/Users/ngocthuannguyen13/OneDrive/Dev_Resources/Lib/gwt-2.7.0/requestfactory-client.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="EXTJAR" id="/Users/ngocthuannguyen13/OneDrive/Dev_Resources/Lib/gwt-2.7.0/requestfactory-server.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="/Users/ngocthuannguyen13/OneDrive/Dev_Resources/Lib/gwt-2.7.0/validation-api-1.0.0.GA.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>

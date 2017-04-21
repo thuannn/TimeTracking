@@ -229,9 +229,9 @@ public class RptTimeByProfView extends ViewWithUiHandlers<ExtractDataUiHandler>
 			
 			// draw the data
 			if (logs.get(i).getTypeName().equals("6.Frais"))
-				tblLogs.setText(currentRow, currentCol, (logs.get(i).getHour() > 0) ? "CHF " + Double.toString(logs.get(i).getHour()) : "");
+				tblLogs.setText(currentRow, currentCol, (logs.get(i).getHour() != 0) ? "CHF " + Double.toString(logs.get(i).getHour()) : "");
 			else
-				tblLogs.setText(currentRow, currentCol, (logs.get(i).getHour() > 0) ? Double.toString(logs.get(i).getHour()) : "");
+				tblLogs.setText(currentRow, currentCol, (logs.get(i).getHour() != 0) ? Double.toString(logs.get(i).getHour()) : "");
 			
 			// show the total hour of previous department
 			tblLogs.setText(currentRow, 7, Double.toString(totalHour));			

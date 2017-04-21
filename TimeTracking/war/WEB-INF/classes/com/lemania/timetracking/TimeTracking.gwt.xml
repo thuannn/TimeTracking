@@ -9,10 +9,7 @@
 	<inherits name='com.google.gwt.resources.Resources'/>
 	<inherits name='com.google.web.bindery.requestfactory.RequestFactory' />
 	
-	
-	
 	<extend-property name="locale" values="fr"/>
-	
 
 	<!-- Inherit the default GWT style sheet.  You can change       -->
 	<!-- the theme of your GWT application by uncommenting          -->
@@ -20,6 +17,12 @@
 	<!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/>  -->
 	<inherits name='com.google.gwt.user.theme.chrome.Chrome'/>    
 	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
+	
+	<extend-property name="user.agent" values="gecko1_8" />
+	<extend-property name="user.agent" values="safari" />
+	<extend-property name="user.agent" values="ie9" />
+	<extend-property name="user.agent" values="ie10" />
+
 
 	<!-- Other module inherits                                      -->
 	<inherits name='com.gwtplatform.mvp.Mvp'/>

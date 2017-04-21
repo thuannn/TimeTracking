@@ -202,10 +202,10 @@ class RptTimeByStatusView extends ViewWithUiHandlers<RptTimeByStatusUiHandlers> 
 			// draw the data
 			if (logs.get(i).getTypeName().equals("6.Frais")) {
 				if (logs.get(i).isApproved())
-					tblProfs.setText(currentRow, currentCol, (logs.get(i).getHour() > 0) ? "CHF " + Double.toString(logs.get(i).getHour()) : "");
+					tblProfs.setText(currentRow, currentCol, (logs.get(i).getHour() != 0) ? "CHF " + Double.toString(logs.get(i).getHour()) : "");
 			}
 			else
-				tblProfs.setText(currentRow, currentCol, (logs.get(i).getHour() > 0) ? Double.toString(logs.get(i).getHour()) : "");
+				tblProfs.setText(currentRow, currentCol, (logs.get(i).getHour() != 0) ? Double.toString(logs.get(i).getHour()) : "");
 			
 			// show the total hour of previous department
 			if (logs.get(i).isApproved())
