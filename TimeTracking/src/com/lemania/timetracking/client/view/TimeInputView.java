@@ -381,12 +381,18 @@ public class TimeInputView extends ViewWithUiHandlers<TimeInputUiHandler> implem
 		if (txtFraisAmount.getText().equals("")) txtFraisAmount.setText("0.0");
 		
 		// validate numbers
-		if (!txtCoursTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
-			!txtMaladieTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") || 
-			!txtFerieTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
-			!txtPriveTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
-			!txtSupervisionTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
-			!txtFraisAmount.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ) {
+//		if (!txtCoursTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
+//			!txtMaladieTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") || 
+//			!txtFerieTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
+//			!txtPriveTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
+//			!txtSupervisionTime.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ||
+//			!txtFraisAmount.getText().matches("^(([0-9]*)|(([0-9]*).([0-9]*)))$") ) {
+		if (!txtCoursTime.getText().matches("-?\\d+(\\.\\d+)?") ||
+			!txtMaladieTime.getText().matches("-?\\d+(\\.\\d+)?") || 
+			!txtFerieTime.getText().matches("-?\\d+(\\.\\d+)?") ||
+			!txtPriveTime.getText().matches("-?\\d+(\\.\\d+)?") ||
+			!txtSupervisionTime.getText().matches("-?\\d+(\\.\\d+)?") ||
+			!txtFraisAmount.getText().matches("-?\\d+(\\.\\d+)?") ) {
 			Window.alert("Veuillez introduire des heures en chiffre.");
 			return;
 		}

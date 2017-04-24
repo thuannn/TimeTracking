@@ -3,7 +3,7 @@
 
 <!-- 	<application>lemania-timetracking</application> -->
 	
-<!-- 	<version>1-6-20170421-3</version> -->
+<!-- 	<version>1-6-20170424-1</version> -->
 	
 	<threadsafe>true</threadsafe>
 	
@@ -13,8 +13,8 @@
 		<!-- ‘automatic’ is the default value. -->
 		<max-idle-instances>automatic</max-idle-instances>
 		<!-- ‘automatic’ is the default value. -->
-		<min-pending-latency>30ms</min-pending-latency>
-		<max-pending-latency>300ms</max-pending-latency>
+		<min-pending-latency>20ms</min-pending-latency>
+		<max-pending-latency>200ms</max-pending-latency>
 		<max-concurrent-requests>16</max-concurrent-requests>
 	</automatic-scaling>
 
@@ -38,6 +38,10 @@
 
 
 <!-- 
+
+1-6-20170424-1
+...............
+- BUG FIX : Check number with minus and point
 
 1-6-20170421-3
 ...............
